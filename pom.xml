@@ -38,7 +38,6 @@
                   <mainClass>com.tloj.game.Main</mainClass>
                 </configuration>
               </plugin>
-              
         </plugins>
     </build>
 </project>
