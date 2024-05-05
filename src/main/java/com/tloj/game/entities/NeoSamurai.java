@@ -1,5 +1,5 @@
 package com.tloj.game.entities;
 
-public class NeoSamurai extends Character {
+// public class NeoSamurai extends Character {
     
-}
+// }
