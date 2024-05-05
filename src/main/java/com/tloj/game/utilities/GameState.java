@@ -4,6 +4,8 @@ public enum GameState {
     MAIN_MENU,
     CHOOSING_CHARACTER,
     MOVING,
-    FIGHTING,
+    FIGHTING_MOB,
+    FIGHTING_BOSS,
+    LOOTING_ROOM,
     EXIT
 }

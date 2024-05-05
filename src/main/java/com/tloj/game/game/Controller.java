@@ -48,7 +48,9 @@ class MoveNorthCommand extends GameCommand {
         try {
             this.game.movePlayer(Coordinates.Direction.NORTH);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid move");
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -68,7 +70,9 @@ class MoveSouthCommand extends GameCommand {
         try {
             this.game.movePlayer(Coordinates.Direction.SOUTH);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid move");
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -88,7 +92,9 @@ class MoveWestCommand extends GameCommand {
         try {
             this.game.movePlayer(Coordinates.Direction.WEST);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid move");
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -108,7 +114,9 @@ class MoveEastCommand extends GameCommand {
         try {
             this.game.movePlayer(Coordinates.Direction.EAST);
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid move");
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
         }
     }
 }
@@ -297,6 +305,10 @@ public class Controller {
         return this.state;
     }
 
+    public void setState(GameState state) {
+        this.state = state;
+    }
+
     public Character getPlayer() {
         return this.player;
     }
@@ -319,7 +331,6 @@ public class Controller {
     /**
      * Loads the game from the cloud, then deserializes the JSON data to create a new Game object
      * @see GameData
-     * @see GameData#deserializeJSON()
      */
     public void loadGame() {
         GameData gameData = GameData.deserializeJSON("{}");
@@ -358,7 +369,7 @@ public class Controller {
 
     /**
      * Returns the CharacterFactory object based on the user input
-     * @param character
+     * @param character the user's choice of character
      * @return the CharacterFactory object to create the Character subclass object
      */
     private CharacterFactory characterFactory(String character) {
@@ -387,6 +398,7 @@ public class Controller {
             return;
         }
 
+        GCInvoker invoker;
         switch (this.state) {
             case MAIN_MENU:
                 /* New, load, exit game */
@@ -417,7 +429,8 @@ public class Controller {
                 break;
             
             case MOVING:
-                GCInvoker invoker;
+            case FIGHTING_MOB:
+            case FIGHTING_BOSS:
                 invoker = new GCInvoker();
                 invoker.setCommand(this.getCommand(commands[0]));
                 invoker.executeCommand();

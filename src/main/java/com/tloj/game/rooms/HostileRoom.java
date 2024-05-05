@@ -3,6 +3,7 @@ package com.tloj.game.rooms;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public class HostileRoom extends Room {
@@ -18,10 +19,13 @@ public class HostileRoom extends Room {
         return RoomType.HOSTILE_ROOM;
     }
 
+    public Mob getMob() {
+        return this.mob;
+    }
+
     @Override
-    public void enter() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'enter'");
+    public void accept(PlayerRoomVisitor visitor) {
+        visitor.visit(this);
     }
 
     @Override

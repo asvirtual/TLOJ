@@ -5,4 +5,5 @@ public enum CharacterType {
     CHEATER,
     DATA_THIEF,
     MECHA_KNIGHT,
+    NEO_SAMURAI
 }

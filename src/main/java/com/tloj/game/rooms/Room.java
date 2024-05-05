@@ -1,7 +1,7 @@
 package com.tloj.game.rooms;
 
-import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public abstract class Room {
@@ -12,7 +12,7 @@ public abstract class Room {
     }
 
     public abstract RoomType getType();
-    public abstract void enter();
+    public abstract void accept(PlayerRoomVisitor PlayerRoomVisitor);
     public abstract void exit();
     
     public Coordinates getCoordinates() {
