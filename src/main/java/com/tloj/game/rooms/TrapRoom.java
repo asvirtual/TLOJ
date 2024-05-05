@@ -5,7 +5,24 @@ import com.tloj.game.utilities.Coordinates;
 
 
 public class TrapRoom extends Room {
-    public TrapRoom(Coordinates coordinates, Character character, boolean isLocked) {
-        super(coordinates, character, isLocked);
+    public TrapRoom(Coordinates coordinates) {
+        super(coordinates);
+    }
+
+    @Override
+    public RoomType getType() {
+        return RoomType.TRAP_ROOM;
+    }
+
+    @Override
+    public void enter() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'enter'");
+    }
+
+    @Override
+    public void exit() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'exit'");
     }
 }

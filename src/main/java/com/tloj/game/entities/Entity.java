@@ -21,4 +21,8 @@ public abstract class Entity {
         this.def = def;
         this.position = position;
     }
+
+    public Coordinates getPosition() {
+        return position;
+    }
 }

@@ -2,6 +2,13 @@ package com.tloj.game.utilities;
 
 
 public class Coordinates {
+    public enum Direction {
+        NORTH,
+        SOUTH,
+        WEST,
+        EAST
+    }
+
     private int x;
     private int y;
 
@@ -16,5 +23,20 @@ public class Coordinates {
 
     public int getY() {
         return y;
-    }    
+    }
+
+    public Coordinates getAdjacent(Direction direction) {
+        switch (direction) {
+            case NORTH:
+                return new Coordinates(x, y - 1);
+            case SOUTH:
+                return new Coordinates(x, y + 1);
+            case WEST:
+                return new Coordinates(x - 1, y);
+            case EAST:
+                return new Coordinates(x + 1, y);
+            default:
+                return this;
+        }
+    }
 }

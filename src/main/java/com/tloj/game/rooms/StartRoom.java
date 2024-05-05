@@ -1,21 +1,17 @@
 package com.tloj.game.rooms;
 
-import com.tloj.game.entities.Boss;
-import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.Character;
+import com.tloj.game.utilities.Coordinates;
 
 
-public class BossRoom extends Room {
-    Boss boss;
-    
-    public BossRoom(Coordinates coordinates, Boss boss) {
+public class StartRoom extends Room {
+    public StartRoom(Coordinates coordinates) {
         super(coordinates);
-        this.boss = boss;
     }
 
     @Override
     public RoomType getType() {
-        return RoomType.BOSS_ROOM;
+        return RoomType.START_ROOM;
     }
 
     @Override

@@ -122,6 +122,22 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         this.position = to;
     }
 
+    public void goNorth() {
+
+    }
+
+    public void goSouth() {
+
+    }
+
+    public void goWest() {
+
+    }
+
+    public void goEast() {
+
+    }
+
     @Override
     public void attack(CombatEntity target) {
         target.takeDamage(this.atk);

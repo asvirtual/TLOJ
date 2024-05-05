@@ -1,18 +1,16 @@
 package com.tloj.game.game;
 
 import java.util.ArrayList;
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.entities.Character;
 
 
 public class GameData {
     Level currentLevel;
-    Coordinates currentPosition;
     Character player;
     ArrayList<Level> levels;
 
-    public GameData(Level currentLevel, Coordinates currentPosition, Character player, ArrayList<Level> levels) {
+    public GameData(Level currentLevel, Character player, ArrayList<Level> levels) {
         this.currentLevel = currentLevel;
-        this.currentPosition = currentPosition;
         this.player = player;
         this.levels = levels;
     }

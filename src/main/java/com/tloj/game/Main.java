@@ -1,7 +1,11 @@
 package com.tloj.game;
 
+import com.tloj.game.game.Controller;
+
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("The Legend of Jordan");
+        Controller controller = Controller.getInstance();
+        controller.run();
     }
 }
