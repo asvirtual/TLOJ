@@ -1,32 +1,25 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.abilities.HealthAbsorber;
+
 
 /**
  * Represents the NaniteLeechBlade Weapon in the game.<br>
- * The NaniteLeechBlade is a light weapon with a short range blade that can be found in the game. 
- * It can also inflicts average damage, and it has no ability<br>
- * It weights {@value #WEIGHT}, with a D12 attack points with no bonus.
- * @see Item
- * @see Weapon
+ * The NaniteLeechBlade is a light weapon with a short range blade that can be found in the game. <br>
+ * It is paired with the {@link HealthAbsorber} ability<br>
+ * It weighs {@value #WEIGHT}, and is equipped with a D{@value #DICE_FACES}
  * @see NanoDirk
  * @see CyberKatana
  * @see PulseStaff
  * @see LaserBlade
  * @see PlasmaGreatSword
-
  */
-
-
-public class NaniteLeechBlade extends Weapon{
+public class NaniteLeechBlade extends Weapon {
     private static final double WEIGHT = 0.8;
     private static final int DICE_FACES = 12;
 
     public NaniteLeechBlade() {
         super(WEIGHT, DICE_FACES); 
-    }
-
-    @Override
-    public void useEffect(Object ...args) {
-        // Add effect here
+        this.effect = new HealthAbsorber(this);
     }
 }

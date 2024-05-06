@@ -73,7 +73,7 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         this.money = money;
         this.inventory = inventory;
         this.weapon = weapon;
-        this.weapon.assign(this);
+        this.weapon.assignTo(this);
         this.ability = ability;
         this.passiveAbility = passiveAbility;
     }
@@ -114,7 +114,7 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         this.money = money;
         this.inventory = new ArrayList<Item>();
         this.weapon = weapon;
-        this.weapon.assign(this);
+        this.weapon.assignTo(this);
         this.ability = ability;
         this.passiveAbility = passiveAbility;
     }
@@ -164,7 +164,7 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
     public void attack(CombatEntity t) {
         Mob target = (Mob) t;
         this.takeDamage(atk);
-        this.weapon.swing(target);
+        this.weapon.hit(target);
     }
 
     @Override

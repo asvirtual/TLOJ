@@ -1,29 +1,25 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.abilities.ManaAttackBooster;
+
 
 /**
  * Represents the PulseStaff Weapon in the game.<br>
- * The PulseStaff is an average heavy weapon with a long blade that can be found in the game. 
- * If you spend 3 mana to attack it inflicts damage + bonus, more is the mana, then more is the damage. If there's no mana left, then it inflicts no bonus damage<br>
- * It weights {@value #WEIGHT}, with a D5 attack points with no bonus, D10 with max bonus.
- * @see Item
- * @see Weapon
+ * The PulseStaff is an rare heavy weapon with a long blade that can be found in the game. <br>
+ * It is paired with the {@link ManaAttackBooster} ability, that allows its holder to inflict from 5 to 10 more damage points by spending 3 mana points<br>
+ * It weighs {@value #WEIGHT}, and is equipped with a D{@value #DICE_FACES}
  * @see LaserBlade
  * @see CyberKatana
  * @see NanoDirk
  * @see PlasmaGreatSword
  * @see NaniteLeechBlade
  */
-public class PulseStaff extends Weapon{
+public class PulseStaff extends Weapon {
     private static final double WEIGHT = 1.2;
     private static final int DICE_FACES = 5;    //5 standard value if no mana then -->
 
     public PulseStaff() {
-        super(WEIGHT, DICE_FACES); 
-    }
-
-    @Override
-    public void useEffect(Object ...args) {
-        // Add effect here
+        super(WEIGHT, DICE_FACES);
+        this.effect = new ManaAttackBooster(this); 
     }
 }

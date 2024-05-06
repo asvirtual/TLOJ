@@ -1,6 +1,5 @@
 package com.tloj.game.rooms;
 
-import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
