@@ -1,6 +1,5 @@
 package com.tloj.game.rooms;
 
-import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
@@ -32,5 +31,10 @@ public class HostileRoom extends Room {
     public void exit() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
+    }
+
+    public void removeMob() {
+        this.mob = null;
+        this.roomCleared();
     }
 }

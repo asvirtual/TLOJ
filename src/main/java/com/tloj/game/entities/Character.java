@@ -1,7 +1,6 @@
 package com.tloj.game.entities;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
@@ -74,6 +73,7 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         this.money = money;
         this.inventory = inventory;
         this.weapon = weapon;
+        this.weapon.assign(this);
         this.ability = ability;
         this.passiveAbility = passiveAbility;
     }
@@ -114,6 +114,7 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         this.money = money;
         this.inventory = new ArrayList<Item>();
         this.weapon = weapon;
+        this.weapon.assign(this);
         this.ability = ability;
         this.passiveAbility = passiveAbility;
     }
@@ -124,6 +125,14 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
             weight += item.getWeight();
 
         return weight;
+    }
+
+    public int getMana() {
+        return this.mana;
+    }
+
+    public void useMana(int amount) {
+        this.mana -= amount;
     }
 
     public ArrayList<Item> getInventory() {
@@ -152,8 +161,10 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
     }
 
     @Override
-    public void attack(CombatEntity target) {
-        target.takeDamage(this.atk);
+    public void attack(CombatEntity t) {
+        Mob target = (Mob) t;
+        this.takeDamage(atk);
+        this.weapon.swing(target);
     }
 
     @Override
@@ -169,5 +180,15 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
     @Override
     public void die() {
         
+    }
+    
+    public void heal(int amount) {
+        this.hp += amount;
+    }
+
+    public void lootMob(Mob mob) {
+        System.out.println("You gain " + mob.xpDrop + " experience points and " + mob.moneyDrop + " money");
+        this.xp += mob.xpDrop;
+        this.money += mob.moneyDrop;
     }
 }

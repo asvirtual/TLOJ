@@ -25,4 +25,6 @@ public abstract class Entity {
     public Coordinates getPosition() {
         return position;
     }
+
+    
 }

@@ -1,18 +1,25 @@
 package com.tloj.game.utilities;
 
 public class Dice {
-    private int faces;
+    private int min;
+    private int max;
 
     public Dice(int faces) {
-        this.faces = faces;
+        this.min = 1;
+        this.max = faces;
+    }
+
+    public Dice (int min, int max) {
+        this.min = min;
+        this.max = max;
     }
 
     public int roll() {
-        return (int) (Math.random() * faces) + 1;
+        return (int) (Math.random() * (this.max - this.min + 1)) + 1;
     }
 
     @Override 
     public String toString() {
-        return faces + "D";
+        return "D" + (this.max - this.min + 1);
     }
 }

@@ -16,7 +16,7 @@ public abstract class Room {
     }
 
     public void visit() {
-        this.visited = true;
+        this.roomVisited();
     }
 
     public abstract RoomType getType();
@@ -25,5 +25,13 @@ public abstract class Room {
     
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+
+    protected void roomCleared() {
+        this.cleared = true;
+    }
+
+    protected void roomVisited() {
+        this.visited = true;
     }
 }

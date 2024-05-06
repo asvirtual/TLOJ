@@ -7,9 +7,9 @@ import java.util.Scanner;
 import java.util.function.Supplier;
 
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.Mob;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
-import com.tloj.game.rooms.RoomType;
 import com.tloj.game.entities.BasePlayer;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -147,6 +147,7 @@ class AttackCommand extends GameCommand {
         * TODO
         * Attack the enemy in the room
         */ 
+        this.game.playerAttack();
     }
 }
 
