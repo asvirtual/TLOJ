@@ -159,11 +159,11 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         
     }
     
-    protected static int getWeight(ArrayList <Item> inventory) {
-    int weight = 0;
-    for (Item item : inventory) {
-        weight += item.getWeight();
+    public int getWeight() {
+        int weight = 0;
+        for (Item item : this.inventory)
+            weight += item.getWeight();
+
+        return weight;
     }
-    return weight;
-}
 }
