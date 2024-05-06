@@ -1,8 +1,10 @@
 package com.tloj.game.game;
 
 import java.util.ArrayList;
+import java.util.Date;
+
 import com.tloj.game.entities.Character;
-import com.tloj.game.rooms.RoomType;
+import com.tloj.game.rooms.Room;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -12,18 +14,20 @@ public class Game {
     public static final int DEFAULT_ROOMS_ROWS = 6;
     public static final int DEFAULT_ROOMS_COLS = 6;
 
+    private long seed;
     private Level currentLevel;
     private Character player;
     private ArrayList<Level> levels;
     private Controller controller;
 
-    public Game(RoomType[][][] map) {
-        this.levels = new ArrayList<Level>(map.length);
-        for (int i = 0; i < map.length; i++)
-            this.levels.set(i, new Level(i, map[i]));
+    public Game(ArrayList<ArrayList<ArrayList<Room>>> map) {
+        this.levels = new ArrayList<Level>(map.size());
+        for (int i = 0; i < map.size(); i++)
+            this.levels.set(i, new Level(i, map.get(i)));
 
         this.currentLevel = this.levels.get(0);
         this.controller = Controller.getInstance();
+        this.seed = new Date().getTime();
     }
 
     public Game(GameData gameData) {
@@ -31,6 +35,11 @@ public class Game {
         this.player = gameData.player;
         this.levels = gameData.levels;
         this.controller = Controller.getInstance();
+        this.seed = new Date().getTime();
+    }
+
+    public long getSeed() {
+        return this.seed;
     }
 
     public void setPlayer(Character player) {
@@ -68,5 +77,11 @@ public class Game {
         
         return coordinates.getX() >= 0 && coordinates.getY() < roomsRowCount &&
                coordinates.getX() >= 0 && coordinates.getY() < roomsColCount;
+    }
+
+    public void save() {
+        GameData gameData = new GameData(this);
+        gameData.serializeJSON();
+        // TODO: Save in JSON file
     }
 }

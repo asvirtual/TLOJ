@@ -3,12 +3,12 @@ package com.tloj.game.collectables;
 import com.tloj.game.utilities.Dice;
 
 
-public abstract class Weapon {
+public abstract class Weapon extends Item {
     protected Object ability;
     protected Dice dice;
 
-    public Weapon(Dice dice, Object ability) {  //should we add weight to the weapons?
-        this.ability = ability;
+    public Weapon(int weight, Dice dice, Object effect) {
+        super(weight, effect);
         this.dice = dice;
     }
 }

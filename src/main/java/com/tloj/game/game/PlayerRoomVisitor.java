@@ -26,17 +26,19 @@ public class PlayerRoomVisitor implements Visitor {
 
     @Override
     public void visit(StartRoom room) {
-        
+        room.visit();
     }
 
     @Override
     public void visit(BossRoom room) {
+        room.visit();
         System.out.println("You've encountered the boss!");
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
     @Override
     public void visit(HealingRoom room) {
+        room.visit();
         System.out.println("You've found a healing room! What do you want to do?");
         System.out.println("1. Heal");
         System.out.println("2. Leave");
@@ -44,12 +46,14 @@ public class PlayerRoomVisitor implements Visitor {
 
     @Override
     public void visit(HostileRoom room) {
+        room.visit();
         System.out.println("You've encountered an enemy!");
         this.controller.setState(GameState.FIGHTING_MOB);
     }
 
     @Override
     public void visit(LootRoom room) {
+        room.visit();
         System.out.println("You've found some loot! What do you want to do?");
         System.out.println("1. Take it");
         System.out.println("2. Leave it");
@@ -58,6 +62,7 @@ public class PlayerRoomVisitor implements Visitor {
 
     @Override
     public void visit(TrapRoom room) {
+        room.visit();
         Dice dice = new Dice(6);
         int roll = dice.roll();
         if (roll < 3) {

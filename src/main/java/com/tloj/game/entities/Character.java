@@ -117,6 +117,18 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         this.ability = ability;
         this.passiveAbility = passiveAbility;
     }
+    
+    public int getWeight() {
+        int weight = 0;
+        for (Item item : this.inventory)
+            weight += item.getWeight();
+
+        return weight;
+    }
+
+    public ArrayList<Item> getInventory() {
+        return this.inventory;
+    }
 
     @Override
     public void move(Coordinates to) {
@@ -157,13 +169,5 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
     @Override
     public void die() {
         
-    }
-    
-    public int getWeight() {
-        int weight = 0;
-        for (Item item : this.inventory)
-            weight += item.getWeight();
-
-        return weight;
     }
 }

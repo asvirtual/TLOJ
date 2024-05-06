@@ -14,7 +14,7 @@ import com.tloj.game.utilities.Coordinates;
  * ATTACK 4 attack points<br>
  * DEFENCE 4 defence points<br>
  * MANA 10 mana points<br>
- * MAX_WEIGHT -1 maximum weight capacity<br>
+ * MAX_WEIGHT 5 maximum weight capacity<br>
  * MONEY 10 money<br>
  * @see Character
  */

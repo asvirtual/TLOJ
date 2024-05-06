@@ -1,11 +1,14 @@
 package com.tloj.game.game;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
 import com.tloj.game.entities.Character;
+import com.tloj.game.rooms.HostileRoom;
+import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.entities.BasePlayer;
 import com.tloj.game.utilities.Coordinates;
@@ -13,7 +16,7 @@ import com.tloj.game.utilities.GameState;
 
 
 /**
- * Command pattern implementation to handle the different game commands
+ * Command pattern implementation to handle the different game commands<br>
  * Available commands are:<br>
  * - gn {@link MoveNorthCommand}<br>
  * - gs {@link MoveSouthCommand}<br>
@@ -25,9 +28,13 @@ import com.tloj.game.utilities.GameState;
  */
 abstract class GameCommand {
     protected Game game;
+    protected String[] commands;
+    protected Character player;
 
-    protected GameCommand(Game game) {
+    protected GameCommand(Game game, String[] commands) {
         this.game = game;
+        this.commands = commands;
+        if (this.game != null) this.player = game.getPlayer();
     }
 
     public abstract void execute();
@@ -39,14 +46,15 @@ abstract class GameCommand {
  * @see Coordinates.Direction <br>
  */
 class MoveNorthCommand extends GameCommand {
-    public MoveNorthCommand(Game game) {
-        super(game);
+    public MoveNorthCommand(Game game, String[] commands) {
+        super(game, null);        
     }
 
     @Override
     public void execute() {
         try {
             this.game.movePlayer(Coordinates.Direction.NORTH);
+            this.game.save();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
@@ -61,14 +69,15 @@ class MoveNorthCommand extends GameCommand {
  * @see Coordinates.Direction <br>
  */
 class MoveSouthCommand extends GameCommand {
-    public MoveSouthCommand(Game game) {
-        super(game);
+    public MoveSouthCommand(Game game, String[] commands) {
+        super(game, null);
     }
 
     @Override
     public void execute() {
         try {
             this.game.movePlayer(Coordinates.Direction.SOUTH);
+            this.game.save();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
@@ -83,14 +92,15 @@ class MoveSouthCommand extends GameCommand {
  * @see Coordinates.Direction <br>
  */
 class MoveWestCommand extends GameCommand {
-    public MoveWestCommand(Game game) {
-        super(game);
+    public MoveWestCommand(Game game, String[] commands) {
+        super(game, null);
     }
 
     @Override
     public void execute() {
         try {
             this.game.movePlayer(Coordinates.Direction.WEST);
+            this.game.save();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
@@ -105,14 +115,15 @@ class MoveWestCommand extends GameCommand {
  * @see Coordinates.Direction <br>
  */
 class MoveEastCommand extends GameCommand {
-    public MoveEastCommand(Game game) {
-        super(game);
+    public MoveEastCommand(Game game, String[] commands) {
+        super(game, null);
     }
 
     @Override
     public void execute() {
         try {
             this.game.movePlayer(Coordinates.Direction.EAST);
+            this.game.save();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
@@ -126,8 +137,8 @@ class MoveEastCommand extends GameCommand {
  * @see GameCommand <br>
  */
 class AttackCommand extends GameCommand {
-    public AttackCommand(Game game) {
-        super(game);
+    public AttackCommand(Game game, String[] commands) {
+        super(game, null);
     }
 
     @Override
@@ -140,19 +151,164 @@ class AttackCommand extends GameCommand {
 }
 
 /**
- * Concrete command class to save the game state<br>
+ * Concrete command class to activate the Character's skill<br>
  * @see GameCommand <br>
- * @see GameData <br>
  */
-class SaveGameCommand extends GameCommand {
-    public SaveGameCommand(Game game) {
-        super(game);
+class SkillCommand extends GameCommand {
+    public SkillCommand(Game game, String[] commands) {
+        super(game, null);
     }
 
     @Override
     public void execute() {
-        GameData gameData = new GameData(game.getLevel(), game.getPlayer(), game.getLevels());
-        gameData.serializeJSON();
+        /* 
+        * TODO
+        * Activate the skill
+        */ 
+    }
+}
+
+/**
+ * Concrete command class to show the inventory<br>
+ * @see GameCommand <br>
+ */
+class InventoryCommand extends GameCommand {
+    public InventoryCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        this.player.getInventory().forEach(item -> {
+            System.out.println(item);
+        });
+    }
+}
+
+/**
+ * Concrete command class to consume an item from the inventory<br>
+ * @see GameCommand <br>
+ */
+class UseItemCommand extends GameCommand {
+    public UseItemCommand(Game game, String[] commands) {
+        super(game, commands);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Consume an item from the inventory
+        */ 
+    }
+}
+
+/**
+ * Concrete command class to drop an item<br>
+ * @see GameCommand <br>
+ */
+class DropItemCommand extends GameCommand {
+    public DropItemCommand(Game game, String[] commands) {
+        super(game, commands);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Consume an item from the inventory
+        */ 
+    }
+}
+
+/**
+ * Concrete command class to print the game seed<br>
+ * @see GameCommand <br>
+ */
+class PrintSeedCommand extends GameCommand {
+    public PrintSeedCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        System.out.println("The game seed is: " + this.game.getSeed());
+    }
+}
+
+/**
+ * Concrete command class to print the game seed<br>
+ * @see GameCommand <br>
+ */
+class PrintMapCommand extends GameCommand {
+    public PrintMapCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Print the game map
+        */ 
+    }
+}
+
+/**
+ * Concrete command class to print the game seed<br>
+ * @see GameCommand <br>
+ */
+class PrintStatsCommand extends GameCommand {
+    public PrintStatsCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Print the game and player stats
+        */ 
+    }
+}
+
+/**
+ * Concrete command class to quit the current game<br>
+ * @see GameCommand <br>
+ */
+class QuitCommand extends GameCommand {
+    public QuitCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Quit the current game
+        */ 
+        this.game.save();
+
+        Controller controller = Controller.getInstance();
+        controller.setState(GameState.MAIN_MENU);
+    }
+}
+
+/**
+ * Concrete command class to print the game seed<br>
+ * @see GameCommand <br>
+ */
+class ScoreCommand extends GameCommand {
+    public ScoreCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Show the player's current score
+        */ 
     }
 }
 
@@ -161,7 +317,7 @@ class SaveGameCommand extends GameCommand {
  */
 class HelpCommand extends GameCommand {
     public HelpCommand() {
-        super(null);
+        super(null, null);
     }
 
     @Override
@@ -322,10 +478,31 @@ public class Controller {
         this.game = game;
     }
 
+    /*
+     * TODO
+     * Implement loading pre-defined configurations from JSON file (and maybe random map generation?)
+     */
     public void newGame() {
-        this.state = GameState.CHOOSING_CHARACTER;
-        RoomType[][][] map = new RoomType[Game.DEFAULT_LEVELS_COUNT][Game.DEFAULT_ROOMS_ROWS][Game.DEFAULT_ROOMS_COLS];
+        ArrayList<ArrayList<ArrayList<Room>>> map = new ArrayList<ArrayList<ArrayList<Room>>>();
+
+        for (int l = 0; l < Game.DEFAULT_LEVELS_COUNT; l++) {
+            ArrayList<ArrayList<Room>> level = new ArrayList<ArrayList<Room>>();
+
+            for (int i = 0; i < Game.DEFAULT_ROOMS_ROWS; i++) {
+                ArrayList<Room> row = new ArrayList<Room>();
+
+                for (int j = 0; j < Game.DEFAULT_ROOMS_COLS; j++) {
+                    row.add(new HostileRoom(new Coordinates(j, i), null));
+                }
+
+                level.add(row);    
+            }
+
+            map.add(level);
+        }
+
         this.setGame(new Game(map));
+        this.setState(GameState.CHOOSING_CHARACTER);
     }
 
     /**
@@ -351,20 +528,19 @@ public class Controller {
      * @param command the user input
      * @return the command object to be executed
      */
-    private GameCommand getCommand(String command) {
+    private GameCommand getCommand(String[] commands) {
         Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
             Map.of(
-                "gn", () -> new MoveNorthCommand(this.game),
-                "gs", () -> new MoveSouthCommand(this.game),
-                "gw", () -> new MoveWestCommand(this.game),
-                "ge", () -> new MoveEastCommand(this.game),
+                "gn", () -> new MoveNorthCommand(this.game, commands),
+                "gs", () -> new MoveSouthCommand(this.game, commands),
+                "gw", () -> new MoveWestCommand(this.game, commands),
+                "ge", () -> new MoveEastCommand(this.game, commands),
                 "help", () -> new HelpCommand(),
-                "attack", () -> new AttackCommand(this.game),
-                "save", () -> new SaveGameCommand(this.game)
+                "attack", () -> new AttackCommand(this.game, commands)
             )
         );
         
-        return commandMap.get(command).get();
+        return commandMap.get(commands[0]).get();
     }
 
     /**
@@ -429,10 +605,11 @@ public class Controller {
                 break;
             
             case MOVING:
+            case LOOTING_ROOM:
             case FIGHTING_MOB:
             case FIGHTING_BOSS:
                 invoker = new GCInvoker();
-                invoker.setCommand(this.getCommand(commands[0]));
+                invoker.setCommand(this.getCommand(commands));
                 invoker.executeCommand();
                 break;
 
