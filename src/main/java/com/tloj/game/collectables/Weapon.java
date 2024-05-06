@@ -7,7 +7,7 @@ public abstract class Weapon extends Item {
     protected Object ability;
     protected Dice dice;
 
-    public Weapon(int weight, Dice dice, Object effect) {
+    public Weapon(double weight, Dice dice, Object effect) {
         super(weight, effect);
         this.dice = dice;
     }
