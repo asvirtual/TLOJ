@@ -58,10 +58,16 @@ public abstract class Mob extends Entity implements CombatEntity {
     @Override
     public void takeDamage(int damage) {
         this.hp -= damage;
+        if (this.hp <= 0) 
+            this.die();
     }
 
     @Override
     public void die() {
         
+    }
+
+    public boolean isAlive() {
+        return this.hp > 0;
     }
 }
