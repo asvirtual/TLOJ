@@ -72,7 +72,7 @@ public class Game {
         this.currentLevel.getRoom(newCoordinates).accept(PlayerRoomVisitor);
     }
 
-    public void playerAttack() {
+    public void playerAttack() throws IllegalStateException {
         if (this.controller.getState() != GameState.FIGHTING_BOSS && this.controller.getState() != GameState.FIGHTING_MOB)
             throw new IllegalStateException("Cannot attack while not fighting");
 
@@ -92,8 +92,8 @@ public class Game {
         int roomsRowCount = this.currentLevel.getRoomsRowCount();
         int roomsColCount = this.currentLevel.getRoomsColCount();
         
-        return coordinates.getX() >= 0 && coordinates.getY() < roomsRowCount &&
-               coordinates.getX() >= 0 && coordinates.getY() < roomsColCount;
+        return coordinates.getY() >= 0 && coordinates.getY() < roomsRowCount &&
+               coordinates.getX() >= 0 && coordinates.getX() < roomsColCount;
     }
 
     public void save() {

@@ -1,9 +1,10 @@
 package com.tloj.game.collectables;
 
 /**
+ * TODO: Establish whether this item should be a ConsumableItem or not
  * Represents the Consumable Item NorthStar in the game.<br>
  * The NorthStar can print the entire game map, it can be found or purchased in the game.<br>
- * It weighs {@value #WEIGHT}, with an in game cost of D{@value #PRICE}
+ * It weighs {@value #WEIGHT}, with an in game cost of {@value #PRICE}
  * @see GreatHealthPotion
  * @see HealthPotion
  * @see ManaPotion
@@ -14,8 +15,7 @@ package com.tloj.game.collectables;
  * @see WeaponShard
  * @see Ragu
  * @see SpecialKey
- */
-
+*/
 public class NorthStar extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0;
     private static final int PRICE=0;

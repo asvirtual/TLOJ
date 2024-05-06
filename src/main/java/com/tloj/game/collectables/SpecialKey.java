@@ -2,6 +2,7 @@
 package com.tloj.game.collectables;
 
 /**
+ * TODO: Establish whether this item should be a ConsumableItem or not
  * Represents the Consumable Item Special Key in the game.<br>
  * The Special Key opens a special locked loot room, it can be found or purchased in the game.<br>
  * It weighs {@value #WEIGHT}, with an in game cost of D{@value #PRICE}
@@ -16,10 +17,9 @@ package com.tloj.game.collectables;
  * @see Ragu
  * @see NorthStar
  */
-
 public class SpecialKey extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0;
-    private static final int PRICE=0;
+    private static final int PRICE = 0;
 
     public SpecialKey() {
         super(PRICE, WEIGHT); 
