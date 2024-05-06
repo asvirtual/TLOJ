@@ -7,13 +7,12 @@ import com.tloj.game.entities.Character;
 
 
 public abstract class Weapon extends Item {
-    protected WeaponEffect ability;
     protected Dice dice;
     protected Character character;
 
-    public Weapon(int weight, Dice dice, Object effect) {
-        super(weight, effect);
-        this.dice = dice;
+    public Weapon(double weight, int diceFaces) {
+        super(weight);
+        this.dice = new Dice(diceFaces);
     }
 
     public Dice getDice() {
@@ -32,4 +31,6 @@ public abstract class Weapon extends Item {
         if (ability == null) target.takeDamage(this.diceRoll());
         else this.ability.apply();
     }
+
+    public abstract void useEffect(Object ...args);
 }

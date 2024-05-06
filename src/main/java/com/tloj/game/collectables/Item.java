@@ -2,15 +2,13 @@ package com.tloj.game.collectables;
 
 
 public abstract class Item {
-    protected int weight;
-    protected Object effect;
+    protected double weight;
 
-    protected Item(int weight, Object effect) {
+    protected Item(double weight) {
         this.weight = weight;
-        this.effect = effect;
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
 }
