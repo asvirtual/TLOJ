@@ -11,4 +11,8 @@ public abstract class Item {
         this.weight = weight;
         this.effect = effect;
     }
+
+    public int getWeight() {
+        return weight;
+    }
 }

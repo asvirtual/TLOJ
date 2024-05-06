@@ -1,6 +1,7 @@
 package com.tloj.game.entities;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
@@ -157,4 +158,12 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
     public void die() {
         
     }
+    
+    protected static int getWeight(ArrayList <Item> inventory) {
+    int weight = 0;
+    for (Item item : inventory) {
+        weight += item.getWeight();
+    }
+    return weight;
+}
 }

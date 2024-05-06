@@ -7,7 +7,7 @@ public abstract class Weapon {
     protected Object ability;
     protected Dice dice;
 
-    public Weapon(Dice dice, Object ability) {
+    public Weapon(Dice dice, Object ability) {  //should we add weight to the weapons?
         this.ability = ability;
         this.dice = dice;
     }
