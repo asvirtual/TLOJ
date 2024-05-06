@@ -1,6 +1,6 @@
 package com.tloj.game.collectables;
 
-import com.tloj.game.abilities.HealthAbsorber;
+import com.tloj.game.effects.HealthAbsorber;
 
 
 /**

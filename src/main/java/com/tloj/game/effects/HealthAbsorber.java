@@ -1,4 +1,4 @@
-package com.tloj.game.abilities;
+package com.tloj.game.effects;
 
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.entities.Character;

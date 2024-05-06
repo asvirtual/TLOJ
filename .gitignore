@@ -2,3 +2,4 @@ target
 .vscode
 dependency-reduced-pom.xml
 *.bat
+*.DS_Store
