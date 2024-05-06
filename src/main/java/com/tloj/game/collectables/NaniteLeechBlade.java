@@ -1,6 +1,5 @@
 package com.tloj.game.collectables;
 
-import com.tloj.game.utilities.Dice;
 
 /**
  * Represents the NaniteLeechBlade Weapon in the game.<br>
@@ -19,13 +18,15 @@ import com.tloj.game.utilities.Dice;
 
 
 public class NaniteLeechBlade extends Weapon{
-    private static final double WEIGHT=0.8;
-    private static final Dice DICE=new Dice(12);    
-    private static Object ability=null; //TODO: implement ability
-
-
+    private static final double WEIGHT = 0.8;
+    private static final int DICE_FACES = 12;
 
     public NaniteLeechBlade() {
-        super(WEIGHT,DICE,ability); 
+        super(WEIGHT, DICE_FACES); 
+    }
+
+    @Override
+    public void useEffect(Object ...args) {
+        // Add effect here
     }
 }

@@ -4,11 +4,12 @@ import com.tloj.game.utilities.Dice;
 
 
 public abstract class Weapon extends Item {
-    protected Object ability;
     protected Dice dice;
 
-    public Weapon(double weight, Dice dice, Object effect) {
-        super(weight, effect);
-        this.dice = dice;
+    public Weapon(double weight, int diceFaces) {
+        super(weight);
+        this.dice = new Dice(diceFaces);
     }
+
+    public abstract void useEffect(Object ...args);
 }
