@@ -7,7 +7,6 @@ import java.util.Scanner;
 import java.util.function.Supplier;
 
 import com.tloj.game.entities.Character;
-import com.tloj.game.entities.Mob;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.entities.BasePlayer;
@@ -17,14 +16,6 @@ import com.tloj.game.utilities.GameState;
 
 /**
  * Command pattern implementation to handle the different game commands<br>
- * Available commands are:<br>
- * - gn {@link MoveNorthCommand}<br>
- * - gs {@link MoveSouthCommand}<br>
- * - gw {@link MoveWestCommand}<br>
- * - ge {@link MoveEastCommand}<br>
- * - attack {@link AttackCommand}<br>
- * - save {@link SaveGameCommand}<br>
- * - help {@link HelpCommand}<br>
  */
 abstract class GameCommand {
     protected Game game;
@@ -147,7 +138,11 @@ class AttackCommand extends GameCommand {
         * TODO
         * Attack the enemy in the room
         */ 
-        this.game.playerAttack();
+        try {
+            this.game.playerAttack();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -614,7 +609,7 @@ class NeoSamuraiFactory extends CharacterFactory {
 }
 
 /**
- * Controller class to handle the game state and user input<br>
+ * Controller façade class to handle the game state and user input<br>
  * It uses the Singleton pattern to ensure only one instance of the Controller class is created<br>
  * It uses the Command pattern to handle the different game commands<br>
  * It uses the Factory pattern to create different Characters based on the user's choice<br>
@@ -682,6 +677,7 @@ public class Controller {
     }
 
     /**
+     * TODO
      * Loads the game from the cloud, then deserializes the JSON data to create a new Game object
      * @see GameData
      */
@@ -705,7 +701,8 @@ public class Controller {
      * @return the command object to be executed
      */
     private GameCommand getCommand(String[] commands) {
-        Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(Map.ofEntries(
+        Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
+            Map.ofEntries(
                 Map.entry("gn", () -> new MoveNorthCommand(this.game, commands)),
                 Map.entry("gs", () -> new MoveSouthCommand(this.game, commands)),
                 Map.entry("gw", () -> new MoveWestCommand(this.game, commands)),
