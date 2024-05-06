@@ -8,7 +8,7 @@ package com.tloj.game.collectables;
 public abstract class PurchasableItem extends Item {
     protected int price;
 
-    protected PurchasableItem(int price, int weight) {
+    protected PurchasableItem(int price, double weight) {
         super(weight);
         this.price = price;
     }
