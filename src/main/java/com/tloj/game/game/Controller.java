@@ -296,11 +296,28 @@ class QuitCommand extends GameCommand {
 }
 
 /**
+ * Concrete command class to return to the previous interaction status<br>
+ * @see GameCommand <br>
+ */
+class BackCommand extends GameCommand {
+    public BackCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Return to the previous interaction status
+        */ 
+    }
+}
+/**
  * Concrete command class to print the game seed<br>
  * @see GameCommand <br>
  */
-class ScoreCommand extends GameCommand {
-    public ScoreCommand(Game game, String[] commands) {
+class PrintScoreCommand extends GameCommand {
+    public PrintScoreCommand(Game game, String[] commands) {
         super(game, null);
     }
 
@@ -315,6 +332,7 @@ class ScoreCommand extends GameCommand {
 
 /**
  * Concrete command class to display the available commands
+ * @see GameCommand
  */
 class HelpCommand extends GameCommand {
     public HelpCommand() {
@@ -324,6 +342,163 @@ class HelpCommand extends GameCommand {
     @Override
     public void execute() {
         System.out.println("Commands: gn, gs, gw, ge, attack, use, save, exit");
+    }
+}
+
+/**
+ * Concrete command class to return to the starting room
+ * @see GameCommand
+ */
+class ReturnCommand extends GameCommand {
+    public ReturnCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Return to the starting room
+        */ 
+    }
+}
+/**
+ * Concrete command class to show player status
+ * @see GameCommand
+ */
+class PrintStatusCommand extends GameCommand {
+    public PrintStatusCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Show player status
+        */ 
+    }
+}
+
+/**
+ * Concrete command class to interact with the merchant
+ *  @see GameCommand
+ */
+class MerchantCommand extends GameCommand {
+    public MerchantCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Interact with the merchant
+        */ 
+    }
+}
+/**
+ * Concrete command class to show the merchant's list of items
+ * @see GameCommand
+ */
+class ShowListCommand extends GameCommand {
+    public ShowListCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Show the merchant's list of items
+        */ 
+    }
+}
+/**
+ * Concrete command class to buy an item from the merchant
+ * @see GameCommand
+ */
+class BuyCommand extends GameCommand {
+    public BuyCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Buy an item from the merchant
+        */ 
+    }
+}
+/**
+ * Concrete command class to interact with the smith
+ * @see GameCommand
+ */
+class SmithCommand extends GameCommand {
+    public SmithCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Interact with the smith
+        */ 
+    }
+}
+/** 
+ * Concrete command class to upgrade an item with the smith
+ * @see GameCommand
+ */
+
+class UpgradeCommand extends GameCommand {
+    public UpgradeCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Upgrade an item with the smith
+        */ 
+    }
+}
+/**
+ * Concrete command class to give an item to an NPC
+ * @see GameCommand
+ */
+
+class GiveCommand extends GameCommand {
+    public GiveCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Give an item to an NPC
+        */ 
+    }
+}
+/**
+ * Concrete command class to confirm an action
+ * @see GameCommand
+ */
+class ConfirmCommand extends GameCommand {
+    public ConfirmCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        /* 
+        * TODO
+        * Confirm an action
+        */ 
     }
 }
 
@@ -530,16 +705,33 @@ public class Controller {
      * @return the command object to be executed
      */
     private GameCommand getCommand(String[] commands) {
-        Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
-            Map.of(
-                "gn", () -> new MoveNorthCommand(this.game, commands),
-                "gs", () -> new MoveSouthCommand(this.game, commands),
-                "gw", () -> new MoveWestCommand(this.game, commands),
-                "ge", () -> new MoveEastCommand(this.game, commands),
-                "help", () -> new HelpCommand(),
-                "attack", () -> new AttackCommand(this.game, commands)
+        Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(Map.ofEntries(
+                Map.entry("gn", () -> new MoveNorthCommand(this.game, commands)),
+                Map.entry("gs", () -> new MoveSouthCommand(this.game, commands)),
+                Map.entry("gw", () -> new MoveWestCommand(this.game, commands)),
+                Map.entry("ge", () -> new MoveEastCommand(this.game, commands)),
+                Map.entry("help", () -> new HelpCommand()),
+                Map.entry("attack", () -> new AttackCommand(this.game, commands)),
+                Map.entry("skill", () -> new SkillCommand(this.game, commands)),
+                Map.entry("inventory", () -> new InventoryCommand(this.game, commands)),
+                Map.entry("use", () -> new UseItemCommand(this.game, commands)),
+                Map.entry("drop", () -> new DropItemCommand(this.game, commands)),
+                Map.entry("return", () -> new ReturnCommand(this.game, commands)),
+                Map.entry("map", () -> new PrintMapCommand(this.game, commands)),
+                Map.entry("status", () -> new PrintStatusCommand(this.game, commands)),
+                Map.entry("score", () -> new PrintScoreCommand(this.game, commands)),
+                Map.entry("seed", () -> new PrintSeedCommand(this.game, commands)),
+                Map.entry("quit", () -> new QuitCommand(this.game, commands)),
+                Map.entry("back", () -> new BackCommand(this.game, commands)),
+                Map.entry("merchant", () -> new MerchantCommand(this.game, commands)),
+                Map.entry("showlist", () -> new ShowListCommand(this.game, commands)),
+                Map.entry("buy", () -> new BuyCommand(this.game, commands)),
+                Map.entry("smith", () -> new SmithCommand(this.game, commands)),
+                Map.entry("upgrade", () -> new UpgradeCommand(this.game, commands)),
+                Map.entry("give", () -> new GiveCommand(this.game, commands)),
+                Map.entry("confirm", () -> new ConfirmCommand(this.game, commands))
             )
-        );
+        );    
         
         return commandMap.get(commands[0]).get();
     }
