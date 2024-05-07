@@ -10,7 +10,7 @@ import com.tloj.game.utilities.Coordinates;
 public class Cheater extends Character {
     private static final int HP = 15;
     private static final int ATTACK = 3;
-    private static final int DEFENCE = 3;
+    private static final int DEFENSE = 3;
     private static final int MANA = 30;
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 10;
@@ -60,7 +60,7 @@ public class Cheater extends Character {
         super(
             HP,
             ATTACK,
-            DEFENCE,
+            DEFENSE,
             MANA,
             MAX_WEIGHT,
             MONEY,

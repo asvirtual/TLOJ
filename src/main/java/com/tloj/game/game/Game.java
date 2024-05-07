@@ -5,8 +5,10 @@ import java.util.Date;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.entities.Boss;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
+import com.tloj.game.rooms.RoomType;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -73,19 +75,38 @@ public class Game {
     }
 
     public void playerAttack() throws IllegalStateException {
-        if (this.controller.getState() != GameState.FIGHTING_BOSS && this.controller.getState() != GameState.FIGHTING_MOB)
+        if (
+            (this.controller.getState() != GameState.FIGHTING_BOSS && this.controller.getState() != GameState.FIGHTING_MOB) ||
+            (this.getCurrentRoom().getType() != RoomType.BOSS_ROOM && this.getCurrentRoom().getType() != RoomType.HOSTILE_ROOM)
+        )
             throw new IllegalStateException("Cannot attack while not fighting");
 
+        /** 
+         * Player in a HostileRoom/BossRoom, attack its Mob/Boss
+        */
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
         Mob mob = room.getMob();
         this.player.attack(mob);
         
-        if (!mob.isAlive()) {
+        if (mob.isAlive()) {
+            mob.attack(this.player);
+            return;
+        }
+
+        /**
+         * If the defeated Mob was a Boss, ...
+         * Otherwise, ...
+        */
+        if (mob instanceof Boss) {
+            System.out.println("You've defeated the Boss!");
+            this.controller.setState(GameState.MOVING);
+        } else {
             System.out.println("You've defeated the enemy!");
-            this.player.lootMob(mob);
-            room.removeMob();
             this.controller.setState(GameState.MOVING);
         }
+
+        this.player.lootMob(mob);
+        room.removeMob();
     }
 
     public boolean areCoordinatesValid(Coordinates coordinates) {

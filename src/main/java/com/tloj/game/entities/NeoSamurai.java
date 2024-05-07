@@ -10,7 +10,7 @@ public class NeoSamurai extends Character {
     
     private static final int HP = 20;
     private static final int ATTACK = 7;
-    private static final int DEFENCE = 1;
+    private static final int DEFENSE = 1;
     private static final int MANA = 10;
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 15;
@@ -61,7 +61,7 @@ public class NeoSamurai extends Character {
         super(
             HP,
             ATTACK,
-            DEFENCE,
+            DEFENSE,
             MANA,
             MAX_WEIGHT,
             MONEY,

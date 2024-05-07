@@ -12,7 +12,7 @@ import com.tloj.game.utilities.Coordinates;
  * It has the following fixed initial attributes:<br>
  * HP 20 health points<br>
  * ATTACK 4 attack points<br>
- * DEFENCE 4 defence points<br>
+ * DEFENSE 4 defense points<br>
  * MANA 10 mana points<br>
  * MAX_WEIGHT 5 maximum weight capacity<br>
  * MONEY 10 money<br>
@@ -21,7 +21,7 @@ import com.tloj.game.utilities.Coordinates;
 public class BasePlayer extends Character {
     private static final int HP = 20;
     private static final int ATTACK = 4;
-    private static final int DEFENCE = 4;
+    private static final int DEFENSE = 4;
     private static final int MANA = 10;
     private static final int MAX_WEIGHT = -1; // Missing from doc
     private static final int MONEY = 10;
@@ -71,7 +71,7 @@ public class BasePlayer extends Character {
         super(
             HP,
             ATTACK,
-            DEFENCE,
+            DEFENSE,
             MANA,
             MAX_WEIGHT,
             MONEY,

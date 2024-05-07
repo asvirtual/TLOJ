@@ -6,7 +6,7 @@ import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public class HostileRoom extends Room {
-    private Mob mob;
+    protected Mob mob;
 
     public HostileRoom(Coordinates coordinates, Mob mob) {
         super(coordinates);

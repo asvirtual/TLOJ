@@ -1,7 +1,6 @@
 package com.tloj.game.effects;
 
-import com.tloj.game.entities.Character;
-import com.tloj.game.entities.Mob;
+import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.collectables.NanoDirk;
 import com.tloj.game.collectables.Weapon;
 
@@ -18,9 +17,11 @@ public class DiceReroller extends WeaponEffect {
     }
 
     @Override
-    public boolean apply(Character holder, Mob enemy) {
-        enemy.takeDamage(this.weapon.diceRoll());
-        enemy.takeDamage(this.weapon.diceRoll());
+    public boolean apply(PlayerAttack attack) {
+        attack.setWeaponRoll(
+            this.weapon.diceRoll() + 
+            this.weapon.diceRoll()
+        );
         
         return true;
     }

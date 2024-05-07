@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -14,7 +15,7 @@ import com.tloj.game.utilities.Coordinates;
  * @see MovingEntity
  * @see CombatEntity
  */
-public abstract class Character extends Entity implements MovingEntity, CombatEntity {
+public abstract class Character extends CombatEntity implements MovingEntity {
     /** Used for abilities */
     protected int mana; 
     /** Experience points, needed to level up */
@@ -35,7 +36,7 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
      * Constructor to create a Character from loaded data<br>
      * @param hp The character's health points<br>
      * @param atk The character's attack points<br>
-     * @param def The character's defence points<br>
+     * @param def The character's defense points<br>
      * @param mana The character's mana points<br>
      * @param xp The character's experience points<br>
      * @param lvl The character's level<br>
@@ -82,7 +83,7 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
      * Constructor to create an entirely new Character<br> 
      * @param hp The character's health points<br>
      * @param atk The character's attack points<br>
-     * @param def The character's defence points<br>
+     * @param def The character's defense points<br>
      * @param mana The character's mana points<br>
      * @param maxWeight The character's maximum weight capacity<br>
      * @param money The character's money<br>
@@ -118,6 +119,10 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         this.ability = ability;
         this.passiveAbility = passiveAbility;
     }
+
+    public Weapon getWeapon() {
+        return this.weapon;
+    }
     
     public int getWeight() {
         int weight = 0;
@@ -144,43 +149,21 @@ public abstract class Character extends Entity implements MovingEntity, CombatEn
         this.position = to;
     }
 
-    public void goNorth() {
-
-    }
-
-    public void goSouth() {
-
-    }
-
-    public void goWest() {
-
-    }
-
-    public void goEast() {
-
-    }
-
     @Override
-    public void attack(CombatEntity t) {
+    public void attack(CombatEntity t) throws IllegalArgumentException {
+        if (!(t instanceof Mob)) throw new IllegalArgumentException("Characters can only attack Mobs");
+
         Mob target = (Mob) t;
-        this.takeDamage(atk);
-        this.weapon.hit(target);
-    }
-
-    @Override
-    public void defend() {
+        PlayerAttack attack = new PlayerAttack(this, target);
         
+        this.weapon.modifyAttack(attack);
+        target.defend(attack);
+
+        attack.perform();
     }
 
     @Override
-    public void takeDamage(int damage) {
-        this.hp -= damage;
-    }
-
-    @Override
-    public void die() {
-        
-    }
+    public void die() {}
     
     public void heal(int amount) {
         this.hp += amount;

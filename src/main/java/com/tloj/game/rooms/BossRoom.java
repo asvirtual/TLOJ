@@ -5,12 +5,9 @@ import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 
-public class BossRoom extends Room {
-    Boss boss;
-    
+public class BossRoom extends HostileRoom {
     public BossRoom(Coordinates coordinates, Boss boss) {
-        super(coordinates);
-        this.boss = boss;
+        super(coordinates, boss);
     }
 
     @Override

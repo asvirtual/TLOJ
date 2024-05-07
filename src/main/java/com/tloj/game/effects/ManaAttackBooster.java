@@ -3,13 +3,13 @@ package com.tloj.game.effects;
 import com.tloj.game.collectables.PulseStaff;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Dice;
-import com.tloj.game.entities.Mob;
 
 
 /**
- * An effect that boosts the weapon's damage by 3 mana points<br>
- * This effect requires 3 mana points to use<br>
+ * An effect that boosts allows the weapon to inflict from 5 to 10 dmg points<br>
+ * It requires 3 mana points to be used<br>
  * It is paired with the Pulse Staff<br>
  * @see PulseStaff
  */
@@ -19,15 +19,16 @@ public class ManaAttackBooster extends WeaponEffect {
     }
 
     /**
-     * Apply the effect to the target<br>
+     * Apply the effect to the attack<br>
      * @return true if the player had enough mana, false otherwise
      */
     @Override
-    public boolean apply(Character holder, Mob enemy) {
+    public boolean apply(PlayerAttack attack) {
+        Character holder = attack.getAttacker();
         if (holder.getMana() < 3) return false;
 
         Dice dice = this.weapon.getDice();
-        enemy.takeDamage(dice.roll());
+        attack.setBonusDamage(dice.roll());
         holder.useMana(3);
 
         return true;

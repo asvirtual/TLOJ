@@ -9,22 +9,14 @@ import com.tloj.game.utilities.Coordinates;
  * This includes the {@link Character} (the player), the {@link Mob}s and the {@link Boss}es<br>
  */
 public abstract class Entity {
-    protected int hp;
-    protected int atk;
-    protected int def;
     /** The Entity's current {@link Coordinates} in the game */
     protected Coordinates position;
 
-    protected Entity(int hp, int atk, int def, Coordinates position) {
-        this.hp = hp;
-        this.atk = atk;
-        this.def = def;
+    protected Entity(Coordinates position) {
         this.position = position;
     }
 
     public Coordinates getPosition() {
         return position;
     }
-
-    
 }

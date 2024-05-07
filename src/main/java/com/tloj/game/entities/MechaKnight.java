@@ -10,7 +10,7 @@ public class MechaKnight extends Character {
     
     private static final int HP = 30;
     private static final int ATTACK = 2;
-    private static final int DEFENCE = 6;
+    private static final int DEFENSE = 6;
     private static final int MANA = 5;
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 15;
@@ -60,7 +60,7 @@ public class MechaKnight extends Character {
         super(
             HP,
             ATTACK,
-            DEFENCE,
+            DEFENSE,
             MANA,
             MAX_WEIGHT,
             MONEY,

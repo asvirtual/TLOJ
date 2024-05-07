@@ -1,9 +1,12 @@
 package com.tloj.game.collectables;
 
 import com.tloj.game.entities.Mob;
+import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.effects.WeaponEffect;
+import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.CombatEntity;
 
 
 /**
@@ -26,6 +29,10 @@ public abstract class Weapon extends Item {
         return dice;
     }
 
+    public WeaponEffect getEffect() {
+        return effect;
+    }
+
     public int diceRoll() {
         return dice.roll();
     }
@@ -34,15 +41,24 @@ public abstract class Weapon extends Item {
         this.character = character;
     }
 
+    public Character getHolder() {
+        return this.character;
+    }
+
     /**
-     * Swing the weapon at a target <br>
+     * Swing the weapon at a Mob <br>
      * If the weapon has an effect, apply it, otherwise deal standard weapon dice roll damage to the target<br>
      * @param target The target to hit
      * @see WeaponEffect#apply(Character, Mob)
      */
-    public void hit(Mob target) {
+    /* public void hit(Mob target) {
         // If the weapon has an effect, try to apply it to the target, otherwise deal standard damage to the target
-        if (this.effect == null || !this.effect.apply(this.character, target)) 
-            target.takeDamage(this.diceRoll());
+        if (this.effect == null) target.takeDamage(this.diceRoll());
+        else this.effect.apply(this.character, target);
+    } */
+
+    public void modifyAttack(PlayerAttack attack) {
+        if (this.effect != null) this.effect.apply(attack);
+        else attack.setWeaponRoll(this.diceRoll());
     }
 }

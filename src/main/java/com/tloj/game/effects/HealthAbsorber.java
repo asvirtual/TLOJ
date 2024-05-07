@@ -1,8 +1,8 @@
 package com.tloj.game.effects;
 
+import com.tloj.game.collectables.NaniteLeechBlade;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.entities.Character;
-import com.tloj.game.entities.Mob;
+import com.tloj.game.game.PlayerAttack;
 
 
 /**
@@ -17,11 +17,18 @@ public class HealthAbsorber extends WeaponEffect {
     }
 
     @Override
-    public boolean apply(Character holder, Mob enemy) {
+    public boolean apply(PlayerAttack attack) {
         int damage = this.weapon.diceRoll();
-        enemy.takeDamage(damage);
-        holder.heal(damage / 2);
+        attack.setWeaponRoll(damage);
+        attack.setOnHit(new Runnable() {
+            @Override
+            public void run() {
+                int totalDamage = attack.getTotalDamage();
+                if (totalDamage > 0) attack.getAttacker().heal(totalDamage / 2);
+            }
+        });
 
         return true;
+        
     }
 }
