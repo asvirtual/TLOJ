@@ -2,7 +2,20 @@ package com.tloj.game.entities;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.DodgeEvenRollAttack;
+import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.WeaponShard;
+
+
+/**
+ * Represents the EvenBoss Boss entity in the game.<br>
+ * The EvenBoss is the first boss of the game. It has a special ability that nullifies received damage is weapon roll is even<br>
+ * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
+ * @see Boss
+ * @see FlyingBoss
+ * @see BossAbility
+ * @see DodgeEvenRollAttack
+ * @see WeaponShard
+ */
 
 
 public class EvenBoss extends Boss{
