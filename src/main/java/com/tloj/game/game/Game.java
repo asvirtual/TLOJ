@@ -139,4 +139,9 @@ public class Game {
     public Room getCurrentRoom() {
         return this.currentLevel.getRoom(this.player.getPosition());
     }
+
+    public void dropItem(int index) {
+        this.player.getInventory().remove(index);
+    }
+
 }
