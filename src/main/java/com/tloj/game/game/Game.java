@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
-import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
@@ -109,6 +108,7 @@ public class Game {
         /**
          * If the defeated Mob was a Boss, ...
          * Otherwise, ...
+         * TODO: Maybe this should be moved to the "die" methods in the Mob and Boss classes
         */
         if (mob instanceof Boss) {
             System.out.println("You've defeated the Boss!");

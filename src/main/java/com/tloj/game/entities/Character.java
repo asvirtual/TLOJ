@@ -15,7 +15,7 @@ import com.tloj.game.utilities.Coordinates;
  * {@inheritDoc}
  * @see MovingEntity
  * @see CombatEntity
- */
+*/
 public abstract class Character extends CombatEntity implements MovingEntity {
     /** Used for abilities */
     protected int mana; 
