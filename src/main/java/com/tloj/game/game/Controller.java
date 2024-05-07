@@ -257,7 +257,7 @@ class PrintSeedCommand extends GameCommand {
 }
 
 /**
- * Concrete command class to print the game seed<br>
+ * Concrete command class to print the game map<br>
  * @see GameCommand <br>
  */
 class PrintMapCommand extends GameCommand {
@@ -332,7 +332,7 @@ class BackCommand extends GameCommand {
     }
 }
 /**
- * Concrete command class to print the game seed<br>
+ * Concrete command class to print the game score<br>
  * @see GameCommand <br>
  */
 class PrintScoreCommand extends GameCommand {
@@ -342,10 +342,7 @@ class PrintScoreCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Show the player's current score
-        */ 
+        System.out.println("The game score is: " + this.game.getScore());
     }
 }
 

@@ -17,6 +17,7 @@ public class Game {
     public static final int DEFAULT_ROOMS_COLS = 6;
 
     private long seed;
+    private int score;
     private Level currentLevel;
     private Character player;
     private ArrayList<Level> levels;
@@ -40,6 +41,14 @@ public class Game {
         this.seed = new Date().getTime();
     }
 
+    public int getScore() {
+        return this.score;
+    }
+
+    public void updateScore(int score) {
+        this.score += score;
+    }
+    
     public long getSeed() {
         return this.seed;
     }
