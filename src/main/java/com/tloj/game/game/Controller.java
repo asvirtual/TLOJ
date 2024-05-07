@@ -804,7 +804,13 @@ public class Controller {
             return;
         }
 
-        GCInvoker invoker;
+        GCInvoker invoker = new GCInvoker();
+        GameCommand command = this.getCommand(commands);
+        if (command != null) {
+            invoker.setCommand(command);
+            invoker.executeCommand();
+        }
+        
         switch (this.state) {
             case MAIN_MENU:
                 /* New, load, exit game */
@@ -817,9 +823,6 @@ public class Controller {
                         break;
                     case "exit":
                         this.exitGame();
-                        break;
-                    case "help":
-                        new HelpCommand().execute();
                         break;
                     default:
                         System.out.println("Invalid command");
@@ -838,7 +841,6 @@ public class Controller {
             case LOOTING_ROOM:
             case FIGHTING_MOB:
             case FIGHTING_BOSS:
-                invoker = new GCInvoker();
                 invoker.setCommand(this.getCommand(commands));
                 invoker.executeCommand();
                 break;
