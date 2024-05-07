@@ -1,5 +1,8 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.entities.Character;
+
+
 /**
  * Represents the Consumable Item Great Mana Potion in the game.<br>
  * The Great Mana Potion can restore the Mana of the player by 30, it can be found or purchased in the game.<br>
@@ -24,7 +27,7 @@ public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
     }
     
     @Override
-    public void consume() {
+    public void consume(Character consumer) {
         // Implementation of consume method goes here
     }
 }

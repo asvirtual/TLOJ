@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
@@ -101,6 +102,9 @@ public class Game {
             mob.attack(this.player);
             return;
         }
+
+        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
+        this.player.resetFightStats();
 
         /**
          * If the defeated Mob was a Boss, ...

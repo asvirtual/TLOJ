@@ -7,7 +7,7 @@ import com.tloj.game.entities.Mob;
 /**
  * Represents an attack performed by the player. <br>
  * The player can attack mobs in the game. <br>
- * * This class extends the abstract class Attack and adds the player's weapon roll and bonus damage to the attack. <br>
+ * This class extends the abstract class Attack and adds the player's weapon roll and bonus damage to the attack. <br>
  */
 public class PlayerAttack extends Attack {
     private int weaponRoll;
@@ -15,7 +15,6 @@ public class PlayerAttack extends Attack {
 
     public PlayerAttack(Character attacker, Mob target) {
         super(attacker, target);
-        this.baseDamage = attacker.getAtk();
     }
 
     public int getWeaponRoll() {

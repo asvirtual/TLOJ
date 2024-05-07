@@ -1,5 +1,8 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.entities.Character;
+
+
 /**
  * Represents the Consumable Item Ragu in the game.<br>
  * Item Ragu restore all HP and Mana, boosts def stat and the damage inflicted by a +3 factor, it can be found or purchased in the game.<br>
@@ -24,7 +27,7 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     }
     
     @Override
-    public void consume() {
+    public void consume(Character consumer) {
         // Implementation of consume method goes here
     }
 }

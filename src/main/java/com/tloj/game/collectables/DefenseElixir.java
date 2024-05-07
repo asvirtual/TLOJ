@@ -1,5 +1,8 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.entities.Character;
+
+
 /**
  * Represents the Consumable Item Defense Elixir in the game.<br>
  * The Defense Elixir can boost the defense stat of the player, it can be found or purchased in the game.<br>
@@ -24,7 +27,7 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
     }
     
     @Override
-    public void consume() {
+    public void consume(Character consumer) {
         // Implementation of consume method goes here
     }
 }

@@ -2,6 +2,7 @@ package com.tloj.game.entities;
 
 import java.util.ArrayList;
 
+import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.game.PlayerAttack;
@@ -18,6 +19,7 @@ import com.tloj.game.utilities.Coordinates;
 public abstract class Character extends CombatEntity implements MovingEntity {
     /** Used for abilities */
     protected int mana; 
+    protected int maxMana;
     /** Experience points, needed to level up */
     protected int xp;
     /** Current level */
@@ -68,6 +70,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     ) {
         super(hp, atk, def, position);
         this.mana = mana;
+        this.maxMana = mana;
         this.xp = xp;
         this.lvl = lvl;
         this.maxWeight = maxWeight;
@@ -173,5 +176,9 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         System.out.println("You gain " + mob.xpDrop + " experience points and " + mob.moneyDrop + " money");
         this.xp += mob.xpDrop;
         this.money += mob.moneyDrop;
+    }
+
+    public void useItem(ConsumableItem item) {
+        item.consume(this);
     }
 }

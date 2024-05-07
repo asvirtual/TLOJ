@@ -7,7 +7,7 @@ import com.tloj.game.entities.CombatEntity;
  * An abstract class that represents an attack in the game.<br>
  * Attacks are actions that can be performed by CombatEntities.<br>
  * They can be used to deal damage to other CombatEntities.<br>
- * This design applies the Composite pattern, as the action of the attack is its own class that encapsulates different data like<br>
+ * This design respects modularity and scalability, as the action of the attack is its own class that encapsulates different data like<br>
  * the attacker, target and all different damages/defenses and allows for complex attack mechanics in the game to coexist.<br>
  * @see CombatEntity
  */
@@ -19,12 +19,13 @@ public abstract class Attack {
     protected int targetDef;
     protected int totalDamage;
 
-    /**The action to be performed when the attack hits the target.*/
+    /** The action to be performed when the attack hits the target. */
     protected Runnable onHit;
 
     public Attack(CombatEntity attacker, CombatEntity target) {
         this.attacker = attacker;
         this.target = target;
+        this.baseDamage = attacker.getCurrentFightAtk();
     }
 
     public CombatEntity getAttacker() {

@@ -1,5 +1,8 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.entities.Character;
+
+
 /**
  * Represents the Consumable Item Health Potion in the game.<br>
  * The Health Potion can restore the Health Points of the player by 20, it can be found or purchased in the game.<br>
@@ -24,7 +27,7 @@ public class HealthPotion extends PurchasableItem implements ConsumableItem {
     }
     
     @Override
-    public void consume() {
+    public void consume(Character consumer) {
         // Implementation of consume method goes here
     }
 }
