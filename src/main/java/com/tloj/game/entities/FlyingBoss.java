@@ -9,10 +9,11 @@ import com.tloj.game.collectables.WeaponShard;
  * Represents the FlyingBoss Boss entity in the game.<br>
  * The EvenBoss is the second boss of the game. It has a special ability that nullifies received damage is weapon roll is < 4<br>
  * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
+ * This boss is paired with the {@link DodgeSlowAttackFlying} ability and the {@link WeaponShard} drop.
  * @see Boss
- * @see FlyingBoss
+ * @see EvenBoss
  * @see BossAbility
- * @see DodgeEvenRollAttack
+ * @see DodgeSlowAttackFlying
  * @see WeaponShard
  */
 
