@@ -6,7 +6,7 @@ import com.tloj.game.collectables.Weapon;
 
 /**
  * An abstract class representing an effect that can be applied to a weapon<br>
- * As with the {@link BossAbility} class, this class applies the Strategy pattern to the weapon effects, allowing for easy addition of new effects<br>
+ * As with the {@link BossAbility} class, this class applies an adaptation of the Strategy pattern to the weapon effects, allowing for easy addition of new effects<br>
  * This class is meant to be extended by specific weapon effects, guaranteeing modularity<br>
  * @see Weapon
  */

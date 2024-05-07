@@ -24,19 +24,8 @@ public abstract class Boss extends Mob {
         super(hp, atk, def, diceFaces, lvl, xpDrop, moneyDrop, position);
     }
 
-    /* Overrides of the CombatEntity method will be needed as the combat dinamycs of the Boss differ from the Mob's */
-
-    @Override
-    public void attack(CombatEntity target) {
-        target.takeDamage(this.atk);
-    }
-
     @Override
     public void die() {
-        
-    }
-
-    public void useAbilityAgainst(Character player) {
         
     }
 

@@ -2,7 +2,6 @@ package com.tloj.game.entities;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
-import com.tloj.game.game.Attack;
 import com.tloj.game.game.MobAttack;
 
 
@@ -57,9 +56,6 @@ public abstract class Mob extends CombatEntity {
         attack.setDiceRoll(this.dice.roll());
         attack.perform();
     }
-    
-    @Override
-    public void defend(Attack attack) {}
     
     @Override
     public void die() {}
