@@ -155,8 +155,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.maxMana;
     }
 
-    public int setMana(int maxMana) {
-        return this.mana = maxMana;
+    public void setMana(int mana) {
+        this.mana = mana;
     }
 
     public void useMana(int amount) {
