@@ -19,13 +19,9 @@ public abstract class Boss extends Mob {
         int lvl,
         int xpDrop,
         int moneyDrop,
-        BossAbility ability,
-        Item drop,
         Coordinates position
     ) {
         super(hp, atk, def, diceFaces, lvl, xpDrop, moneyDrop, position);
-        this.ability = ability;
-        this.drop = drop;
     }
 
     /* Overrides of the CombatEntity method will be needed as the combat dinamycs of the Boss differ from the Mob's */
