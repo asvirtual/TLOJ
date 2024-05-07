@@ -15,7 +15,7 @@ public class DodgeSlowAttackFlying extends BossAbility {
 
     @Override
     public void use(PlayerAttack attack) {
-        if (attack.getWeaponRoll() < 4) return;
+        if (attack.getWeaponRoll() > 4) return;
         attack.setTotalDamage(0);
     }
 }
