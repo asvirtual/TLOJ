@@ -357,7 +357,30 @@ class HelpCommand extends GameCommand {
 
     @Override
     public void execute() {
-        System.out.println("Commands: gn, gs, gw, ge, attack, use, save, exit");
+        switch (Controller.getInstance().getState()) {
+            case MAIN_MENU:
+                System.out.println("Commands: new, load, exit");
+                break;
+            case CHOOSING_CHARACTER:
+                System.out.println("Choose a character: default, cheater, data thief, mecha knight, neo samurai");
+                break;
+            case MOVING:
+                System.out.println("Commands: gn, gs, gw, ge, return, inventory, status, map, score, seed, quit");
+                break;
+            case FIGHTING_MOB:
+                System.out.println("Commands: attack, skill, inventory, use, drop, back");
+                break;
+            case FIGHTING_BOSS:
+                System.out.println("Commands: attack, skill, inventory, use, drop, back");
+                break;
+            case LOOTING_ROOM:
+                System.out.println("Commands: confirm, inventory, use, drop, back");
+                break;
+
+            default:
+                break;
+        }
+        
     }
 }
 
@@ -712,10 +735,6 @@ public class Controller {
         this.state = GameState.EXIT;
     }
 
-    public void displayHelp() {
-        System.out.println("Commands: new, load, exit");
-    }
-
     /**
      * Returns the command object based on the user input
      * @param command the user input
@@ -800,7 +819,7 @@ public class Controller {
                         this.exitGame();
                         break;
                     case "help":
-                        this.displayHelp();
+                        new HelpCommand().execute();
                         break;
                     default:
                         System.out.println("Invalid command");
