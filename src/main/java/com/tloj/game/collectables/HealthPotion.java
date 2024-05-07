@@ -20,7 +20,7 @@ import com.tloj.game.entities.Character;
  */
 public class HealthPotion extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0.1;
-    private static final int PRICE=  7;
+    private static final int PRICE =  7;
     private static final int HEAL_AMOUNT = 20;
 
     public HealthPotion() {
@@ -32,6 +32,6 @@ public class HealthPotion extends PurchasableItem implements ConsumableItem {
         consumer.heal(HEAL_AMOUNT);
         if (consumer.getHp() > consumer.getMaxHp()) consumer.setHp(consumer.getMaxHp());
         
-        consumer.getInventory().remove(this);
+        consumer.removeInventoryItem(this);
     }
 }

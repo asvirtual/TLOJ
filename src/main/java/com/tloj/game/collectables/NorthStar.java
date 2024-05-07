@@ -22,5 +22,9 @@ public class NorthStar extends PurchasableItem {
     public NorthStar() {
         super(PRICE, WEIGHT); 
     }
+
+    public NorthStar(NorthStar northStar) {
+        super(PRICE, WEIGHT);
+    }
 }
 

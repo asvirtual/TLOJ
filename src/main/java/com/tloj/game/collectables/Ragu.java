@@ -35,7 +35,7 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
         consumer.setCurrentFightDef(consumer.getDef() + STAT_BOOST);
         consumer.setCurrentFightAtk(consumer.getAtk() + STAT_BOOST);
 
-        consumer.getInventory().remove(this);   
+        consumer.removeInventoryItem(this);   
     }
 }
 

@@ -27,9 +27,9 @@ import com.tloj.game.utilities.GameState;
  * - Print seed (seed) {@link PrintSeedCommand}<br>
  * - Print map (map) {@link PrintMapCommand}<br>
  * - Print stats (stats) {@link PrintStatsCommand}<br>
+ * - Print score (score) {@link PrintScoreCommand}<br>
  * - Quit (quit) {@link QuitCommand}<br>
  * - Back (back) {@link BackCommand} (used during complex interactions)<br>
- * - Print score (score) {@link PrintScoreCommand}<br>
  * - Help (help) {@link HelpCommand}<br>
  * - Return (return) {@link ReturnCommand} (used to go back to starting room)<br>
  * - Print status (status) {@link PrintStatusCommand}<br>
@@ -40,6 +40,12 @@ import com.tloj.game.utilities.GameState;
  * - Upgrade (upgrade [item]) {@link UpgradeCommand} (upgrade item with smith)<br>
  * - Give (give [item]) {@link GiveCommand} (give item to npc)<br>
  * - Confirm (confirm) {@link ConfirmCommand} (confirm action)<br>
+ * - New game (new) {@link NewGameCommand} (start a new game)<br>
+ * - Load game (load) {@link LoadGameCommand} (load a saved game)<br>
+ * - Exit game (exit) {@link ExitGameCommand} (exit the game)<br>
+ * - Choose character (choose [character]) {@link ChooseCharacterGameCommand} (choose a character)<br>
+ * - Activate skill (skill) {@link SkillCommand} (activate character's skill)<br>
+ * - Show inventory (inventory) {@link InventoryCommand} (show player's inventory)<br>
  */
 abstract class GameCommand {
     protected Game game;
@@ -199,9 +205,8 @@ class InventoryCommand extends GameCommand {
 
     @Override
     public void execute() {
-        this.player.getInventory().forEach(item -> {
-            System.out.println(item);
-        });
+        for (int i = 0; i < this.player.getInventorySize(); i++) 
+            System.out.println(Integer.toString(i + 1) + ". " + this.player.getInventoryItem(i));
     }
 }
 
@@ -539,6 +544,98 @@ class ConfirmCommand extends GameCommand {
 }
 
 /**
+ * Concrete command class to start a new game
+ * @see GameCommand
+ */
+class NewGameCommand extends GameCommand {
+    public NewGameCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        Controller controller = Controller.getInstance();
+        
+
+        if (controller.getState() != GameState.MAIN_MENU) {
+            System.out.println("You have to go back to the main menu to use this command");
+            return;
+        }
+
+        controller.newGame();
+    }
+}
+
+/**
+ * Concrete command class to load a game
+ * @see GameCommand
+ */
+class LoadGameCommand extends GameCommand {
+    public LoadGameCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        Controller controller = Controller.getInstance();
+        
+
+        if (controller.getState() != GameState.MAIN_MENU) {
+            System.out.println("You have to go back to the main menu to use this command");
+            return;
+        }
+
+        controller.loadGame();
+    }
+}
+
+/**
+ * Concrete command class to exit the game
+ * @see GameCommand
+ */
+class ExitGameCommand extends GameCommand {
+    public ExitGameCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        Controller controller = Controller.getInstance();
+
+        if (controller.getState() != GameState.MAIN_MENU) {
+            System.out.println("You have to go back to the main menu to use this command");
+            return;
+        }
+
+        controller.exitGame();
+    }
+}
+
+/**
+ * Concrete command class to exit the game
+ * @see GameCommand
+ */
+class ChooseCharacterGameCommand extends GameCommand {
+    public ChooseCharacterGameCommand(Game game, String[] commands) {
+        super(game, null);
+    }
+
+    @Override
+    public void execute() {
+        Controller controller = Controller.getInstance();
+
+        if (controller.getState() != GameState.CHOOSING_CHARACTER) {
+            System.out.println("You can't use this command right now");
+            return;
+        }
+
+        CharacterFactory factory = controller.characterFactory(commands[0]);
+        controller.setPlayer(factory.create());
+        controller.setState(GameState.MOVING);
+    }
+}
+
+/**
  * Invoker class to execute the game commands
  */
 class GCInvoker {
@@ -549,7 +646,11 @@ class GCInvoker {
     }
 
     public void executeCommand() {
-        if (this.command == null) return;
+        if (this.command == null) {
+            System.out.println("Invalid command");
+            return;
+        }
+        
         this.command.execute();
     }
 }
@@ -654,6 +755,7 @@ class NeoSamuraiFactory extends CharacterFactory {
  * It uses the Singleton pattern to ensure only one instance of the Controller class is created<br>
  * It uses the Command pattern to handle the different game commands<br>
  * It uses the Factory pattern to create different Characters based on the user's choice<br>
+ * @see Game
  */
 public class Controller {
     /** Singleton Controller unique instance */
@@ -664,6 +766,10 @@ public class Controller {
 
     private Controller() {}
 
+    /** 
+     * Singleton pattern to ensure only one instance of the Controller class is created
+     * @return the unique instance of the Controller class
+     */
     public static Controller getInstance() {
         if (instance == null) instance = new Controller();
         return instance;
@@ -724,7 +830,7 @@ public class Controller {
      */
     public void loadGame() {
         GameData gameData = GameData.deserializeJSON("{}");
-        this.setGame(new Game(gameData));
+        this.setGame(gameData.getGame());
         this.state = GameState.MOVING;
     }
 
@@ -775,7 +881,7 @@ public class Controller {
      * @param character the user's choice of character
      * @return the CharacterFactory object to create the Character subclass object
      */
-    private CharacterFactory characterFactory(String character) {
+    public CharacterFactory characterFactory(String character) {
         Map<String, Supplier<CharacterFactory>> characterMap = new HashMap<>(
             Map.of(
                 "default", () -> new BasePlayerFactory(this.game.getLevel().getStartRoom().getCoordinates()),
@@ -803,48 +909,8 @@ public class Controller {
 
         GCInvoker invoker = new GCInvoker();
         GameCommand command = this.getCommand(commands);
-        if (command != null) {
-            invoker.setCommand(command);
-            invoker.executeCommand();
-        }
-        
-        switch (this.state) {
-            case MAIN_MENU:
-                /* New, load, exit game */
-                switch (commands[0]) {
-                    case "new":
-                        this.newGame();
-                        break;
-                    case "load":
-                        this.loadGame();
-                        break;
-                    case "exit":
-                        this.exitGame();
-                        break;
-                    default:
-                        System.out.println("Invalid command");
-                        break;
-                }
-
-                break;
-
-            case CHOOSING_CHARACTER:
-                CharacterFactory factory = this.characterFactory(commands[0]);
-                this.setPlayer(factory.create());
-                this.state = GameState.MOVING;
-                break;
-            
-            case MOVING:
-            case LOOTING_ROOM:
-            case FIGHTING_MOB:
-            case FIGHTING_BOSS:
-                invoker.setCommand(this.getCommand(commands));
-                invoker.executeCommand();
-                break;
-
-            default:
-                break;
-        }
+        invoker.setCommand(command);
+        invoker.executeCommand();
     }
 
     /**

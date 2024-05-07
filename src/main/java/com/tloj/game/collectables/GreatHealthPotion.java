@@ -32,6 +32,6 @@ public class GreatHealthPotion extends PurchasableItem implements ConsumableItem
         consumer.heal(HEAL_AMOUNT);
         if (consumer.getHp() > consumer.getMaxHp()) consumer.setHp(consumer.getMaxHp());
         
-        consumer.getInventory().remove(this);
+        consumer.removeInventoryItem(this);
     }
 }

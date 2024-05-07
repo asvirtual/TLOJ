@@ -5,7 +5,7 @@ import com.tloj.game.entities.Character;
 
 /**
  * Represents the Consumable Item Defense Elixir in the game.<br>
- * The Defense Elixir can boost the defense stat of the player of {@value #DEFENSE_BOOST}, it can be found or purchased in the game.<br>
+ * The Defense Elixir can boost the defense stat of the player of {@value #DEFENSE_BOOST} for the duration of a fight, it can be found or purchased in the game.<br>
  * It weighs {@value #WEIGHT}, with an in game cost of {@value #PRICE}
  * @see GreatHealthPotion
  * @see HealthPotion
@@ -30,8 +30,7 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
     @Override
     public void consume(Character consumer) {
         consumer.setCurrentFightDef(consumer.getDef() + DEFENSE_BOOST);
-
-        consumer.getInventory().remove(this);
+        consumer.removeInventoryItem(this);
     }
 }
 

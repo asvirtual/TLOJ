@@ -34,13 +34,21 @@ public class Game {
         this.controller = Controller.getInstance();
         this.seed = new Date().getTime();
     }
-
-    public Game(GameData gameData) {
-        this.currentLevel = gameData.currentLevel;
-        this.player = gameData.player;
-        this.levels = gameData.levels;
+    
+    public Game(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
+        this.levels = levels;
+        this.currentLevel = currentLevel;
         this.controller = Controller.getInstance();
-        this.seed = new Date().getTime();
+        this.seed = seed;
+    }
+
+    public GameData getGameData() {
+        return new GameData(
+            this.seed,
+            this.currentLevel,
+            this.player,
+            this.levels
+        );
     }
 
     public int getScore() {
@@ -65,10 +73,6 @@ public class Game {
 
     public Level getLevel() {
         return this.currentLevel;
-    }
-
-    public ArrayList<Level> getLevels() {
-        return this.levels;
     }
 
     public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException, IllegalStateException {
@@ -131,7 +135,7 @@ public class Game {
     }
 
     public void save() {
-        GameData gameData = new GameData(this);
+        GameData gameData = this.getGameData();
         gameData.serializeJSON();
         // TODO: Save in JSON file
     }
@@ -141,7 +145,7 @@ public class Game {
     }
 
     public void dropItem(int index) {
-        this.player.getInventory().remove(index);
+        this.player.removeInventoryItem(index);
     }
 
 }

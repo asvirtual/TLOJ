@@ -1,6 +1,7 @@
 package com.tloj.game.entities;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
@@ -135,6 +136,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return weight;
     }
 
+    public void pay(int amount) {
+        this.money -= amount;
+    }
+
     public int getHp() {
         return this.hp;
     }
@@ -163,8 +168,28 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana -= amount;
     }
 
-    public ArrayList<Item> getInventory() {
-        return this.inventory;
+    public int getInventorySize() {
+        return this.inventory.size();
+    }
+
+    public Item getInventoryItem(int index) {
+        return this.inventory.get(index);
+    }
+
+    public void removeInventoryItem(Item item) {
+        this.inventory.remove(item);
+    }
+
+    public void removeInventoryItem(int index) {
+        this.inventory.remove(index);
+    }
+
+    public void addInventoryItem(Item item) {
+        this.inventory.add(item);
+    }
+
+    public Stream<Item> getInventoryStream() {
+        return this.inventory.stream();
     }
 
     @Override
@@ -205,5 +230,4 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public void useItem(ConsumableItem item) {
         item.consume(this);
     }
-
 }

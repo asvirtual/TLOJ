@@ -32,6 +32,6 @@ public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
         consumer.restoreMana(MANA_RESTORE);
         if (consumer.getMana() > consumer.getMaxMana()) consumer.setMana(consumer.getMaxMana());
         
-        consumer.getInventory().remove(this);
+        consumer.removeInventoryItem(this);
     }
 }

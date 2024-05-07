@@ -7,7 +7,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.utilities.Coordinates;
 
 
-public class Cheater extends Character {
+public class Hacker extends Character {
     private static final int HP = 15;
     private static final int ATTACK = 3;
     private static final int DEFENSE = 3;
@@ -19,7 +19,7 @@ public class Cheater extends Character {
      * Constructor to create a Cheater from loaded data 
      * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
     */
-    public Cheater(
+    public Hacker(
         int hp,
         int atk,
         int def,
@@ -56,7 +56,7 @@ public class Cheater extends Character {
      * @param position The initial position of the Cheater
      * @param lvl The level of the Cheater
     */
-    public Cheater(Coordinates position, int lvl) { 
+    public Hacker(Coordinates position, int lvl) { 
         super(
             HP,
             ATTACK,
