@@ -135,8 +135,28 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return weight;
     }
 
+    public int getHp() {
+        return this.hp;
+    }
+
+    public int getMaxHp() {
+        return this.maxHp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public int getMana() {
         return this.mana;
+    }
+
+    public int getMaxMana() {
+        return this.maxMana;
+    }
+
+    public int setMana(int maxMana) {
+        return this.mana = maxMana;
     }
 
     public void useMana(int amount) {
@@ -172,6 +192,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.hp += amount;
     }
 
+    public void restoreMana(int amount) {
+        this.mana += amount;
+    }
+
     public void lootMob(Mob mob) {
         System.out.println("You gain " + mob.xpDrop + " experience points and " + mob.moneyDrop + " money");
         this.xp += mob.xpDrop;
@@ -181,4 +205,5 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public void useItem(ConsumableItem item) {
         item.consume(this);
     }
+
 }
