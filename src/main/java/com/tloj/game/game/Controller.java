@@ -16,6 +16,30 @@ import com.tloj.game.utilities.GameState;
 
 /**
  * Command pattern implementation to handle the different game commands<br>
+ * The available commands are:<br>
+ * - Go North (gn) {@link MoveNorthCommand}<br>
+ * - Go South (gs) {@link MoveSouthCommand}<br>
+ * - Go West (gw) {@link MoveWestCommand}<br>
+ * - Go East (ge) {@link MoveEastCommand}<br>
+ * - Attack (atk) {@link AttackCommand}<br>
+ * - Use item (use [item]) {@link UseItemCommand}<br>
+ * - Drop item (drop [item]) {@link DropItemCommand}<br>
+ * - Print seed (seed) {@link PrintSeedCommand}<br>
+ * - Print map (map) {@link PrintMapCommand}<br>
+ * - Print stats (stats) {@link PrintStatsCommand}<br>
+ * - Quit (quit) {@link QuitCommand}<br>
+ * - Back (back) {@link BackCommand} (used during complex interactions)<br>
+ * - Print score (score) {@link PrintScoreCommand}<br>
+ * - Help (help) {@link HelpCommand}<br>
+ * - Return (return) {@link ReturnCommand} (used to go back to starting room)<br>
+ * - Print status (status) {@link PrintStatusCommand}<br>
+ * - Merchant (merchant) {@link MerchantCommand} (talk with merchant in healing room)<br>
+ * - Show list (showlist) {@link ShowListCommand} (show merchant items list)<br>
+ * - Buy (buy [item]) {@link BuyCommand} (buy item from merchant)<br>
+ * - Smith (smith) {@link SmithCommand} (talk with smith in healing room)<br>
+ * - Upgrade (upgrade [item]) {@link UpgradeCommand} (upgrade item with smith)<br>
+ * - Give (give [item]) {@link GiveCommand} (give item to npc)<br>
+ * - Confirm (confirm) {@link ConfirmCommand} (confirm action)<br>
  */
 abstract class GameCommand {
     protected Game game;
@@ -251,7 +275,7 @@ class PrintMapCommand extends GameCommand {
 }
 
 /**
- * Concrete command class to print the game seed<br>
+ * Concrete command class to print the current run stats<br>
  * @see GameCommand <br>
  */
 class PrintStatsCommand extends GameCommand {
