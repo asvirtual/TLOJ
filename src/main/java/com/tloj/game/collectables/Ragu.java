@@ -5,7 +5,7 @@ import com.tloj.game.entities.Character;
 
 /**
  * Represents the Consumable Item Ragu in the game.<br>
- * Item Ragu restore all HP and Mana, boosts def stat and the damage inflicted by a +3 factor, it can be found or purchased in the game.<br>
+ * Item Ragu restore all HP and Mana, boosts def stat and the damage inflicted by a {@value #STAT_BOOST} factor, it can be found or purchased in the game.<br>
  * It weighs {@value #WEIGHT}, with an in game cost of {@value #PRICE}
  * @see GreatHealthPotion
  * @see HealthPotion
@@ -21,6 +21,8 @@ import com.tloj.game.entities.Character;
 public class Ragu extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 1;
     private static final int PRICE = 0;
+    private static final int STAT_BOOST = 3;
+    
 
     public Ragu() {
         super(PRICE, WEIGHT); 
@@ -28,7 +30,12 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     
     @Override
     public void consume(Character consumer) {
-        // Implementation of consume method goes here
+        consumer.setHp(consumer.getMaxHp());
+        consumer.setMana(consumer.getMaxMana());
+        consumer.setCurrentFightDef(consumer.getDef() + STAT_BOOST);
+        consumer.setCurrentFightAtk(consumer.getAtk() + STAT_BOOST);
+
+        consumer.getInventory().remove(this);   
     }
 }
 
