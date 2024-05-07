@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import com.tloj.game.entities.Character;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
+import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.BasePlayer;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -234,10 +235,7 @@ class DropItemCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Consume an item from the inventory
-        */ 
+        this.game.dropItem(Integer.parseInt(commands[1]));
     }
 }
 
