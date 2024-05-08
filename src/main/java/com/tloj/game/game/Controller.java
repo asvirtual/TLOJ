@@ -786,6 +786,7 @@ public class Controller {
     public void setPlayer(Character player) {
         this.player = player;
         this.game.setPlayer(player);
+        this.player.setCurrentLevel(this.game.getLevel());
     }
 
     public void setGame(Game game) {

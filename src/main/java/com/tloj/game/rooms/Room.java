@@ -39,4 +39,8 @@ public abstract class Room {
     public void visit() {
         this.visited = true;
     }
+
+    public void forget() {
+        this.visited = false;
+    }
 }

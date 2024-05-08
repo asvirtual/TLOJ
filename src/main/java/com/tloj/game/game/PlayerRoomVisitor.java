@@ -31,6 +31,7 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(StartRoom room) {
         room.visit();
+        room.clear();
     }
 
     @Override
@@ -73,6 +74,8 @@ public class PlayerRoomVisitor implements Visitor {
 
     @Override
     public void visit(TrapRoom room) {
+        if (room.isCleared()) return;
+        
         room.visit();
         Dice dice = new Dice(6);
         int roll = dice.roll();
@@ -80,5 +83,7 @@ public class PlayerRoomVisitor implements Visitor {
             System.out.println("You've been hit by a trap!");
             room.triggerTrap(this.player);
         }
+      
+        room.clear();
     }
 }

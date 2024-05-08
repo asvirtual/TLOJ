@@ -10,6 +10,7 @@ import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.entities.bosses.Boss;
 import com.tloj.game.game.CharacterObserver;
+import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.skills.CharacterSkill;
 import com.tloj.game.utilities.Coordinates;
@@ -47,6 +48,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     /** A collection of {@link Item}s the Character carries during the game */
     protected ArrayList<Item> inventory;
     protected Weapon weapon;
+    protected Level currentLevel;
     protected PlayerAttack currentAttack;
     protected CharacterSkill skill;
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
@@ -175,6 +177,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = mana;
     }
 
+    public Level getCurrentLevel() {
+        return this.currentLevel;
+    }
+
+    public void setCurrentLevel(Level level) {
+        this.currentLevel = level;
+    }
+
     public void useMana(int amount) {
         this.mana -= amount;
     }
@@ -200,6 +210,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             System.out.println("You can't carry more weight, drop something first.");
             return false;
         }
+        
         this.inventory.add(item);
         this.sortInventory();
         return true;
