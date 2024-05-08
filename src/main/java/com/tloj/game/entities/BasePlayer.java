@@ -40,8 +40,6 @@ public class BasePlayer extends Character {
         int maxWeight,
         int money,
         Weapon weapon,
-        Object ability,
-        Object passiveAbility,
         ArrayList<Item> inventory,
         Coordinates position
     ) {
@@ -55,8 +53,6 @@ public class BasePlayer extends Character {
             maxWeight,
             money,
             weapon,
-            ability,
-            passiveAbility,
             inventory,
             position
         );
@@ -75,8 +71,6 @@ public class BasePlayer extends Character {
             MANA,
             MAX_WEIGHT,
             MONEY,
-            null,
-            null,
             null,
             coordinates
         );

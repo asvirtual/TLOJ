@@ -36,6 +36,14 @@ public abstract class Attack {
         return this.target;
     };
 
+    public void setAttacker(CombatEntity attacker) {
+        this.attacker = attacker;
+    }
+
+    public void setTarget(CombatEntity target) {
+        this.target = target;
+    }
+
     public int getBaseDamage() {
         return this.baseDamage;
     }

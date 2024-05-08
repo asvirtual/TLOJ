@@ -6,5 +6,5 @@ public interface CharacterObserver {
     public void onBossDefeated();
     public void onPlayerDefeated();
     public void onPlayerLevelUp();
-    public void onPlayerMove();
+    // public void onPlayerMove();
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.skills.Daburu;
 
 public class NeoSamurai extends Character {
     
@@ -29,8 +30,6 @@ public class NeoSamurai extends Character {
         int maxWeight,
         int money,
         Weapon weapon,
-        Object ability,
-        Object passiveAbility,
         ArrayList<Item> inventory,
         Coordinates position
     ) {
@@ -44,11 +43,11 @@ public class NeoSamurai extends Character {
             maxWeight,
             money,
             weapon,
-            ability,
-            passiveAbility,
             inventory,
             position
         );
+
+        this.skill = new Daburu(this);
     }    
 
     /** 
@@ -66,10 +65,10 @@ public class NeoSamurai extends Character {
             MAX_WEIGHT,
             MONEY,
             null,
-            null,
-            null,
             position
         );
+
+        this.skill = new Daburu(this);
     }
 
 

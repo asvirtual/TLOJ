@@ -12,12 +12,14 @@ public class Steal extends CharacterSkill{
     }
 
     @Override
-    public void useSkill(PlayerAttack attack) {
+    public void use(PlayerAttack attack) {
         Character attacker = attack.getAttacker();
+        
         if (attacker.getMana() < 10) {
             System.out.println("Not enough mana to use Steal");
             return;
         }
+
         Dice dice = new Dice(10);
         if (dice.roll() < 4) return;
         

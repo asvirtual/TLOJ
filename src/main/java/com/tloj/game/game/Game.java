@@ -85,6 +85,7 @@ public class Game implements CharacterObserver {
         
         /**
          * updats player score if the room is cleared
+         * TODO: This could probably be moved to the CharacterObserver, after the player has ended the interactions/events in the room
          */
         if (!this.getCurrentRoom().isCleared()) {
             this.getCurrentRoom().clear();
@@ -110,30 +111,7 @@ public class Game implements CharacterObserver {
         Mob mob = room.getMob();
         this.player.attack(mob);
         
-        if (mob.isAlive()) {
-            mob.attack(this.player);
-            return;
-        }
-
-        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
-        this.player.resetFightStats();
-
-        /**
-         * If the defeated Mob was a Boss, ...
-         * Otherwise, ...
-         * TODO: Maybe this should be moved to the "die" methods in the Mob and Boss classes
-        */
-        if (mob instanceof Boss) {
-            System.out.println("You've defeated the Boss!");
-            this.updateScore(Boss.SCORE_DROP);
-            this.controller.setState(GameState.MOVING);
-        } else {
-            System.out.println("You've defeated the enemy!");
-            this.updateScore(Mob.SCORE_DROP);
-            this.controller.setState(GameState.MOVING);
-        }
-
-        this.player.lootMob(mob);
+        if (mob.isAlive()) mob.attack(this.player);
     }
 
     public void usePlayerSkill() throws IllegalStateException {
@@ -143,7 +121,7 @@ public class Game implements CharacterObserver {
         )
             throw new IllegalStateException("Cannot use skill outside of a fight");
 
-        // this.player.useSkill();
+        this.player.useSkill();
     }
 
     public boolean areCoordinatesValid(Coordinates coordinates) {
@@ -171,13 +149,33 @@ public class Game implements CharacterObserver {
     @Override
     public void onMobDefeated() {
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
+        Mob mob = room.getMob();
+
         room.clear();
+
+        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
+        this.player.resetFightStats();
+        this.player.lootMob(mob);
+
+        System.out.println("You've defeated the enemy!");
+        this.updateScore(Mob.SCORE_DROP);
+        this.controller.setState(GameState.MOVING);
     }
 
     @Override
     public void onBossDefeated() {
         BossRoom room = (BossRoom) this.getCurrentRoom();
+        Boss boss = room.getBoss();
+
         room.clear();
+
+        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
+        this.player.resetFightStats();
+        this.player.lootMob(boss);
+
+        System.out.println("You've defeated the Boss!");
+        this.updateScore(Boss.SCORE_DROP);
+        this.controller.setState(GameState.MOVING);
     }
 
     @Override
@@ -188,10 +186,5 @@ public class Game implements CharacterObserver {
     @Override
     public void onPlayerLevelUp() {
 
-    }
-
-    @Override
-    public void onPlayerMove() {
-        this.getCurrentRoom().visit();
     }
 }

@@ -11,13 +11,15 @@ public class CheatEngine extends CharacterSkill{
     }
 
     @Override
-    public void useSkill(PlayerAttack attack) {
+    public void use(PlayerAttack attack) {
         Character attacker = attack.getAttacker();
         Weapon weapon = attacker.getWeapon();
+
         if (attacker.getMana() < 5) {
             System.out.println("Not enough mana to use Cheat Engine");
             return;
         }
+        
         attack.setWeaponRoll(weapon.getDice().getFaces());
         attacker.useMana(5);
     }

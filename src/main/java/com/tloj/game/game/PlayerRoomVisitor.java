@@ -15,9 +15,12 @@ interface Visitor {
     void visit(TrapRoom room);
 }
 
+/**
+ * TODO
+ */
 public class PlayerRoomVisitor implements Visitor {
     private Character player;
-    Controller controller;
+    private Controller controller;
 
     public PlayerRoomVisitor(Character player) {
         this.player = player;
@@ -32,13 +35,16 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(BossRoom room) {
         room.visit();
+
         System.out.println("You've encountered the boss!");
+
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
     @Override
     public void visit(HealingRoom room) {
         room.visit();
+
         System.out.println("You've found a healing room! What do you want to do?");
         System.out.println("1. Heal");
         System.out.println("2. Leave");
@@ -47,16 +53,20 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(HostileRoom room) {
         room.visit();
+
         System.out.println("You've encountered an enemy!");
+
         this.controller.setState(GameState.FIGHTING_MOB);
     }
 
     @Override
     public void visit(LootRoom room) {
         room.visit();
+
         System.out.println("You've found some loot! What do you want to do?");
         System.out.println("1. Take it");
         System.out.println("2. Leave it");
+
         this.controller.setState(GameState.LOOTING_ROOM);
     }
 

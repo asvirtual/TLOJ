@@ -2,6 +2,7 @@ package com.tloj.game.game;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.skills.CharacterSkill;
 
 
 /**
@@ -15,6 +16,10 @@ public class PlayerAttack extends Attack {
 
     public PlayerAttack(Character attacker, Mob target) {
         super(attacker, target);
+    }
+
+    public PlayerAttack(Character attacker) {
+        super(attacker, null);
     }
 
     public int getWeaponRoll() {

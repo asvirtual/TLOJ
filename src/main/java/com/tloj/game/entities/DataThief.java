@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.skills.Steal;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -30,8 +31,6 @@ public class DataThief extends Character {
         int maxWeight,
         int money,
         Weapon weapon,
-        Object ability,
-        Object passiveAbility,
         ArrayList<Item> inventory,
         Coordinates position
     ) {
@@ -45,11 +44,11 @@ public class DataThief extends Character {
             maxWeight,
             money,
             weapon,
-            ability,
-            passiveAbility,
             inventory,
             position
         );
+
+        this.skill = new Steal(this);
     }    
 
     /** 
@@ -66,11 +65,9 @@ public class DataThief extends Character {
             MAX_WEIGHT,
             MONEY,
             null,
-            null,
-            null,
             position
         );
+
+        this.skill = new Steal(this);
     }
-
-
 }

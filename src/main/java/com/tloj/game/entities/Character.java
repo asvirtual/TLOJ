@@ -10,6 +10,7 @@ import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.skills.CharacterSkill;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 
@@ -45,9 +46,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     /** A collection of {@link Item}s the Character carries during the game */
     protected ArrayList<Item> inventory;
     protected Weapon weapon;
-
-    protected Object ability;
-    protected Object passiveAbility;
+    protected PlayerAttack currentAttack;
+    protected CharacterSkill skill;
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
 
     /**
@@ -80,8 +80,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         int maxWeight,
         int money,
         Weapon weapon,
-        Object ability,
-        Object passiveAbility,
         ArrayList<Item> inventory,
         Coordinates position
     ) {
@@ -96,8 +94,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.inventory = inventory;
         this.weapon = weapon;
         this.weapon.assignTo(this);
-        this.ability = ability;
-        this.passiveAbility = passiveAbility;
     }
 
     /** 
@@ -124,8 +120,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         int maxWeight,
         int money,
         Weapon weapon,
-        Object ability,
-        Object passiveAbility,
         Coordinates position
     ) {
         super(hp, atk, def, position);
@@ -137,8 +131,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.inventory = new ArrayList<Item>();
         this.weapon = weapon;
         this.weapon.assignTo(this);
-        this.ability = ability;
-        this.passiveAbility = passiveAbility;
     }
 
     public Weapon getWeapon() {
@@ -233,17 +225,30 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.position = to;
     }
 
+    public void useSkill() {
+        if (this.currentAttack == null) this.currentAttack = new PlayerAttack(this);
+        this.skill.use(this.currentAttack);
+    }
+
     @Override
     public void attack(CombatEntity t) throws IllegalArgumentException {
         if (!(t instanceof Mob)) throw new IllegalArgumentException("Characters can only attack Mobs");
 
         Mob target = (Mob) t;
-        PlayerAttack attack = new PlayerAttack(this, target);
-        
-        this.weapon.modifyAttack(attack);
-        target.defend(attack);
 
-        attack.perform();
+        if (this.currentAttack == null) this.currentAttack = new PlayerAttack(this, target);
+        else this.currentAttack.setTarget(target);
+        
+        this.weapon.modifyAttack(this.currentAttack);
+        target.defend(this.currentAttack);
+
+        this.currentAttack.perform();
+        this.currentAttack = null;
+
+        if (!target.isAlive()) {
+            if (target instanceof Boss) this.observers.forEach(observer -> observer.onBossDefeated());
+            else this.observers.forEach(observer -> observer.onMobDefeated());
+        }
     }
 
     @Override
@@ -295,7 +300,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.atk += threeDice.roll();
         this.def += threeDice.roll();
 
-        this.observers.forEach(observers -> observers.onPlayerLevelUp());
+        this.observers.forEach(observer -> observer.onPlayerLevelUp());
     }
 
     public void addObserver(CharacterObserver observer) {

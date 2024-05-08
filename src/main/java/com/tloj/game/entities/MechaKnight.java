@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.skills.Focus;
 import com.tloj.game.utilities.Coordinates;
 
 public class MechaKnight extends Character {
@@ -44,11 +45,11 @@ public class MechaKnight extends Character {
             maxWeight,
             money,
             weapon,
-            ability,
-            passiveAbility,
             inventory,
             position
         );
+
+        this.skill = new Focus(this);
     }    
 
     /** 
@@ -65,10 +66,10 @@ public class MechaKnight extends Character {
             MAX_WEIGHT,
             MONEY,
             null,
-            null,
-            null,
             position
         );
+
+        this.skill = new Focus(this);
     }
 
 

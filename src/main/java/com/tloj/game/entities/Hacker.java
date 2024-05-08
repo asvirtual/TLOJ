@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.skills.CheatEngine;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -29,8 +30,6 @@ public class Hacker extends Character {
         int maxWeight,
         int money,
         Weapon weapon,
-        Object ability,
-        Object passiveAbility,
         ArrayList<Item> inventory,
         Coordinates position
     ) {
@@ -44,11 +43,11 @@ public class Hacker extends Character {
             maxWeight,
             money,
             weapon,
-            ability,
-            passiveAbility,
             inventory,
             position
         );
+
+        this.skill = new CheatEngine(this);
     }    
 
     /** 
@@ -65,10 +64,10 @@ public class Hacker extends Character {
             MAX_WEIGHT,
             MONEY,
             null,
-            null,
-            null,
             position
         );
+
+        this.skill = new CheatEngine(this);
     }
 
 

@@ -10,6 +10,10 @@ public class BossRoom extends HostileRoom {
         super(coordinates, boss);
     }
 
+    public Boss getBoss() {
+        return (Boss) this.mob;
+    }
+
     @Override
     public RoomType getType() {
         return RoomType.BOSS_ROOM;

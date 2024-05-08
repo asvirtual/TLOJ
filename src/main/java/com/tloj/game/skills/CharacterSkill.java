@@ -15,5 +15,5 @@ public abstract class CharacterSkill {
         this.character = character;
     }
 
-    public abstract void useSkill(PlayerAttack attack);
+    public abstract void use(PlayerAttack attack);
 }
