@@ -48,7 +48,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     protected Object ability;
     protected Object passiveAbility;
-    protected CharacterObserver observer;
+    protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
 
     /**
      * Constructor to create a Character from loaded data<br>
@@ -58,8 +58,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
      * @param mana The character's mana points<br>
      * @param xp The character's experience points<br>
      * @param requiredXp The character's required experience points<br>
-     * @param D5 The dice faces used to level up hp, mana<br>
-     * @param D3 The dice faces used to level up attack, defense<br>
      * @param lvl The character's level<br>
      * @param maxWeight The character's maximum weight capacity<br>
      * @param money The character's money<br>
@@ -233,6 +231,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @Override
     public void move(Coordinates to) {
         this.position = to;
+        this.observer.update();
     }
 
     @Override
@@ -297,8 +296,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.atk += threeDice.roll();
         this.def += threeDice.roll();
 
-        this.observer.levelUp();
+        this.observers.forEach(observers -> observers.onLevelUp());
     }
 
+    public void addObserver(CharacterObserver observer) {
+        this.observers.add(observer);
+    }
 
+    public void removeObserver(CharacterObserver observer) {
+        this.observers.remove(observer);
+    }
 }

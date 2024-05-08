@@ -13,7 +13,7 @@ import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
 
-public class Game {    
+public class Game implements CharacterObserver {    
     public static final int DEFAULT_LEVELS_COUNT = 3;
     public static final int DEFAULT_ROOMS_ROWS = 6;
     public static final int DEFAULT_ROOMS_COLS = 6;
@@ -167,6 +167,18 @@ public class Game {
 
     public void dropItem(int index) {
         this.player.removeInventoryItem(index);
+    }
+
+    @Override
+    public void onMobDefeated() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onMobDefeated'");
+    }
+
+    @Override
+    public void onBossDefeated() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'onBossDefeated'");
     }
 
 }

@@ -18,7 +18,7 @@ public class Level {
         this.rooms = rooms;
         rooms.forEach(row -> { 
             row.forEach(room -> {
-                if (room.getType() == RoomType.START_ROOM) 
+                if (room != null && room.getType() == RoomType.START_ROOM) 
                     this.startRoom = (StartRoom) room;
             });
         });
