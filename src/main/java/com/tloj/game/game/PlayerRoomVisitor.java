@@ -3,6 +3,7 @@ package com.tloj.game.game;
 import com.tloj.game.rooms.*;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
+import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.Character;
 
 
@@ -13,7 +14,6 @@ interface Visitor {
     void visit(HostileRoom room);
     void visit(LootRoom room);
     void visit(TrapRoom room);
-    void visit(TransporterRoom room);
 }
 
 /**
@@ -60,12 +60,15 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(LootRoom room) {
         room.visit();
-
-        System.out.println("You've found some loot! What do you want to do?");
-        System.out.println("1. Take it");
-        System.out.println("2. Leave it");
-
-        this.controller.setState(GameState.LOOTING_ROOM);
+        Item item = room.getItem();
+        System.out.println("You've found a " + item + "!");
+        if(this.player.addInventoryItem(item)) {
+            this.controller.setState(GameState.MOVING);
+            room.clear();
+        }
+        else {
+            this.controller.setState(GameState.LOOTING_ROOM);
+        }
     }
 
     @Override
@@ -75,12 +78,7 @@ public class PlayerRoomVisitor implements Visitor {
         int roll = dice.roll();
         if (roll < 3) {
             System.out.println("You've been hit by a trap!");
-            this.player.takeDamage(roll);
+            room.triggerTrap(this.player);
         }
-    }
-
-    @Override
-    public void visit(TransporterRoom room) {
-        room.visit();
     }
 }

@@ -7,5 +7,4 @@ public enum RoomType {
     LOOT_ROOM,
     TRAP_ROOM,
     START_ROOM,
-    TRANSPORTER_ROOM;
 }
