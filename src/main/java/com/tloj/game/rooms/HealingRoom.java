@@ -24,4 +24,13 @@ public class HealingRoom extends Room {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
     }
+
+    @Override
+    public String toString() {
+        if(this.isVisited())
+            return "\u256C" + " ";
+        else
+            return "\u00A0" + " ";
+    }
+
 }

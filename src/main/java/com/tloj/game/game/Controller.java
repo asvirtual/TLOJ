@@ -266,10 +266,7 @@ class PrintMapCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Print the game map
-        */ 
+        this.game.printMap();
     }
 }
 

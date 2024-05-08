@@ -25,4 +25,13 @@ public class BossRoom extends HostileRoom {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
     }
+
+    @Override
+    public String toString() {
+        if(this.isVisited())
+            return "\u03A9" + " ";
+        else
+            return "\u00A0" + " ";
+    }
+
 }

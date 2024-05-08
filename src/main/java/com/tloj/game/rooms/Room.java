@@ -23,6 +23,7 @@ public abstract class Room {
     public abstract RoomType getType();
     public abstract void accept(PlayerRoomVisitor PlayerRoomVisitor);
     public abstract void exit();
+    public abstract String toString();
     
     public Coordinates getCoordinates() {
         return coordinates;
@@ -41,4 +42,9 @@ public abstract class Room {
     public void roomVisited() {
         this.visited = true;
     }
+
+    public boolean isVisited() {
+        return this.visited;
+    }
+
 }
