@@ -4,3 +4,4 @@ dependency-reduced-pom.xml
 *.bat
 *.DS_Store
 saves/
+test.json

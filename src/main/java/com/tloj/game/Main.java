@@ -59,6 +59,6 @@ public class Main {
             levels
         );
 
-        gameData.saveToFile("saves/game1.json");
+        gameData.saveToFile("test.json");
     }
 }
