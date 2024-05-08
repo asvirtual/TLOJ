@@ -6,6 +6,7 @@ import java.util.Date;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.Boss;
+import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
@@ -85,9 +86,8 @@ public class Game implements CharacterObserver {
         /**
          * updats player score if the room is cleared
          */
-        if (!this.getCurrentRoom().isCleared())
-        {
-            this.getCurrentRoom().roomCleared();
+        if (!this.getCurrentRoom().isCleared()) {
+            this.getCurrentRoom().clear();
             this.updateScore(Room.SCORE_DROP);
         }
 
@@ -134,7 +134,6 @@ public class Game implements CharacterObserver {
         }
 
         this.player.lootMob(mob);
-        room.removeMob();
     }
 
     public void usePlayerSkill() throws IllegalStateException {
@@ -171,14 +170,28 @@ public class Game implements CharacterObserver {
 
     @Override
     public void onMobDefeated() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onMobDefeated'");
+        HostileRoom room = (HostileRoom) this.getCurrentRoom();
+        room.clear();
     }
 
     @Override
     public void onBossDefeated() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onBossDefeated'");
+        BossRoom room = (BossRoom) this.getCurrentRoom();
+        room.clear();
     }
 
+    @Override
+    public void onPlayerDefeated() {
+
+    }
+
+    @Override
+    public void onPlayerLevelUp() {
+
+    }
+
+    @Override
+    public void onPlayerMove() {
+        this.getCurrentRoom().visit();
+    }
 }

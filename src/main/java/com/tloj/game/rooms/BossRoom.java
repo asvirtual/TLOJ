@@ -25,4 +25,10 @@ public class BossRoom extends HostileRoom {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
     }
+
+    @Override 
+    public void clear() {
+        super.clear();
+        this.mob = null;
+    }
 }

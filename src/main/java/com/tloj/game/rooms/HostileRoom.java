@@ -33,8 +33,9 @@ public class HostileRoom extends Room {
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
     }
 
-    public void removeMob() {
+    @Override
+    public void clear() {
+        super.clear();
         this.mob = null;
-        this.roomCleared();
     }
 }

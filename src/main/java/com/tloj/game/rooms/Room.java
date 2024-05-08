@@ -16,10 +16,6 @@ public abstract class Room {
         this.coordinates = coordinates;
     }
 
-    public void visit() {
-        this.roomVisited();
-    }
-
     public abstract RoomType getType();
     public abstract void accept(PlayerRoomVisitor PlayerRoomVisitor);
     public abstract void exit();
@@ -31,14 +27,16 @@ public abstract class Room {
     public boolean isVisited() {
         return visited;
     }
+
     public boolean isCleared() {
         return cleared;
     }
-    public void roomCleared() {
+
+    public void clear() {
         this.cleared = true;
     }
 
-    public void roomVisited() {
+    public void visit() {
         this.visited = true;
     }
 }
