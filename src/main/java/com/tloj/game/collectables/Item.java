@@ -7,7 +7,27 @@ package com.tloj.game.collectables;
  * @see Weapon
  * @see PurchasableItem
  */
-public abstract class Item {
+
+ public abstract class Item {
+    enum ConsumableItems{
+        HEALTH_POTION(new HealthPotion()),
+        GREAT_HEALTH_POTION(new GreatHealthPotion()),
+        MANA_POTION(new ManaPotion()),
+        GREAT_MANA_POTION(new GreatManaPotion()),
+        ATTACK_ELIXIR(new AttackElixir()),
+        DEFENSE_ELIXIR(new DefenseElixir()),
+        WEAPON_SHARD(new WeaponShard()),
+        LOCKPICK(new Lockpick()),
+        RAGU(new Ragu()),
+        NORTH_STAR(new NorthStar());
+
+        private Item item;
+
+        ConsumableItems(Item item) {
+            this.item = item;
+        }
+    }
+
     protected double weight;
 
     protected Item(double weight) {
@@ -16,5 +36,29 @@ public abstract class Item {
 
     public double getWeight() {
         return weight;
+    }
+
+    public double getDropChance() {
+        return 0;
+    }
+
+    public static Item getRandomItem() {
+        double totalProbability = 0.0;
+        for (ConsumableItems i : ConsumableItems.values()) {
+            Item item = i.item;
+            totalProbability += item.getDropChance();
+        }
+
+        double randomValue = Math.random() * totalProbability;
+        double cumulativeProbability = 0.0;
+        for (ConsumableItems i : ConsumableItems.values()) {
+            Item item = i.item;
+            cumulativeProbability += item.getDropChance();
+            if (randomValue <= cumulativeProbability) {
+                return item;
+            }
+        }
+
+        return null; // should never reach here if probabilities sum to 1
     }
 }

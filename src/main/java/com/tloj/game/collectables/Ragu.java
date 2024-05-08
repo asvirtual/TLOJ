@@ -22,6 +22,7 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 1;
     private static final int PRICE = 0;
     private static final int STAT_BOOST = 3;
+    private static final double DROP_CHANCE = 0.075;
     
 
     public Ragu() {
@@ -36,6 +37,11 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
         consumer.setCurrentFightAtk(consumer.getAtk() + STAT_BOOST);
 
         consumer.removeInventoryItem(this);   
+    }
+
+    @Override
+    public double getDropChance() {
+        return DROP_CHANCE;
     }
 }
 

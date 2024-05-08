@@ -17,7 +17,8 @@ package com.tloj.game.collectables;
 */
 public class NorthStar extends PurchasableItem {
     private static final double WEIGHT = 0;
-    private static final int PRICE=0;
+    private static final int PRICE = 0;
+    private static final double DROP_CHANCE = 0.025;
 
     public NorthStar() {
         super(PRICE, WEIGHT); 
@@ -25,6 +26,10 @@ public class NorthStar extends PurchasableItem {
 
     public NorthStar(NorthStar northStar) {
         super(PRICE, WEIGHT);
+    }
+    @Override
+    public double getDropChance() {
+        return DROP_CHANCE;
     }
 }
 
