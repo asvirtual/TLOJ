@@ -34,4 +34,9 @@ public class EvenBoss extends Boss{
         this.ability = new DodgeEvenRollAttack(this);
         this.drop = new WeaponShard();
     }
+
+    @Override
+    public String toString() {
+        return "Cyfartal, Even Lord of the Dice";
+    }
 }

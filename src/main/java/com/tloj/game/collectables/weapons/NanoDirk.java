@@ -23,4 +23,9 @@ public class NanoDirk extends Weapon {
         super(WEIGHT, DICE_FACES); 
         this.effect = new DiceReroller(this);
     }
+
+    @Override
+    public String toString() {
+        return "Nano Dirk";
+    }
 }
