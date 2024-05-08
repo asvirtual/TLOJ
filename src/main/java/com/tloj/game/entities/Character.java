@@ -147,6 +147,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public void pay(int amount) {
         this.money -= amount;
+        if (this.money < 0) this.money = 0;
     }
 
     public int getHp() {

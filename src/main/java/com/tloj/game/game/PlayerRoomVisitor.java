@@ -13,6 +13,7 @@ interface Visitor {
     void visit(HostileRoom room);
     void visit(LootRoom room);
     void visit(TrapRoom room);
+    void visit(TransporterRoom room);
 }
 
 /**
@@ -44,10 +45,7 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(HealingRoom room) {
         room.visit();
-
-        System.out.println("You've found a healing room! What do you want to do?");
-        System.out.println("1. Heal");
-        System.out.println("2. Leave");
+        this.player.setHp(this.player.getMaxHp());
     }
 
     @Override
@@ -79,5 +77,10 @@ public class PlayerRoomVisitor implements Visitor {
             System.out.println("You've been hit by a trap!");
             this.player.takeDamage(roll);
         }
+    }
+
+    @Override
+    public void visit(TransporterRoom room) {
+        room.visit();
     }
 }
