@@ -2,7 +2,7 @@ package com.tloj.game.collectables;
 
 /**
  * Represents the Consumable Item NorthStar in the game.<br>
- * The NorthStar can print the entire game map, it can be found or purchased in the game.<br>
+ * The NorthStar can print the entire game map, it can be found as a special reward.<br>
  * It weighs {@value #WEIGHT}, with an in game cost of {@value #PRICE}
  * @see GreatHealthPotion
  * @see HealthPotion

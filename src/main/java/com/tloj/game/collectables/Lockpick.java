@@ -28,7 +28,7 @@ public class Lockpick extends PurchasableItem implements ConsumableItem {
     
     @Override
     public void consume(Character consumer) {
-        // Implementation of consume method goes here
+        consumer.removeInventoryItem(this);
     }
 }
 
