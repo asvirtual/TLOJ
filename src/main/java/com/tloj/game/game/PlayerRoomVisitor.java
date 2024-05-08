@@ -13,7 +13,6 @@ interface Visitor {
     void visit(HostileRoom room);
     void visit(LootRoom room);
     void visit(TrapRoom room);
-    void visit(TransporterRoom room);
 }
 
 /**
@@ -31,6 +30,7 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(StartRoom room) {
         room.visit();
+        room.clear();
     }
 
     @Override
@@ -70,6 +70,8 @@ public class PlayerRoomVisitor implements Visitor {
 
     @Override
     public void visit(TrapRoom room) {
+        if (room.isCleared()) return;
+        
         room.visit();
         Dice dice = new Dice(6);
         int roll = dice.roll();
@@ -77,10 +79,7 @@ public class PlayerRoomVisitor implements Visitor {
             System.out.println("You've been hit by a trap!");
             this.player.takeDamage(roll);
         }
-    }
 
-    @Override
-    public void visit(TransporterRoom room) {
-        room.visit();
+        room.clear();
     }
 }

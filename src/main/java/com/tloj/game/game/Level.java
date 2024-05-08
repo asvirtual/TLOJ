@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
@@ -42,5 +43,17 @@ public class Level {
 
     public int getLevelNumber() {
         return this.levelNumber;
+    }
+
+    public Stream<ArrayList<Room>> getRoomStream() {
+        return this.rooms.stream();
+    }
+
+    public boolean areCoordinatesValid(Coordinates coordinates) {
+        int roomsRowCount = this.getRoomsRowCount();
+        int roomsColCount = this.getRoomsColCount();
+        
+        return coordinates.getY() >= 0 && coordinates.getY() < roomsRowCount &&
+               coordinates.getX() >= 0 && coordinates.getX() < roomsColCount;
     }
 }

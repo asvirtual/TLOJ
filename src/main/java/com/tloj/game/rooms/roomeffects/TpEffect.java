@@ -1,12 +1,36 @@
 package com.tloj.game.rooms.roomeffects;
 
-import com.tloj.game.entities.Character;   
-import com.tloj.game.game.Controller;
+import com.tloj.game.entities.Character;
+import com.tloj.game.game.Level;
+import com.tloj.game.rooms.RoomType;
+import com.tloj.game.rooms.LootRoom;
+import com.tloj.game.utilities.Coordinates;
+
 
 public class TpEffect implements RoomEffect {
     @Override
     public void applyEffect(Character character) {
-        Controller controller = Controller.getInstance();
-    }   
-    
+        Level level = character.getCurrentLevel();
+        boolean validLocation = false;
+
+        int rows = level.getRoomsRowCount();
+        int cols = level.getRoomsColCount();
+
+        do {
+            int row = (int) Math.floor(Math.random() * rows);
+            int col = (int) Math.floor(Math.random() * cols);
+
+            Coordinates newCoords = new Coordinates(row, col);
+            if (!level.areCoordinatesValid(newCoords)) continue;
+            if (level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM) continue;
+            if (level.getRoom(newCoords).getType() == RoomType.LOOT_ROOM && ((LootRoom) level.getRoom(newCoords)).isLocked()) continue;
+
+            level.getRoomStream().forEach(rowRooms -> {
+                rowRooms.forEach(room -> room.forget());
+            });            
+
+            character.move(newCoords);
+            validLocation = true;
+        } while (!validLocation);
+    }
 }

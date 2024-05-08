@@ -81,7 +81,7 @@ public class Game implements CharacterObserver {
             throw new IllegalStateException("Cannot move while fighting");
             
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
-        if (!this.areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
+        if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
         
         /**
          * updats player score if the room is cleared
@@ -122,14 +122,6 @@ public class Game implements CharacterObserver {
             throw new IllegalStateException("Cannot use skill outside of a fight");
 
         this.player.useSkill();
-    }
-
-    public boolean areCoordinatesValid(Coordinates coordinates) {
-        int roomsRowCount = this.currentLevel.getRoomsRowCount();
-        int roomsColCount = this.currentLevel.getRoomsColCount();
-        
-        return coordinates.getY() >= 0 && coordinates.getY() < roomsRowCount &&
-               coordinates.getX() >= 0 && coordinates.getX() < roomsColCount;
     }
 
     public void save() {

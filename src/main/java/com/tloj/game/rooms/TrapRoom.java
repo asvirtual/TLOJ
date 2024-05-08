@@ -2,11 +2,15 @@ package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
+import com.tloj.game.rooms.roomeffects.RoomEffect;
 
 
 public class TrapRoom extends Room {
-    public TrapRoom(Coordinates coordinates) {
+    private RoomEffect effect;
+
+    public TrapRoom(Coordinates coordinates, RoomEffect effect) {
         super(coordinates);
+        this.effect = effect;
     }
 
     @Override
