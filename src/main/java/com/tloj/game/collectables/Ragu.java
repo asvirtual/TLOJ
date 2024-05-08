@@ -5,7 +5,7 @@ import com.tloj.game.entities.Character;
 
 /**
  * Represents the Consumable Item Ragu in the game.<br>
- * Item Ragu restore all HP and Mana, boosts def stat and the damage inflicted by a {@value #STAT_BOOST} factor, it can be found or purchased in the game.<br>
+ * Item Ragu restore all HP and Mana, boosts def stat and the damage inflicted by a {@value #STAT_BOOST} factor for the duration of a fight, it can be found or purchased in the game.<br>
  * It weighs {@value #WEIGHT}, with an in game cost of {@value #PRICE}
  * @see GreatHealthPotion
  * @see HealthPotion

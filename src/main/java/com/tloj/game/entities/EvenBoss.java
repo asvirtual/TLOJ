@@ -13,8 +13,10 @@ import com.tloj.game.collectables.WeaponShard;
  * This boss is paired with the {@link DodgeEvenRollAttack} ability and the {@link WeaponShard} drop.    
  * @see Boss
  * @see FlyingBoss
+ * @see HalverBoss
  * @see BossAbility
- * @see DodgeEvenRollAttack
+ * @see DodgeSlowAttackFlying
+ * @see TakeHalfDamage
  * @see WeaponShard
  */
 

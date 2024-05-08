@@ -6,7 +6,8 @@ import com.tloj.game.game.PlayerAttack;
 
 /**
  * An ability that allows a boss to take half damage (base dmg + weapon dice roll). <br>
- * It is paired with the {@link Boss}. <br> TODO: Link to the specific Boss class that has this ability<br>
+ * It is paired with the {@link HalverBoss}.<br>
+ * @see Boss 
  */
 public class TakeHalfDamage extends BossAbility{
     public TakeHalfDamage(Boss boss){
