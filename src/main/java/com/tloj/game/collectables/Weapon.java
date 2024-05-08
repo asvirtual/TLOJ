@@ -3,10 +3,24 @@ package com.tloj.game.collectables;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Dice;
-import com.tloj.game.collectables.items.WeaponShard;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.tloj.game.effects.WeaponEffect;
 import com.tloj.game.entities.Character;
 
+
+
+// Needed to avoid circular references with Weapon when serializing/deserializing 
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.IntSequenceGenerator.class, 
+  property = "@id")
+// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.CLASS, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "@class")
 
 /**
  * An abstract class that represents a weapon that can be used to attack enemies<br>
@@ -19,6 +33,7 @@ import com.tloj.game.entities.Character;
 public abstract class Weapon extends Item {
     private static final int DROP_MONEY = 0;
 
+    @JsonIgnore
     protected WeaponEffect effect;
     protected Dice dice;
     protected Character character;

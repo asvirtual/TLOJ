@@ -11,6 +11,15 @@ import com.tloj.game.collectables.items.NorthStar;
 import com.tloj.game.collectables.items.Ragu;
 import com.tloj.game.collectables.items.WeaponShard;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+
+// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.CLASS, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "@class")
+  
 /**
  * An abstract class representing an item that can be found in the game<br>
  * All items have a weight, and can be picked up by the player<br>

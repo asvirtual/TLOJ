@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import com.tloj.game.entities.Character;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.tloj.game.entities.BasePlayer;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;

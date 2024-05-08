@@ -1,6 +1,16 @@
 package com.tloj.game.game;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Stack;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.rooms.Room;
@@ -12,6 +22,9 @@ import com.tloj.game.rooms.Room;
  * It can be serialized and deserialized to and from JSON.<br>
  * It can also be used to create a new Game instance, with which it will be tightly coupled since the member Objects will point to the same references.
  */
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "seed")
 public class GameData {
     public long seed;
     public Level currentLevel;
@@ -25,6 +38,7 @@ public class GameData {
         this.levels = levels;
     }
 
+    @JsonIgnore
     public Game getGame() {
         return new Game(
             this.seed,
@@ -32,6 +46,45 @@ public class GameData {
             this.player,
             this.levels
         );
+    }
+
+    public void saveToFile(String filename) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            mapper.writeValue(new File(filename), this);
+        } catch (JsonGenerationException e) {
+            System.out.println("Error generating JSON from GameData");
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            System.out.println("Error mapping JSON from GameData");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error opening file " + filename + " for writing");
+            e.printStackTrace();
+        } catch (StackOverflowError e) {
+            System.out.println("Error: StackOverflowError");
+            e.printStackTrace();
+        }
+    }
+
+    public static GameData loadFromFile(String filename) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            return mapper.readValue(new File(filename), GameData.class);
+        } catch (JsonGenerationException e) {
+            System.out.println("Error generating JSON from GameData");
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            System.out.println("Error mapping JSON from GameData");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error opening file " + filename + " for reading");
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /* TODO */
@@ -49,5 +102,38 @@ public class GameData {
      */
     public static ArrayList<ArrayList<ArrayList<Room>>> deserializeMap(String json) {
         return null;
+    }
+
+    /* Getters and setters, needed for ObjectMapper to recognize fields and map them in JSON */
+    public long getSeed() {
+        return this.seed;
+    }
+
+    public void setSeed(long seed) {
+        this.seed = seed;
+    }
+
+    public Level getCurrentLevel() {
+        return this.currentLevel;
+    }
+
+    public void setCurrentLevel(Level currentLevel) {
+        this.currentLevel = currentLevel;
+    }
+
+    public Character getPlayer() {
+        return this.player;
+    }
+
+    public void setPlayer(Character player) {
+        this.player = player;
+    }
+
+    public ArrayList<Level> getLevels() {
+        return this.levels;
+    }
+
+    public void setLevels(ArrayList<Level> levels) {
+        this.levels = levels;
     }
 }

@@ -8,6 +8,12 @@ import com.tloj.game.game.PlayerRoomVisitor;
 public class LootRoom extends Room {
     private Item item;
 
+    public LootRoom(Coordinates coordinates) {
+        super(coordinates);
+        this.item = Item.getRandomItem();
+        this.locked = false;
+    }
+
     public LootRoom(Coordinates coordinates, boolean locked) {
         super(coordinates);
         this.item = Item.getRandomItem();

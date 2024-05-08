@@ -3,6 +3,8 @@ package com.tloj.game.game;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.StartRoom;
@@ -11,6 +13,7 @@ import com.tloj.game.utilities.Coordinates;
 
 public class Level {
     private int levelNumber;
+    @JsonProperty
     private ArrayList<ArrayList<Room>> rooms;
     private StartRoom startRoom;
 
@@ -45,6 +48,7 @@ public class Level {
         return this.levelNumber;
     }
 
+    @JsonIgnore
     public Stream<ArrayList<Room>> getRoomStream() {
         return this.rooms.stream();
     }

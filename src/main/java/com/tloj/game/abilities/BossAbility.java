@@ -2,7 +2,7 @@ package com.tloj.game.abilities;
 
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.effects.WeaponEffect;
-import com.tloj.game.entities.bosses.Boss;
+import com.tloj.game.entities.Boss;
 
 
 /**

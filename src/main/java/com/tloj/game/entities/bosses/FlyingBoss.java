@@ -4,6 +4,7 @@ import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.abilities.DodgeSlowAttackFlying;
 import com.tloj.game.collectables.items.WeaponShard;
+import com.tloj.game.entities.Boss;
 
 /**
  * Represents the FlyingBoss Boss entity in the game.<br>
@@ -18,8 +19,6 @@ import com.tloj.game.collectables.items.WeaponShard;
  * @see DodgeEvenRollAttack
  * @see WeaponShard
  */
-
-
 public class FlyingBoss extends Boss{
     public static final int HP = 80;
     public static final int ATTACK = 10;

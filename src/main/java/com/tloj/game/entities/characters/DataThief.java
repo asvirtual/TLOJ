@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Steal;
 import com.tloj.game.utilities.Coordinates;
@@ -65,7 +66,7 @@ public class DataThief extends Character {
             MANA,
             MAX_WEIGHT,
             MONEY,
-            null,
+            new NanoDirk(),
             position
         );
 

@@ -5,10 +5,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.entities.bosses.Boss;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
@@ -16,6 +20,16 @@ import com.tloj.game.skills.CharacterSkill;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 
+
+// Needed to avoid circular references with Weapon when serializing/deserializing 
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.IntSequenceGenerator.class, 
+  property = "@id")
+// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.CLASS, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "@class")
 
 /**
  * Abstract class to represent a character in the game.<br>
@@ -96,7 +110,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.money = money;
         this.inventory = inventory;
         this.weapon = weapon;
-        this.weapon.assignTo(this);
+        if (weapon != null) this.weapon.assignTo(this);
     }
 
     /** 
@@ -133,7 +147,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.money = money;
         this.inventory = new ArrayList<Item>();
         this.weapon = weapon;
-        this.weapon.assignTo(this);
+        if (weapon != null) this.weapon.assignTo(this);
     }
 
     public Weapon getWeapon() {
@@ -226,6 +240,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return true;
     }
 
+    @JsonIgnore
     public Stream<Item> getInventoryStream() {
         return this.inventory.stream();
     }

@@ -2,6 +2,7 @@ package com.tloj.game.entities.bosses;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.TakeHalfDamage;
+import com.tloj.game.entities.Boss;
 
 /**
  * Represents the FlyingBoss Boss entity in the game.<br>

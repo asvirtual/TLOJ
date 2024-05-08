@@ -1,6 +1,7 @@
 package com.tloj.game.effects;
 
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.Weapon;
 
 

@@ -3,11 +3,14 @@ package com.tloj.game.game;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
+import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
-import com.tloj.game.entities.bosses.Boss;
 import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
@@ -39,12 +42,14 @@ public class Game implements CharacterObserver {
     }
     
     public Game(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
+        this.player = player;
         this.levels = levels;
         this.currentLevel = currentLevel;
         this.controller = Controller.getInstance();
         this.seed = seed;
     }
 
+    @JsonIgnore
     public GameData getGameData() {
         return new GameData(
             this.seed,
