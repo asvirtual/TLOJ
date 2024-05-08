@@ -4,7 +4,8 @@ import com.tloj.game.collectables.Weapon;
 
 /**
  * Represents the CyberKatana Weapon in the game.<br>
- * The CyberKatana is a light but sharp blade that can be found in the game. It can inflicts great damage, but it has no ability<br>
+ * The CyberKatana is a light but sharp blade that can be found in the game.<br>
+ * It comes without an effect. <br>
  * It weighs {@value #WEIGHT}, and is equipped with a D{@value #DICE_FACES}
  * @see LaserBlade
  * @see PulseStaff
@@ -18,5 +19,10 @@ public class CyberKatana extends Weapon {
 
     public CyberKatana() {
         super(WEIGHT, DICE_FACES); 
+    }
+
+    @Override
+    public String toString() {
+        return "Cyber Katana";
     }
 }

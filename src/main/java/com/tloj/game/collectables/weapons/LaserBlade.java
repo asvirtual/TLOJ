@@ -20,4 +20,9 @@ public class LaserBlade extends Weapon {
     public LaserBlade() {
         super(WEIGHT, DICE_FACES); 
     }
+
+    @Override
+    public String toString() {
+        return "Laser Blade";
+    }
 }

@@ -24,4 +24,9 @@ public class CyberGoblin extends Mob {
     public CyberGoblin(Coordinates position, int lvl) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
     }
+
+    @Override
+    public String toString() {
+        return "CyberGoblin";
+    }
 }

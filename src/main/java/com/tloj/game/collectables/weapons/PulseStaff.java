@@ -23,4 +23,9 @@ public class PulseStaff extends Weapon {
         super(WEIGHT, DICE_FACES);
         this.effect = new ManaAttackBooster(this); 
     }
+
+    @Override
+    public String toString() {
+        return "Pulse Staff";
+    }
 }

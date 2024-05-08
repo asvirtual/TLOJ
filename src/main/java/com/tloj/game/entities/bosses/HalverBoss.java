@@ -32,4 +32,9 @@ public class HalverBoss extends Boss{
         this.ability = new TakeHalfDamage(this);
     }
 
+    @Override
+    public String toString() {
+        return "Leth, Halver Lord of the Dice";
+    }
+
 }
