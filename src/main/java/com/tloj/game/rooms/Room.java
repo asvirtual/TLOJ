@@ -5,6 +5,7 @@ import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public abstract class Room {
+    public static final int SCORE_DROP = 15;
     protected Coordinates coordinates;
     protected boolean visited;
     protected boolean cleared;
@@ -27,11 +28,17 @@ public abstract class Room {
         return coordinates;
     }
 
-    protected void roomCleared() {
+    public boolean isVisited() {
+        return visited;
+    }
+    public boolean isCleared() {
+        return cleared;
+    }
+    public void roomCleared() {
         this.cleared = true;
     }
 
-    protected void roomVisited() {
+    public void roomVisited() {
         this.visited = true;
     }
 }

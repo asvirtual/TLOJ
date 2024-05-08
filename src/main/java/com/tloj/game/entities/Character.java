@@ -1,13 +1,17 @@
 package com.tloj.game.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.Dice;
 
 
 /**
@@ -18,11 +22,21 @@ import com.tloj.game.utilities.Coordinates;
  * @see CombatEntity
 */
 public abstract class Character extends CombatEntity implements MovingEntity {
+    public static final int REQ_XP = 10;
+    /**
+     * Dice faces used to level up hp, mana, attack and defense
+     */
+    public static final int D5 = 5;
+    public static final int D3 = 3;
+    
     /** Used for abilities */
     protected int mana; 
     protected int maxMana;
     /** Experience points, needed to level up */
     protected int xp;
+
+    /** Experience points required */
+    protected int requiredXp;
     /** Current level */
     protected int lvl;
     /** The maximum weight a Character can carry. The sum of the items' weight in the {@link inventory} shall be lower or equal than this field */
@@ -34,6 +48,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     protected Object ability;
     protected Object passiveAbility;
+    protected CharacterObserver observer;
 
     /**
      * Constructor to create a Character from loaded data<br>
@@ -42,6 +57,9 @@ public abstract class Character extends CombatEntity implements MovingEntity {
      * @param def The character's defense points<br>
      * @param mana The character's mana points<br>
      * @param xp The character's experience points<br>
+     * @param requiredXp The character's required experience points<br>
+     * @param D5 The dice faces used to level up hp, mana<br>
+     * @param D3 The dice faces used to level up attack, defense<br>
      * @param lvl The character's level<br>
      * @param maxWeight The character's maximum weight capacity<br>
      * @param money The character's money<br>
@@ -73,6 +91,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = mana;
         this.maxMana = mana;
         this.xp = xp;
+        this.requiredXp = REQ_XP;
         this.lvl = lvl;
         this.maxWeight = maxWeight;
         this.money = money;
@@ -186,10 +205,29 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public void addInventoryItem(Item item) {
         this.inventory.add(item);
+        this.sortInventory();
     }
 
     public Stream<Item> getInventoryStream() {
         return this.inventory.stream();
+    }
+
+    /*
+     * TODO: Implement a better sorting algorithm to sort items by type
+     */
+    private void sortInventory() {
+        Collections.sort(inventory, new Comparator<Item>() {
+            @Override
+            public int compare(Item item1, Item item2) {
+                if (item1 instanceof Weapon && !(item2 instanceof Weapon)) {
+                    return -1;
+                } else if (!(item1 instanceof Weapon) && item2 instanceof Weapon) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
     }
 
     @Override
@@ -230,4 +268,32 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public void useItem(ConsumableItem item) {
         item.consume(this);
     }
+
+    public void addXp(int amount) {
+        this.xp += amount;
+        if (this.xp >= this.requiredXp) this.levelUp();
+    }
+
+    public void reqXpUpdate() {
+        this.requiredXp += (REQ_XP * lvl);
+    }
+
+    public void levelUp(){
+        Dice fiveDice = new Dice(D5);
+        Dice threeDice = new Dice(D3);
+
+        this.lvl++;
+        this.xp = 0;
+        this.reqXpUpdate();
+        this.maxHp += fiveDice.roll();
+        this.hp = this.maxHp;
+        this.maxMana += fiveDice.roll();
+        this.mana = this.maxMana;
+        this.atk += threeDice.roll();
+        this.def += threeDice.roll();
+
+        this.observer.levelUp();
+    }
+
+
 }

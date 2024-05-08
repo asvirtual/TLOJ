@@ -164,10 +164,6 @@ class AttackCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Attack the enemy in the room
-        */ 
         try {
             this.game.playerAttack();
         } catch (IllegalStateException e) {
