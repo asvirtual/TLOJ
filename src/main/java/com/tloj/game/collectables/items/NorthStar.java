@@ -33,5 +33,10 @@ public class NorthStar extends PurchasableItem {
     public double getDropChance() {
         return DROP_CHANCE;
     }
+
+    @Override
+    public String toString() {
+        return "North Star";
+    }
 }
 

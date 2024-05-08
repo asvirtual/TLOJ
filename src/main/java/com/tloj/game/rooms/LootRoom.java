@@ -9,11 +9,10 @@ public class LootRoom extends Room {
     private Item item;
     private boolean locked;
 
-    public LootRoom(Coordinates coordinates, Item item, boolean locked) {
+    public LootRoom(Coordinates coordinates, boolean isLocked) {
         super(coordinates);
-        this.item = item;
-        this.locked = locked;
-    }
+        this.item = Item.getRandomItem();
+        this.isLocked = isLocked;
 
     public boolean isLocked() {
         return this.locked;
@@ -33,5 +32,15 @@ public class LootRoom extends Room {
     public void exit() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+        this.item = null;
+    }
+
+    public Item getItem() {
+        return this.item;
     }
 }

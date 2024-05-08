@@ -40,5 +40,10 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
     public double getDropChance() {
         return DROP_CHANCE;
     }
+
+    @Override
+    public String toString() {
+        return "Attack Elixir";
+    }
 }
 

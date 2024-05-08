@@ -3,6 +3,7 @@ package com.tloj.game.rooms;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
+import com.tloj.game.entities.Character;
 
 
 public class TrapRoom extends Room {
@@ -16,6 +17,10 @@ public class TrapRoom extends Room {
     @Override
     public RoomType getType() {
         return RoomType.TRAP_ROOM;
+    }
+
+    public void triggerTrap(Character character) {
+        this.effect.applyEffect(character);
     }
 
     @Override

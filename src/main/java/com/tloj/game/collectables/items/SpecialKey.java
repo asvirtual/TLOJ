@@ -34,5 +34,10 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     public void consume(Character consumer) {
         // Implementation of consume method goes here
     }
+
+    @Override
+    public String toString() {
+        return "Special Key";
+    }
 }
 

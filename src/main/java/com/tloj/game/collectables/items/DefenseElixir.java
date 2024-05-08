@@ -39,5 +39,10 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
     public double getDropChance() {
         return DROP_CHANCE;
     }
+
+    @Override
+    public String toString() {
+        return "Defense Elixir";
+    }
 }
 

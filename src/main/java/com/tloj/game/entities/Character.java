@@ -205,14 +205,15 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.inventory.remove(index);
     }
 
-    public void addInventoryItem(Item item) {
+    public boolean addInventoryItem(Item item) {
         if (this.getWeight() + item.getWeight() > this.maxWeight) {
             System.out.println("You can't carry more weight, drop something first.");
-            return;
+            return false;
         }
         
         this.inventory.add(item);
         this.sortInventory();
+        return true;
     }
 
     public Stream<Item> getInventoryStream() {

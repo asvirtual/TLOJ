@@ -45,5 +45,10 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     public double getDropChance() {
         return DROP_CHANCE;
     }
+
+    @Override
+    public String toString() {
+        return "Ragu'";
+    }
 }
 

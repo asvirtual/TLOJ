@@ -2,7 +2,6 @@ package com.tloj.game.game;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
-import com.tloj.game.skills.CharacterSkill;
 
 
 /**
