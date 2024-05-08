@@ -22,6 +22,7 @@ public class ManaPotion extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0.1;
     private static final int PRICE = 7;
     private static final int MANA_RESTORE = 10;
+    private static final double DROP_CHANCE = 0.18;
 
     public ManaPotion() {
         super(PRICE, WEIGHT); 
@@ -33,5 +34,9 @@ public class ManaPotion extends PurchasableItem implements ConsumableItem {
         if (consumer.getMana() > consumer.getMaxMana()) consumer.setMana(consumer.getMaxMana());
 
         consumer.removeInventoryItem(this); 
+    }
+    @Override
+    public double getDropChance() {
+        return DROP_CHANCE;
     }
 }

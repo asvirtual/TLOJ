@@ -18,9 +18,14 @@ package com.tloj.game.collectables;
 public class WeaponShard extends PurchasableItem {
     private static final double WEIGHT = 0.5;
     private static final int PRICE = 15;
+    private static final double DROP_CHANCE = 0.6;
 
     public WeaponShard() {
         super(PRICE, WEIGHT); 
+    }
+    @Override
+    public double getDropChance(){
+        return DROP_CHANCE;
     }
 }
 
