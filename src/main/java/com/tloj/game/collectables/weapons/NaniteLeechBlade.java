@@ -23,4 +23,9 @@ public class NaniteLeechBlade extends Weapon {
         super(WEIGHT, DICE_FACES); 
         this.effect = new HealthAbsorber(this);
     }
+
+    @Override
+    public String toString() {
+        return "Nanite Leech Blade";
+    }
 }

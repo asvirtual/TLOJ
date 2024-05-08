@@ -33,4 +33,9 @@ public class FlyingBoss extends Boss{
         this.ability = new DodgeSlowAttackFlying(this);
         this.drop = new WeaponShard();
     }
+
+    @Override
+    public String toString() {
+        return "Flygande, Flying Lord of the Dice";
+    }
 }
