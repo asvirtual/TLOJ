@@ -3,6 +3,8 @@ package com.tloj.game.game;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.tloj.game.collectables.Item;
+import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.bosses.Boss;
@@ -82,6 +84,7 @@ public class Game implements CharacterObserver {
             
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
         if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
+        if (this.currentLevel.getRoom(newCoordinates).isLocked()) throw new IllegalArgumentException("Room is locked");
         
         /**
          * updats player score if the room is cleared
@@ -135,6 +138,14 @@ public class Game implements CharacterObserver {
     }
 
     public void dropItem(int index) {
+        Item item = this.player.getInventoryItem(index);
+
+        if (item instanceof PurchasableItem)
+            this.player.setMoney(
+                this.player.getMoney() + 
+                ((PurchasableItem) this.player.getInventoryItem(index)).getPrice()
+            );
+
         this.player.removeInventoryItem(index);
     }
 

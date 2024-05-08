@@ -63,11 +63,10 @@ public class PlayerRoomVisitor implements Visitor {
         room.visit();
         Item item = room.getItem();
         System.out.println("You've found a " + item + "!");
-        if(this.player.addInventoryItem(item)) {
+        if (this.player.addInventoryItem(item)) {
             this.controller.setState(GameState.MOVING);
             room.clear();
-        }
-        else {
+        } else {
             this.controller.setState(GameState.LOOTING_ROOM);
         }
     }

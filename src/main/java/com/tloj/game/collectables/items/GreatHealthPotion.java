@@ -25,9 +25,10 @@ public class GreatHealthPotion extends PurchasableItem implements ConsumableItem
     private static final int PRICE = 20;
     private static final int HEAL_AMOUNT = 50;
     private static final double DROP_CHANCE = 0.13;
+    private static final int DROP_MONEY = PRICE / 2;
 
     public GreatHealthPotion() {
-        super(PRICE, WEIGHT); 
+        super(PRICE, WEIGHT, DROP_MONEY); 
     }
     
     @Override

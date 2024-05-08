@@ -1,6 +1,6 @@
 package com.tloj.game.collectables.items;
 
-import com.tloj.game.collectables.PurchasableItem;
+import com.tloj.game.collectables.Item;
 
 /**
  * Represents the Consumable Item NorthStar in the game.<br>
@@ -17,18 +17,15 @@ import com.tloj.game.collectables.PurchasableItem;
  * @see Ragu
  * @see SpecialKey
 */
-public class NorthStar extends PurchasableItem {
+public class NorthStar extends Item {
     private static final double WEIGHT = 0;
-    private static final int PRICE = 0;
     private static final double DROP_CHANCE = 0.025;
+    private static final int DROP_MONEY = 50;
 
     public NorthStar() {
-        super(PRICE, WEIGHT); 
+        super(WEIGHT, DROP_MONEY); 
     }
 
-    public NorthStar(NorthStar northStar) {
-        super(PRICE, WEIGHT);
-    }
     @Override
     public double getDropChance() {
         return DROP_CHANCE;

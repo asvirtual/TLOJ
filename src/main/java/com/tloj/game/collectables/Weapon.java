@@ -17,13 +17,15 @@ import com.tloj.game.entities.Character;
  * @see WeaponEffect
 */
 public abstract class Weapon extends Item {
+    private static final int DROP_MONEY = 0;
+
     protected WeaponEffect effect;
     protected Dice dice;
     protected Character character;
     protected int lvl;
 
     public Weapon(double weight, int diceFaces) {
-        super(weight);
+        super(weight, DROP_MONEY);
         this.dice = new Dice(diceFaces);
         this.lvl = 0;
     }

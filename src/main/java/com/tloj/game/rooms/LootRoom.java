@@ -7,7 +7,6 @@ import com.tloj.game.game.PlayerRoomVisitor;
 
 public class LootRoom extends Room {
     private Item item;
-    private boolean locked;
 
     public LootRoom(Coordinates coordinates, boolean locked) {
         super(coordinates);
@@ -15,8 +14,10 @@ public class LootRoom extends Room {
         this.locked = locked;
     }
 
-    public boolean isLocked() {
-        return this.locked;
+    public LootRoom(Coordinates coordinates, boolean locked, Item item) {
+        super(coordinates);
+        this.item = item;
+        this.locked = locked;
     }
 
     @Override

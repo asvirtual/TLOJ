@@ -148,6 +148,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return weight;
     }
 
+    public int getMoney() {
+        return this.money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
     public void pay(int amount) {
         this.money -= amount;
         if (this.money < 0) this.money = 0;
@@ -199,10 +207,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public void removeInventoryItem(Item item) {
         this.inventory.remove(item);
+        this.sortInventory();
     }
 
     public void removeInventoryItem(int index) {
         this.inventory.remove(index);
+        this.sortInventory();
     }
 
     public boolean addInventoryItem(Item item) {
@@ -227,13 +237,9 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         Collections.sort(inventory, new Comparator<Item>() {
             @Override
             public int compare(Item item1, Item item2) {
-                if (item1 instanceof Weapon && !(item2 instanceof Weapon)) {
-                    return -1;
-                } else if (!(item1 instanceof Weapon) && item2 instanceof Weapon) {
-                    return 1;
-                } else {
-                    return 0;
-                }
+                if (item1 instanceof Weapon && !(item2 instanceof Weapon)) return -1;
+                else if (!(item1 instanceof Weapon) && item2 instanceof Weapon) return 1;
+                else return 0;
             }
         });
     }

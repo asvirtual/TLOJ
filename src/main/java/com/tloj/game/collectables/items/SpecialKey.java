@@ -25,9 +25,10 @@ import com.tloj.game.entities.Character;
 public class SpecialKey extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0;
     private static final int PRICE = 0;
+    private static final int DROP_MONEY = PRICE / 2;
 
     public SpecialKey() {
-        super(PRICE, WEIGHT); 
+        super(PRICE, WEIGHT, DROP_MONEY); 
     }
     
     @Override

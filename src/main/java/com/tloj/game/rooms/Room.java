@@ -9,6 +9,7 @@ public abstract class Room {
     protected Coordinates coordinates;
     protected boolean visited;
     protected boolean cleared;
+    protected boolean locked;
 
     protected Room(Coordinates coordinates) {
         this.visited = false;
@@ -22,6 +23,10 @@ public abstract class Room {
     
     public Coordinates getCoordinates() {
         return coordinates;
+    }
+
+    public boolean isLocked() {
+        return this.locked;
     }
 
     public boolean isVisited() {

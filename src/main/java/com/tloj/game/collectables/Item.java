@@ -19,7 +19,10 @@ import com.tloj.game.collectables.items.WeaponShard;
  */
 
  public abstract class Item {
-    enum ConsumableItems{
+    protected double weight;
+    protected int dropMoney;
+    
+    enum ConsumableItems {
         HEALTH_POTION(new HealthPotion()),
         GREAT_HEALTH_POTION(new GreatHealthPotion()),
         MANA_POTION(new ManaPotion()),
@@ -38,10 +41,9 @@ import com.tloj.game.collectables.items.WeaponShard;
         }
     }
 
-    protected double weight;
-
-    protected Item(double weight) {
+    protected Item(double weight, int dropMoney) {
         this.weight = weight;
+        this.dropMoney = dropMoney;
     }
 
     public double getWeight() {
@@ -50,6 +52,10 @@ import com.tloj.game.collectables.items.WeaponShard;
 
     public double getDropChance() {
         return 0;
+    }
+
+    public int getDropMoney() {
+        return dropMoney;
     }
 
     public static Item getRandomItem() {
@@ -64,11 +70,9 @@ import com.tloj.game.collectables.items.WeaponShard;
         for (ConsumableItems i : ConsumableItems.values()) {
             Item item = i.item;
             cumulativeProbability += item.getDropChance();
-            if (randomValue <= cumulativeProbability) {
-                return item;
-            }
+            if (randomValue <= cumulativeProbability) return item;
         }
 
-        return null; // should never reach here if probabilities sum to 1
+        return null; // Should never reach here if probabilities sum to 1
     }
 }

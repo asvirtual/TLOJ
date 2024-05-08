@@ -25,9 +25,10 @@ public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
     private static final int PRICE = 20;
     private static final int MANA_RESTORE = 30;
     private static final double DROP_CHANCE = 0.13;
+    private static final int DROP_MONEY = PRICE / 2;
 
     public GreatManaPotion() {
-        super(PRICE, WEIGHT); 
+        super(PRICE, WEIGHT, DROP_MONEY); 
     }
     
     @Override

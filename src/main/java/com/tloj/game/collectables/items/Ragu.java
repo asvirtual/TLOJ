@@ -25,10 +25,11 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     private static final int PRICE = 0;
     private static final int STAT_BOOST = 3;
     private static final double DROP_CHANCE = 0.075;
+    private static final int DROP_MONEY = PRICE / 2;
     
 
     public Ragu() {
-        super(PRICE, WEIGHT); 
+        super(PRICE, WEIGHT, DROP_MONEY); 
     }
     
     @Override
