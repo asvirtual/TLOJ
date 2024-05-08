@@ -8,6 +8,8 @@ import com.tloj.game.game.PlayerAttack;
 
 
 public abstract class Boss extends Mob {
+
+    public static final int SCORE_DROP = 50;
     protected BossAbility ability;
     protected Item drop;
 

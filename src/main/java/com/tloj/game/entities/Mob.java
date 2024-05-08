@@ -10,6 +10,9 @@ import com.tloj.game.game.MobAttack;
  * Mobs are entities that can be attacked and defeated by the player. <br>
  */
 public abstract class Mob extends CombatEntity {
+
+    public static final int SCORE_DROP = 10;
+    /** The mob's level */
     protected int lvl;
     /** How many xp points are gained by the player upon defeating the Mob */
     protected int xpDrop;

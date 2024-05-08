@@ -78,10 +78,19 @@ public class Game {
     public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException, IllegalStateException {
         if (this.controller.getState() == GameState.FIGHTING_BOSS || this.controller.getState() == GameState.FIGHTING_MOB)
             throw new IllegalStateException("Cannot move while fighting");
-
+            
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
         if (!this.areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
         
+        /**
+         * updats player score if the room is cleared
+         */
+        if (!this.getCurrentRoom().isCleared())
+        {
+            this.getCurrentRoom().roomCleared();
+            this.updateScore(Room.SCORE_DROP);
+        }
+
         this.player.move(newCoordinates);
         PlayerRoomVisitor PlayerRoomVisitor = new PlayerRoomVisitor(this.player);
         this.currentLevel.getRoom(newCoordinates).accept(PlayerRoomVisitor);
@@ -116,9 +125,11 @@ public class Game {
         */
         if (mob instanceof Boss) {
             System.out.println("You've defeated the Boss!");
+            this.updateScore(Boss.SCORE_DROP);
             this.controller.setState(GameState.MOVING);
         } else {
             System.out.println("You've defeated the enemy!");
+            this.updateScore(Mob.SCORE_DROP);
             this.controller.setState(GameState.MOVING);
         }
 
