@@ -1,4 +1,4 @@
-package com.tloj.game.utilities;
+git package com.tloj.game.utilities;
 
 public class Constants {
 

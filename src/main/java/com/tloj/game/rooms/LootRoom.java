@@ -30,4 +30,12 @@ public class LootRoom extends Room {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
     }
+
+    @Override
+    public String toString() {
+        if(this.isVisited())
+            return "\u03C6" + " ";
+        else
+            return "\u00A0" + " ";
+    }
 }
