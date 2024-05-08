@@ -6,6 +6,11 @@ import com.tloj.game.collectables.Item;
 import com.tloj.game.utilities.Dice;
 
 
+/**
+ * Class that represents the Steal skill, which allows the character to steal a random item and add it to the inventory with a 40% probability. <br>
+ * It is paired with the {@link DataThief} class. <br>
+ */
+
 public class Steal extends CharacterSkill{
     public Steal(Character character) {
         super(character);
