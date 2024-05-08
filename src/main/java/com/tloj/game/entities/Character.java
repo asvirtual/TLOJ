@@ -225,6 +225,11 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         System.out.println("You gain " + mob.xpDrop + " experience points and " + mob.moneyDrop + " money");
         this.xp += mob.xpDrop;
         this.money += mob.moneyDrop;
+
+        if (mob instanceof Boss) {
+            Boss boss = (Boss) mob;
+            this.addInventoryItem(boss.getDrop());
+        }    
     }
 
     public void useItem(ConsumableItem item) {

@@ -187,10 +187,11 @@ class SkillCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Activate the skill
-        */ 
+        try {
+            this.game.usePlayerSkill();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 }
 
@@ -556,7 +557,6 @@ class NewGameCommand extends GameCommand {
     public void execute() {
         Controller controller = Controller.getInstance();
         
-
         if (controller.getState() != GameState.MAIN_MENU) {
             System.out.println("You have to go back to the main menu to use this command");
             return;

@@ -92,7 +92,7 @@ public class Game {
             (this.controller.getState() != GameState.FIGHTING_BOSS && this.controller.getState() != GameState.FIGHTING_MOB) ||
             (this.getCurrentRoom().getType() != RoomType.BOSS_ROOM && this.getCurrentRoom().getType() != RoomType.HOSTILE_ROOM)
         )
-            throw new IllegalStateException("Cannot attack while not fighting");
+            throw new IllegalStateException("Cannot attack outside of a fight");
 
         /** 
          * Player in a HostileRoom/BossRoom, attack its Mob/Boss
@@ -124,6 +124,16 @@ public class Game {
 
         this.player.lootMob(mob);
         room.removeMob();
+    }
+
+    public void usePlayerSkill() throws IllegalStateException {
+        if (
+            (this.controller.getState() != GameState.FIGHTING_BOSS && this.controller.getState() != GameState.FIGHTING_MOB) ||
+            (this.getCurrentRoom().getType() != RoomType.BOSS_ROOM && this.getCurrentRoom().getType() != RoomType.HOSTILE_ROOM)
+        )
+            throw new IllegalStateException("Cannot use skill outside of a fight");
+
+        // this.player.useSkill();
     }
 
     public boolean areCoordinatesValid(Coordinates coordinates) {

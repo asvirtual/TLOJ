@@ -24,6 +24,10 @@ public abstract class Boss extends Mob {
         super(hp, atk, def, diceFaces, lvl, xpDrop, moneyDrop, position);
     }
 
+    public Item getDrop() {
+        return this.drop;
+    }
+ 
     @Override
     public void die() {
         
