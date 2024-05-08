@@ -1,7 +1,7 @@
 package com.tloj.game.effects;
 
-import com.tloj.game.collectables.NaniteLeechBlade;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.game.PlayerAttack;
 
 

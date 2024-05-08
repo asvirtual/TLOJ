@@ -1,5 +1,6 @@
-package com.tloj.game.entities;
+package com.tloj.game.entities.mobs;
 
+import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
 
 

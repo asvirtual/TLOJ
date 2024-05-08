@@ -1,4 +1,4 @@
-package com.tloj.game.entities;
+package com.tloj.game.entities.bosses;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.TakeHalfDamage;

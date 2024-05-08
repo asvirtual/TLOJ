@@ -17,7 +17,7 @@ public abstract class Room {
     }
 
     public abstract RoomType getType();
-    public abstract void accept(PlayerRoomVisitor PlayerRoomVisitor);
+    public abstract void accept(PlayerRoomVisitor visitor);
     public abstract void exit();
     
     public Coordinates getCoordinates() {

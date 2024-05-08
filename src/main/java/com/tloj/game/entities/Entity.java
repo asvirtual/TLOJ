@@ -1,5 +1,6 @@
 package com.tloj.game.entities;
 
+import com.tloj.game.entities.bosses.Boss;
 import com.tloj.game.utilities.Coordinates;
 
 

@@ -1,9 +1,9 @@
-package com.tloj.game.entities;
+package com.tloj.game.entities.bosses;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.DodgeEvenRollAttack;
+import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.abilities.BossAbility;
-import com.tloj.game.collectables.WeaponShard;
 
 
 /**

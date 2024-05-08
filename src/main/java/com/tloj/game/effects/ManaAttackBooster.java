@@ -1,7 +1,7 @@
 package com.tloj.game.effects;
 
-import com.tloj.game.collectables.PulseStaff;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Dice;

@@ -1,26 +1,27 @@
-package com.tloj.game.entities;
+package com.tloj.game.entities.characters;
 
 import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.entities.Character;
+import com.tloj.game.skills.Focus;
 import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.skills.Daburu;
 
-public class NeoSamurai extends Character {
+public class MechaKnight extends Character {
     
-    private static final int HP = 20;
-    private static final int ATTACK = 7;
-    private static final int DEFENSE = 1;
-    private static final int MANA = 10;
+    private static final int HP = 30;
+    private static final int ATTACK = 2;
+    private static final int DEFENSE = 6;
+    private static final int MANA = 5;
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 15;
 
     /** 
-     * Constructor to create a NeoSamurai from loaded data  
+     * Constructor to create a MechaKnight from loaded data  
      * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
     */
-    public NeoSamurai(
+    public MechaKnight(
         int hp,
         int atk,
         int def,
@@ -30,6 +31,8 @@ public class NeoSamurai extends Character {
         int maxWeight,
         int money,
         Weapon weapon,
+        Object ability,
+        Object passiveAbility,
         ArrayList<Item> inventory,
         Coordinates position
     ) {
@@ -47,16 +50,15 @@ public class NeoSamurai extends Character {
             position
         );
 
-        this.skill = new Daburu(this);
+        this.skill = new Focus(this);
     }    
 
     /** 
-     * Constructor to create an entirely new NeoSamurai 
-     * @param position The initial position of the NeoSamurai
-     * @param lvl The level of the NeoSamurai
+     * Constructor to create an entirely new MechaKnight 
+     * @param position The initial position of the MechaKnight
+     * @param lvl The level of the MechaKnight
     */
-
-    public NeoSamurai(Coordinates position, int lvl) {
+    public MechaKnight(Coordinates position, int lvl) {        
         super(
             HP,
             ATTACK,
@@ -68,9 +70,8 @@ public class NeoSamurai extends Character {
             position
         );
 
-        this.skill = new Daburu(this);
+        this.skill = new Focus(this);
     }
 
 
 }
-

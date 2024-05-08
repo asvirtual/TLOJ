@@ -1,26 +1,27 @@
-package com.tloj.game.entities;
+package com.tloj.game.entities.mobs;
 
+import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
 
 
 /**
- * Represents the JetBat Mob entity in the game.<br>
- * The JetBat is a flying enemy that can be found in the game.<br>
+ * Represents the CyberGoblin Mob entity in the game.<br>
+ * The CyberGoblin is a weak but quick enemy that can be found in the game. It has average health and low defense, but inflicts some damage<br>
  * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
  * @see Mob
- * @see CyberGoblin
+ * @see JetBat
  * @see JunkSlime
  * @see MechaRat
  */
-public class JetBat extends Mob {
-    private static final int HP = 6;
+public class CyberGoblin extends Mob {
+    private static final int HP = 10;
     private static final int ATTACK = 3;
     private static final int DEFENSE = 1;
     private static final int DICE_FACES = 6;
-    private static final int XP_DROP = 2;
-    private static final int MONEY_DROP = 1;
+    private static final int XP_DROP = 3;
+    private static final int MONEY_DROP = 2;
 
-    public JetBat(Coordinates position, int lvl) {
+    public CyberGoblin(Coordinates position, int lvl) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
     }
 }

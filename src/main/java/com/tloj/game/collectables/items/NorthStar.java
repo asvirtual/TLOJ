@@ -1,4 +1,6 @@
-package com.tloj.game.collectables;
+package com.tloj.game.collectables.items;
+
+import com.tloj.game.collectables.PurchasableItem;
 
 /**
  * Represents the Consumable Item NorthStar in the game.<br>

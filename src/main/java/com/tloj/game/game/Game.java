@@ -5,7 +5,7 @@ import java.util.Date;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
-import com.tloj.game.entities.Boss;
+import com.tloj.game.entities.bosses.Boss;
 import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;

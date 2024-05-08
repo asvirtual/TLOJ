@@ -8,6 +8,7 @@ import java.util.stream.Stream;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.entities.bosses.Boss;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.skills.CharacterSkill;

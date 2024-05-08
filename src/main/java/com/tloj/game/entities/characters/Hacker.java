@@ -1,27 +1,27 @@
-package com.tloj.game.entities;
+package com.tloj.game.entities.characters;
 
 import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.skills.Steal;
+import com.tloj.game.entities.Character;
+import com.tloj.game.skills.CheatEngine;
 import com.tloj.game.utilities.Coordinates;
 
 
-public class DataThief extends Character {
-    
-    private static final int HP = 16;
-    private static final int ATTACK = 5;
+public class Hacker extends Character {
+    private static final int HP = 15;
+    private static final int ATTACK = 3;
     private static final int DEFENSE = 3;
-    private static final int MANA = 10;
+    private static final int MANA = 30;
     private static final int MAX_WEIGHT = 5;
-    private static final int MONEY = 0;
+    private static final int MONEY = 10;
 
     /** 
-     * Constructor to create a DataThief from loaded data  
+     * Constructor to create a Cheater from loaded data 
      * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
     */
-    public DataThief(
+    public Hacker(
         int hp,
         int atk,
         int def,
@@ -48,15 +48,15 @@ public class DataThief extends Character {
             position
         );
 
-        this.skill = new Steal(this);
+        this.skill = new CheatEngine(this);
     }    
 
     /** 
-     * Constructor to create an entirely new DataThief 
-     * @param position The initial position of the DataThief
-     * @param lvl The level of the DataThief
+     * Constructor to create an entirely new Cheater 
+     * @param position The initial position of the Cheater
+     * @param lvl The level of the Cheater
     */
-    public DataThief(Coordinates position, int lvl) {    
+    public Hacker(Coordinates position, int lvl) { 
         super(
             HP,
             ATTACK,
@@ -68,6 +68,9 @@ public class DataThief extends Character {
             position
         );
 
-        this.skill = new Steal(this);
+        this.skill = new CheatEngine(this);
     }
+
+
 }
+ 

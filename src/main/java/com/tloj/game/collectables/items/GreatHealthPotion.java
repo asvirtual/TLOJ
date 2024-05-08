@@ -1,5 +1,7 @@
-package com.tloj.game.collectables;
+package com.tloj.game.collectables.items;
 
+import com.tloj.game.collectables.ConsumableItem;
+import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 
 

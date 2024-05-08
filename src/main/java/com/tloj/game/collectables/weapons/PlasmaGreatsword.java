@@ -1,5 +1,6 @@
-package com.tloj.game.collectables;
+package com.tloj.game.collectables.weapons;
 
+import com.tloj.game.collectables.Weapon;
 
 /**
  * Represents the PlasmaGreatsword Weapon in the game.<br>

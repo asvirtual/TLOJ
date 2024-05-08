@@ -1,5 +1,15 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.collectables.items.AttackElixir;
+import com.tloj.game.collectables.items.DefenseElixir;
+import com.tloj.game.collectables.items.GreatHealthPotion;
+import com.tloj.game.collectables.items.GreatManaPotion;
+import com.tloj.game.collectables.items.HealthPotion;
+import com.tloj.game.collectables.items.Lockpick;
+import com.tloj.game.collectables.items.ManaPotion;
+import com.tloj.game.collectables.items.NorthStar;
+import com.tloj.game.collectables.items.Ragu;
+import com.tloj.game.collectables.items.WeaponShard;
 
 /**
  * An abstract class representing an item that can be found in the game<br>

@@ -1,26 +1,27 @@
-package com.tloj.game.entities;
+package com.tloj.game.entities.characters;
 
 import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.skills.CheatEngine;
+import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.skills.Daburu;
 
-
-public class Hacker extends Character {
-    private static final int HP = 15;
-    private static final int ATTACK = 3;
-    private static final int DEFENSE = 3;
-    private static final int MANA = 30;
+public class NeoSamurai extends Character {
+    
+    private static final int HP = 20;
+    private static final int ATTACK = 7;
+    private static final int DEFENSE = 1;
+    private static final int MANA = 10;
     private static final int MAX_WEIGHT = 5;
-    private static final int MONEY = 10;
+    private static final int MONEY = 15;
 
     /** 
-     * Constructor to create a Cheater from loaded data 
+     * Constructor to create a NeoSamurai from loaded data  
      * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
     */
-    public Hacker(
+    public NeoSamurai(
         int hp,
         int atk,
         int def,
@@ -47,15 +48,16 @@ public class Hacker extends Character {
             position
         );
 
-        this.skill = new CheatEngine(this);
+        this.skill = new Daburu(this);
     }    
 
     /** 
-     * Constructor to create an entirely new Cheater 
-     * @param position The initial position of the Cheater
-     * @param lvl The level of the Cheater
+     * Constructor to create an entirely new NeoSamurai 
+     * @param position The initial position of the NeoSamurai
+     * @param lvl The level of the NeoSamurai
     */
-    public Hacker(Coordinates position, int lvl) { 
+
+    public NeoSamurai(Coordinates position, int lvl) {
         super(
             HP,
             ATTACK,
@@ -67,9 +69,9 @@ public class Hacker extends Character {
             position
         );
 
-        this.skill = new CheatEngine(this);
+        this.skill = new Daburu(this);
     }
 
 
 }
- 
+
