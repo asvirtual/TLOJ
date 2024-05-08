@@ -4,6 +4,11 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
 
 
+/**
+ * Class that represents the Daburu (double from japanese) skill, which forces next attack to inflict double damage. <br>
+ * It is paired with the {@link NeoSamurai} class. <br>
+ */
+
 public class Daburu extends CharacterSkill{
     public Daburu(Character character) {
         super(character);
