@@ -9,10 +9,11 @@ public class LootRoom extends Room {
     private Item item;
     private boolean locked;
 
-    public LootRoom(Coordinates coordinates, boolean isLocked) {
+    public LootRoom(Coordinates coordinates, boolean locked) {
         super(coordinates);
         this.item = Item.getRandomItem();
-        this.isLocked = isLocked;
+        this.locked = locked;
+    }
 
     public boolean isLocked() {
         return this.locked;
