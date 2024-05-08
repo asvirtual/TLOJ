@@ -60,12 +60,6 @@ public abstract class Weapon extends Item {
      * @param target The target to hit
      * @see WeaponEffect#apply(Character, Mob)
      */
-    /* public void hit(Mob target) {
-        // If the weapon has an effect, try to apply it to the target, otherwise deal standard damage to the target
-        if (this.effect == null) target.takeDamage(this.diceRoll());
-        else this.effect.apply(this.character, target);
-    } */
-
     public void modifyAttack(PlayerAttack attack) {
         if (this.effect != null) this.effect.apply(attack);
         else attack.setWeaponRoll(this.diceRoll());
