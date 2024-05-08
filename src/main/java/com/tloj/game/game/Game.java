@@ -186,106 +186,6 @@ public class Game implements CharacterObserver {
         throw new UnsupportedOperationException("Unimplemented method 'onBossDefeated'");
     }
 
-    public static void main(String[] args) {
-
-        ArrayList<ArrayList<ArrayList<Room>>> map = new ArrayList<ArrayList<ArrayList<Room>>>();
-
-        ArrayList<ArrayList<Room>> level = new ArrayList<ArrayList<Room>>();
-
-        ArrayList<Room> row = new ArrayList<Room>();
-        HostileRoom h1 = new HostileRoom(new Coordinates(3, 0), null);
-        h1.visit();
-        HostileRoom h2 = new HostileRoom(new Coordinates(4, 0), null);
-        h2.visit();
-        row.add(null);
-        row.add(null);
-        row.add(null);
-        row.add(h1);
-        row.add(h2);
-        row.add(null);
-        level.add(row);
-
-        ArrayList<Room> row1 = new ArrayList<Room>();
-        LootRoom l1 = new LootRoom(new Coordinates(3, 1), null, false);
-        l1.visit();
-        row1.add(null);
-        row1.add(null);
-        row1.add(null);
-        row1.add(l1);
-        row1.add(null);
-        row1.add(null);
-        level.add(row1);
-
-        ArrayList<Room> row2 = new ArrayList<Room>();
-        TrapRoom t1 = new TrapRoom(new Coordinates(3, 2));
-        t1.visit();
-        row2.add(null);
-        row2.add(null);
-        row2.add(null);
-        row2.add(t1);
-        row2.add(null);
-        row2.add(null);
-        level.add(row2);
-
-        ArrayList<Room> row3 = new ArrayList<Room>();
-    
-        row3.add(null);
-        row3.add(null);
-        row3.add(null);
-        row3.add(null);
-        row3.add(null);
-        row3.add(null);
-        level.add(row3);
-
-        ArrayList<Room> row4 = new ArrayList<Room>();
-        StartRoom s1 = new StartRoom(new Coordinates(3, 4));
-        s1.visit();
-        row4.add(null);
-        row4.add(null);
-        row4.add(null);
-        row4.add(s1);
-        row4.add(null);
-        row4.add(null);
-        level.add(row4);
-
-    
-        ArrayList<Room> row5 = new ArrayList<Room>();
-        BossRoom b1 = new BossRoom(new Coordinates(2, 5), null);
-        b1.visit();
-        HealingRoom hl = new HealingRoom(new Coordinates(3, 5));
-        hl.visit();
-        row5.add(null);
-        row5.add(null);
-        row5.add(b1);
-        row5.add(hl);
-        row5.add(null);
-        row5.add(null);
-        level.add(row5);
-
-        map.add(level);
-
-        /*
-        for (int l = 0; l < Game.DEFAULT_LEVELS_COUNT; l++) {
-            ArrayList<ArrayList<Room>> level = new ArrayList<ArrayList<Room>>();
-
-            for (int i = 0; i < Game.DEFAULT_ROOMS_ROWS; i++) {
-                ArrayList<Room> row = new ArrayList<Room>();
-
-                for (int j = 0; j < Game.DEFAULT_ROOMS_COLS; j++) {
-                    row.add(new HostileRoom(new Coordinates(j, i), null));
-                }
-
-                level.add(row);    
-            }
-
-            map.add(level);
-        }
-        */
-
-        Game game = new Game(map);
-        game.printMap();
-    }
-
     public void printMap(){
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
@@ -294,8 +194,7 @@ public class Game implements CharacterObserver {
                     System.out.print("\u00A0" + " ");                    
                     continue;
                 }
-                //if (this.getCurrentRoom().equals(room)) {
-                if (i==3 && j==3) {
+                if (this.getCurrentRoom().equals(room)) {
                     System.out.print("\u0398" + " ");
                 } else {
                     

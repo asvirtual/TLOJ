@@ -29,9 +29,6 @@ public abstract class Room {
         return coordinates;
     }
 
-    public boolean isVisited() {
-        return visited;
-    }
     public boolean isCleared() {
         return cleared;
     }
