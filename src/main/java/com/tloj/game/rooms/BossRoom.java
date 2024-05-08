@@ -29,7 +29,7 @@ public class BossRoom extends HostileRoom {
     @Override
     public String toString() {
         if(this.isVisited())
-            return "\u03A9" + " ";
+            return "\u00DF" + " ";
         else
             return "\u00A0" + " ";
     }

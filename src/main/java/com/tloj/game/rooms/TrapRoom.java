@@ -28,7 +28,7 @@ public class TrapRoom extends Room {
     @Override
     public String toString() {
         if(this.isVisited())
-            return "\u2261" + " ";
+            return "\u2566" + " ";
         else
             return "\u00A0" + " ";
     }

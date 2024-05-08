@@ -184,6 +184,7 @@ public class Game implements CharacterObserver {
     public void onBossDefeated() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'onBossDefeated'");
+    }
 
     public static void main(String[] args) {
 
@@ -250,7 +251,9 @@ public class Game implements CharacterObserver {
     
         ArrayList<Room> row5 = new ArrayList<Room>();
         BossRoom b1 = new BossRoom(new Coordinates(2, 5), null);
+        b1.visit();
         HealingRoom hl = new HealingRoom(new Coordinates(3, 5));
+        hl.visit();
         row5.add(null);
         row5.add(null);
         row5.add(b1);

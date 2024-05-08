@@ -34,7 +34,7 @@ public class LootRoom extends Room {
     @Override
     public String toString() {
         if(this.isVisited())
-            return "\u03C6" + " ";
+            return "\u255A" + " ";
         else
             return "\u00A0" + " ";
     }

@@ -231,7 +231,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @Override
     public void move(Coordinates to) {
         this.position = to;
-        this.observer.update();
+        // this.observer.update();
     }
 
     @Override
@@ -296,7 +296,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.atk += threeDice.roll();
         this.def += threeDice.roll();
 
-        this.observers.forEach(observers -> observers.onLevelUp());
+        // this.observers.forEach(observers -> observers.onLevelUp());
     }
 
     public void addObserver(CharacterObserver observer) {
