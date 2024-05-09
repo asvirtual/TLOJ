@@ -1,16 +1,29 @@
 package com.tloj.game.rooms;
 
+import java.util.ArrayList;
+
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public class HostileRoom extends Room {
-    protected Mob mob;
+    protected ArrayList<Mob> mobs;
+
+    public HostileRoom(Coordinates coordinates) {
+        super(coordinates);
+        this.mobs = new ArrayList<Mob>();
+    }
+
+    public HostileRoom(Coordinates coordinates, ArrayList<Mob> mobs) {
+        super(coordinates);
+        this.mobs = mobs;
+    }
 
     public HostileRoom(Coordinates coordinates, Mob mob) {
         super(coordinates);
-        this.mob = mob;
+        this.mobs = new ArrayList<Mob>();
+        this.mobs.add(mob);
     }
 
     @Override
@@ -18,8 +31,8 @@ public class HostileRoom extends Room {
         return RoomType.HOSTILE_ROOM;
     }
 
-    public Mob getMob() {
-        return this.mob;
+    public ArrayList<Mob> getMobs() {
+        return this.mobs;
     }
 
     @Override
@@ -41,8 +54,16 @@ public class HostileRoom extends Room {
             return "\u00A0" + " ";
     }
 
+    public Mob getMob() {
+        return this.mobs.get(0);
+    }
+
+    public void removeMob(Mob mob) {
+        this.mobs.remove(mob);
+    }
+
     public void clear() {
         super.clear();
-        this.mob = null;
+        for (Mob mob : this.mobs) this.removeMob(mob);
     }
 }

@@ -290,7 +290,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
         if (!target.isAlive()) {
             if (target instanceof Boss) this.observers.forEach(observer -> observer.onBossDefeated());
-            else this.observers.forEach(observer -> observer.onMobDefeated());
+            else this.observers.forEach(observer -> observer.onMobDefeated(target));
         }
     }
 

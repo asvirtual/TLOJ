@@ -156,9 +156,8 @@ public class Game implements CharacterObserver {
     }
 
     @Override
-    public void onMobDefeated() {
+    public void onMobDefeated(Mob mob) {
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
-        Mob mob = room.getMob();
 
         room.clear();
 

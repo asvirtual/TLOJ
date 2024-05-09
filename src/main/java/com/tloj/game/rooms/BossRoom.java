@@ -1,17 +1,24 @@
 package com.tloj.game.rooms;
 
+import java.util.ArrayList;
+
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.Boss;
+import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public class BossRoom extends HostileRoom {
+    public BossRoom(Coordinates coordinates, ArrayList<Mob> bosses) {
+        super(coordinates, bosses);
+    }
+
     public BossRoom(Coordinates coordinates, Boss boss) {
         super(coordinates, boss);
     }
 
     public Boss getBoss() {
-        return (Boss) this.mob;
+        return (Boss) this.mobs.get(0);
     }
 
     @Override
@@ -41,6 +48,6 @@ public class BossRoom extends HostileRoom {
     @Override 
     public void clear() {
         super.clear();
-        this.mob = null;
+        this.mobs.set(0, null);
     }
 }
