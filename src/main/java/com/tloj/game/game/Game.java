@@ -298,22 +298,4 @@ public class Game implements CharacterObserver {
 
         return directions;
     }
-
-
-    public void smithInteraction(){
-        //dialogue with smith   
-        
-        System.out.println("Smith: Hello there! I can upgrade your weapon with a Weapon Shard. Do you have one?");
-        System.out.println("J: I have " + this.player.itemCounter(new WeaponShard()) + " Weapon Shards!");
-        if(this.player.itemCounter(new WeaponShard()) > 0){
-            System.out.println("Smith: Great! Let me upgrade your weapon!");
-            this.controller.setState(GameState.SMITH_FORGING);
-        }
-        else{
-            System.out.println("Smith: You don't have any Weapon Shards. Come back when you have one.");
-            //forcede to go back
-        }
-        
-        
-    }
 }
