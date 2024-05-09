@@ -1,16 +1,23 @@
 package com.tloj.game.entities;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.game.MobAttack;
 
 
+// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.CLASS, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "@class")
+  
 /**
  * Represents a mob in the game. <br>
  * Mobs are entities that can be attacked and defeated by the player. <br>
  */
 public abstract class Mob extends CombatEntity {
-
     public static final int SCORE_DROP = 10;
     /** The mob's level */
     protected int lvl;

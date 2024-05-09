@@ -14,6 +14,10 @@ public class Dice {
         this.max = max;
     }
 
+    public int getFaces() {
+        return this.max - this.min + 1;
+    }
+    
     public int roll() {
         return (int) (Math.random() * (this.max - this.min + 1)) + 1;
     }

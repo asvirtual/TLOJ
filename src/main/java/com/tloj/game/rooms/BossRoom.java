@@ -1,13 +1,17 @@
 package com.tloj.game.rooms;
 
-import com.tloj.game.entities.Boss;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.entities.Boss;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public class BossRoom extends HostileRoom {
     public BossRoom(Coordinates coordinates, Boss boss) {
         super(coordinates, boss);
+    }
+
+    public Boss getBoss() {
+        return (Boss) this.mob;
     }
 
     @Override
@@ -34,4 +38,9 @@ public class BossRoom extends HostileRoom {
             return "\u00A0" + " ";
     }
 
+    @Override 
+    public void clear() {
+        super.clear();
+        this.mob = null;
+    }
 }

@@ -3,9 +3,24 @@ package com.tloj.game.collectables;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Dice;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.tloj.game.effects.WeaponEffect;
 import com.tloj.game.entities.Character;
 
+
+
+// Needed to avoid circular references with Weapon when serializing/deserializing 
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.IntSequenceGenerator.class, 
+  property = "@id")
+// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.CLASS, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "@class")
 
 /**
  * An abstract class that represents a weapon that can be used to attack enemies<br>
@@ -16,13 +31,16 @@ import com.tloj.game.entities.Character;
  * @see WeaponEffect
 */
 public abstract class Weapon extends Item {
+    private static final int DROP_MONEY = 0;
+
+    @JsonIgnore
     protected WeaponEffect effect;
     protected Dice dice;
     protected Character character;
     protected int lvl;
 
     public Weapon(double weight, int diceFaces) {
-        super(weight);
+        super(weight, DROP_MONEY);
         this.dice = new Dice(diceFaces);
         this.lvl = 0;
     }
@@ -57,12 +75,6 @@ public abstract class Weapon extends Item {
      * @param target The target to hit
      * @see WeaponEffect#apply(Character, Mob)
      */
-    /* public void hit(Mob target) {
-        // If the weapon has an effect, try to apply it to the target, otherwise deal standard damage to the target
-        if (this.effect == null) target.takeDamage(this.diceRoll());
-        else this.effect.apply(this.character, target);
-    } */
-
     public void modifyAttack(PlayerAttack attack) {
         if (this.effect != null) this.effect.apply(attack);
         else attack.setWeaponRoll(this.diceRoll());

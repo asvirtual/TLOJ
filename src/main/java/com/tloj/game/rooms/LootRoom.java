@@ -7,12 +7,23 @@ import com.tloj.game.game.PlayerRoomVisitor;
 
 public class LootRoom extends Room {
     private Item item;
-    private boolean isLocked;
 
-    public LootRoom(Coordinates coordinates, Item item, boolean isLocked) {
+    public LootRoom(Coordinates coordinates) {
+        super(coordinates);
+        this.item = Item.getRandomItem();
+        this.locked = false;
+    }
+
+    public LootRoom(Coordinates coordinates, boolean locked) {
+        super(coordinates);
+        this.item = Item.getRandomItem();
+        this.locked = locked;
+    }
+
+    public LootRoom(Coordinates coordinates, boolean locked, Item item) {
         super(coordinates);
         this.item = item;
-        this.isLocked = isLocked;
+        this.locked = locked;
     }
 
     @Override
@@ -37,5 +48,14 @@ public class LootRoom extends Room {
             return "\u255A" + " ";
         else
             return "\u00A0" + " ";
+    }
+  
+    public void clear() {
+        super.clear();
+        this.item = null;
+    }
+
+    public Item getItem() {
+        return this.item;
     }
 }

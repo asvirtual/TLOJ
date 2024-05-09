@@ -3,11 +3,18 @@ package com.tloj.game.game;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+import com.tloj.game.collectables.Item;
+import com.tloj.game.collectables.PurchasableItem;
+import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HealingRoom;
+import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
@@ -41,12 +48,14 @@ public class Game implements CharacterObserver {
     }
     
     public Game(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
+        this.player = player;
         this.levels = levels;
         this.currentLevel = currentLevel;
         this.controller = Controller.getInstance();
         this.seed = seed;
     }
 
+    @JsonIgnore
     public GameData getGameData() {
         return new GameData(
             this.seed,
@@ -85,14 +94,15 @@ public class Game implements CharacterObserver {
             throw new IllegalStateException("Cannot move while fighting");
             
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
-        if (!this.areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
+        if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
+        if (this.currentLevel.getRoom(newCoordinates).isLocked()) throw new IllegalArgumentException("Room is locked");
         
         /**
          * updats player score if the room is cleared
+         * TODO: This could probably be moved to the CharacterObserver, after the player has ended the interactions/events in the room
          */
-        if (!this.getCurrentRoom().isCleared())
-        {
-            this.getCurrentRoom().roomCleared();
+        if (!this.getCurrentRoom().isCleared()) {
+            this.getCurrentRoom().clear();
             this.updateScore(Room.SCORE_DROP);
         }
 
@@ -115,31 +125,7 @@ public class Game implements CharacterObserver {
         Mob mob = room.getMob();
         this.player.attack(mob);
         
-        if (mob.isAlive()) {
-            mob.attack(this.player);
-            return;
-        }
-
-        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
-        this.player.resetFightStats();
-
-        /**
-         * If the defeated Mob was a Boss, ...
-         * Otherwise, ...
-         * TODO: Maybe this should be moved to the "die" methods in the Mob and Boss classes
-        */
-        if (mob instanceof Boss) {
-            System.out.println("You've defeated the Boss!");
-            this.updateScore(Boss.SCORE_DROP);
-            this.controller.setState(GameState.MOVING);
-        } else {
-            System.out.println("You've defeated the enemy!");
-            this.updateScore(Mob.SCORE_DROP);
-            this.controller.setState(GameState.MOVING);
-        }
-
-        this.player.lootMob(mob);
-        room.removeMob();
+        if (mob.isAlive()) mob.attack(this.player);
     }
 
     public void usePlayerSkill() throws IllegalStateException {
@@ -149,15 +135,7 @@ public class Game implements CharacterObserver {
         )
             throw new IllegalStateException("Cannot use skill outside of a fight");
 
-        // this.player.useSkill();
-    }
-
-    public boolean areCoordinatesValid(Coordinates coordinates) {
-        int roomsRowCount = this.currentLevel.getRoomsRowCount();
-        int roomsColCount = this.currentLevel.getRoomsColCount();
-        
-        return coordinates.getY() >= 0 && coordinates.getY() < roomsRowCount &&
-               coordinates.getX() >= 0 && coordinates.getX() < roomsColCount;
+        this.player.useSkill();
     }
 
     public void save() {
@@ -171,19 +149,52 @@ public class Game implements CharacterObserver {
     }
 
     public void dropItem(int index) {
+        Item item = this.player.getInventoryItem(index);
+
+        if (item instanceof PurchasableItem)
+            this.player.setMoney(
+                this.player.getMoney() + 
+                ((PurchasableItem) this.player.getInventoryItem(index)).getPrice()
+            );
+
         this.player.removeInventoryItem(index);
     }
 
     @Override
     public void onMobDefeated() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onMobDefeated'");
+        HostileRoom room = (HostileRoom) this.getCurrentRoom();
+        Mob mob = room.getMob();
+
+        room.clear();
+
+        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
+        this.player.resetFightStats();
+        this.player.lootMob(mob);
+
+        System.out.println("You've defeated the enemy!");
+        this.updateScore(Mob.SCORE_DROP);
+        this.controller.setState(GameState.MOVING);
     }
 
     @Override
     public void onBossDefeated() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onBossDefeated'");
+        BossRoom room = (BossRoom) this.getCurrentRoom();
+        Boss boss = room.getBoss();
+
+        room.clear();
+
+        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
+        this.player.resetFightStats();
+        this.player.lootMob(boss);
+
+        System.out.println("You've defeated the Boss!");
+        this.updateScore(Boss.SCORE_DROP);
+        this.controller.setState(GameState.MOVING);
+    }
+
+    @Override
+    public void onPlayerDefeated() {
+
     }
 
     public void printMap(){
@@ -205,4 +216,8 @@ public class Game implements CharacterObserver {
         }
     }
 
+    @Override
+    public void onPlayerLevelUp() {
+
+    }
 }

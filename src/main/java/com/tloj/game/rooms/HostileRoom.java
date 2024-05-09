@@ -41,8 +41,8 @@ public class HostileRoom extends Room {
             return "\u00A0" + " ";
     }
 
-    public void removeMob() {
+    public void clear() {
+        super.clear();
         this.mob = null;
-        this.roomCleared();
     }
 }

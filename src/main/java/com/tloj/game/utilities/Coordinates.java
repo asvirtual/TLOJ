@@ -1,6 +1,7 @@
 package com.tloj.game.utilities;
 
 
+
 public class Coordinates {
     public enum Direction {
         NORTH,
