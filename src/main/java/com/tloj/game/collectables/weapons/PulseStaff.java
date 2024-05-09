@@ -4,7 +4,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.NanoDirk;
-import com.tloj.game.collectables.weapons.PlasmaGreatSword;
+import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.effects.ManaAttackBooster;
 
@@ -17,7 +17,7 @@ import com.tloj.game.effects.ManaAttackBooster;
  * @see LaserBlade
  * @see CyberKatana
  * @see NanoDirk
- * @see PlasmaGreatSword
+ * @see PlasmaGreatsword
  * @see NaniteLeechBlade
  */
 public class PulseStaff extends Weapon {

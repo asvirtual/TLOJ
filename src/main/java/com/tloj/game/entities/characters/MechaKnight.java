@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.collectables.weapons.PlasmaGreatSword;
+import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Focus;
 import com.tloj.game.skills.Guard;
@@ -72,7 +72,7 @@ public class MechaKnight extends Character {
             MANA,
             MAX_WEIGHT,
             MONEY,
-            new PlasmaGreatSword(),
+            new PlasmaGreatsword(),
             position
         );
 
@@ -84,7 +84,7 @@ public class MechaKnight extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: " + PlasmaGreatSword.describe() + "\n" +
+               "Weapon: " + PlasmaGreatsword.describe() + "\n" +
                "Ability: " + Guard.describe() + "\n" +
                "Money: " + MONEY;
     }

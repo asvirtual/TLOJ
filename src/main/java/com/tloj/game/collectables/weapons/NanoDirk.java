@@ -4,7 +4,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.collectables.weapons.CyberKatana;
-import com.tloj.game.collectables.weapons.PlasmaGreatSword;
+import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.DiceReroller;
 
@@ -17,7 +17,7 @@ import com.tloj.game.effects.DiceReroller;
  * @see LaserBlade
  * @see CyberKatana
  * @see PulseStaff
- * @see PlasmaGreatSword
+ * @see PlasmaGreatsword
  * @see NaniteLeechBlade
  */
 public class NanoDirk extends Weapon {

@@ -4,7 +4,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.CyberKatana;
-import com.tloj.game.collectables.weapons.PlasmaGreatSword;
+import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.HealthAbsorber;
 
@@ -18,7 +18,7 @@ import com.tloj.game.effects.HealthAbsorber;
  * @see CyberKatana
  * @see PulseStaff
  * @see LaserBlade
- * @see PlasmaGreatSword
+ * @see PlasmaGreatsword
  */
 public class NaniteLeechBlade extends Weapon {
     private static final double WEIGHT = 0.8;
