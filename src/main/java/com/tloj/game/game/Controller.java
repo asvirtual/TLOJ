@@ -902,11 +902,13 @@ public class Controller {
 
     @JsonIgnore
     public String getAvailableCommands() {
-        switch (this.state) {
-            case MAIN_MENU: return "[new, load, exit]";
-            
-            default: return "";
-        }
+        return switch (this.state) {
+            case MAIN_MENU -> "[new, load, exit]";
+            case FIGHTING_BOSS, FIGHTING_MOB -> "[atk, skill, inv]";
+            case LOOTING_ROOM -> "[inv, use, drop, gn, gs, gw, ge]";
+            case MOVING -> "[gn, gs, gw, ge, return, inv, status, map, score, seed, quit]";
+            default -> "";
+        };
     }
 
     /**
