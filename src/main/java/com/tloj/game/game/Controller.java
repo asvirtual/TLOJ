@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import com.tloj.game.entities.Character;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.entities.BasePlayer;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -37,7 +38,6 @@ import com.tloj.game.utilities.GameState;
  * - Show list (showlist) {@link ShowListCommand} (show merchant items list)<br>
  * - Buy (buy [item]) {@link BuyCommand} (buy item from merchant)<br>
  * - Smith (smith) {@link SmithCommand} (talk with smith in healing room)<br>
- * - Upgrade (upgrade [item]) {@link UpgradeCommand} (upgrade item with smith)<br>
  * - Give (give [item]) {@link GiveCommand} (give item to npc)<br>
  * - Confirm (confirm) {@link ConfirmCommand} (confirm action)<br>
  * - New game (new) {@link NewGameCommand} (start a new game)<br>
@@ -217,6 +217,7 @@ class UseItemCommand extends GameCommand {
 
     @Override
     public void execute() {
+        if (!Controller.awaitConfirmation()) return;
         this.game.useItem(Integer.parseInt(commands[1]));
     }
 }
@@ -232,6 +233,7 @@ class DropItemCommand extends GameCommand {
 
     @Override
     public void execute() {
+        if (!Controller.awaitConfirmation()) return;
         this.game.dropItem(Integer.parseInt(commands[1]));
     }
 }
@@ -295,10 +297,7 @@ class QuitCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Quit the current game
-        */ 
+        if (!Controller.awaitConfirmation()) return;
         this.game.save();
 
         Controller controller = Controller.getInstance();
@@ -366,7 +365,7 @@ class HelpCommand extends GameCommand {
                 System.out.println("Commands: showlist, buy, back");
                 break;
             case SMITH_FORGING:
-                System.out.println("Commands: upgrade, back");
+                System.out.println("Commands: give (to upgrade), back");
                 break;
             case FIGHTING_MOB:
                 System.out.println("Commands: attack, skill, inventory, use, drop, back");
@@ -459,6 +458,7 @@ class BuyCommand extends GameCommand {
 
     @Override
     public void execute() {
+        if (!Controller.awaitConfirmation()) return;
         /* 
         * TODO
         * Buy an item from the merchant
@@ -482,29 +482,11 @@ class SmithCommand extends GameCommand {
         */ 
     }
 }
-/** 
- * Concrete command class to upgrade an item with the smith
- * @see GameCommand
- */
 
-class UpgradeCommand extends GameCommand {
-    public UpgradeCommand(Game game, String[] commands) {
-        super(game, null);
-    }
-
-    @Override
-    public void execute() {
-        /* 
-        * TODO
-        * Upgrade an item with the smith
-        */ 
-    }
-}
 /**
  * Concrete command class to give an item to an NPC
  * @see GameCommand
  */
-
 class GiveCommand extends GameCommand {
     public GiveCommand(Game game, String[] commands) {
         super(game, null);
@@ -512,6 +494,7 @@ class GiveCommand extends GameCommand {
 
     @Override
     public void execute() {
+        if (!Controller.awaitConfirmation()) return;
         /* 
         * TODO
         * Give an item to an NPC
@@ -872,7 +855,6 @@ public class Controller {
                 Map.entry("showlist", () -> new ShowListCommand(this.game, commands)),
                 Map.entry("buy", () -> new BuyCommand(this.game, commands)),
                 Map.entry("smith", () -> new SmithCommand(this.game, commands)),
-                Map.entry("upgrade", () -> new UpgradeCommand(this.game, commands)),
                 Map.entry("give", () -> new GiveCommand(this.game, commands)),
                 Map.entry("confirm", () -> new ConfirmCommand(this.game, commands))
             )
@@ -918,6 +900,15 @@ public class Controller {
         invoker.executeCommand();
     }
 
+    @JsonIgnore
+    public String getAvailableCommands() {
+        switch (this.state) {
+            case MAIN_MENU: return "[new, load, exit]";
+            
+            default: return "";
+        }
+    }
+
     /**
      * Main game loop to handle user input
      */
@@ -925,6 +916,7 @@ public class Controller {
         Scanner scanner = new Scanner(System.in);
 
         while (this.state != GameState.EXIT) {
+            System.out.print("What to do? " + this.getAvailableCommands() + " (write \"help\" for the complete list of commands)");
             String input = scanner.nextLine();
             this.handleUserInput(input);
         }

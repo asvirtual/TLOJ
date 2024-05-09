@@ -125,6 +125,9 @@ public class Game implements CharacterObserver {
         Mob mob = room.getMob();
         this.player.attack(mob);
         
+        if (mob instanceof Boss) this.controller.setState(GameState.FIGHTING_BOSS);
+        else this.controller.setState(GameState.FIGHTING_MOB);
+        
         if (mob.isAlive()) mob.attack(this.player);
     }
 
