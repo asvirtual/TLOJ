@@ -5,15 +5,13 @@ import com.tloj.game.entities.MovingEntity;
 import com.tloj.game.game.Attack;
 import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.utilities.Coordinates;
 
-import java.lang.invoke.ClassSpecializer.SpeciesData;
-
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.SpecialKey;
-import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Character;
 
 
@@ -64,7 +62,9 @@ public class Glitched extends Mob implements MovingEntity{
             if (level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM) continue;
             if (level.getRoom(newCoords).getType() == RoomType.TRAP_ROOM) continue;
             if (level.getRoom(newCoords).getType() == RoomType.LOOT_ROOM && ((LootRoom) level.getRoom(newCoords)).isLocked()) continue;         
-
+            
+            HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
+            nextRoom.addMobTop(this);
             move(newCoords);
             validLocation = true;
         } while (!validLocation);
