@@ -227,6 +227,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.inventory.get(index);
     }
 
+    public Item searchInventoryItem(Item item){
+        for (Item i : this.inventory) {
+            if (i.equals(item)) return i;
+        }
+        return null;
+    }
+
     public void removeInventoryItem(Item item) {
         this.inventory.remove(item);
         this.sortInventory();
@@ -359,6 +366,18 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.observers.remove(observer);
     }
 
+    public void swapWeapon(int index) {
+        if (index < 0 || this.hasItem(this.getInventoryItem(index))) {
+            System.out.println("Invalid index");
+            return;
+        }
+
+        Item item = this.getInventoryItem(index);
+        if (item instanceof Weapon) {
+            this.weapon = (Weapon) item;
+            this.weapon.assignTo(this);
+        }
+    }
     /**
      * Better graphical representation of the Character's status
      */
