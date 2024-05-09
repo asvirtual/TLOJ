@@ -65,6 +65,7 @@ public abstract class Weapon extends Item {
         this.character = character;
     }
 
+    @JsonIgnore
     public Character getHolder() {
         return this.character;
     }

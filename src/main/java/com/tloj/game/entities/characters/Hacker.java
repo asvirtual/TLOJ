@@ -17,6 +17,11 @@ public class Hacker extends Character {
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 10;
 
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public Hacker() {}
+
     /** 
      * Constructor to create a Cheater from loaded data 
      * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)

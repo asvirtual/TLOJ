@@ -29,7 +29,7 @@ public class HealthPotion extends PurchasableItem implements ConsumableItem {
     private static final int ID = 1;
 
     public HealthPotion() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }
     
     @Override
@@ -38,10 +38,6 @@ public class HealthPotion extends PurchasableItem implements ConsumableItem {
         if (consumer.getHp() > consumer.getMaxHp()) consumer.setHp(consumer.getMaxHp());
         
         consumer.removeInventoryItem(this);
-    }
-    @Override
-    public double getDropChance() {
-        return DROP_CHANCE;
     }
 
     @Override

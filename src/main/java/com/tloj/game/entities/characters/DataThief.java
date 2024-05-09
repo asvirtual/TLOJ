@@ -19,6 +19,11 @@ public class DataThief extends Character {
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 0;
 
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public DataThief() {}
+
     /** 
      * Constructor to create a DataThief from loaded data  
      * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)

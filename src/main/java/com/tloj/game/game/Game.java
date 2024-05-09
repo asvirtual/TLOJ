@@ -87,6 +87,12 @@ public class Game implements CharacterObserver {
         if (this.controller.getState() == GameState.FIGHTING_BOSS || this.controller.getState() == GameState.FIGHTING_MOB)
             throw new IllegalStateException("Cannot move while fighting");
             
+        if (this.controller.getState() == GameState.BOSS_DEFEATED || this.getCurrentRoom().getType() == RoomType.HEALING_ROOM) {
+            this.currentLevel = this.levels.get(this.currentLevel.getLevelNumber() + 1);
+            this.player.setCurrentLevel(this.currentLevel);
+            return;
+        }
+
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
         if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
         if (this.currentLevel.getRoom(newCoordinates).isLocked() && !this.player.hasItem(new SpecialKey())) throw new IllegalArgumentException("Room is locked");
@@ -182,7 +188,7 @@ public class Game implements CharacterObserver {
 
         System.out.println("You've defeated the Boss!");
         this.updateScore(Boss.SCORE_DROP);
-        this.controller.setState(GameState.MOVING);
+        this.controller.setState(GameState.BOSS_DEFEATED);
     }
 
     @Override
@@ -223,8 +229,18 @@ public class Game implements CharacterObserver {
     public void useItem(int index) {
         ConsumableItem item = (ConsumableItem) this.player.getInventoryItem(index);
         item.consume(this.player);
-        }
-
+    }
     
+    public void returnToStart() {
+        if (this.controller.getState() == GameState.MOVING) {
+            this.player.move(this.currentLevel.getStartRoom().getCoordinates());
+        }
+        else {
+            System.out.println("There's a time and place for everything but not now!");
+        }
+    }
 
+    public void printPlayerStatus() {
+        System.out.println(this.player);
+    }
 }

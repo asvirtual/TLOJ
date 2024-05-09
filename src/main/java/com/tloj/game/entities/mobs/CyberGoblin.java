@@ -21,6 +21,11 @@ public class CyberGoblin extends Mob {
     private static final int XP_DROP = 3;
     private static final int MONEY_DROP = 2;
 
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public CyberGoblin() {}
+
     public CyberGoblin(Coordinates position, int lvl) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
     }

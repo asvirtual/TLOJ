@@ -30,6 +30,7 @@ public abstract class Item {
     protected double weight;
     protected int dropMoney;
     protected int id;
+    protected double dropChance;
     
     enum ConsumableItems {
         HEALTH_POTION(new HealthPotion()),
@@ -56,12 +57,19 @@ public abstract class Item {
         this.id = id;
     }
 
+    protected Item(double weight, int dropMoney, int id, double dropChance) {
+        this.weight = weight;
+        this.dropMoney = dropMoney;
+        this.id = id;
+        this.dropChance = dropChance;
+    }
+
     public double getWeight() {
         return weight;
     }
 
     public double getDropChance() {
-        return 0;
+        return this.dropChance;
     }
 
     public int getDropMoney() {

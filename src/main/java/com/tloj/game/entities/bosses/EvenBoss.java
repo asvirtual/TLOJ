@@ -2,6 +2,8 @@ package com.tloj.game.entities.bosses;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.DodgeEvenRollAttack;
+import com.tloj.game.abilities.DodgeSlowAttackFlying;
+import com.tloj.game.abilities.TakeHalfDamage;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.abilities.BossAbility;
@@ -29,6 +31,11 @@ public class EvenBoss extends Boss{
     public static final int DICE_FACES = 10;
     public static final int XP_DROP = 30;
     public static final int MONEY_DROP = 50;
+
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public EvenBoss() {}
     
     public EvenBoss(Coordinates position, int lvl) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP,position);

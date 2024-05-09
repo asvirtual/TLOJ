@@ -68,6 +68,11 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
 
     /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    protected Character() {}
+
+    /**
      * Constructor to create a Character from loaded data<br>
      * @param hp The character's health points<br>
      * @param atk The character's attack points<br>
@@ -154,7 +159,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.weapon;
     }
     
-    public int getWeight() {
+    @JsonIgnore
+    public int getCarriedWeight() {
         int weight = 0;
         for (Item item : this.inventory)
             weight += item.getWeight();
@@ -211,10 +217,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana -= amount;
     }
 
+    @JsonIgnore
     public int getInventorySize() {
         return this.inventory.size();
     }
 
+    @JsonIgnore
     public Item getInventoryItem(int index) {
         return this.inventory.get(index);
     }
@@ -231,7 +239,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public boolean addInventoryItem(Item item) {
         if(item == null) return false;
-        if (this.getWeight() + item.getWeight() > this.maxWeight) {
+        if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
             System.out.println("You can't carry more weight, drop something first.");
             return false;
         }
@@ -349,5 +357,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public void removeObserver(CharacterObserver observer) {
         this.observers.remove(observer);
+    }
+
+    /**
+     * Better graphical representation of the Character's status
+     */
+    @Override
+    public String toString() {
+        String status = "HP: " + this.hp + "/" + this.maxHp + " | Mana: " + this.mana + "/" + this.maxMana + " | Atk: " + this.atk + " | Def: " + this.def + " | Lvl: " + this.lvl + " | XP: " + this.xp + "/" + this.requiredXp + " | Money: " + this.money;
+        return status;
     }
 }

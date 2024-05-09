@@ -28,24 +28,26 @@ public class Level {
         });
     }
 
-    public Level() {
-        this.levelNumber = 0;
-        this.rooms = new ArrayList<ArrayList<Room>>();
-        this.startRoom = null;
-    }
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public Level() {}
 
     public StartRoom getStartRoom() {
         return this.startRoom;
     }
 
+    @JsonIgnore
     public int getRoomsRowCount() {
         return this.rooms.size();
     }
 
+    @JsonIgnore
     public int getRoomsColCount() {
         return this.rooms.get(0).size();
     }
 
+    @JsonIgnore
     public Room getRoom(Coordinates coordinates) {
         return this.rooms.get(coordinates.getX()).get(coordinates.getY());
     }

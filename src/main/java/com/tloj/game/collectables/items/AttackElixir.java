@@ -29,7 +29,7 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
     private static final int ID = 5;
 
     public AttackElixir() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }
     
     @Override
@@ -37,10 +37,6 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
         consumer.setCurrentFightAtk(consumer.getAtk() + ATTACK_BOOST);
 
         consumer.removeInventoryItem(this);
-    }
-    @Override
-    public double getDropChance() {
-        return DROP_CHANCE;
     }
 
     @Override

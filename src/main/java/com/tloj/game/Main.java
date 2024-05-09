@@ -1,6 +1,5 @@
 package com.tloj.game;
 
-
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Controller;
@@ -19,7 +18,8 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("test")) {
-            test();
+            testWrite();
+            testRead();
             return;
         }
 
@@ -27,11 +27,12 @@ public class Main {
         controller.run();
     }
 
-    public static void test() {
-        // System.out.println(GameData.deserializeMapFromFile("test.json"));
+    public static void testRead() {
+        System.out.println(GameData.deserializeMapFromFile("test.json"));
         System.out.println(GameData.loadFromFile("test.json"));
+    }
 
-        /*
+    public static void testWrite() {        
         Level level = new Level
             (
                 1, 
@@ -64,6 +65,5 @@ public class Main {
         );
 
         gameData.saveToFile("test.json");
-        */
     }
 }

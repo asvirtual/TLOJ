@@ -11,8 +11,13 @@ import com.tloj.game.entities.Character;
 public abstract class PurchasableItem extends Item {
     protected int price;
 
-    protected PurchasableItem(int price, double weight, int dropMoney, int ID) {
-        super(weight, dropMoney, ID);
+    protected PurchasableItem(int price, double weight, int dropMoney, int id) {
+        super(weight, dropMoney, id);
+        this.price = price;
+    }
+
+    protected PurchasableItem(int price, double weight, int dropMoney, int id, double dropChance) {
+        super(weight, dropMoney, id, dropChance);
         this.price = price;
     }
 

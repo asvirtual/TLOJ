@@ -28,16 +28,12 @@ public class Lockpick extends PurchasableItem implements ConsumableItem {
     private static final int ID = 8;
 
     public Lockpick() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }
     
     @Override
     public void consume(Character consumer) {
         consumer.removeInventoryItem(this);
-    }
-    @Override
-    public double getDropChance() {
-        return DROP_CHANCE;
     }
 
     @Override
