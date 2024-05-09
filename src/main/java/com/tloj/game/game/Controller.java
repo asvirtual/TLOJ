@@ -12,6 +12,11 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.tloj.game.entities.characters.BasePlayer;
+import com.tloj.game.entities.characters.Hacker;
+import com.tloj.game.entities.characters.DataThief;
+import com.tloj.game.entities.characters.MechaKnight;
+import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -28,7 +33,6 @@ import com.tloj.game.utilities.GameState;
  * - Drop item (drop [item]) {@link DropItemCommand}<br>
  * - Print seed (seed) {@link PrintSeedCommand}<br>
  * - Print map (map) {@link PrintMapCommand}<br>
- * - Print stats (stats) {@link PrintStatsCommand}<br>
  * - Print score (score) {@link PrintScoreCommand}<br>
  * - Quit (quit) {@link QuitCommand}<br>
  * - Back (back) {@link BackCommand} (used during complex interactions)<br>
@@ -432,7 +436,7 @@ class HelpCommand extends GameCommand {
                 System.out.println("Commands: use, drop, back");
                 break;
             case MERCHANT_SHOPPING:
-                System.out.println("Commands: showlist, buy, back");
+                System.out.println("Commands: buy, back");
                 break;
             case SMITH_FORGING:
                 System.out.println("Commands: give (to upgrade), back");
@@ -506,25 +510,7 @@ class MerchantCommand extends GameCommand {
         */ 
     }
 }
-/**
- * Concrete command class to show the merchant's list of items
- * @see GameCommand
- */
-class ShowListCommand extends GameCommand {
-    public ShowListCommand(Game game, String[] commands) {
-        super(game, null);
-    }
 
-    @Override
-    public void execute() throws IllegalStateException {
-        super.execute();
-        
-        /* 
-        * TODO
-        * Show the merchant's list of items
-        */ 
-    }
-}
 /**
  * Concrete command class to buy an item from the merchant
  * @see GameCommand
@@ -619,6 +605,7 @@ class NewGameCommand extends GameCommand {
         super.execute();
 
         this.controller.newGame();
+        System.out.println("Choose your starting character: 1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
     }
 }
 
@@ -677,7 +664,14 @@ class ChooseCharacterGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        
+        switch(commands[0]) {
+            case "1" -> BasePlayer.getDetailedInfo();
+            case "2"-> Hacker.getDetailedInfo();
+            case "3" -> DataThief.getDetailedInfo();
+            case "4" -> MechaKnight.getDetailedInfo();
+            case "5" -> NeoSamurai.getDetailedInfo();
+            default -> System.out.println("Invalid character choice. Please choose a valid character.");
+        }
         if (!Controller.awaitConfirmation()) return;
 
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
@@ -748,8 +742,8 @@ class BasePlayerFactory extends CharacterFactory {
 /**
  * Concrete factory class to create a Cheater character
 */
-class CheaterFactory extends CharacterFactory {
-    public CheaterFactory(Coordinates spawnCoordinates) {
+class HackerFactory extends CharacterFactory {
+    public HackerFactory(Coordinates spawnCoordinates) {
         super(spawnCoordinates);
     }
 
@@ -927,7 +921,6 @@ public class Controller {
                 Map.entry("quit", () -> new QuitCommand(this.game, commands)),
                 Map.entry("back", () -> new BackCommand(this.game, commands)),
                 Map.entry("merchant", () -> new MerchantCommand(this.game, commands)),
-                Map.entry("showlist", () -> new ShowListCommand(this.game, commands)),
                 Map.entry("buy", () -> new BuyCommand(this.game, commands)),
                 Map.entry("smith", () -> new SmithCommand(this.game, commands)),
                 Map.entry("give", () -> new GiveCommand(this.game, commands)),
@@ -946,11 +939,11 @@ public class Controller {
     public CharacterFactory characterFactory(String character) {
         Map<String, Supplier<CharacterFactory>> characterMap = new HashMap<>(
             Map.of(
-                "default", () -> new BasePlayerFactory(this.game.getLevel().getStartRoom().getCoordinates()),
-                "cheater", () -> new CheaterFactory(this.game.getLevel().getStartRoom().getCoordinates()),
-                "data thief", () -> new DataThiefFactory(this.game.getLevel().getStartRoom().getCoordinates()),
-                "mecha knight", () -> new MechaKnightFactory(this.game.getLevel().getStartRoom().getCoordinates()),
-                "neo samurai", () -> new NeoSamuraiFactory(this.game.getLevel().getStartRoom().getCoordinates())
+                "1", () -> new BasePlayerFactory(this.game.getLevel().getStartRoom().getCoordinates()),
+                "2", () -> new HackerFactory(this.game.getLevel().getStartRoom().getCoordinates()),
+                "3", () -> new DataThiefFactory(this.game.getLevel().getStartRoom().getCoordinates()),
+                "4", () -> new MechaKnightFactory(this.game.getLevel().getStartRoom().getCoordinates()),
+                "5", () -> new NeoSamuraiFactory(this.game.getLevel().getStartRoom().getCoordinates())
             )
         );
         
@@ -984,9 +977,14 @@ public class Controller {
     public String getAvailableCommands() {
         return switch (this.state) {
             case MAIN_MENU -> "[new, load, exit]";
+            case CHOOSING_CHARACTER -> "[1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai]";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk, skill, inv]";
-            case LOOTING_ROOM -> "[inv, use, drop, gn, gs, gw, ge]";
-            case MOVING -> "[gn, gs, gw, ge, return, inv, status, map, score, seed, quit]";
+            case LOOTING_ROOM -> "[inv, use, drop] \n" + this.game.getAvailableDirections();
+            case MOVING -> "\n" + this.game.getAvailableDirections();
+            case INV_MANAGEMENT -> "[use, drop, swap, back]";
+            case MERCHANT_SHOPPING -> "[buy, back]";
+            case SMITH_FORGING -> "[give, back]";
+            case BOSS_DEFEATED -> "[inv, move to any direction to change floor]";
             default -> "";
         };
     }

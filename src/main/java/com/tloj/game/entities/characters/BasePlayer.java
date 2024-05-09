@@ -81,4 +81,14 @@ public class BasePlayer extends Character {
             coordinates
         );
     }
+
+    public static String getDetailedInfo() {
+        return "HP: " + HP + "\n" +
+               "Attack: " + ATTACK + "\n" +
+               "Defense: " + DEFENSE + "\n" +
+               "Mana: " + MANA + "\n" +
+               "Weapon: LaserBlade (D8)" + "\n" +
+               "Ability: Focus - Adds 3 damage on next attack" + "\n" +
+               "Money: " + MONEY;
+    }
 }

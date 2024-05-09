@@ -8,7 +8,6 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.SpecialKey;
-import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
@@ -125,9 +124,6 @@ public class Game implements CharacterObserver {
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
         Mob mob = room.getMob();
         this.player.attack(mob);
-        
-        if (mob instanceof Boss) this.controller.setState(GameState.FIGHTING_BOSS);
-        else this.controller.setState(GameState.FIGHTING_MOB);
         
         if (mob.isAlive()) mob.attack(this.player);
     }
