@@ -16,9 +16,10 @@ import com.tloj.game.collectables.Weapon;
 public class CyberKatana extends Weapon {
     private static final double WEIGHT = 0.8;
     private static final int DICE_FACES = 10;
+    private static final int ID = 13;
 
     public CyberKatana() {
-        super(WEIGHT, DICE_FACES); 
+        super(WEIGHT, DICE_FACES, ID); 
     }
 
     @Override

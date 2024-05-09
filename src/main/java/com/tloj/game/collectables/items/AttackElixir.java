@@ -26,9 +26,10 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
     private static final int ATTACK_BOOST = 5;
     private static final double DROP_CHANCE = 0.1;
     private static final int DROP_MONEY = PRICE / 2;
+    private static final int ID = 5;
 
     public AttackElixir() {
-        super(PRICE, WEIGHT, DROP_MONEY); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID); 
     }
     
     @Override

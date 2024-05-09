@@ -39,8 +39,8 @@ public abstract class Weapon extends Item {
     protected Character character;
     protected int lvl;
 
-    public Weapon(double weight, int diceFaces) {
-        super(weight, DROP_MONEY);
+    public Weapon(double weight, int diceFaces, int ID) {
+        super(weight, DROP_MONEY, ID);
         this.dice = new Dice(diceFaces);
         this.lvl = 0;
     }
