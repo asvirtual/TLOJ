@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
+import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.SpecialKey;
@@ -225,5 +224,23 @@ public class Game implements CharacterObserver {
     @Override
     public void onPlayerLevelUp() {
 
+    }
+
+    public void useItem(int index) {
+        ConsumableItem item = (ConsumableItem) this.player.getInventoryItem(index);
+        item.consume(this.player);
+    }
+    
+    public void returnToStart() {
+        if (this.controller.getState() == GameState.MOVING) {
+            this.player.move(this.currentLevel.getStartRoom().getCoordinates());
+        }
+        else {
+            System.out.println("There's a time and place for everything but not now!");
+        }
+    }
+
+    public void printPlayerStatus() {
+        System.out.println(this.player);
     }
 }

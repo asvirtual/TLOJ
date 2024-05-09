@@ -358,4 +358,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public void removeObserver(CharacterObserver observer) {
         this.observers.remove(observer);
     }
+
+    /**
+     * Better graphical representation of the Character's status
+     */
+    @Override
+    public String toString() {
+        String status = "HP: " + this.hp + "/" + this.maxHp + " | Mana: " + this.mana + "/" + this.maxMana + " | Atk: " + this.atk + " | Def: " + this.def + " | Lvl: " + this.lvl + " | XP: " + this.xp + "/" + this.requiredXp + " | Money: " + this.money;
+        return status;
+    }
 }
