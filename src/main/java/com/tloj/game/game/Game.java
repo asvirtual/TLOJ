@@ -243,4 +243,70 @@ public class Game implements CharacterObserver {
     public void printPlayerStatus() {
         System.out.println(this.player);
     }
+
+    public void giveItem(String reciver, String itemName) {
+        
+        if(!reciver.equalsIgnoreCase("Smith")){
+            System.out.print("Who?");
+            return;
+        }
+
+        if(!itemName.equalsIgnoreCase("WeapoShard")){
+            System.out.print("Wrong Item!");
+            return;
+        }
+        
+        if(this.player.searchInventoryItem(new WeaponShard()) != null){
+            this.getPlayer().removeInventoryItem(this.player.searchInventoryItem(new WeaponShard()));
+            this.player.getWeapon().upgrade(1);
+            System.out.println("You have upgraded " + this.player.getWeapon().toString() +"!");
+        }
+    }
+
+    public String getAvailableDirection(){
+        Coordinates coordinates = this.player.getPosition();
+        String directions = "You can go: \n";
+        String N = "gn \n";
+        String S = "gs \n";
+        String E = "ge \n";
+        String W = "gn \n";
+        String Nb = "gn - There's somtig strange... \n";
+        String Sb = "gs - There's somtig strange... \n";
+        String Eb = "ge - There's somtig strange... \n";
+        String Wb = "gn - There's somtig strange... \n";
+
+        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))){
+            if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH)).getType() == RoomType.BOSS_ROOM)
+                directions += Nb;
+            else
+                directions += N;    
+        }
+        
+        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))){
+            if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH)).getType() == RoomType.BOSS_ROOM)
+                directions += Sb;
+            else
+                directions += S;  
+        }
+
+        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))){
+            if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST)).getType() == RoomType.BOSS_ROOM)
+                directions += Eb;
+            else
+                directions += E;
+        }
+
+        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))){
+            if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST)).getType() == RoomType.BOSS_ROOM)
+                directions += Wb;
+            else
+                directions += W;    
+        }
+
+        return directions;
+    }
+
+
+
+
 }

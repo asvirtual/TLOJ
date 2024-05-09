@@ -2,6 +2,7 @@ package com.tloj.game.skills;
 
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.PlayerAttack;
 
 
@@ -29,7 +30,7 @@ public class Focus extends CharacterSkill{
             return;
         }
 
-        attack.setTotalDamage(attack.getTotalDamage() + 3);
+        attack.setBaseDamage(this.character.getCurrentFightAtk() + 3);
         attacker.useMana(5);
     }
 }
