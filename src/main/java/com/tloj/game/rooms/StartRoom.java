@@ -3,6 +3,15 @@ package com.tloj.game.rooms;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
+/**
+ * Class that represents the start room in the game<br>
+ * @see Room
+ * @see BossRoom
+ * @see HealingRoom
+ * @see LootRoom
+ * @see TrapRoom
+ * @see HostileRoom
+ */
 
 public class StartRoom extends Room {
     public StartRoom(Coordinates coordinates) {

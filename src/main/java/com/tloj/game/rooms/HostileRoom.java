@@ -8,6 +8,16 @@ import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
+/**
+ * Class that represents a hostile room in the game<br>
+ * Contains the mobs of the room<br>
+ * @see Room
+ * @see BossRoom
+ * @see HealingRoom
+ * @see LootRoom
+ * @see TrapRoom
+ * @see StartRoom
+ */
 
 public class HostileRoom extends Room {
     @JsonProperty
