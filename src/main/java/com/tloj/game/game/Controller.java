@@ -518,11 +518,8 @@ class SmithCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        
-        /* 
-        * TODO
-        * Interact with the smith
-        */ 
+        //probably need to check by JCULO
+        this.game.smithInteraction();
     }
 }
 
