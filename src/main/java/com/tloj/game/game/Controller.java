@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +11,20 @@ import java.util.function.Supplier;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.tloj.game.rooms.Room;
+import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.HostileRoom;
-import com.tloj.game.collectables.items.WeaponShard;
+import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.FriendlyEntity;
+import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.characters.Hacker;
 import com.tloj.game.entities.characters.DataThief;
 import com.tloj.game.entities.characters.MechaKnight;
 import com.tloj.game.entities.characters.NeoSamurai;
+import com.tloj.game.entities.npcs.Merchant;
+import com.tloj.game.entities.npcs.Smith;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -60,7 +67,7 @@ abstract class GameCommand {
     protected Character player;
     protected Controller controller;
     protected List<GameState> invalidStates;
-    protected List<GameState> whiteListStates;
+    protected List<GameState> validListStates;
 
     protected GameCommand(Game game, String[] commands) {
         this.game = game;
@@ -71,7 +78,7 @@ abstract class GameCommand {
 
     public void execute() throws IllegalStateException {
         if (
-            (this.whiteListStates != null && !this.whiteListStates.contains(this.controller.getState())) ||
+            (this.validListStates != null && !this.validListStates.contains(this.controller.getState())) ||
             (this.invalidStates != null && this.invalidStates.contains(this.controller.getState()))
         )
             throw new IllegalStateException("Invalid state to execute this command");
@@ -408,13 +415,16 @@ class HelpCommand extends GameCommand {
                 System.out.println("Commands: give (to upgrade), back");
                 break;
             case FIGHTING_MOB:
-                System.out.println("Commands: attack, skill, inventory, use, drop, back");
+                System.out.println("Commands: attack, skill, inventory, use, drop");
                 break;
             case FIGHTING_BOSS:
-                System.out.println("Commands: attack, skill, inventory, use, drop, back");
+                System.out.println("Commands: attack, skill, inventory, use, drop");
                 break;
             case LOOTING_ROOM:
-                System.out.println("Commands: confirm, inventory, use, drop, back");
+                System.out.println("Commands: confirm, inventory, use, drop");
+                break;
+            case HEALING_ROOM:
+                System.out.println("Commands: merchant, smith, inventory, use, drop");
                 break;
 
             default:
@@ -431,7 +441,7 @@ class HelpCommand extends GameCommand {
 class ReturnCommand extends GameCommand {
     public ReturnCommand(Game game, String[] commands) {
         super(game, null);
-        this.whiteListStates = List.of(
+        this.validListStates = List.of(
             GameState.MOVING
         );
     }
@@ -469,16 +479,18 @@ class PrintStatusCommand extends GameCommand {
 class MerchantCommand extends GameCommand {
     public MerchantCommand(Game game, String[] commands) {
         super(game, null);
+        this.validListStates = List.of(
+            GameState.HEALING_ROOM
+        );
     }
 
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
         
-        /* 
-        * TODO
-        * Interact with the merchant
-        */ 
+        HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
+        Merchant merchant = (Merchant) room.getFriendlyEntity(Merchant.NAME);
+        if (merchant != null) merchant.interact(this.player);
     }
 }
 
@@ -496,10 +508,15 @@ class BuyCommand extends GameCommand {
         super.execute();
         
         if (!Controller.awaitConfirmation()) return;
-        /* 
-        * TODO
-        * Buy an item from the merchant
-        */ 
+
+        HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
+        Merchant merchant = (Merchant) room.getFriendlyEntity(Merchant.NAME);
+        
+        try {
+            if (merchant != null) merchant.buy(Integer.parseInt(commands[1]));
+        } catch (NumberFormatException e) {
+            System.out.println("Please enter a valid number");
+        }
     }
 }
 
@@ -510,15 +527,19 @@ class BuyCommand extends GameCommand {
 class SmithCommand extends GameCommand {
     public SmithCommand(Game game, String[] commands) {
         super(game, null);
+        this.validListStates = List.of(
+            GameState.HEALING_ROOM
+        );
     }
 
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
 
-        // System.out.println("Smith: Hello there! I can upgrade your weapon with a Weapon Shard.");
-        // System.out.println("You currently have " + this.game.getPlayer().countItem(new WeaponShard()) + " Weapon Shards.");
-        // this.controller.setState(GameState.SMITH_FORGING);
+        HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
+
+        Smith smith = (Smith) room.getFriendlyEntity(Smith.NAME);
+        if (smith != null) smith.interact(this.game.getPlayer());
     }
 }
 
@@ -535,7 +556,11 @@ class GiveCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         
-        if (!Controller.awaitConfirmation()) return;
+        if (this.commands.length != 2) {
+            System.out.println("Invalid command. Correct Syntax: give [npc] [item]");
+            return;
+        }
+
         this.game.giveItem(commands[1], commands[2]);
     }
 }
@@ -547,7 +572,7 @@ class GiveCommand extends GameCommand {
 class NewGameCommand extends GameCommand {
     public NewGameCommand(Game game, String[] commands) {
         super(game, null);
-        this.whiteListStates = List.of(
+        this.validListStates = List.of(
             GameState.MAIN_MENU
         );
     }
@@ -567,7 +592,7 @@ class NewGameCommand extends GameCommand {
 class LoadGameCommand extends GameCommand {
     public LoadGameCommand(Game game, String[] commands) {
         super(game, null);
-        this.whiteListStates = List.of(
+        this.validListStates = List.of(
             GameState.MAIN_MENU
         );
     }
@@ -587,7 +612,7 @@ class LoadGameCommand extends GameCommand {
 class ExitGameCommand extends GameCommand {
     public ExitGameCommand(Game game, String[] commands) {
         super(game, null);
-        this.whiteListStates = List.of(
+        this.validListStates = List.of(
             GameState.MAIN_MENU
         );
     }
@@ -606,7 +631,7 @@ class ExitGameCommand extends GameCommand {
 class ChooseCharacterGameCommand extends GameCommand {
     public ChooseCharacterGameCommand(Game game, String[] commands) {
         super(game, commands);
-        this.whiteListStates = List.of(
+        this.validListStates = List.of(
             GameState.CHOOSING_CHARACTER
         );
     }
@@ -760,16 +785,17 @@ public class Controller {
     private Game game;
     private Character player;
     private GameState state;
+    private static Scanner scanner;
 
-    private Controller() {}
+    private Controller() {
+        Controller.scanner = new Scanner(System.in);
+        this.state = GameState.MAIN_MENU;
+    }
 
     public static boolean awaitConfirmation() {
         System.out.println("Are you sure? (yes/no)");
 
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        scanner.close();
-
+        String input = Controller.scanner.nextLine();
         return input.matches("(yes|y)");
     }
 
@@ -827,8 +853,8 @@ public class Controller {
             map.add(level);
         }
 
-        this.setGame(new Game(map));
         this.setState(GameState.CHOOSING_CHARACTER);
+        this.setGame(new Game(map));
     }
 
     /**
@@ -848,8 +874,12 @@ public class Controller {
      * @return the command object to be executed
      */
     private GameCommand getCommand(String[] commands) {
+
         Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
             Map.ofEntries(
+                Map.entry("new", () -> new NewGameCommand(this.game, commands)),
+                Map.entry("load", () -> new LoadGameCommand(this.game, commands)),
+                Map.entry("exit", () -> new ExitGameCommand(this.game, commands)),
                 Map.entry("gn", () -> new MoveNorthCommand(this.game, commands)),
                 Map.entry("gs", () -> new MoveSouthCommand(this.game, commands)),
                 Map.entry("gw", () -> new MoveWestCommand(this.game, commands)),
@@ -870,12 +900,15 @@ public class Controller {
                 Map.entry("back", () -> new PreviousStateCommand(this.game, commands)),
                 Map.entry("merchant", () -> new MerchantCommand(this.game, commands)),
                 Map.entry("buy", () -> new BuyCommand(this.game, commands)),
-                Map.entry("smith", () -> new SmithCommand(this.game, commands)),
-                Map.entry("give", () -> new GiveCommand(this.game, commands))
+                Map.entry("smith", () -> new SmithCommand(this.game, commands))
             )
-        );    
+        );
+
+        if (commands[0].matches("\\d+")) return new ChooseCharacterGameCommand(this.game, commands);
         
-        return commandMap.get(commands[0]).get();
+        Supplier<GameCommand> command = commandMap.get(commands[0]);
+        if (command != null) return command.get();
+        return null;
     }
 
     /**
@@ -923,15 +956,16 @@ public class Controller {
     @JsonIgnore
     public String getAvailableCommands() {
         return switch (this.state) {
-            case MAIN_MENU -> "[new, load, exit]";
-            case CHOOSING_CHARACTER -> "[1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai]";
-            case FIGHTING_BOSS, FIGHTING_MOB -> "[atk, skill, inv]";
-            case LOOTING_ROOM -> "[inv, use, drop] \n" + this.game.getAvailableDirections();
-            case MOVING -> "\n" + this.game.getAvailableDirections();
-            case INV_MANAGEMENT -> "[use, drop, swap, back]";
-            case MERCHANT_SHOPPING -> "[buy, back]";
-            case SMITH_FORGING -> "[give, back]";
+            case MAIN_MENU -> "[new] - [load] - [exit]";
+            case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Cheater] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
+            case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [inv]";
+            case LOOTING_ROOM -> "[inv] - [use] - [drop] - " + this.game.getAvailableDirections();
+            case MOVING -> this.game.getAvailableDirections();
+            case INV_MANAGEMENT -> "[use] - [drop] - [swap] - [back]";
+            case MERCHANT_SHOPPING -> "[buy] - [back]";
+            case SMITH_FORGING -> "[give] -[back]";
             case BOSS_DEFEATED -> "[inv, move to any direction to change floor]";
+            case HEALING_ROOM -> "[merchant] - [smith] - [inv] - [use] - [drop]";
             default -> "";
         };
     }
@@ -940,14 +974,14 @@ public class Controller {
      * Main game loop
      */
     public void run() {
-        Scanner scanner = new Scanner(System.in);
+        System.out.println(Constants.GAME_TITLE);
 
         while (this.state != GameState.EXIT) {
-            System.out.print("What to do? " + this.getAvailableCommands() + " (write \"help\" for the complete list of commands)");
-            String input = scanner.nextLine();
+            System.out.print("What to do? " + this.getAvailableCommands() + " (write \"help\" for the complete list of commands) ");
+            String input = Controller.scanner.nextLine();
             this.handleUserInput(input);
         }
 
-        scanner.close();
+        Controller.scanner.close();
     }
 }

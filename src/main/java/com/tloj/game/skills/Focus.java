@@ -31,6 +31,7 @@ public class Focus extends CharacterSkill{
 
         attack.setBaseDamage(this.character.getCurrentFightAtk() + 3);
         attacker.useMana(5);
+        System.out.println("Focus mode on! Next attack will deal 3 more damage");
     }
 
     public static String describe() {

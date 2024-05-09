@@ -32,6 +32,7 @@ public class CheatEngine extends CharacterSkill{
         
         attack.setWeaponRoll(weapon.getDice().getFaces());
         attacker.useMana(5);
+        System.out.println("Hacking going on! MAX ROLL INCOMING!");
     }
 
     public static String describe() {

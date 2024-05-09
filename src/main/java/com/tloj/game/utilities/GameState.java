@@ -13,7 +13,8 @@ public enum GameState {
     LOOTING_ROOM (5),
     HEALING_ROOM (5),
     BOSS_DEFEATED (7),
-    EXIT(8);
+    EXIT(8),
+    GAME_OVER(9);
 
     private int value;
 

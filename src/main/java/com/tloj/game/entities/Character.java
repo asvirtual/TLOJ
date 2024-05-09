@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.Level;
@@ -175,6 +176,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if (this.money < 0) this.money = 0;
     }
 
+    public boolean canAfford(PurchasableItem item) {
+        return this.money >= item.getPrice();
+    }
+
     public int getHp() {
         return this.hp;
     }
@@ -252,6 +257,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public boolean hasItem(Item item) {
         return this.inventory.contains(item);
+    }
+
+    public Item getItem(String itemName) {
+        for (Item item : this.inventory) 
+            if (itemName.equals(item.toString())) return item;
+
+        return null;
     }
 
     @JsonIgnore

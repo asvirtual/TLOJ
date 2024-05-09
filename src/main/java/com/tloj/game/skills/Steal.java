@@ -34,8 +34,10 @@ public class Steal extends CharacterSkill {
         Dice dice = new Dice(10);
         if (dice.roll() < 4) return;
         
-        attacker.addInventoryItem(Item.getRandomItem());
+        Item item = Item.getRandomItem();
+        attacker.addInventoryItem(item);
         attacker.useMana(10);
+        System.out.println("Steal successful! You stole a " + item);
     }
 
     public static String describe() {

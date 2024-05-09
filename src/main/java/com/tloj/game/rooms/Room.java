@@ -1,9 +1,13 @@
 package com.tloj.game.rooms;
 
+import java.util.ArrayList;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
 
@@ -25,6 +29,8 @@ public abstract class Room {
     protected boolean visited;
     protected boolean cleared;
     protected boolean locked;
+    @JsonProperty
+    protected ArrayList<FriendlyEntity> friendlyEntities;
 
     /**
      * Default constructor to allow Jackson to deserialize JSON.
@@ -35,6 +41,7 @@ public abstract class Room {
         this.visited = false;
         this.cleared = false;
         this.coordinates = coordinates;
+        this.friendlyEntities = new ArrayList<FriendlyEntity>();
     }
 
     @JsonIgnore
@@ -68,5 +75,9 @@ public abstract class Room {
 
     public void forget() {
         this.visited = false;
+    }
+
+    public FriendlyEntity getFriendlyEntity(String name) {
+        return this.friendlyEntities.stream().filter(entity -> entity.getName().equals(name)).findFirst().orElse(null);
     }
 }

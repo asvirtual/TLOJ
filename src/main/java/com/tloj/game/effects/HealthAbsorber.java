@@ -25,6 +25,7 @@ public class HealthAbsorber extends WeaponEffect {
             public void run() {
                 int totalDamage = attack.getTotalDamage();
                 if (totalDamage > 0) attack.getAttacker().heal(totalDamage / 2);
+                System.out.println("You healed for " + totalDamage / 2 + " hp");
             }
         });
 

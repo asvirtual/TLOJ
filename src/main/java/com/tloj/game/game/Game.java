@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
@@ -11,6 +12,8 @@ import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.FriendlyEntity;
+import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
@@ -31,6 +34,9 @@ public class Game implements CharacterObserver {
     private Character player;
     private ArrayList<Level> levels;
     private Controller controller;
+    @JsonProperty
+    private long elapsedTime;
+    private long sessionStartTime;
 
     public Game(ArrayList<ArrayList<ArrayList<Room>>> map) {
         this.levels = new ArrayList<Level>();
@@ -40,6 +46,8 @@ public class Game implements CharacterObserver {
         this.currentLevel = this.levels.get(0);
         this.controller = Controller.getInstance();
         this.seed = new Date().getTime();
+        this.elapsedTime = 0;
+        this.sessionStartTime = new Date().getTime();
     }
     
     public Game(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
@@ -48,6 +56,7 @@ public class Game implements CharacterObserver {
         this.currentLevel = currentLevel;
         this.controller = Controller.getInstance();
         this.seed = seed;
+        this.sessionStartTime = new Date().getTime();
     }
 
     @JsonIgnore
@@ -140,6 +149,7 @@ public class Game implements CharacterObserver {
     }
 
     public void save() {
+        this.elapsedTime += new Date().getTime() - this.sessionStartTime;
         GameData gameData = this.getGameData();
         gameData.serializeJSON();
         // TODO: Save in JSON file (and/or in cloud)
@@ -195,7 +205,8 @@ public class Game implements CharacterObserver {
 
     @Override
     public void onPlayerDefeated() {
-        // TODO: Lost game, back to main menu?
+        System.out.println("You've been defeated!");
+        this.controller.setState(GameState.GAME_OVER);
     }
 
     public void printMap(){
@@ -239,24 +250,26 @@ public class Game implements CharacterObserver {
         System.out.println(this.player);
     }
 
-    public void giveItem(String receiver, String itemName) {  
-        if (!receiver.equalsIgnoreCase("Smith")) {
-            System.out.print("Who?");
+    public void giveItem(String receiverName, String itemName) {
+        Item item = this.player.getItem(itemName);
+        if (item == null) return;
+
+        FriendlyEntity entity = this.getCurrentRoom().getFriendlyEntity(receiverName);
+        
+        if (entity == null) {
+            System.out.println("There is no such entity in this room");
             return;
         }
 
-        if (!itemName.equalsIgnoreCase("WeaponShard")) {
-            System.out.print("Wrong Item!");
+        if (!(entity instanceof ItemReceiverEntity)) {
+            System.out.println("This entity cannot receive items");
             return;
         }
         
-        WeaponShard weaponShard = new WeaponShard();
-
-        if (this.player.searchInventoryItem(weaponShard) != null) {
-            this.getPlayer().removeInventoryItem(this.player.searchInventoryItem(weaponShard));
-            this.player.getWeapon().upgrade(1);
-            System.out.println("You have upgraded " + this.player.getWeapon() +"!");
-        }
+        if (!Controller.awaitConfirmation()) return;
+        
+        ItemReceiverEntity receiver = (ItemReceiverEntity) entity;
+        receiver.giveItem(item);
     }
 
     public String getAvailableDirections() {
@@ -298,7 +311,7 @@ public class Game implements CharacterObserver {
             else
                 directions += W;    
         }
-
+        
         return directions;
     }
   
