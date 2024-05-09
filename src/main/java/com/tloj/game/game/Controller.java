@@ -46,6 +46,7 @@ import com.tloj.game.utilities.GameState;
  * - Choose character (choose [character]) {@link ChooseCharacterGameCommand} (choose a character)<br>
  * - Activate skill (skill) {@link SkillCommand} (activate character's skill)<br>
  * - Show inventory (inventory) {@link InventoryCommand} (show player's inventory)<br>
+ * - Swap weapon (swap [weapon]) {@link SwapWeaponCommand} (swap player's weapon)<br>
  */
 abstract class GameCommand {
     protected Game game;
@@ -218,6 +219,22 @@ class UseItemCommand extends GameCommand {
     @Override
     public void execute() {
         this.game.useItem(Integer.parseInt(commands[1]));
+    }
+}
+
+
+/**
+ * Concrete command class to swap the player's weapon<br>
+ * @see GameCommand <br>
+ */
+class SwapWeaponCommand extends GameCommand {
+    public SwapWeaponCommand(Game game, String[] commands) {
+        super(game, commands);
+    }
+
+    @Override
+    public void execute() {
+        this.game.getPlayer().swapWeapon(Integer.parseInt(commands[1]));
     }
 }
 
@@ -849,6 +866,7 @@ public class Controller {
                 Map.entry("inventory", () -> new InventoryCommand(this.game, commands)),
                 Map.entry("use", () -> new UseItemCommand(this.game, commands)),
                 Map.entry("drop", () -> new DropItemCommand(this.game, commands)),
+                Map.entry("swap", () -> new SwapWeaponCommand(this.game, commands)),
                 Map.entry("return", () -> new ReturnCommand(this.game, commands)),
                 Map.entry("map", () -> new PrintMapCommand(this.game, commands)),
                 Map.entry("status", () -> new PrintStatusCommand(this.game, commands)),
