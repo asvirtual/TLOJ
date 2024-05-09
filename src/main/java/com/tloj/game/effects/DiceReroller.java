@@ -25,4 +25,13 @@ public class DiceReroller extends WeaponEffect {
         
         return true;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "dice thrown twice";
+    }
+
+    public static String describe() {
+        return "Dice Reroller: dice thrown twice";
+    }
 }

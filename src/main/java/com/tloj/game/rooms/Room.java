@@ -40,7 +40,6 @@ public abstract class Room {
     @JsonIgnore
     public abstract RoomType getType();
     public abstract void accept(PlayerRoomVisitor visitor);
-    public abstract void exit();
     public abstract String toString();
     
     public Coordinates getCoordinates() {

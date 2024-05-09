@@ -22,8 +22,7 @@ public class PlasmaGreatsword extends Weapon {
         super(WEIGHT, DICE_FACES, ID); 
     }
 
-    @Override
-    public String toString() {
-        return "Plasma Greatsword";
+    public static String describe() {
+        return "Plasma Great Sword (D15)";
     }
 }

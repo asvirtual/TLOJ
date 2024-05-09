@@ -19,32 +19,30 @@ import com.tloj.game.entities.Character;
  * Represents the Glithed Wandering Mob entity in the game.<br>
  * The Glithed Wandering is a special moving entyty in the game. It has average health and low defense, but inflicts some damage<br>
  * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
- * @see Mob
  * @see JetBat
  * @see JunkSlime
  * @see MechaRat
  */
 
-public class Glitched extends Mob implements MovingEntity{
-
+public class Glitched extends Mob implements MovingEntity {
     private static final int HP = 50;
     private static final int ATTACK = 3;
     private static final int DEFENSE = 0;
     private static final int DICE_FACES = 6;
     private static final int XP_DROP = 3;
     private static final int MONEY_DROP = 2;
-    private int TurnLeft = 5;
+    private int turnsLeft = 5;
     
-
     public Glitched(Coordinates position, int lvl) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position, new SpecialKey());
     }
 
     @Override
     public void defend(Attack attack) {
-        PlayerAttack playerAttack = (PlayerAttack) attack;
-        TurnLeft -= TurnLeft;
         super.defend(attack);
+
+        PlayerAttack playerAttack = (PlayerAttack) attack;
+        this.turnsLeft--;
 
         Character player = playerAttack.getAttacker();
         Level level = player.getCurrentLevel();
@@ -59,32 +57,24 @@ public class Glitched extends Mob implements MovingEntity{
 
             Coordinates newCoords = new Coordinates(row, col);
             if (!level.areCoordinatesValid(newCoords)) continue;
-            if (level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM) continue;
-            if (level.getRoom(newCoords).getType() == RoomType.TRAP_ROOM) continue;
-            if (level.getRoom(newCoords).getType() == RoomType.LOOT_ROOM && ((LootRoom) level.getRoom(newCoords)).isLocked()) continue;         
+            if (
+                level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM ||
+                level.getRoom(newCoords).getType() == RoomType.TRAP_ROOM ||
+                (level.getRoom(newCoords).getType() == RoomType.LOOT_ROOM && ((LootRoom) level.getRoom(newCoords)).isLocked())
+            ) 
+                continue;
             
             HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
-            nextRoom.addMobTop(this);
-            move(newCoords);
+            nextRoom.addMobToTop(this);
+            this.move(newCoords);
             validLocation = true;
         } while (!validLocation);
     }
 
     @Override
     public void move(Coordinates to) {
-        if(TurnLeft != 0){
-            System.out.print("The Glitched has changed room");
-            this.position = to;
-        }
-            else{
-            System.out.print("The Glitched has gone...");
-            this.die();
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "The Glitched";
+        if (this.turnsLeft != 0) this.position = to;
+        else System.out.print("The Glitched has gone...");
     }
 
     @Override

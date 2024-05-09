@@ -48,23 +48,14 @@ public class BossRoom extends HostileRoom {
         visitor.visit(this);
     }
 
-    @Override
-    public void exit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exit'");
-    }
-
-    @Override
-    public String toString() {
-        if(this.isVisited())
-            return "\u00DF" + " ";
-        else
-            return "\u00A0" + " ";
-    }
-
     @Override 
     public void clear() {
         super.clear();
         this.mobs.set(0, null);
+    }
+
+    @Override
+    public String toString() {
+        return this.visited ? "\u00DF" : "\u00A0";
     }
 }

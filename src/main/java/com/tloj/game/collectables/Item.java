@@ -97,4 +97,9 @@ public abstract class Item {
 
         return null; // Should never reach here if probabilities sum to 1
     }
+
+    @Override
+    public String toString() {
+        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
+    };
 }

@@ -2,6 +2,7 @@ package com.tloj.game.collectables.weapons;
 
 import com.tloj.game.collectables.Weapon;
 
+
 /**
  * Represents the CyberKatana Weapon in the game.<br>
  * The CyberKatana is a light but sharp blade that can be found in the game.<br>
@@ -22,8 +23,7 @@ public class CyberKatana extends Weapon {
         super(WEIGHT, DICE_FACES, ID); 
     }
 
-    @Override
-    public String toString() {
-        return "Cyber Katana";
+    public static String describe() {
+        return "Cyber Katana (D10)";
     }
 }

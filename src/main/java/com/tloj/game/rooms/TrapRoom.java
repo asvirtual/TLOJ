@@ -1,6 +1,7 @@
 package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.Dice;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
 import com.tloj.game.abilities.BossAbility;
@@ -41,17 +42,7 @@ public class TrapRoom extends Room {
     }
 
     @Override
-    public void exit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exit'");
-    }
-
-    @Override
     public String toString() {
-        if(this.isVisited())
-            return "\u2566" + " ";
-        else
-            return "\u00A0" + " ";
+        return this.visited ? "\u2566" : "\u00A0";
     }
-
 }

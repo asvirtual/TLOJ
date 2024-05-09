@@ -62,8 +62,6 @@ public abstract class CombatEntity extends Entity {
 
     public void takeDamage(int damage) {
         this.hp -= damage;
-        if (this.hp <= 0) 
-            this.die();
     };
 
     @JsonIgnore
@@ -76,5 +74,4 @@ public abstract class CombatEntity extends Entity {
     };
 
     public abstract void attack(CombatEntity target);
-    public abstract void die();
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
+import com.tloj.game.effects.DiceReroller;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Steal;
 import com.tloj.game.utilities.Coordinates;
@@ -83,8 +84,8 @@ public class DataThief extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: NanoDirk (D6) - thrown twice" + "\n" +
-               "Ability: Steal - Chance to steal a random item" + "\n" +
+               "Weapon: " + NanoDirk.describe() + " - " + DiceReroller.describe() + "\n" +
+               "Ability: " + Steal.describe() + "\n" +
                "Money: " + MONEY;
     }
 }

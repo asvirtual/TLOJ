@@ -39,9 +39,4 @@ public class HealthPotion extends PurchasableItem implements ConsumableItem {
         
         consumer.removeInventoryItem(this);
     }
-
-    @Override
-    public String toString() {
-        return "Health Potion";
-    }
 }

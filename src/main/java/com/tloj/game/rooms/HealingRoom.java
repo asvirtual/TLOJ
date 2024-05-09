@@ -36,17 +36,7 @@ public class HealingRoom extends Room {
     }
 
     @Override
-    public void exit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exit'");
-    }
-
-    @Override
     public String toString() {
-        if(this.isVisited())
-            return "\u256C" + " ";
-        else
-            return "\u00A0" + " ";
+        return this.visited ? "\u256C" : "\u00A0";
     }
-
 }

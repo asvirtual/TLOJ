@@ -17,7 +17,7 @@ import com.tloj.game.utilities.Dice;
  * @see Focus
  */
 
-public class Steal extends CharacterSkill{
+public class Steal extends CharacterSkill {
     public Steal(Character character) {
         super(character);
     }
@@ -38,4 +38,7 @@ public class Steal extends CharacterSkill{
         attacker.useMana(10);
     }
 
+    public static String describe() {
+        return "Steal: Chance to steal a random item";
+    }
 }

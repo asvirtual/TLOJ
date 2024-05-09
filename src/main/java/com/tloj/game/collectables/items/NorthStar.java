@@ -26,11 +26,5 @@ public class NorthStar extends Item {
     public NorthStar() {
         super(WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }
-
-
-    @Override
-    public String toString() {
-        return "North Star";
-    }
 }
 

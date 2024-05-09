@@ -39,9 +39,4 @@ public class ManaPotion extends PurchasableItem implements ConsumableItem {
 
         consumer.removeInventoryItem(this); 
     }
-
-    @Override
-    public String toString() {
-        return "Mana Potion";
-    }
 }

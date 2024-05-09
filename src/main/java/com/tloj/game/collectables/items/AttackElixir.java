@@ -38,10 +38,5 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
 
         consumer.removeInventoryItem(this);
     }
-
-    @Override
-    public String toString() {
-        return "Attack Elixir";
-    }
 }
 

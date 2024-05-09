@@ -25,8 +25,7 @@ public class PulseStaff extends Weapon {
         this.effect = new ManaAttackBooster(this); 
     }
 
-    @Override
-    public String toString() {
-        return "Pulse Staff";
+    public static String describe() {
+        return "Pulse-Staff (D5-10)";
     }
 }

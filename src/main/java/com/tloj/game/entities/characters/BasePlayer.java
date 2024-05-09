@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.Character;
+import com.tloj.game.skills.Focus;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -87,8 +89,8 @@ public class BasePlayer extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: LaserBlade (D8)" + "\n" +
-               "Ability: Focus - Adds 3 damage on next attack" + "\n" +
+               "Weapon: " + LaserBlade.describe() + "\n" +
+               "Ability: " + Focus.describe() + "\n" +
                "Money: " + MONEY;
     }
 }

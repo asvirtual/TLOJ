@@ -33,5 +33,9 @@ public class Focus extends CharacterSkill{
         attack.setBaseDamage(this.character.getCurrentFightAtk() + 3);
         attacker.useMana(5);
     }
+
+    public static String describe() {
+        return "Focus: Adds 3 dmg points on next attack";
+    }
 }
 

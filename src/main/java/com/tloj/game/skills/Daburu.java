@@ -32,4 +32,8 @@ public class Daburu extends CharacterSkill{
         attack.setTotalDamage(attack.getTotalDamage() * 2);
         attacker.useMana(10);
     }
+
+    public static String describe() {
+        return "Daburu: Doubles next attack damage";
+    }
 }

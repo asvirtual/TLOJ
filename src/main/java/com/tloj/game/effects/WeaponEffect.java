@@ -24,4 +24,9 @@ public abstract class WeaponEffect {
      * @return true if the effect was applied successfully, false otherwise
      */
     public abstract boolean apply(PlayerAttack attack);
+
+    @Override
+    public String toString() {
+        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + ": ";
+    };
 }

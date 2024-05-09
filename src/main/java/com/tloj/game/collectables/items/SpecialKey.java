@@ -7,7 +7,6 @@ import com.tloj.game.entities.Character;
 
 
 /**
- * TODO: Establish whether this item should be a ConsumableItem or not
  * Represents the Consumable Item Special Key in the game.<br>
  * The Special Key opens a special locked loot room, it can be found or purchased in the game.<br>
  * It weighs {@value #WEIGHT}, with an in game cost of D{@value #PRICE}
@@ -36,11 +35,6 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     public void consume(Character consumer) {
         System.out.println("You've used the Special Key to unlock a special loot room!");
         consumer.removeInventoryItem(this);
-    }
-
-    @Override
-    public String toString() {
-        return "Special Key";
     }
 }
 

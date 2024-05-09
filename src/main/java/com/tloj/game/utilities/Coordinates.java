@@ -1,7 +1,6 @@
 package com.tloj.game.utilities;
 
 
-
 public class Coordinates {
     public enum Direction {
         NORTH,
@@ -17,7 +16,6 @@ public class Coordinates {
         this.x = x;
         this.y = y;
     }
-
 
     /**
      * Default constructor to allow Jackson to deserialize JSON.

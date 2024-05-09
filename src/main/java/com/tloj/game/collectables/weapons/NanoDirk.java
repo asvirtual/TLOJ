@@ -25,8 +25,7 @@ public class NanoDirk extends Weapon {
         this.effect = new DiceReroller(this);
     }
 
-    @Override
-    public String toString() {
-        return "Nano Dirk";
+    public static String describe() {
+        return "Nano Dirk (D6)";
     }
 }

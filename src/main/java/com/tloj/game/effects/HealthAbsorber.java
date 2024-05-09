@@ -29,6 +29,10 @@ public class HealthAbsorber extends WeaponEffect {
         });
 
         return true;
-        
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "heals for half the damage dealt";
     }
 }

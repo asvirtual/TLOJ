@@ -32,10 +32,5 @@ public class WeaponShard extends PurchasableItem {
     public double getDropChance(){
         return DROP_CHANCE;
     }
-
-    @Override
-    public String toString() {
-        return "Weapon Shard";
-    }
 }
 

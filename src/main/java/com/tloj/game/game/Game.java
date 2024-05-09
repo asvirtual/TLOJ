@@ -8,6 +8,7 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.SpecialKey;
+import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
@@ -141,7 +142,7 @@ public class Game implements CharacterObserver {
     public void save() {
         GameData gameData = this.getGameData();
         gameData.serializeJSON();
-        // TODO: Save in JSON file
+        // TODO: Save in JSON file (and/or in cloud)
     }
 
     public Room getCurrentRoom() {
@@ -171,6 +172,7 @@ public class Game implements CharacterObserver {
         this.player.lootMob(mob);
 
         System.out.println("You've defeated the enemy!");
+        
         this.updateScore(Mob.SCORE_DROP);
         this.controller.setState(GameState.MOVING);
     }
@@ -193,7 +195,7 @@ public class Game implements CharacterObserver {
 
     @Override
     public void onPlayerDefeated() {
-
+        // TODO: Lost game, back to main menu?
     }
 
     public void printMap(){
@@ -217,13 +219,8 @@ public class Game implements CharacterObserver {
         this.player.sortInventory();
         System.out.println("Inventory:");
         for (int i = 0; i < this.player.getInventorySize(); i++) {
-            System.out.println(i + ". " + this.player.getInventoryItem(i).toString());
+            System.out.println(i + ". " + this.player.getInventoryItem(i));
         }
-    }
-
-    @Override
-    public void onPlayerLevelUp() {
-
     }
 
     public void useItem(int index) {
@@ -232,71 +229,68 @@ public class Game implements CharacterObserver {
     }
     
     public void returnToStart() {
-        if (this.controller.getState() == GameState.MOVING) {
-            this.player.move(this.currentLevel.getStartRoom().getCoordinates());
-        }
-        else {
-            System.out.println("There's a time and place for everything but not now!");
-        }
+        this.player.move(this.currentLevel.getStartRoom().getCoordinates());
     }
 
     public void printPlayerStatus() {
         System.out.println(this.player);
     }
 
-    public void giveItem(String reciver, String itemName) {
+    public void giveItem(String receiver, String itemName) {
         
-        if(!reciver.equalsIgnoreCase("Smith")){
+        if (!receiver.equalsIgnoreCase("Smith")) {
             System.out.print("Who?");
             return;
         }
 
-        if(!itemName.equalsIgnoreCase("WeapoShard")){
+        if (!itemName.equalsIgnoreCase("WeaponShard")) {
             System.out.print("Wrong Item!");
             return;
         }
         
-        if(this.player.searchInventoryItem(new WeaponShard()) != null){
-            this.getPlayer().removeInventoryItem(this.player.searchInventoryItem(new WeaponShard()));
+        WeaponShard weaponShard = new WeaponShard();
+
+        if (this.player.searchInventoryItem(weaponShard) != null) {
+            this.getPlayer().removeInventoryItem(this.player.searchInventoryItem(weaponShard));
             this.player.getWeapon().upgrade(1);
-            System.out.println("You have upgraded " + this.player.getWeapon().toString() +"!");
+            System.out.println("You have upgraded " + this.player.getWeapon() +"!");
         }
     }
 
-    public String getAvailableDirection(){
+    public String getAvailableDirections() {
         Coordinates coordinates = this.player.getPosition();
         String directions = "You can go: \n";
         String N = "gn \n";
         String S = "gs \n";
         String E = "ge \n";
         String W = "gn \n";
-        String Nb = "gn - There's somtig strange... \n";
-        String Sb = "gs - There's somtig strange... \n";
-        String Eb = "ge - There's somtig strange... \n";
-        String Wb = "gn - There's somtig strange... \n";
+        String Nb = "gn - There's something strange... \n";
+        String Sb = "gs - There's something strange... \n";
+        String Eb = "ge - There's something strange... \n";
+        String Wb = "gn - There's something strange... \n";
 
-        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))){
+        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH)).getType() == RoomType.BOSS_ROOM)
                 directions += Nb;
             else
                 directions += N;    
         }
         
-        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))){
+        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH)).getType() == RoomType.BOSS_ROOM)
                 directions += Sb;
             else
                 directions += S;  
         }
 
-        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))){
+        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST)).getType() == RoomType.BOSS_ROOM)
                 directions += Eb;
             else
                 directions += E;
         }
 
-        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))){
+        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST)).getType() == RoomType.BOSS_ROOM)
                 directions += Wb;
             else

@@ -2,6 +2,7 @@ package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.BossAbility;
+import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.game.PlayerRoomVisitor;
@@ -52,20 +53,6 @@ public class LootRoom extends Room {
     public void accept(PlayerRoomVisitor visitor) {
         visitor.visit(this);
     }
-
-    @Override
-    public void exit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exit'");
-    }
-
-    @Override
-    public String toString() {
-        if(this.isVisited())
-            return "\u255A" + " ";
-        else
-            return "\u00A0" + " ";
-    }
   
     public void clear() {
         super.clear();
@@ -74,5 +61,10 @@ public class LootRoom extends Room {
 
     public Item getItem() {
         return this.item;
+    }
+
+    @Override
+    public String toString() {
+        return this.visited ? "\u255A" : "\u00A0";
     }
 }

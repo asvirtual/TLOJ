@@ -29,17 +29,7 @@ public class StartRoom extends Room {
     }
 
     @Override
-    public void exit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exit'");
-    }
-
-    @Override
     public String toString() {
-        if(this.isVisited())
-            return "\u2229" + " ";
-        else
-            return "\u00A0" + " ";
+        return this.visited ? "\u2229" : "\u00A0";
     }
-
 }

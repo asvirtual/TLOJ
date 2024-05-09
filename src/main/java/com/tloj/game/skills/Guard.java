@@ -32,5 +32,9 @@ public class Guard extends CharacterSkill{
         attack.setTargetDef(this.character.getCurrentFightDef() + 3);
         attacker.useMana(5);
     }
+
+    public static String describe() {
+        return "Guard: Adds 3 defense points during fight";
+    }
 }
 

@@ -7,6 +7,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Focus;
+import com.tloj.game.skills.Guard;
 import com.tloj.game.utilities.Coordinates;
 
 public class MechaKnight extends Character {
@@ -83,8 +84,8 @@ public class MechaKnight extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: GreatSword (D15)" + "\n" +
-               "Ability: Guard - Adds +3 def during fight" + "\n" +
+               "Weapon: " + PlasmaGreatsword.describe() + "\n" +
+               "Ability: " + Guard.describe() + "\n" +
                "Money: " + MONEY;
     }
 }

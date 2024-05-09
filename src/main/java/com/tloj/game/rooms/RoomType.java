@@ -1,5 +1,6 @@
 package com.tloj.game.rooms;
 
+
 /**
  * Enum that represents the different types of rooms in the game<br>
  * @see BossRoom

@@ -11,7 +11,6 @@ import com.tloj.game.game.PlayerRoomVisitor;
 /**
  * Class that represents a hostile room in the game<br>
  * Contains the mobs of the room<br>
- * @see Room
  * @see BossRoom
  * @see HealingRoom
  * @see LootRoom
@@ -54,19 +53,6 @@ public class HostileRoom extends Room {
         visitor.visit(this);
     }
 
-    @Override
-    public void exit() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'exit'");
-    }
-
-    @Override
-    public String toString() {
-        if(this.isVisited())
-            return "\u25A0" + " ";
-        else
-            return "\u00A0" + " ";
-    }
 
     @JsonIgnore
     public Mob getMob() {
@@ -77,12 +63,17 @@ public class HostileRoom extends Room {
         this.mobs.remove(mob);
     }
 
-    public void addMobTop(Mob mob) {
+    public void addMobToTop(Mob mob) {
         this.mobs.add(0, mob);
     }
 
     public void clear() {
         super.clear();
         for (Mob mob : this.mobs) this.removeMob(mob);
+    }
+    
+    @Override
+    public String toString() {
+        return this.visited ? "\u25A0" : "\u00A0";
     }
 }

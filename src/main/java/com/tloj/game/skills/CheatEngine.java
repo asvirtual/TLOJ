@@ -33,4 +33,8 @@ public class CheatEngine extends CharacterSkill{
         attack.setWeaponRoll(weapon.getDice().getFaces());
         attacker.useMana(5);
     }
+
+    public static String describe() {
+        return "Cheat Engine: Forces the max weapon roll";
+    }
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.weapons.PulseStaff;
+import com.tloj.game.effects.ManaAttackBooster;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.CheatEngine;
 import com.tloj.game.utilities.Coordinates;
@@ -81,8 +83,8 @@ public class Hacker extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: Pulse-Staff (D5-10) - costs 3 mana to use" + "\n" +
-               "Ability: CheatEngine - Forces max roll on next attack" + "\n" +
+               "Weapon: " + PulseStaff.describe() + " - " + ManaAttackBooster.describe() + "\n" +
+               "Ability: " + CheatEngine.describe() + "\n" +
                "Money: " + MONEY;
     }
 

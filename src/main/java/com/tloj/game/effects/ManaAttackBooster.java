@@ -33,4 +33,13 @@ public class ManaAttackBooster extends WeaponEffect {
 
         return true;
     }
+
+    @Override
+    public String toString() {
+        return super.toString() + "costs 3 mana to use";
+    }
+
+    public static String describe() {
+        return "costs 3 mana to use";
+    }
 }

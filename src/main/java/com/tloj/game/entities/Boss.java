@@ -37,11 +37,6 @@ public abstract class Boss extends Mob {
     }
 
     @Override
-    public void die() {
-        
-    }
-
-    @Override
     public void defend(Attack attack) {
         super.defend(attack);
         if (!(attack instanceof PlayerAttack)) return;

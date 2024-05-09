@@ -71,7 +71,6 @@ public abstract class Mob extends CombatEntity {
         this.drop = Item.getRandomItem();
     }
 
-    
     /**
      * @param hp The mob's health points<br>
      * @param atk The mob's attack points<br>
@@ -120,10 +119,12 @@ public abstract class Mob extends CombatEntity {
        
     public Item getDrop() {
         Dice dice = new Dice(DROP_CHANCE);
-        if(dice.roll() < 2) return this.drop;
+        if (dice.roll() < 2) return this.drop;
         return null;
     }
- 
+
     @Override
-    public void die() {}
+    public String toString() {
+        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
+    };
 }

@@ -37,10 +37,5 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
         consumer.setCurrentFightDef(consumer.getDef() + DEFENSE_BOOST);
         consumer.removeInventoryItem(this);
     }
-
-    @Override
-    public String toString() {
-        return "Defense Elixir";
-    }
 }
 

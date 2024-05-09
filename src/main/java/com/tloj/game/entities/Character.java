@@ -308,9 +308,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             else this.observers.forEach(observer -> observer.onMobDefeated(target));
         }
     }
-
-    @Override
-    public void die() {}
     
     public void heal(int amount) {
         this.hp += amount;
@@ -354,8 +351,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = this.maxMana;
         this.atk += threeDice.roll();
         this.def += threeDice.roll();
-
-        this.observers.forEach(observer -> observer.onPlayerLevelUp());
     }
 
     public void addObserver(CharacterObserver observer) {
@@ -379,7 +374,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         }
     }
     /**
-     * Better graphical representation of the Character's status
+     * TODO: Better graphical representation of the Character's status
      */
     @Override
     public String toString() {
