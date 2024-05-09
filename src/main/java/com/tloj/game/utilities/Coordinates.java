@@ -18,6 +18,10 @@ public class Coordinates {
         this.y = y;
     }
 
+    public Coordinates() {
+        this(0, 0);
+    }
+
     public int getX() {
         return x;
     }
