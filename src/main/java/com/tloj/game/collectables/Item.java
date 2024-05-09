@@ -26,8 +26,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * @see Weapon
  * @see PurchasableItem
  */
-
- public abstract class Item {
+public abstract class Item {
     protected double weight;
     protected int dropMoney;
     

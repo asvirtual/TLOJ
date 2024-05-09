@@ -38,10 +38,6 @@ public abstract class Room {
         return this.locked;
     }
 
-    public boolean isVisited() {
-        return visited;
-    }
-
     public boolean isCleared() {
         return cleared;
     }

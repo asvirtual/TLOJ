@@ -49,10 +49,11 @@
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.6.3</version>
                 <configuration>
-                    <source>1.8</source>  
+                    <source>15</source>  
                     <includes>
                         <include>src/**/*.java</include>
                     </includes>
+                    <additionalJOption>-Xdoclint:none</additionalJOption>
                 </configuration>
             </plugin>
         </plugins>
