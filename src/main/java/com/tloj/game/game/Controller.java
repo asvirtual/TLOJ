@@ -2,15 +2,16 @@ package com.tloj.game.game;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.function.Supplier;
 
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.tloj.game.entities.BasePlayer;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -52,14 +53,24 @@ abstract class GameCommand {
     protected Game game;
     protected String[] commands;
     protected Character player;
+    protected Controller controller;
+    protected List<GameState> invalidStates;
+    protected List<GameState> whiteListStates;
 
     protected GameCommand(Game game, String[] commands) {
         this.game = game;
         this.commands = commands;
         if (this.game != null) this.player = game.getPlayer();
+        this.controller = Controller.getInstance();
     }
 
-    public abstract void execute();
+    public void execute() throws IllegalStateException {
+        if (this.whiteListStates != null && !this.whiteListStates.contains(this.controller.getState()))
+            throw new IllegalStateException("Invalid state to execute this command");
+
+        if (this.invalidStates.contains(this.controller.getState()))
+            throw new IllegalStateException("Invalid state to execute this command");
+    };
 }
 
 /**
@@ -73,13 +84,13 @@ class MoveNorthCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+
         try {
             this.game.movePlayer(Coordinates.Direction.NORTH);
             this.game.save();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
             e.printStackTrace();
         }
     }
@@ -96,13 +107,13 @@ class MoveSouthCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+
         try {
             this.game.movePlayer(Coordinates.Direction.SOUTH);
             this.game.save();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
             e.printStackTrace();
         }
     }
@@ -119,13 +130,13 @@ class MoveWestCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         try {
             this.game.movePlayer(Coordinates.Direction.WEST);
             this.game.save();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IllegalStateException e) {
             e.printStackTrace();
         }
     }
@@ -142,15 +153,15 @@ class MoveEastCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         try {
             this.game.movePlayer(Coordinates.Direction.EAST);
             this.game.save();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
+        } 
     }
 }
 
@@ -164,12 +175,10 @@ class AttackCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
-        try {
-            this.game.playerAttack();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
+        this.game.playerAttack();
     }
 }
 
@@ -183,12 +192,10 @@ class SkillCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
-        try {
-            this.game.usePlayerSkill();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        }
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
+        this.game.usePlayerSkill();
     }
 }
 
@@ -199,10 +206,16 @@ class SkillCommand extends GameCommand {
 class InventoryCommand extends GameCommand {
     public InventoryCommand(Game game, String[] commands) {
         super(game, null);
+        this.invalidStates = List.of(
+            GameState.MERCHANT_SHOPPING,
+            GameState.SMITH_FORGING
+        );
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+            
         this.game.printInventory();
     }
 }
@@ -214,10 +227,16 @@ class InventoryCommand extends GameCommand {
 class UseItemCommand extends GameCommand {
     public UseItemCommand(Game game, String[] commands) {
         super(game, commands);
+        this.invalidStates = List.of(
+            GameState.MERCHANT_SHOPPING,
+            GameState.SMITH_FORGING
+        );
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+            
         if (!Controller.awaitConfirmation()) return;
         this.game.useItem(Integer.parseInt(commands[1]));
     }
@@ -231,10 +250,16 @@ class UseItemCommand extends GameCommand {
 class SwapWeaponCommand extends GameCommand {
     public SwapWeaponCommand(Game game, String[] commands) {
         super(game, commands);
+        this.invalidStates = List.of(
+            GameState.MERCHANT_SHOPPING,
+            GameState.SMITH_FORGING
+        );
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+            
         this.game.getPlayer().swapWeapon(Integer.parseInt(commands[1]));
     }
 }
@@ -246,10 +271,16 @@ class SwapWeaponCommand extends GameCommand {
 class DropItemCommand extends GameCommand {
     public DropItemCommand(Game game, String[] commands) {
         super(game, commands);
+        this.invalidStates = List.of(
+            GameState.MERCHANT_SHOPPING,
+            GameState.SMITH_FORGING
+        );
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+
         if (!Controller.awaitConfirmation()) return;
         this.game.dropItem(Integer.parseInt(commands[1]));
     }
@@ -262,10 +293,16 @@ class DropItemCommand extends GameCommand {
 class PrintSeedCommand extends GameCommand {
     public PrintSeedCommand(Game game, String[] commands) {
         super(game, null);
+        this.invalidStates = List.of(
+            GameState.MERCHANT_SHOPPING,
+            GameState.SMITH_FORGING
+        );
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+
         System.out.println("The game seed is: " + this.game.getSeed());
     }
 }
@@ -277,10 +314,16 @@ class PrintSeedCommand extends GameCommand {
 class PrintMapCommand extends GameCommand {
     public PrintMapCommand(Game game, String[] commands) {
         super(game, null);
+        this.invalidStates = List.of(
+            GameState.MERCHANT_SHOPPING,
+            GameState.SMITH_FORGING
+        );
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+
         this.game.printMap();
     }
 }
@@ -292,10 +335,15 @@ class PrintMapCommand extends GameCommand {
 class PrintStatsCommand extends GameCommand {
     public PrintStatsCommand(Game game, String[] commands) {
         super(game, null);
+        this.invalidStates = List.of(
+            GameState.MERCHANT_SHOPPING,
+            GameState.SMITH_FORGING
+        );
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
         /* 
         * TODO
         * Print the game and player stats
@@ -313,7 +361,9 @@ class QuitCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         if (!Controller.awaitConfirmation()) return;
         this.game.save();
 
@@ -332,7 +382,8 @@ class BackCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
         /* 
         * TODO
         * Return to the previous interaction status
@@ -349,7 +400,9 @@ class PrintScoreCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+
         System.out.println("The game score is: " + this.game.getScore());
     }
 }
@@ -411,7 +464,9 @@ class ReturnCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         this.game.returnToStart();
     }
 }
@@ -425,7 +480,9 @@ class PrintStatusCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         this.game.printPlayerStatus();
     }
 }
@@ -440,7 +497,9 @@ class MerchantCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         /* 
         * TODO
         * Interact with the merchant
@@ -457,7 +516,9 @@ class ShowListCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         /* 
         * TODO
         * Show the merchant's list of items
@@ -474,7 +535,9 @@ class BuyCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         if (!Controller.awaitConfirmation()) return;
         /* 
         * TODO
@@ -492,7 +555,9 @@ class SmithCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         /* 
         * TODO
         * Interact with the smith
@@ -510,7 +575,9 @@ class GiveCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         if (!Controller.awaitConfirmation()) return;
         this.game.giveItem(commands[1], commands[2]);
     }
@@ -525,7 +592,9 @@ class ConfirmCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         /* 
         * TODO
         * Confirm an action
@@ -540,18 +609,16 @@ class ConfirmCommand extends GameCommand {
 class NewGameCommand extends GameCommand {
     public NewGameCommand(Game game, String[] commands) {
         super(game, null);
+        this.whiteListStates = List.of(
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
-    public void execute() {
-        Controller controller = Controller.getInstance();
-        
-        if (controller.getState() != GameState.MAIN_MENU) {
-            System.out.println("You have to go back to the main menu to use this command");
-            return;
-        }
+    public void execute() throws IllegalStateException {
+        super.execute();
 
-        controller.newGame();
+        this.controller.newGame();
     }
 }
 
@@ -562,19 +629,16 @@ class NewGameCommand extends GameCommand {
 class LoadGameCommand extends GameCommand {
     public LoadGameCommand(Game game, String[] commands) {
         super(game, null);
+        this.whiteListStates = List.of(
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
-    public void execute() {
-        Controller controller = Controller.getInstance();
-        
+    public void execute() throws IllegalStateException {
+        super.execute();
 
-        if (controller.getState() != GameState.MAIN_MENU) {
-            System.out.println("You have to go back to the main menu to use this command");
-            return;
-        }
-
-        controller.loadGame();
+        this.controller.loadGame();
     }
 }
 
@@ -585,18 +649,16 @@ class LoadGameCommand extends GameCommand {
 class ExitGameCommand extends GameCommand {
     public ExitGameCommand(Game game, String[] commands) {
         super(game, null);
+        this.whiteListStates = List.of(
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
-    public void execute() {
-        Controller controller = Controller.getInstance();
+    public void execute() throws IllegalStateException {
+        super.execute();
 
-        if (controller.getState() != GameState.MAIN_MENU) {
-            System.out.println("You have to go back to the main menu to use this command");
-            return;
-        }
-
-        controller.exitGame();
+        this.controller.exitGame();
     }
 }
 
@@ -607,22 +669,20 @@ class ExitGameCommand extends GameCommand {
 class ChooseCharacterGameCommand extends GameCommand {
     public ChooseCharacterGameCommand(Game game, String[] commands) {
         super(game, null);
+        this.whiteListStates = List.of(
+            GameState.CHOOSING_CHARACTER
+        );
     }
 
     @Override
-    public void execute() {
-        Controller controller = Controller.getInstance();
-
-        if (controller.getState() != GameState.CHOOSING_CHARACTER) {
-            System.out.println("You can't use this command right now");
-            return;
-        }
-
+    public void execute() throws IllegalStateException {
+        super.execute();
+        
         if (!Controller.awaitConfirmation()) return;
 
-        CharacterFactory factory = controller.characterFactory(commands[0]);
-        controller.setPlayer(factory.create());
-        controller.setState(GameState.MOVING);
+        CharacterFactory factory = this.controller.characterFactory(commands[0]);
+        this.controller.setPlayer(factory.create());
+        this.controller.setState(GameState.MOVING);
     }
 }
 
@@ -912,7 +972,12 @@ public class Controller {
         GCInvoker invoker = new GCInvoker();
         GameCommand command = this.getCommand(commands);
         invoker.setCommand(command);
-        invoker.executeCommand();
+
+        try {
+            invoker.executeCommand();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        }
     }
 
     @JsonIgnore

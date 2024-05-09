@@ -1,9 +1,10 @@
-package com.tloj.game.entities;
+package com.tloj.game.entities.characters;
 
 import java.util.ArrayList;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Coordinates;
 
 

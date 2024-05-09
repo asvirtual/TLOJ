@@ -1,7 +1,7 @@
 package com.tloj.game.skills;
 
-import com.tloj.game.entities.BasePlayer;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.PlayerAttack;
 
 
