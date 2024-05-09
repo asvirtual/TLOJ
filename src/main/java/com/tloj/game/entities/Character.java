@@ -375,4 +375,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         String status = "HP: " + this.hp + "/" + this.maxHp + " | Mana: " + this.mana + "/" + this.maxMana + " | Atk: " + this.atk + " | Def: " + this.def + " | Lvl: " + this.lvl + " | XP: " + this.xp + "/" + this.requiredXp + " | Money: " + this.money;
         return status;
     }
+
+    public int itemCounter(Item item) {
+        int count = 0;
+        for (Item i : this.inventory) {
+            if (i.equals(item)) count++;
+        }
+        return count;
+    }
 }
