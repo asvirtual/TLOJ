@@ -1,11 +1,19 @@
 package com.tloj.game.rooms.roomeffects;
 
+import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.utilities.Coordinates;
 
+/**
+ * Class that implements a room effect that teleports the character to a random room<br>
+ * Teleports the player to a random room in the same floor causing the player to forget the visited rooms(doesn't apply with {@link NorthStar} item)<br>
+ * @see RoomEffect
+ * @see InflictDamage
+ * @see StealMoney
+ */
 
 public class TpEffect implements RoomEffect {
     @Override

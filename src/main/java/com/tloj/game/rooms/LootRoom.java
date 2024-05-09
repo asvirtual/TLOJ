@@ -1,9 +1,21 @@
 package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.collectables.Weapon;
 import com.tloj.game.game.PlayerRoomVisitor;
 
+/**
+ * Class that represents a loot room in the game<br>
+ * Contains an item ({@link Weapon}, {@link ConsumableItem})that the player can pick up<br>
+ * @see Room
+ * @see BossRoom
+ * @see HealingRoom
+ * @see TrapRoom
+ * @see HostileRoom
+ * @see StartRoom
+ */
 
 public class LootRoom extends Room {
     private Item item;

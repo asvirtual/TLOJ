@@ -5,7 +5,13 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
+import com.tloj.game.rooms.roomeffects.RoomEffect;
 
+/**
+ * Abstract class that represents a room in the game<br>
+ * @see RoomType
+ * @see RoomEffect
+ */
 
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
 @JsonTypeInfo(
