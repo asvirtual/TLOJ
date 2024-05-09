@@ -47,6 +47,7 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(HealingRoom room) {
         room.visit();
         this.player.setHp(this.player.getMaxHp());
+        this.controller.setState(GameState.HEALING_ROOM);
     }
 
     @Override

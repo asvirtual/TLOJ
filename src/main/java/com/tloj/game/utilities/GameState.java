@@ -12,5 +12,6 @@ public enum GameState {
     FIGHTING_BOSS,
     LOOTING_ROOM,
     BOSS_DEFEATED,
-    EXIT
+    EXIT,
+    HEALING_ROOM
 }

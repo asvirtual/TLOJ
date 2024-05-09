@@ -1,6 +1,5 @@
 package com.tloj.game.collectables;
 
-import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Dice;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
