@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.HostileRoom;
+import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.characters.Hacker;
@@ -514,8 +515,10 @@ class SmithCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        //probably need to check by JCULO
-        this.game.smithInteraction();
+
+        // System.out.println("Smith: Hello there! I can upgrade your weapon with a Weapon Shard.");
+        // System.out.println("You currently have " + this.game.getPlayer().countItem(new WeaponShard()) + " Weapon Shards.");
+        // this.controller.setState(GameState.SMITH_FORGING);
     }
 }
 

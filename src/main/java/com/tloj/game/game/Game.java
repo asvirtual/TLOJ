@@ -239,8 +239,7 @@ public class Game implements CharacterObserver {
         System.out.println(this.player);
     }
 
-    public void giveItem(String receiver, String itemName) {
-        
+    public void giveItem(String receiver, String itemName) {  
         if (!receiver.equalsIgnoreCase("Smith")) {
             System.out.print("Who?");
             return;
@@ -302,22 +301,15 @@ public class Game implements CharacterObserver {
 
         return directions;
     }
-
-
-    public void smithInteraction(){
-        //dialogue with smith   
-        
-        System.out.println("Smith: Hello there! I can upgrade your weapon with a Weapon Shard. Do you have one?");
-        System.out.println("J: I have " + this.player.getItemCount(new WeaponShard()) + " Weapon Shards!");
-        if(this.player.getItemCount(new WeaponShard()) > 0){
+  
+    public void smithInteraction() {
+        if (this.player.getItemCount(new WeaponShard()) > 0) {
             System.out.println("Smith: Great! Let me upgrade your weapon!");
             this.controller.setState(GameState.SMITH_FORGING);
-        }
-        else{
+        } else {
             System.out.println("Smith: You don't have any Weapon Shards. Come back when you have one.");
-            //forcede to go back
+            this.controller.setState(GameState.HEALING_ROOM);
         }
-        
-        
     }
+
 }

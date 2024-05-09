@@ -379,9 +379,9 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @JsonIgnore
     public int getItemCount(Item item) {
         int count = 0;
-        for (Item i : this.inventory) {
+        for (Item i : this.inventory) 
             if (i.equals(item)) count++;
-        }
+
         return count;
     }
 }
