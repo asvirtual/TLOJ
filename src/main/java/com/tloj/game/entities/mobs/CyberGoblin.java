@@ -34,4 +34,6 @@ public class CyberGoblin extends Mob {
     public String toString() {
         return "CyberGoblin";
     }
+
+    
 }

@@ -17,7 +17,6 @@ import com.tloj.game.game.PlayerAttack;
 public abstract class Boss extends Mob {
     public static final int SCORE_DROP = 50;
     protected BossAbility ability;
-    protected Item drop;
 
     /**
      * Default constructor to allow Jackson to deserialize JSON.
@@ -37,10 +36,6 @@ public abstract class Boss extends Mob {
         super(hp, atk, def, diceFaces, lvl, xpDrop, moneyDrop, position);
     }
 
-    public Item getDrop() {
-        return this.drop;
-    }
- 
     @Override
     public void die() {
         
@@ -53,5 +48,10 @@ public abstract class Boss extends Mob {
 
         if (this.ability == null) return;
         this.ability.use((PlayerAttack) attack);
+    }
+
+    @Override
+    public Item getDrop() {
+        return this.drop;
     }
 }

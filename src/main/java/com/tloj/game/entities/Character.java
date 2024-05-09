@@ -235,6 +235,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public boolean addInventoryItem(Item item) {
+        if(item == null) return false;
         if (this.getWeight() + item.getWeight() > this.maxWeight) {
             System.out.println("You can't carry more weight, drop something first.");
             return false;
@@ -314,10 +315,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.xp += mob.xpDrop;
         this.money += mob.moneyDrop;
 
-        if (mob instanceof Boss) {
-            Boss boss = (Boss) mob;
-            this.addInventoryItem(boss.getDrop());
-        }    
+        this.addInventoryItem(mob.getDrop());
     }
 
     public void useItem(ConsumableItem item) {
