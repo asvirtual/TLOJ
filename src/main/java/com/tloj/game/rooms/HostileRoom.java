@@ -2,6 +2,7 @@ package com.tloj.game.rooms;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
@@ -57,6 +58,7 @@ public class HostileRoom extends Room {
             return "\u00A0" + " ";
     }
 
+    @JsonIgnore
     public Mob getMob() {
         return this.mobs.get(0);
     }

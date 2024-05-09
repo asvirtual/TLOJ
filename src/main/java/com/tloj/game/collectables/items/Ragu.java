@@ -30,7 +30,7 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     
 
     public Ragu() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }
     
     @Override
@@ -43,10 +43,6 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
         consumer.removeInventoryItem(this);   
     }
 
-    @Override
-    public double getDropChance() {
-        return DROP_CHANCE;
-    }
 
     @Override
     public String toString() {

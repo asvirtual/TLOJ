@@ -29,17 +29,13 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
     private static final int ID = 6;
 
     public DefenseElixir() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }
     
     @Override
     public void consume(Character consumer) {
         consumer.setCurrentFightDef(consumer.getDef() + DEFENSE_BOOST);
         consumer.removeInventoryItem(this);
-    }
-    @Override
-    public double getDropChance() {
-        return DROP_CHANCE;
     }
 
     @Override

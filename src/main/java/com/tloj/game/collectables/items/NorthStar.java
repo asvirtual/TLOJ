@@ -24,13 +24,9 @@ public class NorthStar extends Item {
     private static final int ID = 9;
 
     public NorthStar() {
-        super(WEIGHT, DROP_MONEY, ID); 
+        super(WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }
 
-    @Override
-    public double getDropChance() {
-        return DROP_CHANCE;
-    }
 
     @Override
     public String toString() {

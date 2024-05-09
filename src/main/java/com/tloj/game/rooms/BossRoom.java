@@ -9,6 +9,11 @@ import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public class BossRoom extends HostileRoom {
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public BossRoom() {}
+
     public BossRoom(Coordinates coordinates, ArrayList<Mob> bosses) {
         super(coordinates, bosses);
     }

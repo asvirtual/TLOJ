@@ -29,7 +29,7 @@ public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
     private static final int ID = 4;
 
     public GreatManaPotion() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }
     
     @Override
@@ -38,10 +38,6 @@ public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
         if (consumer.getMana() > consumer.getMaxMana()) consumer.setMana(consumer.getMaxMana());
         
         consumer.removeInventoryItem(this);
-    }
-    @Override
-    public double getDropChance() {
-        return DROP_CHANCE;
     }
 
     @Override

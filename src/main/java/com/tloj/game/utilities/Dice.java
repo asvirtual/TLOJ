@@ -1,8 +1,15 @@
 package com.tloj.game.utilities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Dice {
     private int min;
     private int max;
+
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public Dice() {}
 
     public Dice(int faces) {
         this.min = 1;
@@ -14,6 +21,15 @@ public class Dice {
         this.max = max;
     }
 
+    public int getMin() {
+        return this.min;
+    }
+
+    public int getMax() {
+        return this.max;
+    }
+
+    @JsonIgnore
     public int getFaces() {
         return this.max - this.min + 1;
     }

@@ -159,7 +159,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.weapon;
     }
     
-    public int getWeight() {
+    @JsonIgnore
+    public int getCarriedWeight() {
         int weight = 0;
         for (Item item : this.inventory)
             weight += item.getWeight();
@@ -216,10 +217,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana -= amount;
     }
 
+    @JsonIgnore
     public int getInventorySize() {
         return this.inventory.size();
     }
 
+    @JsonIgnore
     public Item getInventoryItem(int index) {
         return this.inventory.get(index);
     }
@@ -236,7 +239,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public boolean addInventoryItem(Item item) {
         if(item == null) return false;
-        if (this.getWeight() + item.getWeight() > this.maxWeight) {
+        if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
             System.out.println("You can't carry more weight, drop something first.");
             return false;
         }

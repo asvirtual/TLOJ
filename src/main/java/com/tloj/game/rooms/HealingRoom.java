@@ -5,6 +5,11 @@ import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public class HealingRoom extends Room {
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public HealingRoom() {}
+
     public HealingRoom(Coordinates coordinates) {
         super(coordinates);
     }

@@ -27,6 +27,7 @@ public class WeaponShard extends PurchasableItem {
     public WeaponShard() {
         super(PRICE, WEIGHT, DROP_MONEY, ID); 
     }
+    
     @Override
     public double getDropChance(){
         return DROP_CHANCE;
