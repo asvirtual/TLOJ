@@ -1,6 +1,5 @@
 package com.tloj.game;
 
-
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Controller;
@@ -31,7 +30,6 @@ public class Main {
     public static void testRead() {
         System.out.println(GameData.deserializeMapFromFile("test.json"));
         System.out.println(GameData.loadFromFile("test.json"));
-
     }
 
     public static void testWrite() {        
