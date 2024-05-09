@@ -203,8 +203,7 @@ class InventoryCommand extends GameCommand {
 
     @Override
     public void execute() {
-        for (int i = 0; i < this.player.getInventorySize(); i++) 
-            System.out.println(Integer.toString(i + 1) + ". " + this.player.getInventoryItem(i));
+        this.game.printInventory();
     }
 }
 

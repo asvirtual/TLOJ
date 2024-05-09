@@ -211,6 +211,14 @@ public class Game implements CharacterObserver {
         }
     }
 
+    public void printInventory() {
+        this.player.sortInventory();
+        System.out.println("Inventory:");
+        for (int i = 0; i < this.player.getInventorySize(); i++) {
+            System.out.println(i + ". " + this.player.getInventoryItem(i).toString());
+        }
+    }
+
     @Override
     public void onPlayerLevelUp() {
 
