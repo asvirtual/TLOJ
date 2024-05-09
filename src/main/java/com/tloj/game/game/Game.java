@@ -226,4 +226,17 @@ public class Game implements CharacterObserver {
     public void onPlayerLevelUp() {
 
     }
+
+    public void returnToStart() {
+        if (this.controller.getState() == GameState.MOVING) {
+            this.player.move(this.currentLevel.getStartRoom().getCoordinates());
+        }
+        else {
+            System.out.println("There's a time and place for everything but not now!");
+        }
+    }
+
+    public void printPlayerStatus() {
+        System.out.println(this.player);
+    }
 }

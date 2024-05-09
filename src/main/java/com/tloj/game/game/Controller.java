@@ -362,6 +362,15 @@ class HelpCommand extends GameCommand {
             case MOVING:
                 System.out.println("Commands: gn, gs, gw, ge, return, inventory, status, map, score, seed, quit");
                 break;
+            case INV_MANAGEMENT:
+                System.out.println("Commands: use, drop, back");
+                break;
+            case MERCHANT_SHOPPING:
+                System.out.println("Commands: showlist, buy, back");
+                break;
+            case SMITH_FORGING:
+                System.out.println("Commands: upgrade, back");
+                break;
             case FIGHTING_MOB:
                 System.out.println("Commands: attack, skill, inventory, use, drop, back");
                 break;
@@ -390,10 +399,7 @@ class ReturnCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Return to the starting room
-        */ 
+        this.game.returnToStart();
     }
 }
 /**
@@ -407,10 +413,7 @@ class PrintStatusCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Show player status
-        */ 
+        this.game.printPlayerStatus();
     }
 }
 
