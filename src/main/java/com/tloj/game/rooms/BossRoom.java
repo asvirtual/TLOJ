@@ -30,6 +30,14 @@ public class BossRoom extends HostileRoom {
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
     }
 
+    @Override
+    public String toString() {
+        if(this.isVisited())
+            return "\u00DF" + " ";
+        else
+            return "\u00A0" + " ";
+    }
+
     @Override 
     public void clear() {
         super.clear();

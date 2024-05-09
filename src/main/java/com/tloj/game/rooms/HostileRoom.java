@@ -34,6 +34,13 @@ public class HostileRoom extends Room {
     }
 
     @Override
+    public String toString() {
+        if(this.isVisited())
+            return "\u25A0" + " ";
+        else
+            return "\u00A0" + " ";
+    }
+
     public void clear() {
         super.clear();
         this.mob = null;

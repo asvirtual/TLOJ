@@ -11,10 +11,16 @@ import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.entities.Boss;
+import com.tloj.game.rooms.BossRoom;
+import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
+import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
+import com.tloj.game.rooms.StartRoom;
+import com.tloj.game.rooms.TrapRoom;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -32,9 +38,9 @@ public class Game implements CharacterObserver {
     private Controller controller;
 
     public Game(ArrayList<ArrayList<ArrayList<Room>>> map) {
-        this.levels = new ArrayList<Level>(map.size());
+        this.levels = new ArrayList<Level>();
         for (int i = 0; i < map.size(); i++)
-            this.levels.set(i, new Level(i, map.get(i)));
+            this.levels.add(new Level(i, map.get(i)));
 
         this.currentLevel = this.levels.get(0);
         this.controller = Controller.getInstance();
@@ -189,6 +195,25 @@ public class Game implements CharacterObserver {
     @Override
     public void onPlayerDefeated() {
 
+    }
+
+    public void printMap(){
+        for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
+            for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
+                Room room = this.currentLevel.getRoom(new Coordinates(i, j));
+                if(room == null){
+                    System.out.print("\u00A0" + " ");                    
+                    continue;
+                }
+                if (this.getCurrentRoom().equals(room)) {
+                    System.out.print("\u0398" + " ");
+                } else {
+                    
+                    System.out.print(room.toString());
+                }
+            }
+            System.out.println();
+        }
     }
 
     @Override

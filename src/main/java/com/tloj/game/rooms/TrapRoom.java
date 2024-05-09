@@ -33,4 +33,13 @@ public class TrapRoom extends Room {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'exit'");
     }
+
+    @Override
+    public String toString() {
+        if(this.isVisited())
+            return "\u2566" + " ";
+        else
+            return "\u00A0" + " ";
+    }
+
 }
