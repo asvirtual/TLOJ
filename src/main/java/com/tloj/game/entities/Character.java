@@ -240,6 +240,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return true;
     }
 
+    public boolean hasItem(Item item) {
+        return this.inventory.contains(item);
+    }
+
     @JsonIgnore
     public Stream<Item> getInventoryStream() {
         return this.inventory.stream();
