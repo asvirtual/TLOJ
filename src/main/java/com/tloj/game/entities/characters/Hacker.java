@@ -76,6 +76,15 @@ public class Hacker extends Character {
         this.skill = new CheatEngine(this);
     }
 
+    public static String getDetailedInfo() {
+        return "HP: " + HP + "\n" +
+               "Attack: " + ATTACK + "\n" +
+               "Defense: " + DEFENSE + "\n" +
+               "Mana: " + MANA + "\n" +
+               "Weapon: Pulse-Staff (D5-10) - costs 3 mana to use" + "\n" +
+               "Ability: CheatEngine - Forces max roll on next attack" + "\n" +
+               "Money: " + MONEY;
+    }
 
 }
  

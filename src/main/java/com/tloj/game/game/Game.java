@@ -8,7 +8,6 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.SpecialKey;
-import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
@@ -125,9 +124,6 @@ public class Game implements CharacterObserver {
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
         Mob mob = room.getMob();
         this.player.attack(mob);
-        
-        if (mob instanceof Boss) this.controller.setState(GameState.FIGHTING_BOSS);
-        else this.controller.setState(GameState.FIGHTING_MOB);
         
         if (mob.isAlive()) mob.attack(this.player);
     }
@@ -247,29 +243,4 @@ public class Game implements CharacterObserver {
     public void printPlayerStatus() {
         System.out.println(this.player);
     }
-
-    public void giveItem(String reciver, String itemName) {
-        
-        if(!reciver.equalsIgnoreCase("Smith")){
-            System.out.print("Who?");
-            return;
-        }
-
-        if(!itemName.equalsIgnoreCase("WeapoShard")){
-            System.out.print("Wrong Item!");
-            return;
-        }
-        
-        if(this.player.searchInventoryItem(new WeaponShard()) != null){
-            this.getPlayer().removeInventoryItem(this.player.searchInventoryItem(new WeaponShard()));
-            this.player.getWeapon().upgrade(1);
-            System.out.println("You have upgraded " + this.player.getWeapon().toString() +"!");
-        }
-
-
-    }
-
-
-
-
 }

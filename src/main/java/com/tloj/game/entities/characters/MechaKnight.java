@@ -78,5 +78,13 @@ public class MechaKnight extends Character {
         this.skill = new Focus(this);
     }
 
-
+    public static String getDetailedInfo() {
+        return "HP: " + HP + "\n" +
+               "Attack: " + ATTACK + "\n" +
+               "Defense: " + DEFENSE + "\n" +
+               "Mana: " + MANA + "\n" +
+               "Weapon: GreatSword (D15)" + "\n" +
+               "Ability: Guard - Adds +3 def during fight" + "\n" +
+               "Money: " + MONEY;
+    }
 }

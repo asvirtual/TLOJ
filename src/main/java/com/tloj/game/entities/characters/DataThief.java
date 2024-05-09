@@ -77,4 +77,14 @@ public class DataThief extends Character {
 
         this.skill = new Steal(this);
     }
+
+    public static String getDetailedInfo() {
+        return "HP: " + HP + "\n" +
+               "Attack: " + ATTACK + "\n" +
+               "Defense: " + DEFENSE + "\n" +
+               "Mana: " + MANA + "\n" +
+               "Weapon: NanoDirk (D6) - thrown twice" + "\n" +
+               "Ability: Steal - Chance to steal a random item" + "\n" +
+               "Money: " + MONEY;
+    }
 }

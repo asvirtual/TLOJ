@@ -78,6 +78,16 @@ public class NeoSamurai extends Character {
         this.skill = new Daburu(this);
     }
 
+    public static String getDetailedInfo() {
+        return "HP: " + HP + "\n" +
+               "Attack: " + ATTACK + "\n" +
+               "Defense: " + DEFENSE + "\n" +
+               "Mana: " + MANA + "\n" +
+               "Weapon: CyberKatana (D10)" + "\n" +
+               "Ability: Daburu - Doubles next attack damage" + "\n" +
+               "Money: " + MONEY;
+    }
+
 
 }
 
