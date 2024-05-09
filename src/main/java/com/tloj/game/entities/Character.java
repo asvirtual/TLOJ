@@ -241,21 +241,24 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return true;
     }
 
+    public boolean hasItem(Item item) {
+        return this.inventory.contains(item);
+    }
+
     @JsonIgnore
     public Stream<Item> getInventoryStream() {
         return this.inventory.stream();
     }
 
     /*
-     * TODO: Implement a better sorting algorithm to sort items by type
+     * Sorts the inventory by item id, lower id first
      */
-    private void sortInventory() {
+    public void sortInventory() {
         Collections.sort(inventory, new Comparator<Item>() {
             @Override
             public int compare(Item item1, Item item2) {
-                if (item1 instanceof Weapon && !(item2 instanceof Weapon)) return -1;
-                else if (!(item1 instanceof Weapon) && item2 instanceof Weapon) return 1;
-                else return 0;
+                if (item1.getId() < item2.getId()) return -1;
+                else return 1;
             }
         });
     }
@@ -287,7 +290,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
         if (!target.isAlive()) {
             if (target instanceof Boss) this.observers.forEach(observer -> observer.onBossDefeated());
-            else this.observers.forEach(observer -> observer.onMobDefeated());
+            else this.observers.forEach(observer -> observer.onMobDefeated(target));
         }
     }
 

@@ -28,6 +28,10 @@ public class Main {
     }
 
     public static void test() {
+        // System.out.println(GameData.deserializeMapFromFile("test.json"));
+        System.out.println(GameData.loadFromFile("test.json"));
+
+        /*
         Level level = new Level
             (
                 1, 
@@ -60,5 +64,6 @@ public class Main {
         );
 
         gameData.saveToFile("test.json");
+        */
     }
 }

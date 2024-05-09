@@ -8,19 +8,14 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
+import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
-import com.tloj.game.entities.Boss;
-import com.tloj.game.rooms.BossRoom;
-import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
-import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
-import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.rooms.TrapRoom;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -95,7 +90,7 @@ public class Game implements CharacterObserver {
             
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
         if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
-        if (this.currentLevel.getRoom(newCoordinates).isLocked()) throw new IllegalArgumentException("Room is locked");
+        if (this.currentLevel.getRoom(newCoordinates).isLocked() && !this.player.hasItem(new SpecialKey())) throw new IllegalArgumentException("Room is locked");
         
         /**
          * updats player score if the room is cleared
@@ -161,9 +156,8 @@ public class Game implements CharacterObserver {
     }
 
     @Override
-    public void onMobDefeated() {
+    public void onMobDefeated(Mob mob) {
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
-        Mob mob = room.getMob();
 
         room.clear();
 
@@ -201,18 +195,24 @@ public class Game implements CharacterObserver {
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
                 Room room = this.currentLevel.getRoom(new Coordinates(i, j));
-                if(room == null){
+                if (room == null){
                     System.out.print("\u00A0" + " ");                    
                     continue;
                 }
-                if (this.getCurrentRoom().equals(room)) {
-                    System.out.print("\u0398" + " ");
-                } else {
-                    
-                    System.out.print(room.toString());
-                }
+
+                if (this.getCurrentRoom().equals(room)) System.out.print("\u0398" + " ");
+                else System.out.print(room);
             }
+            
             System.out.println();
+        }
+    }
+
+    public void printInventory() {
+        this.player.sortInventory();
+        System.out.println("Inventory:");
+        for (int i = 0; i < this.player.getInventorySize(); i++) {
+            System.out.println(i + ". " + this.player.getInventoryItem(i).toString());
         }
     }
 

@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class Item {
     protected double weight;
     protected int dropMoney;
+    protected int id;
     
     enum ConsumableItems {
         HEALTH_POTION(new HealthPotion()),
@@ -49,9 +50,10 @@ public abstract class Item {
         }
     }
 
-    protected Item(double weight, int dropMoney) {
+    protected Item(double weight, int dropMoney, int id) {
         this.weight = weight;
         this.dropMoney = dropMoney;
+        this.id = id;
     }
 
     public double getWeight() {
@@ -64,6 +66,10 @@ public abstract class Item {
 
     public int getDropMoney() {
         return dropMoney;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public static Item getRandomItem() {

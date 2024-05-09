@@ -4,6 +4,7 @@ import com.tloj.game.rooms.*;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Character;
 
 
@@ -61,6 +62,8 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(LootRoom room) {
         room.visit();
+        if (room.isLocked()) this.player.useItem(new SpecialKey());
+        
         Item item = room.getItem();
         System.out.println("You've found a " + item + "!");
         if (this.player.addInventoryItem(item)) {

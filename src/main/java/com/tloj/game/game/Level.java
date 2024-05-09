@@ -28,6 +28,12 @@ public class Level {
         });
     }
 
+    public Level() {
+        this.levelNumber = 0;
+        this.rooms = new ArrayList<ArrayList<Room>>();
+        this.startRoom = null;
+    }
+
     public StartRoom getStartRoom() {
         return this.startRoom;
     }

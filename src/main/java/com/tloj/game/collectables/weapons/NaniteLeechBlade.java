@@ -18,9 +18,10 @@ import com.tloj.game.effects.HealthAbsorber;
 public class NaniteLeechBlade extends Weapon {
     private static final double WEIGHT = 0.8;
     private static final int DICE_FACES = 12;
+    private static final int ID = 16;
 
     public NaniteLeechBlade() {
-        super(WEIGHT, DICE_FACES); 
+        super(WEIGHT, DICE_FACES, ID); 
         this.effect = new HealthAbsorber(this);
     }
 

@@ -9,7 +9,6 @@ import java.util.function.Supplier;
 import com.tloj.game.entities.Character;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.tloj.game.entities.BasePlayer;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -203,8 +202,7 @@ class InventoryCommand extends GameCommand {
 
     @Override
     public void execute() {
-        for (int i = 0; i < this.player.getInventorySize(); i++) 
-            System.out.println(Integer.toString(i + 1) + ". " + this.player.getInventoryItem(i));
+        this.game.printInventory();
     }
 }
 
@@ -805,7 +803,7 @@ public class Controller {
                 ArrayList<Room> row = new ArrayList<Room>();
 
                 for (int j = 0; j < Game.DEFAULT_ROOMS_COLS; j++) {
-                    row.add(new HostileRoom(new Coordinates(j, i), null));
+                    row.add(new HostileRoom(new Coordinates(j, i)));
                 }
 
                 level.add(row);    

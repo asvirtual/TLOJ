@@ -18,9 +18,10 @@ import com.tloj.game.effects.DiceReroller;
 public class NanoDirk extends Weapon {
     private static final double WEIGHT = 0.5;
     private static final int DICE_FACES = 6;
+    private static final int ID = 14;
 
     public NanoDirk() {
-        super(WEIGHT, DICE_FACES); 
+        super(WEIGHT, DICE_FACES, ID); 
         this.effect = new DiceReroller(this);
     }
 

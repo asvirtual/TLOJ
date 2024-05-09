@@ -26,14 +26,16 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0;
     private static final int PRICE = 0;
     private static final int DROP_MONEY = PRICE / 2;
+    private static final int ID = 11;    
 
     public SpecialKey() {
-        super(PRICE, WEIGHT, DROP_MONEY); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID); 
     }
     
     @Override
     public void consume(Character consumer) {
-        // Implementation of consume method goes here
+        System.out.println("You've used the Special Key to unlock a special loot room!");
+        consumer.removeInventoryItem(this);
     }
 
     @Override

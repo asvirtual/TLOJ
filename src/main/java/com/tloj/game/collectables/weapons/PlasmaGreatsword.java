@@ -16,9 +16,10 @@ import com.tloj.game.collectables.Weapon;
 public class PlasmaGreatsword extends Weapon {
     private static final double WEIGHT = 2.5;
     private static final int DICE_FACES = 15;
+    private static final int ID = 15;
 
     public PlasmaGreatsword() {
-        super(WEIGHT, DICE_FACES); 
+        super(WEIGHT, DICE_FACES, ID); 
     }
 
     @Override
