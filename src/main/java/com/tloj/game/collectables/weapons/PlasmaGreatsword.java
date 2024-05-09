@@ -7,7 +7,6 @@ import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 
-
 /**
  * Represents the PlasmaGreatsword Weapon in the game.<br>
  * The PlasmaGreatsword is an heavy weapon with a long range blade that can be found in the game. <br>

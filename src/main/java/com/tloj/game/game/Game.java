@@ -218,8 +218,12 @@ public class Game implements CharacterObserver {
     public void printInventory() {
         this.player.sortInventory();
         System.out.println("Inventory:");
-        for (int i = 0; i < this.player.getInventorySize(); i++)
-            System.out.println(i + ". " + this.player.getInventoryItem(i));
+        for (int i = 0; i < this.player.getInventorySize(); i++) {
+            Item item = this.player.getInventoryItem(i);
+            int count = this.player.getItemCount(item);
+            if (count > 1) System.out.println(i + ". " + item + " (x" + count + ")");
+            else System.out.println(i + ". " + item);
+        }
     }
 
     public void useItem(int index) {
@@ -297,7 +301,7 @@ public class Game implements CharacterObserver {
 
         return directions;
     }
-
+  
     public void smithInteraction() {
         if (this.player.getItemCount(new WeaponShard()) > 0) {
             System.out.println("Smith: Great! Let me upgrade your weapon!");
