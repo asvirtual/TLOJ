@@ -195,17 +195,15 @@ public class Game implements CharacterObserver {
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
                 Room room = this.currentLevel.getRoom(new Coordinates(i, j));
-                if(room == null){
+                if (room == null){
                     System.out.print("\u00A0" + " ");                    
                     continue;
                 }
-                if (this.getCurrentRoom().equals(room)) {
-                    System.out.print("\u0398" + " ");
-                } else {
-                    
-                    System.out.print(room.toString());
-                }
+
+                if (this.getCurrentRoom().equals(room)) System.out.print("\u0398" + " ");
+                else System.out.print(room);
             }
+            
             System.out.println();
         }
     }

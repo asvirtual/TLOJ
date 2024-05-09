@@ -2,12 +2,14 @@ package com.tloj.game.rooms;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 
 public class HostileRoom extends Room {
+    @JsonProperty
     protected ArrayList<Mob> mobs;
 
     public HostileRoom(Coordinates coordinates) {
@@ -29,10 +31,6 @@ public class HostileRoom extends Room {
     @Override
     public RoomType getType() {
         return RoomType.HOSTILE_ROOM;
-    }
-
-    public ArrayList<Mob> getMobs() {
-        return this.mobs;
     }
 
     @Override
@@ -60,6 +58,10 @@ public class HostileRoom extends Room {
 
     public void removeMob(Mob mob) {
         this.mobs.remove(mob);
+    }
+
+    public void addMobTop(Mob mob) {
+        this.mobs.add(0, mob);
     }
 
     public void clear() {
