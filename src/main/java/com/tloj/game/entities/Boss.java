@@ -19,6 +19,11 @@ public abstract class Boss extends Mob {
     protected BossAbility ability;
     protected Item drop;
 
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    protected Boss() {}
+
     protected Boss(
         int hp,
         int atk,

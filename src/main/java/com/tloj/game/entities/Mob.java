@@ -26,6 +26,11 @@ public abstract class Mob extends CombatEntity {
     /** How many money are earned by the player upon defeating the Mob */
     protected int moneyDrop;
     protected Dice dice;
+
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    protected Mob() {}
     
     /**
      * @param hp The mob's health points<br>

@@ -12,10 +12,10 @@ public class HostileRoom extends Room {
     @JsonProperty
     protected ArrayList<Mob> mobs;
 
-    public HostileRoom() {
-        super(new Coordinates(0, 0));
-        this.mobs = new ArrayList<Mob>();
-    }
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public HostileRoom() {}
 
     public HostileRoom(Coordinates coordinates) {
         super(coordinates);

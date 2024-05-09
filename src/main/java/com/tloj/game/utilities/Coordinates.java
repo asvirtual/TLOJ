@@ -18,9 +18,11 @@ public class Coordinates {
         this.y = y;
     }
 
-    public Coordinates() {
-        this(0, 0);
-    }
+
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public Coordinates() {}
 
     public int getX() {
         return x;
