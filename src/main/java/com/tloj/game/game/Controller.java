@@ -621,6 +621,8 @@ class ChooseCharacterGameCommand extends GameCommand {
             return;
         }
 
+        if (!Controller.awaitConfirmation()) return;
+
         CharacterFactory factory = controller.characterFactory(commands[0]);
         controller.setPlayer(factory.create());
         controller.setState(GameState.MOVING);
@@ -757,6 +759,16 @@ public class Controller {
     private GameState state;
 
     private Controller() {}
+
+    public static boolean awaitConfirmation() {
+        System.out.println("Are you sure? (yes/no)");
+
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        scanner.close();
+
+        return input.matches("(yes|y|si|s)");
+    }
 
     /** 
      * Singleton pattern to ensure only one instance of the Controller class is created
