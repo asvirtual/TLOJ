@@ -26,9 +26,10 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0;
     private static final int PRICE = 0;
     private static final int DROP_MONEY = PRICE / 2;
+    private static final int ID = 11;    
 
     public SpecialKey() {
-        super(PRICE, WEIGHT, DROP_MONEY); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID); 
     }
     
     @Override

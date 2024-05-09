@@ -22,9 +22,10 @@ public class WeaponShard extends PurchasableItem {
     private static final int PRICE = 15;
     private static final double DROP_CHANCE = 0.6;
     private static final int DROP_MONEY = PRICE / 2;
+    private static final int ID = 10;
 
     public WeaponShard() {
-        super(PRICE, WEIGHT, DROP_MONEY); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID); 
     }
     @Override
     public double getDropChance(){

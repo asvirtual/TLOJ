@@ -26,9 +26,10 @@ public class ManaPotion extends PurchasableItem implements ConsumableItem {
     private static final int MANA_RESTORE = 10;
     private static final double DROP_CHANCE = 0.18;
     private static final int DROP_MONEY = PRICE / 2;
+    private static final int ID = 3;
 
     public ManaPotion() {
-        super(PRICE, WEIGHT, DROP_MONEY); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID); 
     }
     
     @Override

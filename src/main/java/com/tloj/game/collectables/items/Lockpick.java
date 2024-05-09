@@ -25,9 +25,10 @@ public class Lockpick extends PurchasableItem implements ConsumableItem {
     private static final int PRICE = 50;
     private static final double DROP_CHANCE = 0.05;
     private static final int DROP_MONEY = PRICE / 2;
+    private static final int ID = 8;
 
     public Lockpick() {
-        super(PRICE, WEIGHT, DROP_MONEY); 
+        super(PRICE, WEIGHT, DROP_MONEY, ID); 
     }
     
     @Override

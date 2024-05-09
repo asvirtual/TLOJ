@@ -18,9 +18,10 @@ import com.tloj.game.effects.ManaAttackBooster;
 public class PulseStaff extends Weapon {
     private static final double WEIGHT = 1.2;
     private static final int DICE_FACES = 5;    //5 standard value if no mana then -->
+    private static final int ID = 16;
 
     public PulseStaff() {
-        super(WEIGHT, DICE_FACES);
+        super(WEIGHT, DICE_FACES, ID);
         this.effect = new ManaAttackBooster(this); 
     }
 

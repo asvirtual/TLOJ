@@ -15,10 +15,11 @@ import com.tloj.game.collectables.Weapon;
  */
 public class LaserBlade extends Weapon {
     private static final double WEIGHT = 1;
-    private static final int DICE_FACES = 8;    
+    private static final int DICE_FACES = 8;
+    private static final int ID = 12;    
 
     public LaserBlade() {
-        super(WEIGHT, DICE_FACES); 
+        super(WEIGHT, DICE_FACES, ID); 
     }
 
     @Override
