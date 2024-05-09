@@ -29,7 +29,7 @@ public class Focus extends CharacterSkill{
             return;
         }
 
-        attack.setTotalDamage(attack.getTotalDamage() + 3);
+        attack.setBaseDamage(this.character.getCurrentFightAtk() + 3);
         attacker.useMana(5);
     }
 }
