@@ -1,7 +1,11 @@
 package com.tloj.game.entities.bosses;
 
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.abilities.BossAbility;
+import com.tloj.game.abilities.DodgeEvenRollAttack;
+import com.tloj.game.abilities.DodgeSlowAttackFlying;
 import com.tloj.game.abilities.TakeHalfDamage;
+import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 
 /**
@@ -27,6 +31,11 @@ public class HalverBoss extends Boss{
     public static final int DICE_FACES = 15;
     public static final int XP_DROP = 75;
     public static final int MONEY_DROP = 100;
+
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public HalverBoss() {}
     
     public HalverBoss(Coordinates position, int lvl) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP,position);

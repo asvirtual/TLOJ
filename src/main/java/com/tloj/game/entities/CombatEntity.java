@@ -1,5 +1,6 @@
 package com.tloj.game.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.game.Attack;
 import com.tloj.game.utilities.Coordinates;
 
@@ -16,6 +17,11 @@ public abstract class CombatEntity extends Entity {
     protected int def;
     protected int currentFightAtk;
     protected int currentFightDef;
+
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public CombatEntity() {}
 
     protected CombatEntity(int hp, int atk, int def, Coordinates position) {
         super(position);
@@ -60,6 +66,7 @@ public abstract class CombatEntity extends Entity {
             this.die();
     };
 
+    @JsonIgnore
     public boolean isAlive() {
         return this.hp > 0;
     }

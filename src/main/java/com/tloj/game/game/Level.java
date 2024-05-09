@@ -28,11 +28,10 @@ public class Level {
         });
     }
 
-    public Level() {
-        this.levelNumber = 0;
-        this.rooms = new ArrayList<ArrayList<Room>>();
-        this.startRoom = null;
-    }
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public Level() {}
 
     public StartRoom getStartRoom() {
         return this.startRoom;

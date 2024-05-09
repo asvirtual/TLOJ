@@ -26,6 +26,11 @@ public class BasePlayer extends Character {
     private static final int MAX_WEIGHT = -1; // Missing from doc
     private static final int MONEY = 10;
 
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public BasePlayer() {}
+
     /** 
      * Constructor to create a BasePlayer from loaded data 
      * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)

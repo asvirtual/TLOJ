@@ -33,7 +33,11 @@ public abstract class Mob extends CombatEntity {
     protected Dice dice;
     /** Mob has a chance to drop a random item to the player upon defeating */
     protected Item drop;
-    
+
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    protected Mob() {}
     
     /**
      * @param hp The mob's health points<br>

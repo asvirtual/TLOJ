@@ -1,5 +1,6 @@
 package com.tloj.game.rooms;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.tloj.game.utilities.Coordinates;
@@ -19,12 +20,18 @@ public abstract class Room {
     protected boolean cleared;
     protected boolean locked;
 
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public Room() {}
+
     protected Room(Coordinates coordinates) {
         this.visited = false;
         this.cleared = false;
         this.coordinates = coordinates;
     }
 
+    @JsonIgnore
     public abstract RoomType getType();
     public abstract void accept(PlayerRoomVisitor visitor);
     public abstract void exit();

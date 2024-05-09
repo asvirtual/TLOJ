@@ -68,6 +68,11 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
 
     /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    protected Character() {}
+
+    /**
      * Constructor to create a Character from loaded data<br>
      * @param hp The character's health points<br>
      * @param atk The character's attack points<br>

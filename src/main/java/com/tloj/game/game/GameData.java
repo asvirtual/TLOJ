@@ -39,12 +39,10 @@ public class GameData {
         this.levels = levels;
     }
 
-    public GameData() {
-        this.seed = 0;
-        this.currentLevel = null;
-        this.player = null;
-        this.levels = new ArrayList<Level>();
-    }
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public GameData() {}
 
     @JsonIgnore
     public Game getGame() {

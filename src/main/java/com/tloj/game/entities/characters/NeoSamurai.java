@@ -18,6 +18,11 @@ public class NeoSamurai extends Character {
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 15;
 
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public NeoSamurai() {}
+
     /** 
      * Constructor to create a NeoSamurai from loaded data  
      * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
