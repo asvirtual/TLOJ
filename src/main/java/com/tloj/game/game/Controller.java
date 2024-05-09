@@ -217,10 +217,7 @@ class UseItemCommand extends GameCommand {
 
     @Override
     public void execute() {
-        /* 
-        * TODO
-        * Consume an item from the inventory
-        */ 
+        this.game.useItem(Integer.parseInt(commands[1]));
     }
 }
 

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-
+import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.SpecialKey;
@@ -220,4 +219,12 @@ public class Game implements CharacterObserver {
     public void onPlayerLevelUp() {
 
     }
+
+    public void useItem(int index) {
+        ConsumableItem item = (ConsumableItem) this.player.getInventoryItem(index);
+        item.consume(this.player);
+        }
+
+    
+
 }
