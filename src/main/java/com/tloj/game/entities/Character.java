@@ -227,6 +227,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.inventory.get(index);
     }
 
+    public Item searchInventoryItem(Item item){
+        for (Item i : this.inventory) {
+            if (i.equals(item)) return i;
+        }
+        return null;
+    }
+
     public void removeInventoryItem(Item item) {
         this.inventory.remove(item);
         this.sortInventory();

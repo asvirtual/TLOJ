@@ -511,11 +511,8 @@ class GiveCommand extends GameCommand {
     }
 
     @Override
-    public void execute() {
-        /* 
-        * TODO
-        * Give an item to an NPC
-        */ 
+    public void execute() { 
+        this.game.giveItem(commands[1], commands[2]);
     }
 }
 /**
