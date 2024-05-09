@@ -208,7 +208,7 @@ public class Game implements CharacterObserver {
                 }
 
                 if (this.getCurrentRoom().equals(room)) System.out.print("\u0398" + " ");
-                else System.out.print(room);
+                else System.out.print(room + " ");
             }
             
             System.out.println();
@@ -218,9 +218,8 @@ public class Game implements CharacterObserver {
     public void printInventory() {
         this.player.sortInventory();
         System.out.println("Inventory:");
-        for (int i = 0; i < this.player.getInventorySize(); i++) {
+        for (int i = 0; i < this.player.getInventorySize(); i++)
             System.out.println(i + ". " + this.player.getInventoryItem(i));
-        }
     }
 
     public void useItem(int index) {
@@ -259,15 +258,15 @@ public class Game implements CharacterObserver {
 
     public String getAvailableDirections() {
         Coordinates coordinates = this.player.getPosition();
-        String directions = "You can go: \n";
-        String N = "gn \n";
-        String S = "gs \n";
-        String E = "ge \n";
-        String W = "gn \n";
-        String Nb = "gn - There's something strange... \n";
-        String Sb = "gs - There's something strange... \n";
-        String Eb = "ge - There's something strange... \n";
-        String Wb = "gn - There's something strange... \n";
+        String directions = "You can: \n";
+        String N = "[gn] ";
+        String S = "[gs] ";
+        String E = "[ge] ";
+        String W = "[gn] ";
+        String Nb = "[gn] - Something's off... ";
+        String Sb = "[gs] - Something's off... ";
+        String Eb = "[ge] - Something's off... ";
+        String Wb = "[gn] - Something's off... ";
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH)).getType() == RoomType.BOSS_ROOM)
@@ -299,8 +298,4 @@ public class Game implements CharacterObserver {
 
         return directions;
     }
-
-
-
-
 }

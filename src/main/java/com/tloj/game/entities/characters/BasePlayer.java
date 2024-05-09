@@ -36,7 +36,7 @@ public class BasePlayer extends Character {
 
     /** 
      * Constructor to create a BasePlayer from loaded data 
-     * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
     */
     public BasePlayer(
         int hp,
@@ -68,8 +68,7 @@ public class BasePlayer extends Character {
 
     /** 
      * Constructor to create an entirely new BasePlayer 
-     * @param position The initial position of the BasePlayer
-     * @param lvl The level of the BasePlayer
+     * @param coordinates The initial position of the BasePlayer
     */
     public BasePlayer(Coordinates coordinates) {
         super(

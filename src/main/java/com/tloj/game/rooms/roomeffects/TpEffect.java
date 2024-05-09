@@ -1,11 +1,11 @@
 package com.tloj.game.rooms.roomeffects;
 
-import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.collectables.items.NorthStar;
 
 /**
  * Class that implements a room effect that teleports the character to a random room<br>

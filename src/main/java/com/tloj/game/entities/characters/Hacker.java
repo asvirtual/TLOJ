@@ -26,7 +26,7 @@ public class Hacker extends Character {
 
     /** 
      * Constructor to create a Cheater from loaded data 
-     * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
     */
     public Hacker(
         int hp,

@@ -16,7 +16,7 @@ import com.tloj.game.entities.Character;
  * @see AttackElixir
  * @see DefenseElixir
  * @see WeaponShard
- * @see Ragù
+ * @see Ragu
  * @see SpecialKey
  * @see NorthStar
 */

@@ -13,10 +13,10 @@ import com.tloj.game.entities.Character;
  * @see HealthPotion
  * @see ManaPotion
  * @see AttackElixir
- * @see DefenceElixir
+ * @see DefenseElixir
  * @see Lockpick
  * @see WeaponShard
- * @see Ragù
+ * @see Ragu
  * @see SpecialKey
  * @see NorthStar
  */

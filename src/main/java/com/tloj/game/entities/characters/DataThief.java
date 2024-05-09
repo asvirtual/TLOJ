@@ -27,7 +27,7 @@ public class DataThief extends Character {
 
     /** 
      * Constructor to create a DataThief from loaded data  
-     * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
     */
     public DataThief(
         int hp,

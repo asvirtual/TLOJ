@@ -1,7 +1,5 @@
 package com.tloj.game;
 
-import com.tloj.game.collectables.weapons.CyberKatana;
-import com.tloj.game.collectables.Weapon;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Controller;

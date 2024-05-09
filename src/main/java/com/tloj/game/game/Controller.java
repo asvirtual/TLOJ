@@ -69,10 +69,10 @@ abstract class GameCommand {
     }
 
     public void execute() throws IllegalStateException {
-        if (this.whiteListStates != null && !this.whiteListStates.contains(this.controller.getState()))
-            throw new IllegalStateException("Invalid state to execute this command");
-
-        if (this.invalidStates.contains(this.controller.getState()))
+        if (
+            (this.whiteListStates != null && !this.whiteListStates.contains(this.controller.getState())) ||
+            (this.invalidStates != null && this.invalidStates.contains(this.controller.getState()))
+        )
             throw new IllegalStateException("Invalid state to execute this command");
     };
 }
@@ -242,7 +242,6 @@ class UseItemCommand extends GameCommand {
     }
 }
 
-
 /**
  * Concrete command class to swap the player's weapon<br>
  * @see GameCommand <br>
@@ -364,6 +363,7 @@ class BackCommand extends GameCommand {
         */ 
     }
 }
+
 /**
  * Concrete command class to print the game score<br>
  * @see GameCommand <br>
@@ -505,6 +505,7 @@ class BuyCommand extends GameCommand {
         */ 
     }
 }
+
 /**
  * Concrete command class to interact with the smith
  * @see GameCommand
@@ -773,7 +774,7 @@ public class Controller {
         String input = scanner.nextLine();
         scanner.close();
 
-        return input.matches("(yes|y|si|s)");
+        return input.matches("(yes|y)");
     }
 
     /** 

@@ -48,8 +48,6 @@ public abstract class Mob extends CombatEntity {
      * @param xpDrop The amount of experience points the mob drops when defeated<br>
      * @param moneyDrop The amount of money the mob drops when defeated<br>
      * @param position The mob's position<br>
-     * @param drop The mob's drop<br>
-     * @param dice The mob's dice<br>
      * @see Entity
      * @see CombatEntity
      */
@@ -80,7 +78,6 @@ public abstract class Mob extends CombatEntity {
      * @param xpDrop The amount of experience points the mob drops when defeated<br>
      * @param moneyDrop The amount of money the mob drops when defeated<br>
      * @param position The mob's position<br>
-     * @param dice The mob's dice<br>
      * @param drop The mob's drop item<br>
      * @see Entity
      * @see CombatEntity

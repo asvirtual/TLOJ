@@ -1,6 +1,7 @@
 package com.tloj.game.abilities;
 
 import com.tloj.game.entities.Boss;
+import com.tloj.game.entities.bosses.FlyingBoss;
 import com.tloj.game.game.PlayerAttack;
 
 

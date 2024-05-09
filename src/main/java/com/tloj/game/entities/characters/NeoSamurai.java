@@ -25,7 +25,7 @@ public class NeoSamurai extends Character {
 
     /** 
      * Constructor to create a NeoSamurai from loaded data  
-     * @see Character#Character(int, int, int, int, int, int, int, int, Weapon, Object, Object, ArrayList, Coordinates)
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
     */
     public NeoSamurai(
         int hp,
@@ -62,7 +62,6 @@ public class NeoSamurai extends Character {
      * @param position The initial position of the NeoSamurai
      * @param lvl The level of the NeoSamurai
     */
-
     public NeoSamurai(Coordinates position, int lvl) {
         super(
             HP,

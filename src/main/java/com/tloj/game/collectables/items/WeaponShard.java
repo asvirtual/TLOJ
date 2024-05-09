@@ -13,7 +13,7 @@ import com.tloj.game.collectables.PurchasableItem;
  * @see AttackElixir
  * @see DefenseElixir
  * @see Lockpick
- * @see Ragù
+ * @see Ragu
  * @see SpecialKey
  * @see NorthStar
  */

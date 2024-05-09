@@ -17,9 +17,8 @@ interface Visitor {
     void visit(TrapRoom room);
 }
 
-/**
- * TODO
- */
+// TODO: What to do with statements here?
+
 public class PlayerRoomVisitor implements Visitor {
     private Character player;
     private Controller controller;

@@ -1,7 +1,6 @@
 package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;

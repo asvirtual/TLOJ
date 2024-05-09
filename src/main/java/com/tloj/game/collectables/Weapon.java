@@ -73,8 +73,8 @@ public abstract class Weapon extends Item {
     /**
      * Swing the weapon at a Mob <br>
      * If the weapon has an effect, apply it, otherwise deal standard weapon dice roll damage to the target<br>
-     * @param target The target to hit
-     * @see WeaponEffect#apply(Character, Mob)
+     * @param attack The attack to modify
+     * @see WeaponEffect#apply(PlayerAttack)
      */
     public void modifyAttack(PlayerAttack attack) {
         if (this.effect != null) this.effect.apply(attack);

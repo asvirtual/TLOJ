@@ -5,7 +5,7 @@ import com.tloj.game.collectables.Item;
 /**
  * Represents the Consumable Item NorthStar in the game.<br>
  * The NorthStar can print the entire game map, it can be found as a special reward.<br>
- * It weighs {@value #WEIGHT}, with an in game cost of {@value #PRICE}
+ * It weighs {@value #WEIGHT}<br>
  * @see GreatHealthPotion
  * @see HealthPotion
  * @see ManaPotion

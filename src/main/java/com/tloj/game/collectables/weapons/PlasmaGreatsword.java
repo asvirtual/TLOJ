@@ -13,12 +13,12 @@ import com.tloj.game.collectables.Weapon;
  * @see LaserBlade
  * @see NaniteLeechBlade
  */
-public class PlasmaGreatsword extends Weapon {
+public class PlasmaGreatSword extends Weapon {
     private static final double WEIGHT = 2.5;
     private static final int DICE_FACES = 15;
     private static final int ID = 15;
 
-    public PlasmaGreatsword() {
+    public PlasmaGreatSword() {
         super(WEIGHT, DICE_FACES, ID); 
     }
 

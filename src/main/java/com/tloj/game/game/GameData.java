@@ -3,18 +3,16 @@ package com.tloj.game.game;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Stack;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.tloj.game.entities.Character;
-import com.tloj.game.rooms.Room;
 
 
 /**
@@ -68,10 +66,7 @@ public class GameData {
         } catch (IOException e) {
             System.out.println("Error opening file " + filename + " for writing");
             e.printStackTrace();
-        } catch (StackOverflowError e) {
-            System.out.println("Error: StackOverflowError");
-            e.printStackTrace();
-        }
+        } 
     }
 
     public static GameData loadFromFile(String filename) {
@@ -93,43 +88,48 @@ public class GameData {
         return null;
     }
 
-    /* TODO */
     public String serializeJSON() {
-        return null;
-    }
-
-    /* TODO */
-    public static GameData deserializeJSON(String json) {
-        return null;
-    }
-
-    /* TODO
-     * ArrayList<ArrayList<ArrayList<Room>>> or ArrayList<Level> ?
-     */
-    public static ArrayList<Level> deserializeMapFromFile(String filename) {
-        GameData gameData = GameData.loadFromFile("test.json");
-        if (gameData != null) return gameData.levels;
-        return null;
-
-        /* 
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            return mapper.readValue(new File(filename), new TypeReference<ArrayList<Level>>(){});
+            return mapper.writeValueAsString(this);
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();
         } catch (JsonMappingException e) {
             System.out.println("Error mapping JSON from GameData");
             e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Error opening file " + filename + " for reading");
+        } catch (JsonProcessingException e) {
+            System.out.println("Error processing JSON from GameData");
             e.printStackTrace();
         }
-        
-        return null;
 
-        */
+        return null;
+    }
+
+    public static GameData deserializeJSON(String json) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            return mapper.readValue(json, GameData.class);
+        } catch (JsonGenerationException e) {
+            System.out.println("Error generating JSON from GameData");
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            System.out.println("Error mapping JSON from GameData");
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            System.out.println("Error processing JSON from GameData");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Level> deserializeMapFromFile(String filename) {
+        GameData gameData = GameData.loadFromFile("test.json");
+        if (gameData != null) return gameData.levels;
+        return null;
     }
 
     /* Getters and setters, needed for ObjectMapper to recognize fields and map them in JSON */

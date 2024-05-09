@@ -34,7 +34,6 @@ import com.tloj.game.utilities.Dice;
 /**
  * Abstract class to represent a character in the game.<br>
  * A Character is a moving entity that can engage in combat, and it is controlled by the user.<br>
- * {@inheritDoc}
  * @see MovingEntity
  * @see CombatEntity
 */
@@ -79,13 +78,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
      * @param def The character's defense points<br>
      * @param mana The character's mana points<br>
      * @param xp The character's experience points<br>
-     * @param requiredXp The character's required experience points<br>
      * @param lvl The character's level<br>
      * @param maxWeight The character's maximum weight capacity<br>
      * @param money The character's money<br>
      * @param weapon The character's weapon<br>
-     * @param ability The character's ability<br>
-     * @param passiveAbility The character's passive ability<br>
      * @param inventory The character's inventory<br>
      * @param position The character's position<br>
      * @see com.tloj.game.entities.Entity
@@ -127,8 +123,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
      * @param maxWeight The character's maximum weight capacity<br>
      * @param money The character's money<br>
      * @param weapon The character's weapon<br>
-     * @param ability The character's ability<br>
-     * @param passiveAbility The character's passive ability<br>
      * @param position The character's position<br>
      * @see Entity
      * @see MovingEntity
