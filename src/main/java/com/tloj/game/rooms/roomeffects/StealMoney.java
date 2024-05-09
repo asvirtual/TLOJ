@@ -4,7 +4,7 @@ import com.tloj.game.entities.Character;
 
 /**
  * Class that implements a room effect that steals money from the character<br>
- * Steals 5 money from the player if it doesn't roll 6 on D6<br>
+ * Steals {@value #COST} money from the player if it doesn't roll 6 on D6<br>
  * @see RoomEffect
  * @see InflictDamage
  * @see TpEffect
