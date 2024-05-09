@@ -1,6 +1,10 @@
 package com.tloj.game.collectables.weapons;
 
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.weapons.LaserBlade;
+import com.tloj.game.collectables.weapons.NaniteLeechBlade;
+import com.tloj.game.collectables.weapons.CyberKatana;
+import com.tloj.game.collectables.weapons.PulseStaff;
 
 /**
  * Represents the PlasmaGreatsword Weapon in the game.<br>

@@ -35,7 +35,7 @@ import com.tloj.game.utilities.GameState;
  * - Print map (map) {@link PrintMapCommand}<br>
  * - Print score (score) {@link PrintScoreCommand}<br>
  * - Quit (quit) {@link QuitCommand}<br>
- * - Back (back) {@link BackCommand} (used during complex interactions)<br>
+ * - Back (back) {@link PreviousStateCommand} (used during complex interactions)<br>
  * - Help (help) {@link HelpCommand}<br>
  * - Return (return) {@link ReturnCommand} (used to go back to starting room)<br>
  * - Print status (status) {@link PrintStatusCommand}<br>
@@ -340,8 +340,7 @@ class QuitCommand extends GameCommand {
         if (!Controller.awaitConfirmation()) return;
         this.game.save();
 
-        Controller controller = Controller.getInstance();
-        controller.setState(GameState.MAIN_MENU);
+        this.controller.setState(GameState.MAIN_MENU);
     }
 }
 
@@ -349,18 +348,15 @@ class QuitCommand extends GameCommand {
  * Concrete command class to return to the previous interaction status<br>
  * @see GameCommand <br>
  */
-class BackCommand extends GameCommand {
-    public BackCommand(Game game, String[] commands) {
+class PreviousStateCommand extends GameCommand {
+    public PreviousStateCommand(Game game, String[] commands) {
         super(game, null);
     }
 
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        /* 
-        * TODO
-        * Return to the previous interaction status
-        */ 
+        this.controller.getState().previousState();
     }
 }
 
@@ -391,7 +387,7 @@ class HelpCommand extends GameCommand {
 
     @Override
     public void execute() {
-        switch (Controller.getInstance().getState()) {
+        switch (this.controller.getState()) {
             case MAIN_MENU:
                 System.out.println("Commands: new, load, exit");
                 break;
@@ -868,7 +864,7 @@ public class Controller {
                 Map.entry("score", () -> new PrintScoreCommand(this.game, commands)),
                 Map.entry("seed", () -> new PrintSeedCommand(this.game, commands)),
                 Map.entry("quit", () -> new QuitCommand(this.game, commands)),
-                Map.entry("back", () -> new BackCommand(this.game, commands)),
+                Map.entry("back", () -> new PreviousStateCommand(this.game, commands)),
                 Map.entry("merchant", () -> new MerchantCommand(this.game, commands)),
                 Map.entry("buy", () -> new BuyCommand(this.game, commands)),
                 Map.entry("smith", () -> new SmithCommand(this.game, commands)),

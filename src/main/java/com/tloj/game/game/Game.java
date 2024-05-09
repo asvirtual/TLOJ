@@ -218,8 +218,12 @@ public class Game implements CharacterObserver {
     public void printInventory() {
         this.player.sortInventory();
         System.out.println("Inventory:");
-        for (int i = 0; i < this.player.getInventorySize(); i++)
-            System.out.println(i + ". " + this.player.getInventoryItem(i));
+        for (int i = 0; i < this.player.getInventorySize(); i++) {
+            Item item = this.player.getInventoryItem(i);
+            int count = this.player.getItemCount(item);
+            if (count > 1) System.out.println(i + ". " + item + " (x" + count + ")");
+            else System.out.println(i + ". " + item);
+        }
     }
 
     public void useItem(int index) {
@@ -304,8 +308,8 @@ public class Game implements CharacterObserver {
         //dialogue with smith   
         
         System.out.println("Smith: Hello there! I can upgrade your weapon with a Weapon Shard. Do you have one?");
-        System.out.println("J: I have " + this.player.itemCounter(new WeaponShard()) + " Weapon Shards!");
-        if(this.player.itemCounter(new WeaponShard()) > 0){
+        System.out.println("J: I have " + this.player.getItemCount(new WeaponShard()) + " Weapon Shards!");
+        if(this.player.getItemCount(new WeaponShard()) > 0){
             System.out.println("Smith: Great! Let me upgrade your weapon!");
             this.controller.setState(GameState.SMITH_FORGING);
         }
