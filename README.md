@@ -26,10 +26,12 @@
 ---
 ### Game Description
 ___The Legend Of Jordan___ is a text adventure, RPG and Roguelike game with dice related mechanics. <br>
-The game consists of exploring a dungeon made of 3 floors each filled with many different rooms. <br>
-Each available starting class has unique quirks that influence playstyle and how you overcome
+The game consists of exploring a dungeon made of 3 floors, each filled with many different rooms. <br>
+Each available starting class has unique perks that influence playstyle and how you overcome
 the various enemies that the hero, Jordan, will meet in his path to escape the dungeon!
 
+---
+### How to Download and Install
 ---
 ### System Documentation
 
