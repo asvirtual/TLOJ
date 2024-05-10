@@ -73,6 +73,6 @@ public abstract class Room {
     }
 
     public FriendlyEntity getFriendlyEntity(String name) {
-        return this.friendlyEntities.stream().filter(entity -> entity.getName().equals(name)).findFirst().orElse(null);
+        return this.friendlyEntities.stream().filter(entity -> entity.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 }

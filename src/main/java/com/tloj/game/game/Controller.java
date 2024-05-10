@@ -481,7 +481,7 @@ class PrintStatusCommand extends GameCommand {
  */
 class MerchantCommand extends GameCommand {
     public MerchantCommand(Game game, String[] commands) {
-        super(game, null);
+        super(game, commands);
         this.validListStates = List.of(
             GameState.HEALING_ROOM
         );
@@ -503,7 +503,7 @@ class MerchantCommand extends GameCommand {
  */
 class BuyCommand extends GameCommand {
     public BuyCommand(Game game, String[] commands) {
-        super(game, null);
+        super(game, commands);
     }
 
     @Override
@@ -516,7 +516,7 @@ class BuyCommand extends GameCommand {
         Merchant merchant = (Merchant) room.getFriendlyEntity(Merchant.NAME);
         
         try {
-            if (merchant != null) merchant.buy(Integer.parseInt(commands[1]));
+            if (merchant != null) merchant.buy(Integer.parseInt(this.commands[1]));
         } catch (NumberFormatException e) {
             System.out.println("Please enter a valid number");
         }
@@ -552,14 +552,14 @@ class SmithCommand extends GameCommand {
  */
 class GiveCommand extends GameCommand {
     public GiveCommand(Game game, String[] commands) {
-        super(game, null);
+        super(game, commands);
     }
 
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
         
-        if (this.commands.length != 2) {
+        if (this.commands.length != 3) {
             System.out.println("Invalid command. Correct Syntax: give [npc] [item]");
             return;
         }
@@ -846,7 +846,7 @@ public class Controller {
      */
     public void newGame() {
         ArrayList<Level> map = GameData.deserializeMap("""
-        [
+            [
     {
         "levelNumber": 1,
         "rooms": [
@@ -860,7 +860,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.bosses.EvenBoss",
-                            "position": { "x": 0, "y": 0 }
+                            "position": { "x": 0, "y": 0 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -880,7 +881,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.CyberGoblin",
-                            "position": { "x": 2, "y": 0 }
+                            "position": { "x": 2, "y": 0 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -912,7 +914,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.MechaRat",
-                            "position": { "x": 5, "y": 1 }
+                            "position": { "x": 5, "y": 1 },
+                            "lvl": 1
                         }
                     ]
                 }
@@ -927,7 +930,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.JunkSlime",
-                            "position": { "x": 0, "y": 2 }
+                            "position": { "x": 0, "y": 2 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -941,7 +945,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.JetBat",
-                            "position": { "x": 2, "y": 2 }
+                            "position": { "x": 2, "y": 2 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -982,7 +987,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.CyberGoblin",
-                            "position": { "x": 2, "y": 3 }
+                            "position": { "x": 2, "y": 3 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -995,7 +1001,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.MechaRat",
-                            "position": { "x": 3, "y": 3 }
+                            "position": { "x": 3, "y": 3 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -1008,7 +1015,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.CyberGoblin",
-                            "position": { "x": 4, "y": 3 }
+                            "position": { "x": 4, "y": 3 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -1041,7 +1049,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.JunkSlime",
-                            "position": { "x": 5, "y": 4 }
+                            "position": { "x": 5, "y": 4 },
+                            "lvl": 1
                         }
                     ]
                 }
@@ -1058,7 +1067,8 @@ public class Controller {
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.JunkSlime",
-                            "position": { "x": 2, "y": 5 }
+                            "position": { "x": 2, "y": 5 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -1077,6 +1087,75 @@ public class Controller {
             "@class": "com.tloj.game.rooms.StartRoom",
             "coordinates": { "x": 2, "y": 4 }
         }
+    },
+    {
+        "levelNumber": 2,
+        "rooms": [
+            [
+                {
+                    "@class": "com.tloj.game.rooms.StartRoom",
+                    "coordinates": { "x": 0, "y": 0 }
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HealingRoom",
+                    "coordinates": { "x": 1, "y": 0 },
+                    "friendlyEntities": [
+                        {
+                            "@class": "com.tloj.game.entities.npcs.Merchant",
+                            "position": { "x": 1, "y": 0 }
+                        },
+                        {
+                            "@class": "com.tloj.game.entities.npcs.Smith",
+                            "position": { "x": 1, "y": 0 }
+                        }
+                    ]
+                },
+                null,
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ]
+        ]
     }
 ]
         """);
@@ -1131,7 +1210,8 @@ public class Controller {
                 Map.entry("back", () -> new PreviousStateCommand(this.game, commands)),
                 Map.entry("merchant", () -> new MerchantCommand(this.game, commands)),
                 Map.entry("buy", () -> new BuyCommand(this.game, commands)),
-                Map.entry("smith", () -> new SmithCommand(this.game, commands))
+                Map.entry("smith", () -> new SmithCommand(this.game, commands)),
+                Map.entry("give", () -> new GiveCommand(this.game, commands))
             )
         );
 

@@ -25,7 +25,7 @@ public class Level {
     ) {
         this.levelNumber = levelNumber;
         this.rooms = rooms;
-        rooms.forEach(row -> { 
+        this.rooms.forEach(row -> { 
             row.forEach(room -> {
                 if (room != null && room.getType() == RoomType.START_ROOM) 
                     this.startRoom = (StartRoom) room;

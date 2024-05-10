@@ -51,12 +51,6 @@ public class BossRoom extends HostileRoom {
         visitor.visit(this);
     }
 
-    @Override 
-    public void clear() {
-        super.clear();
-        this.mobs.set(0, null);
-    }
-
     @Override
     public String toString() {
         // return this.visited ? "\u00DF" : "\u00A0";

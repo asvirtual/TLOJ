@@ -120,8 +120,9 @@ public class Game implements CharacterObserver {
             throw new IllegalStateException("Cannot move while fighting");
             
         if (this.controller.getState() == GameState.BOSS_DEFEATED || this.getCurrentRoom().getType() == RoomType.HEALING_ROOM) {
-            this.currentLevel = this.levels.get(this.currentLevel.getLevelNumber() + 1);
+            this.currentLevel = this.levels.get(this.currentLevel.getLevelNumber());
             this.player.setCurrentLevel(this.currentLevel);
+            this.controller.setState(GameState.MOVING);
             return;
         }
 
@@ -171,9 +172,9 @@ public class Game implements CharacterObserver {
     }
 
     public void save() {
-        this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        GameData gameData = this.getGameData();
-        gameData.serializeJSON();
+        // this.elapsedTime += new Date().getTime() - this.sessionStartTime;
+        // GameData gameData = this.getGameData();
+        // gameData.serializeJSON();
         // TODO: Save in JSON file (and/or in cloud)
     }
 
