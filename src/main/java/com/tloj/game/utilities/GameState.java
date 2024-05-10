@@ -35,15 +35,11 @@ public enum GameState {
         return null;
     }
 
-    public void nextState() {
-        this.value = this.getValue() + 1;
+    public GameState nextState() {
+        return GameState.fromInt(this.getValue() + 1);
     }
 
-    public void previousState() {
-        if (this.getValue() == 5) {
-            this.value = this.getValue() - 2;
-        } else {
-            this.value = this.getValue() - 1;
-        }
+    public GameState previousState() {
+        return GameState.fromInt(this.getValue() - 1);
     }
 }

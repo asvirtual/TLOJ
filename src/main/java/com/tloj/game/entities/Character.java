@@ -261,7 +261,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public Item getItem(String itemName) {
         for (Item item : this.inventory) 
-            if (itemName.equals(item.toString())) return item;
+            if (itemName.equalsIgnoreCase(item.toString())) return item;
 
         return null;
     }

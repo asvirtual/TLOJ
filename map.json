@@ -1,0 +1,79 @@
+"levels": [
+    {
+      "levelNumber": 1,
+      "rooms": [
+        [
+          {
+            "@class": "com.tloj.game.rooms.BossRoom",
+            "coordinates": { "x": 0, "y": 0 },
+            "visited": false,
+            "cleared": false,
+            "locked": false,
+            "friendlyEntities": [],
+            "mobs": [
+              {
+                "@class": "com.tloj.game.entities.bosses.EvenBoss",
+                "position": { "x": 0, "y": 0 },
+              }
+            ]
+          },
+          {
+            "@class": "com.tloj.game.rooms.LootRoom",
+            "coordinates": { "x": 1, "y": 0 },
+            "visited": false,
+            "cleared": false,
+            "locked": false,
+            "friendlyEntities": [],
+            "item": {
+              "@class": "com.tloj.game.collectables.items.WeaponShard",
+              "weight": 0.5,
+              "dropMoney": 7,
+              "id": 10,
+              "dropChance": 0.6,
+              "price": 15
+            }
+          }
+        ],
+        [
+          {
+            "@class": "com.tloj.game.rooms.LootRoom",
+            "coordinates": { "x": 0, "y": 1 },
+            "visited": false,
+            "cleared": false,
+            "locked": false,
+            "friendlyEntities": [],
+            "item": {
+              "@class": "com.tloj.game.collectables.items.WeaponShard",
+              "weight": 0.5,
+              "dropMoney": 7,
+              "id": 10,
+              "dropChance": 0.6,
+              "price": 15
+            }
+          },
+          {
+            "@class": "com.tloj.game.rooms.HealingRoom",
+            "coordinates": { "x": 1, "y": 1 },
+            "visited": false,
+            "cleared": false,
+            "locked": false,
+            "friendlyEntities": [
+              {
+                "@class": "com.tloj.game.entities.npcs.Smith",
+                "position": { "x": 1, "y": 1 },
+                "player": null,
+                "name": "SMITH"
+              },
+              {
+                "@class": "com.tloj.game.entities.npcs.Merchant",
+                "position": { "x": 1, "y": 1 },
+                "player": null,
+                "name": "MERCHANT"
+              }
+            ]
+          }
+        ]
+      ],
+      "startRoom": null
+    }
+  ]
