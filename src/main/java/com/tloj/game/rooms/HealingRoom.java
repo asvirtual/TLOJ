@@ -12,7 +12,7 @@ import com.tloj.game.game.PlayerRoomVisitor;
 
 /**
  * Class that represents a healing room in the game.<br>
- * It is situated between each floor and allows the player to heal completely.<br>
+ * It is situated between each floor and allows the player to heal completely and meet some {@link FriendlyEntity}.<br>
  * You can also buy items from {@link Merchant} or upgrade your weapon from a {@link Smith}<br>
  * @see Room
  * @see BossRoom
