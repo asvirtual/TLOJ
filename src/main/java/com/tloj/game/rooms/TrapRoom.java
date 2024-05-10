@@ -41,8 +41,12 @@ public class TrapRoom extends Room {
         return RoomType.TRAP_ROOM;
     }
 
-    public void triggerTrap(Character character) {
-        this.effect.applyEffect(character);
+    public boolean triggerTrap(Character character) {
+        return this.effect.applyEffect(character);
+    }
+
+    public void executeSideEffect() {
+        this.effect.executeSideEffect();
     }
 
     @Override

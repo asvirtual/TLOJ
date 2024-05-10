@@ -52,10 +52,14 @@ public class HostileRoom extends Room {
         visitor.visit(this);
     }
 
-
     @JsonIgnore
     public Mob getMob() {
         return this.mobs.get(0);
+    }
+
+    @JsonIgnore
+    public int getMobsCount() {
+        return this.mobs.size();
     }
 
     public void removeMob(Mob mob) {

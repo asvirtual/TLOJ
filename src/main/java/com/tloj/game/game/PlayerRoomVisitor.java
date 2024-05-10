@@ -55,8 +55,11 @@ public class PlayerRoomVisitor implements Visitor {
 
         if (room.isCleared()) return;
 
-        System.out.println("You've encountered an enemy!");
+        System.out.println("You've encountered " + room.getMob() + "!");
         this.controller.setState(GameState.FIGHTING_MOB);
+        
+        this.player.heal(1);
+        this.player.restoreMana(1);
     }
 
     @Override
@@ -76,14 +79,17 @@ public class PlayerRoomVisitor implements Visitor {
 
     @Override
     public void visit(TrapRoom room) {
+        room.visit();
         if (room.isCleared()) return;
         
-        room.visit();
-        Dice dice = new Dice(6);
-        int roll = dice.roll();
-        if (roll < 3) room.triggerTrap(this.player);
-        else System.out.println("You've dodged the trap! Thanks Windows Defender!");
+        if (!room.triggerTrap(this.player)) 
+            System.out.println("You've dodged the trap! Thanks Windows Defender!");
       
         room.clear();
+        
+        this.player.heal(1);
+        this.player.restoreMana(1);
+
+        room.executeSideEffect();
     }
-}
+} 

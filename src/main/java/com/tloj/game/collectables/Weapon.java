@@ -57,7 +57,7 @@ public abstract class Weapon extends Item {
     }
     
     public int diceRoll() {
-        return dice.roll() + lvl;
+        return dice.roll() + this.lvl;
     }
 
     public void assignTo(Character character) {
@@ -78,5 +78,10 @@ public abstract class Weapon extends Item {
     public void modifyAttack(PlayerAttack attack) {
         if (this.effect != null) this.effect.apply(attack);
         else attack.setWeaponRoll(this.diceRoll());
+    }
+
+    @Override 
+    public String toString() {
+        return super.toString() + " +" + this.lvl;
     }
 }

@@ -4,7 +4,6 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -25,7 +24,8 @@ public class DiceReroller extends WeaponEffect {
             this.weapon.diceRoll() + 
             this.weapon.diceRoll()
         );
-        
+
+        System.out.println("Double hit!");
         return true;
     }
 

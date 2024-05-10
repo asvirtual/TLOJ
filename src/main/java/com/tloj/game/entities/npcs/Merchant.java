@@ -1,5 +1,6 @@
 package com.tloj.game.entities.npcs;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -30,15 +31,16 @@ import com.tloj.game.utilities.GameState;
 public class Merchant extends FriendlyEntity {
     public static final String NAME = "MERCHANT";
 
-    private static Map<Integer, PurchasableItem> items = Map.ofEntries(
-        Map.entry(1, new HealthPotion()),
-        Map.entry(2, new GreatHealthPotion()),
-        Map.entry(3, new ManaPotion()),
-        Map.entry(4, new GreatManaPotion()),
-        Map.entry(5, new AttackElixir()),
-        Map.entry(6, new DefenseElixir()),
-        Map.entry(7, new Lockpick())
-    );
+    private static Map<Integer, PurchasableItem> items = new LinkedHashMap<>();
+    static {
+        items.put(1, new HealthPotion());
+        items.put(2, new GreatHealthPotion());
+        items.put(3, new ManaPotion());
+        items.put(4, new GreatManaPotion());
+        items.put(5, new AttackElixir());
+        items.put(6, new DefenseElixir());
+        items.put(7, new Lockpick());
+    }
 
     @JsonCreator
     public Merchant(@JsonProperty("position") Coordinates position) {
@@ -75,5 +77,6 @@ public class Merchant extends FriendlyEntity {
         }
 
         item.purchase(this.player);
+        items.remove(index);
     }
 }

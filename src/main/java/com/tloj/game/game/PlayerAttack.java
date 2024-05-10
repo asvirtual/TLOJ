@@ -57,6 +57,6 @@ public class PlayerAttack extends Attack {
     public void perform() {
         super.perform();
         System.out.println("You inflicted " + (this.totalDamage >= 0 ? totalDamage : 0) + " damage to " + this.target + "!");
-        System.out.println(this.target + " has " + this.target.getHP() + " HP left!");
+        if (this.target.getDef() > 0) System.out.println(this.target + " has " + this.target.getHP() + " HP left!");
     }
 }

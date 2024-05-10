@@ -35,12 +35,15 @@ public class Steal extends CharacterSkill {
         }
 
         Dice dice = new Dice(10);
-        if (dice.roll() < 4) return;
+        attacker.useMana(10);
+        if (dice.roll() < 4) {
+            System.out.println("Couldn't insert the USB drive! Steal failed");
+            return;
+        }
         
         Item item = Item.getRandomItem();
-        attacker.addInventoryItem(item);
-        attacker.useMana(10);
-        System.out.println("Steal successful! You stole a " + item);
+        if (attacker.addInventoryItem(item)) System.out.println("Data acquired! You stole a " + item);
+        else System.out.println("Steal failed! " + item + " fell out of your pocket because your inventory is full");
     }
 
     public static String describe() {

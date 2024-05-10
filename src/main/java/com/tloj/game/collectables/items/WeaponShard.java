@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class WeaponShard extends PurchasableItem {
     private static final double WEIGHT = 0.5;
     private static final int PRICE = 15;
-    private static final double DROP_CHANCE = 0.6;
+    private static final double DROP_CHANCE = 0.07;
     private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 10;
 

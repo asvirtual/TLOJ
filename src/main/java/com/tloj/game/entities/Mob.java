@@ -56,7 +56,7 @@ public abstract class Mob extends CombatEntity {
         int moneyDrop,
         Coordinates position
     ) {
-        super(hp, atk, def, position);
+        super(hp * lvl, atk * Mob.levelUpFactor(lvl), def * Mob.levelUpFactor(lvl), position);
         this.lvl = lvl;
         this.xpDrop = xpDrop;
         this.moneyDrop = moneyDrop;
@@ -89,8 +89,9 @@ public abstract class Mob extends CombatEntity {
         Item drop
         
     ) {
-        super(hp, atk, def, position);
+        super(hp * lvl, atk * Mob.levelUpFactor(lvl) , def * Mob.levelUpFactor(lvl), position);
         this.lvl = lvl;
+        
         this.xpDrop = xpDrop;
         this.moneyDrop = moneyDrop;
         this.dice = new Dice(diceFaces);
@@ -136,8 +137,10 @@ public abstract class Mob extends CombatEntity {
         this.drop = drop;
     }
 
-
-
+    private static int levelUpFactor(int lvl){
+        return (int)( 1 + Math.log(lvl) / (int) Math.log(8));
+    }
+    
     @Override
     public void attack(CombatEntity t) throws IllegalArgumentException {
         if (!(t instanceof Character)) throw new IllegalArgumentException("Mobs can only attack Characters");

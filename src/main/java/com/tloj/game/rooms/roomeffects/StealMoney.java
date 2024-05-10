@@ -1,6 +1,7 @@
 package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
+import com.tloj.game.utilities.Dice;
 
 /**
  * Class that implements a room effect that steals money from the character<br>
@@ -10,7 +11,7 @@ import com.tloj.game.entities.Character;
  * @see TpEffect
  */
 
-public class StealMoney implements RoomEffect {
+public class StealMoney extends RoomEffect {
     public static final int COST = 10;
 
     /*
@@ -19,8 +20,14 @@ public class StealMoney implements RoomEffect {
     public StealMoney() {}
 
     @Override
-    public void applyEffect(Character character) {
+    public boolean applyEffect(Character character) {
+        Dice dice = new Dice(6);
+        int roll = dice.roll();
+        if (roll < 3) return false;
+
         System.out.println("You have been scammed by a Crypto Guru and you lost " + COST + " BTC!");
         character.pay(COST);
+
+        return true;
     }
 }

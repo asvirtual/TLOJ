@@ -45,45 +45,63 @@ public class Glitched extends Mob implements MovingEntity {
     @Override
     public void defend(Attack attack) {
         super.defend(attack);
-
         PlayerAttack playerAttack = (PlayerAttack) attack;
-        this.turnsLeft--;
 
-        Character player = playerAttack.getAttacker();
-        Level level = player.getCurrentLevel();
-        boolean validLocation = false;
+        attack.setOnHit(new Runnable() {
+            @Override
+            public void run() {
+                Glitched target = (Glitched) playerAttack.getTarget();
+                if (!target.isAlive()) return;
+                
+                target.turnsLeft--;
+        
+                Character player = playerAttack.getAttacker();
+                Level level = player.getCurrentLevel();
+                boolean validLocation = false;
+        
+                int rows = level.getRoomsRowCount();
+                int cols = level.getRoomsColCount();
+        
+                do {
+                    int row = (int) Math.floor(Math.random() * rows);
+                    int col = (int) Math.floor(Math.random() * cols);
+        
+                    Coordinates newCoords = new Coordinates(row, col);
+                    if (!level.areCoordinatesValid(newCoords)) continue;
+                    if (level.getRoom(newCoords).getType() != RoomType.HOSTILE_ROOM) 
+                        continue;
+                    
+                    HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
+                    nextRoom.addMobToTop(target);
 
-        int rows = level.getRoomsRowCount();
-        int cols = level.getRoomsColCount();
+                    if (target.turnsLeft != 0) target.move(newCoords);
+                    else {
+                        HostileRoom currentRoom = (HostileRoom) level.getRoom(target.getPosition());
+                        System.out.print("The Glitched has gone...");
+                        currentRoom.removeMob(target);
+                    }
 
-        do {
-            int row = (int) Math.floor(Math.random() * rows);
-            int col = (int) Math.floor(Math.random() * cols);
-
-            Coordinates newCoords = new Coordinates(row, col);
-            if (!level.areCoordinatesValid(newCoords)) continue;
-            if (
-                level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM ||
-                level.getRoom(newCoords).getType() == RoomType.TRAP_ROOM ||
-                (level.getRoom(newCoords).getType() == RoomType.LOOT_ROOM && ((LootRoom) level.getRoom(newCoords)).isLocked())
-            ) 
-                continue;
-            
-            HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
-            nextRoom.addMobToTop(this);
-            this.move(newCoords);
-            validLocation = true;
-        } while (!validLocation);
+                    validLocation = true;
+                } while (!validLocation);
+            }
+        });
     }
 
     @Override
     public void move(Coordinates to) {
         if (this.turnsLeft != 0) this.position = to;
-        else System.out.print("The Glitched has gone...");
+        else {
+            System.out.print("The Glitched has gone...");
+        }
     }
 
     @Override
     public Item getDrop() {
         return this.drop;
+    }
+
+    @Override
+    public void takeDamage(int damage) {
+        super.takeDamage(damage);
     }
 }

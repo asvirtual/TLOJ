@@ -41,6 +41,10 @@ public abstract class CombatEntity extends Entity {
         return this.hp;
     }
 
+    public int getMaxHP() {
+        return this.maxHp;
+    }
+
     public int getCurrentFightAtk() {
         return this.currentFightAtk;
     }
@@ -63,7 +67,8 @@ public abstract class CombatEntity extends Entity {
     }
 
     public void takeDamage(int damage) {
-        this.hp -= damage;
+        if (this.hp - damage < 0) this.hp = 0;
+        else this.hp -= damage;
     };
 
     @JsonIgnore

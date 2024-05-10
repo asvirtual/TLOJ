@@ -2,8 +2,10 @@ package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Level;
+import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.LootRoom;
+import com.tloj.game.rooms.Room;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.collectables.items.NorthStar;
 
@@ -15,14 +17,26 @@ import com.tloj.game.collectables.items.NorthStar;
  * @see StealMoney
  */
 
-public class TpEffect implements RoomEffect {
+public class TpEffect extends RoomEffect {
+    private PlayerRoomVisitor visitor;
+    private Room newRoom;
+
     /*
      * Default constructor for Jackson JSON deserialization
      */
     public TpEffect() {}
 
+    public TpEffect(Runnable sideEffect) {
+        this.sideEffect = new Runnable() {
+            @Override
+            public void run() {
+                newRoom.accept(visitor);
+            }
+        };
+    }
+
     @Override
-    public void applyEffect(Character character) {
+    public boolean applyEffect(Character character) {
         Level level = character.getCurrentLevel();
         boolean validLocation = false;
 
@@ -34,16 +48,25 @@ public class TpEffect implements RoomEffect {
             int col = (int) Math.floor(Math.random() * cols);
 
             Coordinates newCoords = new Coordinates(row, col);
+            this.newRoom = character.getCurrentLevel().getRoom(newCoords);
+
             if (!level.areCoordinatesValid(newCoords)) continue;
-            if (level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM) continue;
-            if (level.getRoom(newCoords).getType() == RoomType.LOOT_ROOM && ((LootRoom) level.getRoom(newCoords)).isLocked()) continue;
+            if (this.newRoom.getType() == RoomType.BOSS_ROOM) continue;
+            if (this.newRoom.getType() == RoomType.LOOT_ROOM && ((LootRoom) this.newRoom).isLocked()) continue;
 
             level.getRoomStream().forEach(rowRooms -> {
-                rowRooms.forEach(room -> room.forget());
+                rowRooms.forEach(room -> {
+                    if (room != null) room.forget();
+                });
             });            
 
             character.move(newCoords);
+            this.newRoom.visit();
             validLocation = true;
+            
+            this.visitor = new PlayerRoomVisitor(character);
         } while (!validLocation);
+
+        return true;
     }
 }

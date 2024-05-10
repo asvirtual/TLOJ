@@ -19,6 +19,7 @@ import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
@@ -122,6 +123,7 @@ public class Game implements CharacterObserver {
         if (this.controller.getState() == GameState.BOSS_DEFEATED || this.getCurrentRoom().getType() == RoomType.HEALING_ROOM) {
             this.currentLevel = this.levels.get(this.currentLevel.getLevelNumber());
             this.player.setCurrentLevel(this.currentLevel);
+            this.player.setPosition(this.currentLevel.getStartRoom().getCoordinates());
             this.controller.setState(GameState.MOVING);
             return;
         }
@@ -130,18 +132,9 @@ public class Game implements CharacterObserver {
         if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
         if (this.currentLevel.getRoom(newCoordinates).isLocked() && !this.player.hasItem(new SpecialKey())) throw new IllegalArgumentException("Room is locked");
         
-        /**
-         * updats player score if the room is cleared
-         * TODO: This could probably be moved to the CharacterObserver, after the player has ended the interactions/events in the room
-         */
-        if (!this.getCurrentRoom().isCleared()) {
-            this.getCurrentRoom().clear();
-            this.updateScore(Room.SCORE_DROP);
-        }
-
         this.player.move(newCoordinates);
-        PlayerRoomVisitor PlayerRoomVisitor = new PlayerRoomVisitor(this.player);
-        this.currentLevel.getRoom(newCoordinates).accept(PlayerRoomVisitor);
+        PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player);
+        this.currentLevel.getRoom(newCoordinates).accept(playerRoomVisitor);
     }
 
     public void playerAttack() throws IllegalStateException {
@@ -198,8 +191,6 @@ public class Game implements CharacterObserver {
     public void onMobDefeated(Mob mob) {
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
 
-        room.clear();
-
         /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
         this.player.resetFightStats();
         this.player.lootMob(mob);
@@ -207,7 +198,11 @@ public class Game implements CharacterObserver {
         System.out.println("You've defeated the " + mob + "!");
         
         this.updateScore(Mob.SCORE_DROP);
-        this.controller.setState(GameState.MOVING);
+
+        if (room.getMobsCount() == 1) {
+            room.clear();
+            this.controller.setState(GameState.MOVING);
+        } else room.removeMob(mob);
     }
 
     @Override
@@ -229,7 +224,9 @@ public class Game implements CharacterObserver {
     @Override
     public void onPlayerDefeated() {
         System.out.println("You've been defeated!");
+        System.out.println("Jordan ended his adventure with " + this.score + "!");
         this.controller.setState(GameState.MAIN_MENU);
+        System.out.println(Constants.GAME_TITLE);
     }
 
     public void printMap(){
@@ -252,12 +249,9 @@ public class Game implements CharacterObserver {
     public void printInventory() {
         this.player.sortInventory();
         System.out.println("Inventory:");
-        for (int i = 0; i < this.player.getInventorySize(); i++) {
-            Item item = this.player.getInventoryItem(i);
-            int count = this.player.getItemCount(item);
-            if (count > 1) System.out.println(i + ". " + item + " (x" + count + ")");
-            else System.out.println(i + ". " + item);
-        }
+
+        for (int i = 0; i < this.player.getInventorySize(); i++) 
+            System.out.println(i + ". " + this.player.getInventoryItem(i));
     }
 
     public void useItem(int index) {

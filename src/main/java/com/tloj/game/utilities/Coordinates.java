@@ -47,4 +47,12 @@ public class Coordinates {
     public String toString() {
         return "(" + this.x + ", " + this.y + ")";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (!(obj instanceof Coordinates)) return false;
+        Coordinates other = (Coordinates) obj;
+        return this.x == other.x && this.y == other.y;
+    }
 }

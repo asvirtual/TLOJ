@@ -19,4 +19,8 @@ public abstract class Entity {
     public Coordinates getPosition() {
         return position;
     }
+
+    public void setPosition(Coordinates position) {
+        this.position = position;
+    }
 }
