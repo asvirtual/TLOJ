@@ -4,6 +4,7 @@ import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 
 /**
@@ -18,7 +19,13 @@ import com.tloj.game.entities.Character;
  * @see HostileRoom
  */
 public class TrapRoom extends Room {
+    @JsonProperty
     private RoomEffect effect;
+
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public TrapRoom() {}
 
     public TrapRoom(Coordinates coordinates, RoomEffect effect) {
         super(coordinates);

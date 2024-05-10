@@ -49,7 +49,7 @@ public class Level {
 
     @JsonIgnore
     public Room getRoom(Coordinates coordinates) {
-        return this.rooms.get(coordinates.getX()).get(coordinates.getY());
+        return this.rooms.get(coordinates.getY()).get(coordinates.getX());
     }
 
     public int getLevelNumber() {
@@ -66,6 +66,7 @@ public class Level {
         int roomsColCount = this.getRoomsColCount();
         
         return coordinates.getY() >= 0 && coordinates.getY() < roomsRowCount &&
-               coordinates.getX() >= 0 && coordinates.getX() < roomsColCount;
+               coordinates.getX() >= 0 && coordinates.getX() < roomsColCount &&
+               this.rooms.get(coordinates.getY()).get(coordinates.getX()) != null;
     }
 }

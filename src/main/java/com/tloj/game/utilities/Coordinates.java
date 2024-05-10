@@ -44,4 +44,9 @@ public class Coordinates {
                 return this;
         }
     }
+
+    @Override
+    public String toString() {
+        return "(" + this.x + ", " + this.y + ")";
+    }
 }

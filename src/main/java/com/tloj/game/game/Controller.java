@@ -657,6 +657,8 @@ class ChooseCharacterGameCommand extends GameCommand {
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
         this.controller.setPlayer(factory.create());
         this.controller.setState(GameState.MOVING);
+
+        System.out.println(this.controller.getPlayer());
     }
 }
 
@@ -843,26 +845,11 @@ public class Controller {
      * Implement loading pre-defined configurations from JSON file (and maybe random map generation?)
      */
     public void newGame() {
-        ArrayList<ArrayList<ArrayList<Room>>> map = new ArrayList<ArrayList<ArrayList<Room>>>();
-
-        for (int l = 0; l < Game.DEFAULT_LEVELS_COUNT; l++) {
-            ArrayList<ArrayList<Room>> level = new ArrayList<ArrayList<Room>>();
-
-            for (int i = 0; i < Game.DEFAULT_ROOMS_ROWS; i++) {
-                ArrayList<Room> row = new ArrayList<Room>();
-
-                for (int j = 0; j < Game.DEFAULT_ROOMS_COLS; j++) {
-                    row.add(new HostileRoom(new Coordinates(j, i)));
-                }
-
-                level.add(row);    
-            }
-
-            map.add(level);
-        }
+        ArrayList<Level> map = GameData.deserializeMapFromFile("map.json");
+        Game game = new Game(map);
 
         this.setState(GameState.CHOOSING_CHARACTER);
-        this.setGame(new Game(map));
+        this.setGame(game);
     }
 
     /**
@@ -882,7 +869,6 @@ public class Controller {
      * @return the command object to be executed
      */
     private GameCommand getCommand(String[] commands) {
-
         Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
             Map.ofEntries(
                 Map.entry("new", () -> new NewGameCommand(this.game, commands)),
@@ -893,7 +879,7 @@ public class Controller {
                 Map.entry("gw", () -> new MoveWestCommand(this.game, commands)),
                 Map.entry("ge", () -> new MoveEastCommand(this.game, commands)),
                 Map.entry("help", () -> new HelpCommand()),
-                Map.entry("attack", () -> new AttackCommand(this.game, commands)),
+                Map.entry("atk", () -> new AttackCommand(this.game, commands)),
                 Map.entry("skill", () -> new SkillCommand(this.game, commands)),
                 Map.entry("inventory", () -> new InventoryCommand(this.game, commands)),
                 Map.entry("use", () -> new UseItemCommand(this.game, commands)),

@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -127,8 +128,21 @@ public class GameData {
     }
 
     public static ArrayList<Level> deserializeMapFromFile(String filename) {
-        GameData gameData = GameData.loadFromFile("test.json");
-        if (gameData != null) return gameData.levels;
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            return mapper.readValue(new File(filename), new TypeReference<ArrayList<Level>>(){});
+        } catch (JsonGenerationException e) {
+            System.out.println("Error generating JSON from GameData");
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            System.out.println("Error mapping JSON from GameData");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error opening file " + filename + " for reading");
+            e.printStackTrace();
+        }
+
         return null;
     }
 

@@ -14,6 +14,11 @@ import com.tloj.game.game.PlayerRoomVisitor;
  */
 
 public class StartRoom extends Room {
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public StartRoom() {}
+
     public StartRoom(Coordinates coordinates) {
         super(coordinates);
     }

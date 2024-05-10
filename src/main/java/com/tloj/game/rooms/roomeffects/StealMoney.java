@@ -13,6 +13,11 @@ import com.tloj.game.entities.Character;
 public class StealMoney implements RoomEffect {
     public static final int COST = 10;
 
+    /**
+     * Default constructor to allow Jackson to deserialize JSON.
+     */
+    public StealMoney() {}
+
     @Override
     public void applyEffect(Character character) {
         character.pay(COST);
