@@ -33,6 +33,12 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 ---
 ### How to Download and Install
 ---
+### How to Play
+***Fullscreen recommended to have a better experience***<br>
+The game saves automatically after clearing every room, exiting the game using [exit] command also saves the game.<br>
+A detailed list of commands can be found ...
+
+---
 ### System Documentation
 
 ---
