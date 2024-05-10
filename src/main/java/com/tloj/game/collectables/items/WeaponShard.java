@@ -2,7 +2,6 @@ package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.PurchasableItem;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the Consumable Item Weapon Shard in the game.<br>

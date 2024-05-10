@@ -1,5 +1,6 @@
 package com.tloj.game.game;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -977,10 +978,23 @@ public class Controller {
         };
     }
 
+    public void setConsoleEncoding() {
+        try {
+            if (System.getProperty("os.name").startsWith("Windows"))
+                new ProcessBuilder("cmd", "/c", "chcp", "65001").start();
+            else
+                new ProcessBuilder("bash", "-c", "export LANG=en_US.UTF-8").start();
+        } catch (IOException e) {
+            System.out.println("Error setting UTF-8 encoding to support special characters");
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Main game loop
      */
     public void run() {
+        this.setConsoleEncoding();
         System.out.println(Constants.GAME_TITLE);
         Character player;
 

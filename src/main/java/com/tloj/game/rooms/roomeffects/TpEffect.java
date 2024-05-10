@@ -21,12 +21,7 @@ public class TpEffect extends RoomEffect {
     private PlayerRoomVisitor visitor;
     private Room newRoom;
 
-    /*
-     * Default constructor for Jackson JSON deserialization
-     */
-    public TpEffect() {}
-
-    public TpEffect(Runnable sideEffect) {
+    public TpEffect() {
         this.sideEffect = new Runnable() {
             @Override
             public void run() {
@@ -50,6 +45,7 @@ public class TpEffect extends RoomEffect {
             Coordinates newCoords = new Coordinates(row, col);
             this.newRoom = character.getCurrentLevel().getRoom(newCoords);
 
+            if (newCoords == character.getPosition()) continue;
             if (!level.areCoordinatesValid(newCoords)) continue;
             if (this.newRoom.getType() == RoomType.BOSS_ROOM) continue;
             if (this.newRoom.getType() == RoomType.LOOT_ROOM && ((LootRoom) this.newRoom).isLocked()) continue;
