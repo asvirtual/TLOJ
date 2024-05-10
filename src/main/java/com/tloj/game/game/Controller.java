@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.function.Supplier;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -366,8 +367,7 @@ class PreviousStateCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        GameState newState = this.controller.getState().previousState(); 
-        this.controller.setState(newState);
+        this.controller.goBackState();
     }
 }
 
@@ -787,12 +787,13 @@ public class Controller {
     private static Controller instance;
     private Game game;
     private Character player;
-    private GameState state;
     private static Scanner scanner;
+    private Stack<GameState> history;
 
     private Controller() {
         Controller.scanner = new Scanner(System.in);
-        this.state = GameState.MAIN_MENU;
+        this.history = new Stack<GameState>();
+        this.history.push(GameState.MAIN_MENU);
     }
 
     public static boolean awaitConfirmation() {
@@ -812,11 +813,15 @@ public class Controller {
     }
 
     public GameState getState() {
-        return this.state;
+        return this.history.peek();
     }
 
     public void setState(GameState state) {
-        this.state = state;
+        this.history.push(state);
+    }
+
+    public void goBackState() {
+        this.history.pop();
     }
 
     public Character getPlayer() {
@@ -868,7 +873,7 @@ public class Controller {
     public void loadGame() {
         GameData gameData = GameData.deserializeJSON("{}");
         this.setGame(gameData.getGame());
-        this.state = GameState.MOVING;
+        this.setState(GameState.MOVING);
     }
 
     /**
@@ -958,7 +963,7 @@ public class Controller {
 
     @JsonIgnore
     public String getAvailableCommands() {
-        return switch (this.state) {
+        return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
             case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Cheater] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [inv]";
@@ -979,7 +984,7 @@ public class Controller {
     public void run() {
         System.out.println(Constants.GAME_TITLE);
 
-        while (this.state != GameState.EXIT) {
+        while (this.getState() != GameState.EXIT) {
             System.out.print("What to do? " + this.getAvailableCommands() + " (write \"help\" for the complete list of commands) ");
             String input = Controller.scanner.nextLine();
             this.handleUserInput(input);

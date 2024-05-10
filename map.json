@@ -1,79 +1,139 @@
-"levels": [
-    {
-      "levelNumber": 1,
-      "rooms": [
-        [
-          {
-            "@class": "com.tloj.game.rooms.BossRoom",
-            "coordinates": { "x": 0, "y": 0 },
-            "visited": false,
-            "cleared": false,
-            "locked": false,
-            "friendlyEntities": [],
-            "mobs": [
-              {
-                "@class": "com.tloj.game.entities.bosses.EvenBoss",
-                "position": { "x": 0, "y": 0 },
-              }
-            ]
-          },
-          {
-            "@class": "com.tloj.game.rooms.LootRoom",
-            "coordinates": { "x": 1, "y": 0 },
-            "visited": false,
-            "cleared": false,
-            "locked": false,
-            "friendlyEntities": [],
-            "item": {
-              "@class": "com.tloj.game.collectables.items.WeaponShard",
-              "weight": 0.5,
-              "dropMoney": 7,
-              "id": 10,
-              "dropChance": 0.6,
-              "price": 15
-            }
-          }
-        ],
-        [
-          {
-            "@class": "com.tloj.game.rooms.LootRoom",
-            "coordinates": { "x": 0, "y": 1 },
-            "visited": false,
-            "cleared": false,
-            "locked": false,
-            "friendlyEntities": [],
-            "item": {
-              "@class": "com.tloj.game.collectables.items.WeaponShard",
-              "weight": 0.5,
-              "dropMoney": 7,
-              "id": 10,
-              "dropChance": 0.6,
-              "price": 15
-            }
-          },
-          {
-            "@class": "com.tloj.game.rooms.HealingRoom",
-            "coordinates": { "x": 1, "y": 1 },
-            "visited": false,
-            "cleared": false,
-            "locked": false,
-            "friendlyEntities": [
-              {
-                "@class": "com.tloj.game.entities.npcs.Smith",
-                "position": { "x": 1, "y": 1 },
-                "player": null,
-                "name": "SMITH"
-              },
-              {
-                "@class": "com.tloj.game.entities.npcs.Merchant",
-                "position": { "x": 1, "y": 1 },
-                "player": null,
-                "name": "MERCHANT"
-              }
-            ]
-          }
-        ]
-      ],
-      "startRoom": null
-    }
-  ]
+{
+    "levels": [
+        {
+            "levelNumber": 1,
+            "rooms": [
+                {
+                    "@class": "com.tloj.game.rooms.BossRoom",
+                    "coordinates": { "x": 0, "y": 0 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                    {
+                        "@class": "com.tloj.game.entities.bosses.EvenBoss",
+                        "position": { "x": 0, "y": 0 }
+                    }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 0, "y": 2 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                    {
+                        "@class": "com.tloj.game.entities.mobs.JunkSlime",
+                        "position": { "x": 0, "y": 2 }
+                    }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.LootRoom",
+                    "coordinates": { "x": 1, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                },
+                {
+                    "@class": "com.tloj.game.rooms.LootRoom",
+                    "coordinates": { "x": 1, "y": 0 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                },
+                {
+                    "@class": "com.tloj.game.rooms.TrapRoom",
+                    "coordinates": { "x": 1, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "effect": {
+                        "@class": "com.tloj.game.rooms.roomeffects.InflictDamage"
+                    }
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 0 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                    {
+                        "@class": "com.tloj.game.entities.mobs.CyberGoblin",
+                        "position": { "x": 2, "y": 0 }
+                    }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.TrapRoom",
+                    "coordinates": { "x": 2, "y": 1 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "effect": {
+                        "@class": "com.tloj.game.rooms.roomeffects.StealMoney"
+                    }
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 2 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                    {
+                        "@class": "com.tloj.game.entities.mobs.JetBat",
+                        "position": { "x": 2, "y": 2 }
+                    }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                    {
+                        "@class": "com.tloj.game.entities.mobs.CyberGoblin",
+                        "position": { "x": 2, "y": 3 }
+                    }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.StartRoom",
+                    "coordinates": { "x": 2, "y": 4 }
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 5 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                    {
+                        "@class": "com.tloj.game.entities.mobs.JunkSlime",
+                        "position": { "x": 2, "y": 5 }
+                    }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                    {
+                        "@class": "com.tloj.game.entities.mobs.CyberGoblin",
+                        "position": { "x": 2, "y": 3 }
+                    }
+                    ]
+                }
+            ],
+            "startRoom": null
+        }
+    ]
+}

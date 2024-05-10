@@ -10,7 +10,7 @@ import com.tloj.game.entities.Character;
  * @see TpEffect
  */
 
-public class StealMoney implements RoomEffect{
+public class StealMoney implements RoomEffect {
     public static final int COST = 10;
 
     @Override
