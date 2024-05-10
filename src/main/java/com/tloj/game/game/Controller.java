@@ -728,7 +728,7 @@ class BasePlayerFactory extends CharacterFactory {
 }
 
 /**
- * Concrete factory class to create a {} character
+ * Concrete factory class to create a {@link Hacker} character
 */
 class HackerFactory extends CharacterFactory {
     public HackerFactory(Coordinates spawnCoordinates) {
@@ -742,7 +742,7 @@ class HackerFactory extends CharacterFactory {
 }
 
 /**
- * Concrete factory class to create a Data Thief character
+ * Concrete factory class to create a {@link DataThief} character
 */
 class DataThiefFactory extends CharacterFactory {
     public DataThiefFactory(Coordinates spawnCoordinates) {
@@ -756,7 +756,7 @@ class DataThiefFactory extends CharacterFactory {
 }
 
 /**
- * Concrete factory class to create a Mecha Knight character
+ * Concrete factory class to create a {@link MechaKnight} character
 */
 class MechaKnightFactory extends CharacterFactory {
     public MechaKnightFactory(Coordinates spawnCoordinates) {
@@ -770,7 +770,7 @@ class MechaKnightFactory extends CharacterFactory {
 }
 
 /**
- * Concrete factory class to create a Neo Samurai character
+ * Concrete factory class to create a {@link NeoSamurai} character
  */
 class NeoSamuraiFactory extends CharacterFactory {
     public NeoSamuraiFactory(Coordinates spawnCoordinates) {

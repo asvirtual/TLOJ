@@ -20,6 +20,11 @@ import java.util.List;
 import java.util.Random;
 
 
+/**
+ * Main class of the game<br>
+ * Contains the main method to run the game
+ */
+
 public class Main {
     public static void main(String[] args) {
         if (args.length > 0 && args[0].equals("test")) {

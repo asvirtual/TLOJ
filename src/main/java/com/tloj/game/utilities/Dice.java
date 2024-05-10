@@ -6,6 +6,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
+/**
+ * Represents a dice in the game<br>
+ * A dice is a random number generator with a minimum and maximum value<br>
+ * The dice can be rolled to get a random number between the minimum and maximum values<br>
+ */
+
 public class Dice {
     private int min;
     private int max;
