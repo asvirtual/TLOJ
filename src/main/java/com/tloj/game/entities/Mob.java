@@ -13,11 +13,15 @@ import com.tloj.game.game.MobAttack;
   use = JsonTypeInfo.Id.CLASS, 
   include = JsonTypeInfo.As.PROPERTY, 
   property = "@class")
+
   
 /**
  * Represents a mob in the game. <br>
  * Mobs are entities that can be attacked and defeated by the player. <br>
+ * @see CombatEntity
+ * @see Attack
  */
+
 public abstract class Mob extends CombatEntity {
     /** Mobs have a 10% chance to drop an item */
     public static final int DROP_CHANCE = 10;

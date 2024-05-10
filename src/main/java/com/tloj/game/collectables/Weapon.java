@@ -24,7 +24,7 @@ import com.tloj.game.entities.Character;
 /**
  * An abstract class that represents a weapon that can be used to attack enemies<br>
  * Different weapons have different effects that are applied to the target when they are hit<br>
- * They are also equipped with a dice that is rolled to determine the damage dealt to the target if no effects are to be applied<br>
+ * They are also equipped with a {@link Dice} that is rolled to determine the damage dealt to the target if no effects are to be applied<br>
  * @param lvl is the weapon's level that is increased via {@link WeaponShard} and {@link Smith}<br>
  * level up means adding the level to the dice roll<br>
  * @see WeaponEffect

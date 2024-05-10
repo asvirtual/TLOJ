@@ -12,6 +12,16 @@ import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.utilities.Coordinates;
 
 
+/**
+ * Represents a level in the game. <br>
+ * A level is a grid of rooms that the player can navigate through. <br>
+ * The level has a start room and many other different types . <br>
+ * <br>
+ * @see Room
+ * @see StartRoom
+ * @see RoomType
+ */
+
 public class Level {
     private int levelNumber;
     @JsonProperty

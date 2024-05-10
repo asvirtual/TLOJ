@@ -10,7 +10,14 @@ import com.tloj.game.utilities.Coordinates;
   use = JsonTypeInfo.Id.CLASS, 
   include = JsonTypeInfo.As.PROPERTY, 
   property = "@class")
-  
+
+
+/**
+ *An abstract class representing a friendly entity in the game.<br>
+*@see Merchant
+*@see Smith
+*/  
+
 public abstract class FriendlyEntity extends Entity {
     @JsonProperty
     protected Character player;

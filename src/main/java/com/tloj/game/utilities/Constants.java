@@ -1,6 +1,10 @@
 
 package com.tloj.game.utilities;
 
+/**
+ *This class contains all the constants used in the game.<br> 
+ */
+
 public class Constants {
     public static final String GAME_TITLE = 
     """

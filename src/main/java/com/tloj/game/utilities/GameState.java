@@ -1,6 +1,12 @@
 package com.tloj.game.utilities;
 
 
+/**
+ * Represents the different states of the game<br>
+ * The game can be in one of these states at any given time<br>
+ * The state of the game determines what the player can do and what the game will do next<br>
+ */
+
 public enum GameState {
     MAIN_MENU,
     CHOOSING_CHARACTER,
