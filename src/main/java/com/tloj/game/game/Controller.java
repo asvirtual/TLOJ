@@ -359,12 +359,15 @@ class QuitCommand extends GameCommand {
 class PreviousStateCommand extends GameCommand {
     public PreviousStateCommand(Game game, String[] commands) {
         super(game, null);
+        this.validListStates = List.of(GameState.CHOOSING_CHARACTER,GameState.INV_MANAGEMENT,
+         GameState.MERCHANT_SHOPPING, GameState.SMITH_FORGING);
     }
 
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        this.controller.getState().previousState();
+        GameState newState = this.controller.getState().previousState(); 
+        this.controller.setState(newState);
     }
 }
 
@@ -640,14 +643,14 @@ class ChooseCharacterGameCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
 
-        switch(this.commands[0]) {
+        System.out.println("\n" + switch(this.commands[0]) {
             case "1" -> BasePlayer.getDetailedInfo();
             case "2"-> Hacker.getDetailedInfo();
             case "3" -> DataThief.getDetailedInfo();
             case "4" -> MechaKnight.getDetailedInfo();
             case "5" -> NeoSamurai.getDetailedInfo();
-            default -> System.out.println("Invalid character choice. Please choose a valid character.");
-        }
+            default -> "Invalid character choice. Please choose a valid character.";
+        });
 
         if (!Controller.awaitConfirmation()) return;
 
@@ -959,11 +962,11 @@ public class Controller {
             case MAIN_MENU -> "[new] - [load] - [exit]";
             case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Cheater] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [inv]";
-            case LOOTING_ROOM -> "[inv] - [use] - [drop] - " + this.game.getAvailableDirections();
+            case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();
             case INV_MANAGEMENT -> "[use] - [drop] - [swap] - [back]";
-            case MERCHANT_SHOPPING -> "[buy] - [back]";
-            case SMITH_FORGING -> "[give] -[back]";
+            case MERCHANT_SHOPPING -> "[buy *number*] - [back]";
+            case SMITH_FORGING -> "[give smith weaponshard] -[back]";
             case BOSS_DEFEATED -> "[inv, move to any direction to change floor]";
             case HEALING_ROOM -> "[merchant] - [smith] - [inv] - [use] - [drop]";
             default -> "";

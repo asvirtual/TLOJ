@@ -20,7 +20,7 @@ import com.tloj.game.utilities.GameState;
 
 /**
  * Represents a merchant NPC in the game. <br>
- * Merchants can sell items to the player and have a fixed inventory that replenish after every floor <br>
+ * Merchants can sell {@link PurchasableItem} to the player and have a fixed inventory that replenish after every floor <br>
  * Merchants can be interacted with by the player to access their shop <br>
  * @see Smith
  */

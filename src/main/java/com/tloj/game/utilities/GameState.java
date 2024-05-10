@@ -8,13 +8,13 @@ public enum GameState {
     INV_MANAGEMENT (4),
     MERCHANT_SHOPPING (6),
     SMITH_FORGING (6),
-    FIGHTING_MOB (5),
-    FIGHTING_BOSS (5),
-    LOOTING_ROOM (5),
+    FIGHTING_MOB (0),
+    FIGHTING_BOSS (0),
+    LOOTING_ROOM (0),
     HEALING_ROOM (5),
-    BOSS_DEFEATED (7),
-    EXIT(8),
-    GAME_OVER(9);
+    BOSS_DEFEATED (0),
+    EXIT(0),
+    GAME_OVER(0);
 
     private int value;
 

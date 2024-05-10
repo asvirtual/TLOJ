@@ -325,10 +325,11 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public void lootMob(Mob mob) {
         System.out.println("You gain " + mob.xpDrop + " experience points and " + mob.moneyDrop + " money");
-        this.xp += mob.xpDrop;
+        this.addXp(mob.xpDrop);
         this.money += mob.moneyDrop;
 
-        this.addInventoryItem(mob.getDrop());
+        Item drop = mob.getDrop();
+        if(this.addInventoryItem(drop)) System.out.println("You found a " + drop);
     }
 
     public void useItem(ConsumableItem item) {
