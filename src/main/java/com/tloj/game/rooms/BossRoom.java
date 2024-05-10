@@ -3,6 +3,8 @@ package com.tloj.game.rooms;
 import java.util.ArrayList;
 
 import com.tloj.game.utilities.Coordinates;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Mob;
@@ -19,18 +21,19 @@ import com.tloj.game.game.PlayerRoomVisitor;
  * @see HostileRoom
  * @see StartRoom
  */
-
 public class BossRoom extends HostileRoom {
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public BossRoom() {}
-
-    public BossRoom(Coordinates coordinates, ArrayList<Mob> bosses) {
+    @JsonCreator
+    public BossRoom(
+        @JsonProperty("coordinates") Coordinates coordinates, 
+        @JsonProperty("bosses") ArrayList<Mob> bosses
+    ) {
         super(coordinates, bosses);
     }
 
-    public BossRoom(Coordinates coordinates, Boss boss) {
+    public BossRoom(
+        Coordinates coordinates, 
+        Boss boss
+    ) {
         super(coordinates, boss);
     }
 
@@ -56,6 +59,7 @@ public class BossRoom extends HostileRoom {
 
     @Override
     public String toString() {
-        return this.visited ? "\u00DF" : "\u00A0";
+        // return this.visited ? "\u00DF" : "\u00A0";
+        return this.visited ? "B" : " ";
     }
 }

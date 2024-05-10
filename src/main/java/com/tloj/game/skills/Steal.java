@@ -3,6 +3,8 @@ package com.tloj.game.skills;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.DataThief;
 import com.tloj.game.game.PlayerAttack;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.utilities.Dice;
 
@@ -18,7 +20,8 @@ import com.tloj.game.utilities.Dice;
  */
 
 public class Steal extends CharacterSkill {
-    public Steal(Character character) {
+    @JsonCreator
+    public Steal(@JsonProperty("character") Character character) {
         super(character);
     }
 

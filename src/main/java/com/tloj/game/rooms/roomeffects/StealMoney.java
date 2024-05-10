@@ -13,13 +13,14 @@ import com.tloj.game.entities.Character;
 public class StealMoney implements RoomEffect {
     public static final int COST = 10;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
+    /*
+     * Default constructor for Jackson JSON deserialization
      */
     public StealMoney() {}
 
     @Override
     public void applyEffect(Character character) {
+        System.out.println("You have been scammed by a Crypto Guru and you lost " + COST + " BTC!");
         character.pay(COST);
     }
 }

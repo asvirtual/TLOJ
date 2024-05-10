@@ -1,5 +1,7 @@
 package com.tloj.game.entities.mobs;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
 
@@ -21,12 +23,11 @@ public class JetBat extends Mob {
     private static final int XP_DROP = 2;
     private static final int MONEY_DROP = 1;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public JetBat() {}
-
-    public JetBat(Coordinates position, int lvl) {
+    @JsonCreator
+    public JetBat(
+        @JsonProperty("position") Coordinates position,
+        @JsonProperty("lvl") int lvl
+    ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
     }
 }

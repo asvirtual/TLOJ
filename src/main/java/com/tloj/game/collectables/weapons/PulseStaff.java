@@ -7,6 +7,8 @@ import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.effects.ManaAttackBooster;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -25,6 +27,7 @@ public class PulseStaff extends Weapon {
     private static final int DICE_FACES = 5;    //5 standard value if no mana then -->
     private static final int ID = 16;
 
+    @JsonCreator
     public PulseStaff() {
         super(WEIGHT, DICE_FACES, ID);
         this.effect = new ManaAttackBooster(this); 

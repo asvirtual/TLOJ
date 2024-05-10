@@ -17,11 +17,6 @@ public abstract class FriendlyEntity extends Entity {
     @JsonProperty
     protected String name;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    protected FriendlyEntity() {}
-
     protected FriendlyEntity(Coordinates position) {
         super(position);
     }

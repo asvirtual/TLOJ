@@ -12,8 +12,12 @@ import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.utilities.Coordinates;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class Main {
@@ -29,6 +33,21 @@ public class Main {
     }
 
     public static void testRead() {
+        Random random = new Random(1);
+
+        try {
+            FileWriter writer = new FileWriter("randomNumbers.txt");
+
+            for (int i = 0; i < 1000; i++) {
+                writer.write(random.nextInt() + "\n");
+            }
+
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         System.out.println(GameData.deserializeMapFromFile("test.json"));
         System.out.println(GameData.loadFromFile("test.json"));
     }
@@ -61,7 +80,7 @@ public class Main {
         GameData gameData = new GameData(
             Long.parseLong("1234567890"), 
             level,
-            new NeoSamurai(new Coordinates(0, 0), 0),
+            new NeoSamurai(new Coordinates(0, 0)),
             levels
         );
 

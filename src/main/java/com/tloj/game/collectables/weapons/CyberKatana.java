@@ -6,6 +6,8 @@ import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -24,6 +26,7 @@ public class CyberKatana extends Weapon {
     private static final int DICE_FACES = 10;
     private static final int ID = 13;
 
+    @JsonCreator
     public CyberKatana() {
         super(WEIGHT, DICE_FACES, ID); 
     }

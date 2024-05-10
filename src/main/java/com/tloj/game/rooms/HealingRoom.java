@@ -5,7 +5,10 @@ import com.tloj.game.utilities.Coordinates;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.FriendlyEntity;
+import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.game.PlayerRoomVisitor;
@@ -22,13 +25,10 @@ import com.tloj.game.game.PlayerRoomVisitor;
  * @see StartRoom
  */
 public class HealingRoom extends Room {
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public HealingRoom() {}
-
-    public HealingRoom(Coordinates coordinates) {
+    @JsonCreator
+    public HealingRoom(
+        @JsonProperty("coordinates") Coordinates coordinates
+    ) {
         super(coordinates);
         this.friendlyEntities.add(new Smith(this.coordinates));
         this.friendlyEntities.add(new Merchant(this.coordinates));
@@ -46,6 +46,7 @@ public class HealingRoom extends Room {
 
     @Override
     public String toString() {
-        return this.visited ? "\u256C" : "\u00A0";
+        // return this.visited ? "\u256C" : "\u00A0";
+        return this.visited ? "H" : "*";
     }
 }

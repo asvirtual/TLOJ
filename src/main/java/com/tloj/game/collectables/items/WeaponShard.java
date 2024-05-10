@@ -1,6 +1,8 @@
 package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.PurchasableItem;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the Consumable Item Weapon Shard in the game.<br>
@@ -24,6 +26,7 @@ public class WeaponShard extends PurchasableItem {
     private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 10;
 
+    @JsonCreator
     public WeaponShard() {
         super(PRICE, WEIGHT, DROP_MONEY, ID); 
     }

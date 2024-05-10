@@ -18,17 +18,15 @@ public abstract class CombatEntity extends Entity {
     protected int currentFightAtk;
     protected int currentFightDef;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public CombatEntity() {}
-
     protected CombatEntity(int hp, int atk, int def, Coordinates position) {
         super(position);
         this.hp = hp;
         this.maxHp = hp;
         this.atk = atk;
         this.def = def;
+
+        this.currentFightAtk = atk;
+        this.currentFightDef = def;
     }
 
     public int getAtk() {
@@ -37,6 +35,10 @@ public abstract class CombatEntity extends Entity {
 
     public int getDef() {
         return this.def;
+    }
+
+    public int getHP() {
+        return this.hp;
     }
 
     public int getCurrentFightAtk() {

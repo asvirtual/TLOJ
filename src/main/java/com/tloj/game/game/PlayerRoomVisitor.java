@@ -38,8 +38,7 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(BossRoom room) {
         room.visit();
 
-        System.out.println("You've encountered the boss!");
-
+        System.out.println("You've encountered" + room.getBoss());
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
@@ -54,8 +53,9 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(HostileRoom room) {
         room.visit();
 
-        System.out.println("You've encountered an enemy!");
+        if (room.isCleared()) return;
 
+        System.out.println("You've encountered an enemy!");
         this.controller.setState(GameState.FIGHTING_MOB);
     }
 
@@ -81,10 +81,8 @@ public class PlayerRoomVisitor implements Visitor {
         room.visit();
         Dice dice = new Dice(6);
         int roll = dice.roll();
-        if (roll < 3) {
-            System.out.println("You've been hit by a trap!");
-            room.triggerTrap(this.player);
-        }
+        if (roll < 3) room.triggerTrap(this.player);
+        else System.out.println("You've dodged the trap! Thanks Windows Defender!");
       
         room.clear();
     }

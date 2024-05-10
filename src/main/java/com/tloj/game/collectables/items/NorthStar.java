@@ -1,6 +1,8 @@
 package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.Item;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the Consumable Item NorthStar in the game.<br>
@@ -23,6 +25,7 @@ public class NorthStar extends Item {
     private static final int DROP_MONEY = 50;
     private static final int ID = 9;
 
+    @JsonCreator
     public NorthStar() {
         super(WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }

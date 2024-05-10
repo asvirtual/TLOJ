@@ -1,9 +1,15 @@
 package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
+
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 /**
@@ -20,11 +26,6 @@ import com.tloj.game.game.PlayerRoomVisitor;
 public class LootRoom extends Room {
     private Item item;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public LootRoom() {}
-
     public LootRoom(Coordinates coordinates) {
         super(coordinates);
         this.item = Item.getRandomItem();
@@ -37,9 +38,14 @@ public class LootRoom extends Room {
         this.locked = locked;
     }
 
-    public LootRoom(Coordinates coordinates, boolean locked, Item item) {
+    @JsonCreator
+    public LootRoom(
+        @JsonProperty("coordinates") Coordinates coordinates, 
+        @JsonProperty("locked") boolean locked,
+        @JsonProperty("item") Item item
+    ) {
         super(coordinates);
-        this.item = item;
+        this.item = item == null ? Item.getRandomItem() : item;
         this.locked = locked;
     }
 
@@ -64,6 +70,7 @@ public class LootRoom extends Room {
 
     @Override
     public String toString() {
-        return this.visited ? "\u255A" : "\u00A0";
+        // return this.visited ? "\u255A" : "\u00A0";
+        return this.visited ? "L" : "*";
     }
 }

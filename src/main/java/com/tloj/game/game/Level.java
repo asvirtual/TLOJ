@@ -3,6 +3,7 @@ package com.tloj.game.game;
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.rooms.Room;
@@ -17,7 +18,11 @@ public class Level {
     private ArrayList<ArrayList<Room>> rooms;
     private StartRoom startRoom;
 
-    public Level(int levelNumber, ArrayList<ArrayList<Room>> rooms) {
+    @JsonCreator
+    public Level(
+        @JsonProperty("levelNumber") int levelNumber, 
+        @JsonProperty("rooms") ArrayList<ArrayList<Room>> rooms
+    ) {
         this.levelNumber = levelNumber;
         this.rooms = rooms;
         rooms.forEach(row -> { 
@@ -27,11 +32,6 @@ public class Level {
             });
         });
     }
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public Level() {}
 
     public StartRoom getStartRoom() {
         return this.startRoom;

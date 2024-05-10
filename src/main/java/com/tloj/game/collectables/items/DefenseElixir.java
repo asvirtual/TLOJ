@@ -3,6 +3,8 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -28,6 +30,7 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
     private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 6;
 
+    @JsonCreator
     public DefenseElixir() {
         super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }

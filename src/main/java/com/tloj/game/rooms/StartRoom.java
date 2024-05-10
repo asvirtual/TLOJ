@@ -1,6 +1,12 @@
 package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
+
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 /**
@@ -14,13 +20,12 @@ import com.tloj.game.game.PlayerRoomVisitor;
  */
 
 public class StartRoom extends Room {
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public StartRoom() {}
-
-    public StartRoom(Coordinates coordinates) {
+    @JsonCreator
+    public StartRoom(
+        @JsonProperty("coordinates") Coordinates coordinates
+    ) {
         super(coordinates);
+        this.visited = true; // StartRoom is always visited, since we start here
     }
 
     @Override
@@ -35,6 +40,7 @@ public class StartRoom extends Room {
 
     @Override
     public String toString() {
-        return this.visited ? "\u2229" : "\u00A0";
+        // return this.visited ? Character.toString(0x2229) : Character.toString(0x00A0);
+        return this.visited ? "S" : "*";
     }
 }

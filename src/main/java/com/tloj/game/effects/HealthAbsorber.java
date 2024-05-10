@@ -3,6 +3,8 @@ package com.tloj.game.effects;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.game.PlayerAttack;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -12,6 +14,7 @@ import com.tloj.game.game.PlayerAttack;
  * @see NaniteLeechBlade
  */
 public class HealthAbsorber extends WeaponEffect {
+    @JsonCreator
     public HealthAbsorber(Weapon weapon) {
         super(weapon);
     }

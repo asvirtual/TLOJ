@@ -18,8 +18,6 @@ import com.tloj.game.entities.Character;
  * @see StealMoney
  * @see TpEffect
  */
-
-
 public interface RoomEffect {
     public void applyEffect(Character character);
 }

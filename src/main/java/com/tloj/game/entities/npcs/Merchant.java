@@ -2,6 +2,8 @@ package com.tloj.game.entities.npcs;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.DefenseElixir;
 import com.tloj.game.collectables.items.AttackElixir;
@@ -27,11 +29,6 @@ import com.tloj.game.utilities.GameState;
 
 public class Merchant extends FriendlyEntity {
     public static final String NAME = "MERCHANT";
-    
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public Merchant() {}
 
     private static Map<Integer, PurchasableItem> items = Map.ofEntries(
         Map.entry(1, new HealthPotion()),
@@ -43,7 +40,8 @@ public class Merchant extends FriendlyEntity {
         Map.entry(7, new Lockpick())
     );
 
-    public Merchant(Coordinates position) {
+    @JsonCreator
+    public Merchant(@JsonProperty("position") Coordinates position) {
         super(position, NAME);
     }
 

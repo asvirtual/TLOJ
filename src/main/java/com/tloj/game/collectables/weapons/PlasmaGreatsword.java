@@ -6,6 +6,8 @@ import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the PlasmaGreatsword Weapon in the game.<br>
@@ -23,6 +25,7 @@ public class PlasmaGreatsword extends Weapon {
     private static final int DICE_FACES = 15;
     private static final int ID = 15;
 
+    @JsonCreator
     public PlasmaGreatsword() {
         super(WEIGHT, DICE_FACES, ID); 
     }

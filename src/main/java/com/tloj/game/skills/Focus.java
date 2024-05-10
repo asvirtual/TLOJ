@@ -1,6 +1,8 @@
 package com.tloj.game.skills;
 
 import com.tloj.game.entities.characters.BasePlayer;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
 
@@ -15,8 +17,9 @@ import com.tloj.game.game.PlayerAttack;
  * @see Steal
  */
 
-public class Focus extends CharacterSkill{
-    public Focus(Character character) {
+public class Focus extends CharacterSkill {
+    @JsonCreator
+    public Focus(@JsonProperty("character") Character character) {
         super(character);
     }
 

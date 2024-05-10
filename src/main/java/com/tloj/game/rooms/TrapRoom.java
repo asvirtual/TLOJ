@@ -4,8 +4,13 @@ import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
+
+import java.util.ArrayList;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.Mob;
 
 /**
  * Class that represents a trap room in the game<br>
@@ -22,12 +27,11 @@ public class TrapRoom extends Room {
     @JsonProperty
     private RoomEffect effect;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public TrapRoom() {}
-
-    public TrapRoom(Coordinates coordinates, RoomEffect effect) {
+    @JsonCreator
+    public TrapRoom(
+        @JsonProperty("coordinates") Coordinates coordinates, 
+        @JsonProperty("effect") RoomEffect effect
+    ) {
         super(coordinates);
         this.effect = effect;
     }
@@ -48,6 +52,7 @@ public class TrapRoom extends Room {
 
     @Override
     public String toString() {
-        return this.visited ? "\u2566" : "\u00A0";
+        // return this.visited ? "\u2566" : "\u00A0";
+        return this.visited ? "T" : "*";
     }
 }

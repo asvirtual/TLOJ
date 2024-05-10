@@ -79,10 +79,9 @@ public abstract class Attack {
     }
 
     public void perform() {
-        if (this.totalDamage >= 0) {
+        if (this.totalDamage >= 0) 
             this.target.takeDamage(this.totalDamage);
-            System.out.println("You inflicted " + this.totalDamage + " damage to " + this.target + "!");
-        }
+        
         if (this.onHit != null) this.onHit.run();
     };
 }

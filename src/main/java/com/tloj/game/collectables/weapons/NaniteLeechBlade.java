@@ -7,7 +7,8 @@ import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.HealthAbsorber;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the NaniteLeechBlade Weapon in the game.<br>
@@ -25,6 +26,7 @@ public class NaniteLeechBlade extends Weapon {
     private static final int DICE_FACES = 12;
     private static final int ID = 16;
 
+    @JsonCreator
     public NaniteLeechBlade() {
         super(WEIGHT, DICE_FACES, ID); 
         this.effect = new HealthAbsorber(this);

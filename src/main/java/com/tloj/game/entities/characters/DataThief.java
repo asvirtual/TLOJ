@@ -2,6 +2,8 @@ package com.tloj.game.entities.characters;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
@@ -20,27 +22,23 @@ public class DataThief extends Character {
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 0;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public DataThief() {}
-
     /** 
      * Constructor to create a DataThief from loaded data  
      * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
     */
+    @JsonCreator
     public DataThief(
-        int hp,
-        int atk,
-        int def,
-        int mana,
-        int xp,
-        int lvl,
-        int maxWeight,
-        int money,
-        Weapon weapon,
-        ArrayList<Item> inventory,
-        Coordinates position
+        @JsonProperty("hp") int hp,
+        @JsonProperty("atk") int atk,
+        @JsonProperty("def") int def,
+        @JsonProperty("mana") int mana,
+        @JsonProperty("xp") int xp,
+        @JsonProperty("lvl") int lvl,
+        @JsonProperty("maxWeight") int maxWeight,
+        @JsonProperty("money") int money,
+        @JsonProperty("weapon") Weapon weapon,
+        @JsonProperty("inventory") ArrayList<Item> inventory,
+        @JsonProperty("position") Coordinates position
     ) {
         super(
             hp,
@@ -64,7 +62,9 @@ public class DataThief extends Character {
      * @param position The initial position of the DataThief
      * @param lvl The level of the DataThief
     */
-    public DataThief(Coordinates position, int lvl) {    
+    public DataThief(
+        Coordinates position
+    ) {    
         super(
             HP,
             ATTACK,

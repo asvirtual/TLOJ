@@ -9,7 +9,8 @@ import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.utilities.Coordinates;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Character;
@@ -33,7 +34,11 @@ public class Glitched extends Mob implements MovingEntity {
     private static final int MONEY_DROP = 2;
     private int turnsLeft = 5;
     
-    public Glitched(Coordinates position, int lvl) {
+    @JsonCreator
+    public Glitched(
+        @JsonProperty("position") Coordinates position,
+        @JsonProperty("lvl") int lvl
+    ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position, new SpecialKey());
     }
 

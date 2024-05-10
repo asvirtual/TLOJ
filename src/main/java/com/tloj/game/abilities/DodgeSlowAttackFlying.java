@@ -3,6 +3,8 @@ package com.tloj.game.abilities;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.bosses.FlyingBoss;
 import com.tloj.game.game.PlayerAttack;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -10,6 +12,7 @@ import com.tloj.game.game.PlayerAttack;
  * It is paired with the {@link FlyingBoss}.
  */
 public class DodgeSlowAttackFlying extends BossAbility {
+    @JsonCreator
     public DodgeSlowAttackFlying(Boss boss) {
         super(boss);
     }

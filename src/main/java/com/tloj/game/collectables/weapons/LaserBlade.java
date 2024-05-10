@@ -6,6 +6,9 @@ import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 /**
  * Represents the LaserBlade Weapon in the game.<br>
@@ -23,6 +26,7 @@ public class LaserBlade extends Weapon {
     private static final int DICE_FACES = 8;
     private static final int ID = 12;    
 
+    @JsonCreator
     public LaserBlade() {
         super(WEIGHT, DICE_FACES, ID); 
     }

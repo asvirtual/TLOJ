@@ -731,7 +731,7 @@ class HackerFactory extends CharacterFactory {
 
     @Override
     public Character createCharacter() {
-        return new BasePlayer(this.spawnCoordinates);
+        return new Hacker(this.spawnCoordinates);
     }
 }
 
@@ -745,7 +745,7 @@ class DataThiefFactory extends CharacterFactory {
 
     @Override
     public Character createCharacter() {
-        return new BasePlayer(this.spawnCoordinates);
+        return new DataThief(this.spawnCoordinates);
     }
 }
 
@@ -759,7 +759,7 @@ class MechaKnightFactory extends CharacterFactory {
 
     @Override
     public Character createCharacter() {
-        return new BasePlayer(this.spawnCoordinates);
+        return new MechaKnight(this.spawnCoordinates);
     }
 }
 
@@ -773,7 +773,7 @@ class NeoSamuraiFactory extends CharacterFactory {
 
     @Override
     public Character createCharacter() {
-        return new BasePlayer(this.spawnCoordinates);
+        return new NeoSamurai(this.spawnCoordinates);
     }
 }
 
@@ -845,8 +845,245 @@ public class Controller {
      * Implement loading pre-defined configurations from JSON file (and maybe random map generation?)
      */
     public void newGame() {
-        ArrayList<Level> map = GameData.deserializeMapFromFile("map.json");
+        ArrayList<Level> map = GameData.deserializeMap("""
+        [
+    {
+        "levelNumber": 1,
+        "rooms": [
+            [
+                {
+                    "@class": "com.tloj.game.rooms.BossRoom",
+                    "coordinates": { "x": 0, "y": 0 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.bosses.EvenBoss",
+                            "position": { "x": 0, "y": 0 }
+                        }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.LootRoom",
+                    "coordinates": { "x": 1, "y": 0 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 0 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.CyberGoblin",
+                            "position": { "x": 2, "y": 0 }
+                        }
+                    ]
+                },
+                null,
+                null,
+                null
+            ],
+            [
+                null,
+                null,
+                {
+                    "@class": "com.tloj.game.rooms.TrapRoom",
+                    "coordinates": { "x": 2, "y": 1 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "effect": {
+                        "@class": "com.tloj.game.rooms.roomeffects.StealMoney"
+                    }
+                },
+                null,
+                null,
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 5, "y": 1 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.MechaRat",
+                            "position": { "x": 5, "y": 1 }
+                        }
+                    ]
+                }
+            ],
+            [
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 0, "y": 2 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.JunkSlime",
+                            "position": { "x": 0, "y": 2 }
+                        }
+                    ]
+                },
+                null,
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 2 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.JetBat",
+                            "position": { "x": 2, "y": 2 }
+                        }
+                    ]
+                },
+                null,
+                null,
+                {
+                    "@class": "com.tloj.game.rooms.LootRoom",
+                    "coordinates": { "x": 5, "y": 2 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false
+                }
+            ],
+            [
+                {
+                    "@class": "com.tloj.game.rooms.LootRoom",
+                    "coordinates": { "x": 0, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false
+                },
+                {
+                    "@class": "com.tloj.game.rooms.TrapRoom",
+                    "coordinates": { "x": 1, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "effect": {
+                        "@class": "com.tloj.game.rooms.roomeffects.InflictDamage"
+                    }
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.CyberGoblin",
+                            "position": { "x": 2, "y": 3 }
+                        }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 3, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.MechaRat",
+                            "position": { "x": 3, "y": 3 }
+                        }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 4, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.CyberGoblin",
+                            "position": { "x": 4, "y": 3 }
+                        }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.TrapRoom",
+                    "coordinates": { "x": 5, "y": 3 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "effect": {
+                        "@class": "com.tloj.game.rooms.roomeffects.TpEffect"
+                    }
+                }
+            ],
+            [
+                null,
+                null,
+                {
+                    "@class": "com.tloj.game.rooms.StartRoom",
+                    "coordinates": { "x": 2, "y": 4 }
+                },
+                null,
+                null,
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 5, "y": 4 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.JunkSlime",
+                            "position": { "x": 5, "y": 4 }
+                        }
+                    ]
+                }
+            ],
+            [
+                null,
+                null,
+                {
+                    "@class": "com.tloj.game.rooms.HostileRoom",
+                    "coordinates": { "x": 2, "y": 5 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false,
+                    "mobs": [
+                        {
+                            "@class": "com.tloj.game.entities.mobs.JunkSlime",
+                            "position": { "x": 2, "y": 5 }
+                        }
+                    ]
+                },
+                {
+                    "@class": "com.tloj.game.rooms.LootRoom",
+                    "coordinates": { "x": 3, "y": 5 },
+                    "visited": false,
+                    "cleared": false,
+                    "locked": false
+                },
+                null,
+                null
+            ]
+        ],
+        "startRoom": {
+            "@class": "com.tloj.game.rooms.StartRoom",
+            "coordinates": { "x": 2, "y": 4 }
+        }
+    }
+]
+        """);
+        
+        // ArrayList<Level> map = GameData.deserializeMapFromFile("map.json");
         Game game = new Game(map);
+        game.setSeed(1);
 
         this.setState(GameState.CHOOSING_CHARACTER);
         this.setGame(game);
@@ -949,6 +1186,7 @@ public class Controller {
 
     @JsonIgnore
     public String getAvailableCommands() {
+
         return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
             case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Cheater] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
@@ -969,9 +1207,19 @@ public class Controller {
      */
     public void run() {
         System.out.println(Constants.GAME_TITLE);
+        Character player;
 
         while (this.getState() != GameState.EXIT) {
-            System.out.print("What to do? " + this.getAvailableCommands() + " (write \"help\" for the complete list of commands) ");
+            if (this.game != null) {
+                player = this.game.getPlayer();
+                if (player != null)
+                    System.out.print(
+                        "What to do? HP: " + player.getHp() + "/" + player.getMaxHp() + 
+                        " | Mana: " + player.getMana() + "/" + player.getMaxMana() + "\n" +
+                        this.getAvailableCommands() + " (write \"help\" for the complete list of commands): "
+                    );
+            }
+
             String input = Controller.scanner.nextLine();
             this.handleUserInput(input);
         }

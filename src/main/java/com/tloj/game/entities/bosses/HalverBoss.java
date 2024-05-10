@@ -1,6 +1,8 @@
 package com.tloj.game.entities.bosses;
 
 import com.tloj.game.utilities.Coordinates;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.abilities.DodgeEvenRollAttack;
 import com.tloj.game.abilities.DodgeSlowAttackFlying;
@@ -21,9 +23,6 @@ import com.tloj.game.entities.Boss;
  * @see DodgeEvenRollAttack
  * @see WeaponShard
  */
-
-
-
 public class HalverBoss extends Boss{
     public static final int HP = 150;
     public static final int ATTACK = 15;
@@ -31,14 +30,12 @@ public class HalverBoss extends Boss{
     public static final int DICE_FACES = 15;
     public static final int XP_DROP = 75;
     public static final int MONEY_DROP = 100;
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public HalverBoss() {}
     
-    public HalverBoss(Coordinates position, int lvl) {
-        super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP,position);
+    @JsonCreator
+    public HalverBoss(
+        @JsonProperty("position") Coordinates position
+    ) {
+        super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP,position);
         this.ability = new TakeHalfDamage(this);
     }
 

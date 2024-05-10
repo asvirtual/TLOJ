@@ -2,6 +2,7 @@ package com.tloj.game.rooms;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
@@ -22,22 +23,20 @@ public class HostileRoom extends Room {
     @JsonProperty
     protected ArrayList<Mob> mobs;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public HostileRoom() {}
-
     public HostileRoom(Coordinates coordinates) {
         super(coordinates);
         this.mobs = new ArrayList<Mob>();
     }
 
-    public HostileRoom(Coordinates coordinates, ArrayList<Mob> mobs) {
+    public HostileRoom(
+        @JsonProperty("coordinates") Coordinates coordinates, 
+        @JsonProperty("mobs") ArrayList<Mob> mobs
+    ) {
         super(coordinates);
         this.mobs = mobs;
     }
 
-    public HostileRoom(Coordinates coordinates, Mob mob) {
+    public HostileRoom(Coordinates coordinates,  Mob mob) {
         super(coordinates);
         this.mobs = new ArrayList<Mob>();
         this.mobs.add(mob);
@@ -69,11 +68,12 @@ public class HostileRoom extends Room {
 
     public void clear() {
         super.clear();
-        for (Mob mob : this.mobs) this.removeMob(mob);
+        this.mobs.clear();
     }
     
     @Override
     public String toString() {
-        return this.visited ? "\u25A0" : "\u00A0";
+        // return this.visited ? "\u25A0" : "\u00A0";
+        return this.visited ? "M" : "*";
     }
 }

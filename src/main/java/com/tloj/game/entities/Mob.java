@@ -33,11 +33,6 @@ public abstract class Mob extends CombatEntity {
     protected Dice dice;
     /** Mob has a chance to drop a random item to the player upon defeating */
     protected Item drop;
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    protected Mob() {}
     
     /**
      * @param hp The mob's health points<br>
@@ -99,9 +94,49 @@ public abstract class Mob extends CombatEntity {
         this.xpDrop = xpDrop;
         this.moneyDrop = moneyDrop;
         this.dice = new Dice(diceFaces);
-        this.drop = drop;
-        
+        this.drop = drop;   
     }
+
+    /*
+     * All getters and setters needed from Jackson
+     */
+    public int getLvl() {
+        return this.lvl;
+    }
+
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
+    public int getXpDrop() {
+        return this.xpDrop;
+    }
+
+    public void setXpDrop(int xpDrop) {
+        this.xpDrop = xpDrop;
+    }
+
+    public int getMoneyDrop() {
+        return this.moneyDrop;
+    }
+
+    public void setMoneyDrop(int moneyDrop) {
+        this.moneyDrop = moneyDrop;
+    }
+
+    public Dice getDice() {
+        return this.dice;
+    }
+
+    public void setDice(Dice dice) {
+        this.dice = dice;
+    }
+
+    public void setDrop(Item drop) {
+        this.drop = drop;
+    }
+
+
 
     @Override
     public void attack(CombatEntity t) throws IllegalArgumentException {

@@ -1,6 +1,8 @@
 package com.tloj.game.entities.bosses;
 
 import com.tloj.game.utilities.Coordinates;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.abilities.DodgeEvenRollAttack;
 import com.tloj.game.abilities.DodgeSlowAttackFlying;
@@ -27,14 +29,12 @@ public class FlyingBoss extends Boss {
     public static final int DICE_FACES = 12;
     public static final int XP_DROP = 50;
     public static final int MONEY_DROP = 80;
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public FlyingBoss() {}
     
-    public FlyingBoss(Coordinates position, int lvl) {
-        super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP,position);
+    @JsonCreator
+    public FlyingBoss(
+        @JsonProperty("position") Coordinates position
+    ) {
+        super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP,position);
         this.ability = new DodgeSlowAttackFlying(this);
         this.drop = new WeaponShard();
     }

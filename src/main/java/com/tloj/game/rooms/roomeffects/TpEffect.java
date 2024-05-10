@@ -16,8 +16,8 @@ import com.tloj.game.collectables.items.NorthStar;
  */
 
 public class TpEffect implements RoomEffect {
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
+    /*
+     * Default constructor for Jackson JSON deserialization
      */
     public TpEffect() {}
 

@@ -1,5 +1,7 @@
 package com.tloj.game.skills;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.game.PlayerAttack;
@@ -16,7 +18,8 @@ import com.tloj.game.game.PlayerAttack;
  */
 
 public class Daburu extends CharacterSkill{
-    public Daburu(Character character) {
+    @JsonCreator
+    public Daburu(@JsonProperty("character") Character character) {
         super(character);
     }
 

@@ -52,4 +52,11 @@ public class PlayerAttack extends Attack {
     public Mob getTarget() {
         return (Mob) this.target;
     }
+
+    @Override
+    public void perform() {
+        super.perform();
+        System.out.println("You inflicted " + this.totalDamage + " damage to " + this.target + "!");
+        System.out.println(this.target + " has " + this.target.getHP() + " HP left!");
+    }
 }

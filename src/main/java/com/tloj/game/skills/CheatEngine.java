@@ -3,6 +3,8 @@ package com.tloj.game.skills;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.Hacker;
 import com.tloj.game.game.PlayerAttack;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Weapon;
 
 /**
@@ -16,7 +18,8 @@ import com.tloj.game.collectables.Weapon;
  */
 
 public class CheatEngine extends CharacterSkill{
-    public CheatEngine(Character character) {
+    @JsonCreator
+    public CheatEngine(@JsonProperty("character") Character character) {
         super(character);
     }
 

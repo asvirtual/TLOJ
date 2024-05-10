@@ -3,6 +3,8 @@ package com.tloj.game.effects;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -12,6 +14,7 @@ import com.tloj.game.collectables.weapons.NanoDirk;
  * @see NanoDirk
 */
 public class DiceReroller extends WeaponEffect {
+    @JsonCreator
     public DiceReroller(Weapon weapon) {
         super(weapon);
     }

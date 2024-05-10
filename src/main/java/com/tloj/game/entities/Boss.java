@@ -16,24 +16,20 @@ import com.tloj.game.game.PlayerAttack;
   
 public abstract class Boss extends Mob {
     public static final int SCORE_DROP = 50;
+    public static final int BOSS_LVL = 1;
+    
     protected BossAbility ability;
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    protected Boss() {}
 
     protected Boss(
         int hp,
         int atk,
         int def,
         int diceFaces,
-        int lvl,
         int xpDrop,
         int moneyDrop,
         Coordinates position
     ) {
-        super(hp, atk, def, diceFaces, lvl, xpDrop, moneyDrop, position);
+        super(hp, atk, def, diceFaces, BOSS_LVL, xpDrop, moneyDrop, position);
     }
 
     @Override

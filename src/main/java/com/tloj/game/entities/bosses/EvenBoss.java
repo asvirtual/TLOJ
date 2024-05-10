@@ -6,6 +6,8 @@ import com.tloj.game.abilities.DodgeSlowAttackFlying;
 import com.tloj.game.abilities.TakeHalfDamage;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.abilities.BossAbility;
 
 
@@ -24,21 +26,20 @@ import com.tloj.game.abilities.BossAbility;
  */
 
 
-public class EvenBoss extends Boss{
-    public static final int HP = 50;
-    public static final int ATTACK = 8;
-    public static final int DEFENSE = 5;
-    public static final int DICE_FACES = 10;
+public class EvenBoss extends Boss {
+    public static final int HP = 40;
+    public static final int ATTACK = 6;
+    public static final int DEFENSE = 4;
+    public static final int DICE_FACES = 8;
     public static final int XP_DROP = 30;
     public static final int MONEY_DROP = 50;
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public EvenBoss() {}
     
-    public EvenBoss(Coordinates position, int lvl) {
-        super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP,position);
+    @JsonCreator
+    public EvenBoss(
+        @JsonProperty("position")
+        Coordinates position
+    ) {
+        super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP,position);
         this.ability = new DodgeEvenRollAttack(this);
         this.drop = new WeaponShard();
     }

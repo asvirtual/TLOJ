@@ -1,5 +1,7 @@
 package com.tloj.game.utilities;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Coordinates {
     public enum Direction {
@@ -12,15 +14,11 @@ public class Coordinates {
     private int x;
     private int y;
 
-    public Coordinates(int x, int y) {
+    @JsonCreator
+    public Coordinates(@JsonProperty("x") int x, @JsonProperty("y") int y) {
         this.x = x;
         this.y = y;
     }
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public Coordinates() {}
 
     public int getX() {
         return x;

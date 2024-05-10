@@ -32,11 +32,6 @@ public abstract class Room {
     @JsonProperty
     protected ArrayList<FriendlyEntity> friendlyEntities;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public Room() {}
-
     protected Room(Coordinates coordinates) {
         this.visited = false;
         this.cleared = false;

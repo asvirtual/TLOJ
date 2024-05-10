@@ -12,7 +12,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.bosses.EvenBoss",
-                            "position": { "x": 0, "y": 0 }
+                            "position": { "x": 0, "y": 0 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -32,7 +33,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.CyberGoblin",
-                            "position": { "x": 2, "y": 0 }
+                            "position": { "x": 2, "y": 0 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -64,7 +66,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.MechaRat",
-                            "position": { "x": 5, "y": 1 }
+                            "position": { "x": 5, "y": 1 },
+                            "lvl": 1
                         }
                     ]
                 }
@@ -79,7 +82,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.JunkSlime",
-                            "position": { "x": 0, "y": 2 }
+                            "position": { "x": 0, "y": 2 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -93,7 +97,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.JetBat",
-                            "position": { "x": 2, "y": 2 }
+                            "position": { "x": 2, "y": 2 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -134,7 +139,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.CyberGoblin",
-                            "position": { "x": 2, "y": 3 }
+                            "position": { "x": 2, "y": 3 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -147,7 +153,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.MechaRat",
-                            "position": { "x": 3, "y": 3 }
+                            "position": { "x": 3, "y": 3 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -160,7 +167,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.CyberGoblin",
-                            "position": { "x": 4, "y": 3 }
+                            "position": { "x": 4, "y": 3 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -193,7 +201,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.JunkSlime",
-                            "position": { "x": 5, "y": 4 }
+                            "position": { "x": 5, "y": 4 },
+                            "lvl": 1
                         }
                     ]
                 }
@@ -210,7 +219,8 @@
                     "mobs": [
                         {
                             "@class": "com.tloj.game.entities.mobs.JunkSlime",
-                            "position": { "x": 2, "y": 5 }
+                            "position": { "x": 2, "y": 5 },
+                            "lvl": 1
                         }
                     ]
                 },
@@ -229,5 +239,11 @@
             "@class": "com.tloj.game.rooms.StartRoom",
             "coordinates": { "x": 2, "y": 4 }
         }
+    },
+    {
+        "levelNumber": 2,
+        "rooms": [
+            
+        ]
     }
 ]

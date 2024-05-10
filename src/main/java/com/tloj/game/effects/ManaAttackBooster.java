@@ -5,6 +5,8 @@ import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Dice;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -14,6 +16,7 @@ import com.tloj.game.utilities.Dice;
  * @see PulseStaff
  */
 public class ManaAttackBooster extends WeaponEffect {
+    @JsonCreator
     public ManaAttackBooster(Weapon weapon) {
         super(weapon);
     }

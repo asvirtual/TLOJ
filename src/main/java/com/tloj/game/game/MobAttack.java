@@ -39,4 +39,10 @@ public class MobAttack extends Attack {
     public Character getTarget() {
         return (Character) this.target;
     }
+
+    @Override
+    public void perform() {
+        System.out.println(this.attacker + " inflicted " + this.totalDamage + " damage to you!");
+        super.perform();
+    }
 }

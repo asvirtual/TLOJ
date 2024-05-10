@@ -2,6 +2,8 @@ package com.tloj.game.entities.characters;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.PulseStaff;
@@ -19,27 +21,23 @@ public class Hacker extends Character {
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 10;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public Hacker() {}
-
     /** 
      * Constructor to create a Cheater from loaded data 
      * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
     */
+    @JsonCreator
     public Hacker(
-        int hp,
-        int atk,
-        int def,
-        int mana,
-        int xp,
-        int lvl,
-        int maxWeight,
-        int money,
-        Weapon weapon,
-        ArrayList<Item> inventory,
-        Coordinates position
+        @JsonProperty("hp") int hp,
+        @JsonProperty("atk") int atk,
+        @JsonProperty("def") int def,
+        @JsonProperty("mana") int mana,
+        @JsonProperty("xp") int xp,
+        @JsonProperty("lvl") int lvl,
+        @JsonProperty("maxWeight") int maxWeight,
+        @JsonProperty("money") int money,
+        @JsonProperty("weapon") Weapon weapon,
+        @JsonProperty("inventory") ArrayList<Item> inventory,
+        @JsonProperty("position") Coordinates position
     ) {
         super(
             hp,
@@ -63,7 +61,9 @@ public class Hacker extends Character {
      * @param position The initial position of the Cheater
      * @param lvl The level of the Cheater
     */
-    public Hacker(Coordinates position, int lvl) { 
+    public Hacker(
+       Coordinates position
+    ) {
         super(
             HP,
             ATTACK,
@@ -71,7 +71,7 @@ public class Hacker extends Character {
             MANA,
             MAX_WEIGHT,
             MONEY,
-            null,
+            new PulseStaff(),
             position
         );
 

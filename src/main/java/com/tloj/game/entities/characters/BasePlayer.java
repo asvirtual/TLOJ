@@ -2,6 +2,8 @@ package com.tloj.game.entities.characters;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.LaserBlade;
@@ -26,30 +28,26 @@ public class BasePlayer extends Character {
     private static final int ATTACK = 4;
     private static final int DEFENSE = 4;
     private static final int MANA = 10;
-    private static final int MAX_WEIGHT = -1; // Missing from doc
+    private static final int MAX_WEIGHT = 5; // Missing from doc
     private static final int MONEY = 10;
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public BasePlayer() {}
 
     /** 
      * Constructor to create a BasePlayer from loaded data 
      * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
     */
+    @JsonCreator
     public BasePlayer(
-        int hp,
-        int atk,
-        int def,
-        int mana,
-        int xp,
-        int lvl,
-        int maxWeight,
-        int money,
-        Weapon weapon,
-        ArrayList<Item> inventory,
-        Coordinates position
+        @JsonProperty("hp") int hp,
+        @JsonProperty("atk") int atk,
+        @JsonProperty("def") int def,
+        @JsonProperty("mana") int mana,
+        @JsonProperty("xp") int xp,
+        @JsonProperty("lvl") int lvl,
+        @JsonProperty("maxWeight") int maxWeight,
+        @JsonProperty("money") int money,
+        @JsonProperty("weapon") Weapon weapon,
+        @JsonProperty("inventory") ArrayList<Item> inventory,
+        @JsonProperty("position") Coordinates position
     ) {
         super(
             hp,
@@ -70,7 +68,9 @@ public class BasePlayer extends Character {
      * Constructor to create an entirely new BasePlayer 
      * @param coordinates The initial position of the BasePlayer
     */
-    public BasePlayer(Coordinates coordinates) {
+    public BasePlayer(
+        Coordinates position
+    ) {
         super(
             HP,
             ATTACK,
@@ -78,8 +78,8 @@ public class BasePlayer extends Character {
             MANA,
             MAX_WEIGHT,
             MONEY,
-            null,
-            coordinates
+            new LaserBlade(),
+            position
         );
     }
 

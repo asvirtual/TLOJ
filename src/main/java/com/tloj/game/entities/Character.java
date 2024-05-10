@@ -14,6 +14,9 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.items.AttackElixir;
+import com.tloj.game.collectables.items.HealthPotion;
+import com.tloj.game.collectables.items.ManaPotion;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
@@ -39,7 +42,9 @@ import com.tloj.game.utilities.Dice;
  * @see CombatEntity
 */
 public abstract class Character extends CombatEntity implements MovingEntity {
-    public static final int REQ_XP = 10;
+    public static final int REQ_XP_BASE = 10;
+    public static final int INITIAL_LVL = 1;
+
     /**
      * Dice faces used to level up hp, mana, attack and defense
      */
@@ -66,11 +71,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected PlayerAttack currentAttack;
     protected CharacterSkill skill;
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    protected Character() {}
 
     /**
      * Constructor to create a Character from loaded data<br>
@@ -106,13 +106,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = mana;
         this.maxMana = mana;
         this.xp = xp;
-        this.requiredXp = REQ_XP;
         this.lvl = lvl;
         this.maxWeight = maxWeight;
         this.money = money;
         this.inventory = inventory;
         this.weapon = weapon;
+
         if (weapon != null) this.weapon.assignTo(this);
+        this.reqXpUpdate();
     }
 
     /** 
@@ -141,13 +142,16 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     ) {
         super(hp, atk, def, position);
         this.mana = mana;
-        this.xp = 1;
-        this.lvl = 1;
+        this.maxMana = mana;
+        this.lvl = INITIAL_LVL;
         this.maxWeight = maxWeight;
         this.money = money;
         this.inventory = new ArrayList<Item>();
         this.weapon = weapon;
         if (weapon != null) this.weapon.assignTo(this);
+
+        this.inventory.add(new HealthPotion());
+        this.reqXpUpdate();
     }
 
     public Weapon getWeapon() {
@@ -227,9 +231,9 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public Item searchInventoryItem(Item item){
-        for (Item i : this.inventory) {
+        for (Item i : this.inventory) 
             if (i.equals(item)) return i;
-        }
+        
         return null;
     }
 
@@ -245,6 +249,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public boolean addInventoryItem(Item item) {
         if(item == null) return false;
+
         if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
             System.out.println("You can't carry more weight, drop something first.");
             return false;
@@ -302,8 +307,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
         if (this.currentAttack == null) this.currentAttack = new PlayerAttack(this, target);
         else this.currentAttack.setTarget(target);
-        
-        this.weapon.modifyAttack(this.currentAttack);
+
+        if (this.weapon != null) this.weapon.modifyAttack(this.currentAttack);
         target.defend(this.currentAttack);
 
         this.currentAttack.perform();
@@ -324,12 +329,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void lootMob(Mob mob) {
-        System.out.println("You gain " + mob.xpDrop + " experience points and " + mob.moneyDrop + " money");
+        System.out.println("You gain " + mob.xpDrop + " experience points and " + mob.moneyDrop + " BTC");
+
         this.addXp(mob.xpDrop);
         this.money += mob.moneyDrop;
 
         Item drop = mob.getDrop();
-        if(this.addInventoryItem(drop)) System.out.println("You found a " + drop);
+        if (this.addInventoryItem(drop)) System.out.println("You found a " + drop);
     }
 
     public void useItem(ConsumableItem item) {
@@ -342,7 +348,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void reqXpUpdate() {
-        this.requiredXp += (REQ_XP * lvl);
+        this.requiredXp += REQ_XP_BASE * this.lvl;
     }
 
     public void levelUp(){
@@ -369,7 +375,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void swapWeapon(int index) {
-        if (index < 0 || this.hasItem(this.getInventoryItem(index))) {
+        if (index < 0 || index >= this.getInventorySize()) {
             System.out.println("Invalid index");
             return;
         }
@@ -378,14 +384,23 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if (item instanceof Weapon) {
             this.weapon = (Weapon) item;
             this.weapon.assignTo(this);
+        } else {
+            System.out.println("This item is not a weapon");
         }
     }
+
+    @Override
+    public void takeDamage(int damage) {
+        super.takeDamage(damage);
+        if (!this.isAlive()) this.observers.forEach(observer -> observer.onPlayerDefeated());
+    }
+
     /**
      * TODO: Better graphical representation of the Character's status
      */
     @Override
     public String toString() {
-        String status = "HP: " + this.hp + "/" + this.maxHp + " | Mana: " + this.mana + "/" + this.maxMana + " | Atk: " + this.atk + " | Def: " + this.def + " | Lvl: " + this.lvl + " | XP: " + this.xp + "/" + this.requiredXp + " | Money: " + this.money;
+        String status = "HP: " + this.hp + "/" + this.maxHp + " | Mana: " + this.mana + "/" + this.maxMana + " | Atk: " + this.currentFightAtk + " | Def: " + this.currentFightDef + " | Lvl: " + this.lvl + " | XP: " + this.xp + "/" + this.requiredXp + " | BTC: " + this.money;
         return status;
     }
 

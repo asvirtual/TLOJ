@@ -7,6 +7,8 @@ import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.DiceReroller;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -25,6 +27,7 @@ public class NanoDirk extends Weapon {
     private static final int DICE_FACES = 6;
     private static final int ID = 14;
 
+    @JsonCreator
     public NanoDirk() {
         super(WEIGHT, DICE_FACES, ID); 
         this.effect = new DiceReroller(this);

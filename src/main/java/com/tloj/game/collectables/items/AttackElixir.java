@@ -3,7 +3,8 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the Consumable Item Attack Elixir in the game.<br>
@@ -20,6 +21,8 @@ import com.tloj.game.entities.Character;
  * @see SpecialKey
  * @see NorthStar
  */
+
+
 public class AttackElixir extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0.2;
     private static final int PRICE = 10;
@@ -28,6 +31,7 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
     private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 5;
 
+    @JsonCreator
     public AttackElixir() {
         super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
     }

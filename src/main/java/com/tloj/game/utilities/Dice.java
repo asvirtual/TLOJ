@@ -1,22 +1,23 @@
 package com.tloj.game.utilities;
 
+import java.util.Random;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Dice {
     private int min;
     private int max;
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public Dice() {}
+    private static Random random;
 
     public Dice(int faces) {
         this.min = 1;
         this.max = faces;
     }
 
-    public Dice (int min, int max) {
+    @JsonCreator
+    public Dice(@JsonProperty("min") int min, @JsonProperty("max") int max) {
         this.min = min;
         this.max = max;
     }
@@ -35,7 +36,12 @@ public class Dice {
     }
     
     public int roll() {
-        return (int) (Math.random() * (this.max - this.min + 1)) + 1;
+        return Dice.random.nextInt(max - min + 1) + min;
+        // return (int) (Math.random() * (this.max - this.min + 1)) + 1;
+    }
+
+    public static void setSeed(long seed) {
+        Dice.random = new Random(seed);
     }
 
     @Override 

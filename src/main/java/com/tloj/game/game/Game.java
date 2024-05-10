@@ -20,6 +20,7 @@ import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
 
 
@@ -58,6 +59,8 @@ public class Game implements CharacterObserver {
         this.seed = new Date().getTime();
         this.elapsedTime = 0;
         this.sessionStartTime = new Date().getTime();
+
+        Dice.setSeed(this.seed);
     }
     
     public Game(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
@@ -67,6 +70,9 @@ public class Game implements CharacterObserver {
         this.controller = Controller.getInstance();
         this.seed = seed;
         this.sessionStartTime = new Date().getTime();
+        
+        this.player.addObserver(this);
+        Dice.setSeed(this.seed);
     }
 
     @JsonIgnore
@@ -91,8 +97,14 @@ public class Game implements CharacterObserver {
         return this.seed;
     }
 
+    public void setSeed(long seed) {
+        this.seed = seed;
+        Dice.setSeed(seed);
+    }
+
     public void setPlayer(Character player) {
         this.player = player;
+        this.player.addObserver(this);
     }
 
     public Character getPlayer() {
@@ -216,13 +228,13 @@ public class Game implements CharacterObserver {
     @Override
     public void onPlayerDefeated() {
         System.out.println("You've been defeated!");
-        this.controller.setState(GameState.GAME_OVER);
+        this.controller.setState(GameState.MAIN_MENU);
     }
 
     public void printMap(){
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
-                Room room = this.currentLevel.getRoom(new Coordinates(i, j));
+                Room room = this.currentLevel.getRoom(new Coordinates(j, i));
                 if (room == null){
                     System.out.print("\u00A0" + " ");                    
                     continue;
@@ -288,11 +300,11 @@ public class Game implements CharacterObserver {
         String N = "[gn] ";
         String S = "[gs] ";
         String E = "[ge] ";
-        String W = "[gn] ";
+        String W = "[gw] ";
         String Nb = "[gn] - Something's off... ";
         String Sb = "[gs] - Something's off... ";
         String Eb = "[ge] - Something's off... ";
-        String Wb = "[gn] - Something's off... ";
+        String Wb = "[gw] - Something's off... ";
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH)).getType() == RoomType.BOSS_ROOM)

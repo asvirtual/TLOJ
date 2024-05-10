@@ -12,13 +12,14 @@ import com.tloj.game.entities.Character;
 public class InflictDamage implements RoomEffect{
     public static final int DAMAGE = 10;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
+    /*
+     * Default constructor for Jackson JSON deserialization
      */
     public InflictDamage() {}
 
     @Override
     public void applyEffect(Character character) {
+        System.out.println("You've been hit by a virus and lost " + DAMAGE + " HP!");
         character.takeDamage(DAMAGE);
     }
 }

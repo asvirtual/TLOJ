@@ -1,5 +1,7 @@
 package com.tloj.game.entities.npcs;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Character;
@@ -19,12 +21,8 @@ import com.tloj.game.utilities.GameState;
 public class Smith extends FriendlyEntity implements ItemReceiverEntity {
     public static final String NAME = "SMITH";
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public Smith() {}
-
-    public Smith(Coordinates position) {
+    @JsonCreator
+    public Smith(@JsonProperty("position") Coordinates position) {
         super(position, NAME);
     }
 

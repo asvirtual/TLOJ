@@ -2,6 +2,8 @@ package com.tloj.game.entities.characters;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.CyberKatana;
@@ -10,7 +12,6 @@ import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.skills.Daburu;
 
 public class NeoSamurai extends Character {
-    
     private static final int HP = 20;
     private static final int ATTACK = 7;
     private static final int DEFENSE = 1;
@@ -18,27 +19,23 @@ public class NeoSamurai extends Character {
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 15;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public NeoSamurai() {}
-
     /** 
      * Constructor to create a NeoSamurai from loaded data  
      * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
     */
+    @JsonCreator
     public NeoSamurai(
-        int hp,
-        int atk,
-        int def,
-        int mana,
-        int xp,
-        int lvl,
-        int maxWeight,
-        int money,
-        Weapon weapon,
-        ArrayList<Item> inventory,
-        Coordinates position
+        @JsonProperty("hp") int hp,
+        @JsonProperty("atk") int atk,
+        @JsonProperty("def") int def,
+        @JsonProperty("mana") int mana,
+        @JsonProperty("xp") int xp,
+        @JsonProperty("lvl") int lvl,
+        @JsonProperty("maxWeight") int maxWeight,
+        @JsonProperty("money") int money,
+        @JsonProperty("weapon") Weapon weapon,
+        @JsonProperty("inventory") ArrayList<Item> inventory,
+        @JsonProperty("position") Coordinates position
     ) {
         super(
             hp,
@@ -62,7 +59,9 @@ public class NeoSamurai extends Character {
      * @param position The initial position of the NeoSamurai
      * @param lvl The level of the NeoSamurai
     */
-    public NeoSamurai(Coordinates position, int lvl) {
+    public NeoSamurai(
+        Coordinates position
+    ) {
         super(
             HP,
             ATTACK,

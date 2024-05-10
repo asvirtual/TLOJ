@@ -1,6 +1,8 @@
 package com.tloj.game.skills;
 
 import com.tloj.game.entities.characters.MechaKnight;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
 
@@ -15,8 +17,9 @@ import com.tloj.game.game.PlayerAttack;
  * @see Steal
  */
 
-public class Guard extends CharacterSkill{
-    public Guard(Character character) {
+public class Guard extends CharacterSkill {
+    @JsonCreator
+    public Guard(@JsonProperty("character") Character character) {
         super(character);
     }
 
@@ -29,7 +32,7 @@ public class Guard extends CharacterSkill{
             return;
         }
 
-        attack.setTargetDef(this.character.getCurrentFightDef() + 3);
+        attack.getAttacker().setCurrentFightDef(this.character.getCurrentFightDef() + 3);
         attacker.useMana(5);
         System.out.println("Guard activated! Defense increased by 3 points!");
     }

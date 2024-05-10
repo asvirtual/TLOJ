@@ -12,11 +12,6 @@ public abstract class Entity {
     /** The Entity's current {@link Coordinates} in the game */
     protected Coordinates position;
 
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    protected Entity() {}
-
     protected Entity(Coordinates position) {
         this.position = position;
     }

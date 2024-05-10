@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -31,17 +33,18 @@ public class GameData {
     public Character player;
     public ArrayList<Level> levels;
 
-    public GameData(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
+    @JsonCreator
+    public GameData(
+        @JsonProperty("seed") long seed, 
+        @JsonProperty("currentLevel") Level currentLevel, 
+        @JsonProperty("player") Character player, 
+        @JsonProperty("levels") ArrayList<Level> levels
+    ) {
         this.seed = seed;
         this.currentLevel = currentLevel;
         this.player = player;
         this.levels = levels;
     }
-
-    /**
-     * Default constructor to allow Jackson to deserialize JSON.
-     */
-    public GameData() {}
 
     @JsonIgnore
     public Game getGame() {
@@ -113,6 +116,25 @@ public class GameData {
 
         try {
             return mapper.readValue(json, GameData.class);
+        } catch (JsonGenerationException e) {
+            System.out.println("Error generating JSON from GameData");
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            System.out.println("Error mapping JSON from GameData");
+            e.printStackTrace();
+        } catch (JsonProcessingException e) {
+            System.out.println("Error processing JSON from GameData");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public static ArrayList<Level> deserializeMap(String json) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            return mapper.readValue(json, new TypeReference<ArrayList<Level>>(){});
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();
