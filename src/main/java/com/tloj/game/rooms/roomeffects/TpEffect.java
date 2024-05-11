@@ -32,6 +32,10 @@ public class TpEffect extends RoomEffect {
 
     @Override
     public boolean applyEffect(Character character) {
+
+        System.out.println("Oh no! Unexpected System call teleported you to a random room!");
+        System.out.println("You forgot the rooms you visited...");
+
         Level level = character.getCurrentLevel();
         boolean validLocation = false;
 

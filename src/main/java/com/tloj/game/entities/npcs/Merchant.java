@@ -52,8 +52,9 @@ public class Merchant extends FriendlyEntity {
     public void interact(Character player) {
         super.interact(player);
         System.out.println("Merchant: Hello there! What do you want to buy today?");
+        System.out.println("You currently have " + this.player.getMoney() + " BTC");
         for (Map.Entry<Integer, PurchasableItem> entry : items.entrySet()) 
-            System.out.println(entry.getKey() + ". " + entry.getValue());
+            System.out.println(entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC");
 
         Controller.getInstance().setState(GameState.MERCHANT_SHOPPING);
     }
