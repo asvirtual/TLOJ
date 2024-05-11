@@ -979,7 +979,7 @@ public class Controller {
         };
     }
 
-    public void setConsoleEncoding() {
+    public static void setConsoleEncoding() {
         try {
             if (System.getProperty("os.name").startsWith("Windows"))
                 new ProcessBuilder("cmd", "/c", "chcp", "65001").start();
@@ -987,6 +987,19 @@ public class Controller {
                 new ProcessBuilder("bash", "-c", "export LANG=en_US.UTF-8").start();
         } catch (IOException e) {
             System.out.println("Error setting UTF-8 encoding to support special characters");
+            e.printStackTrace();
+        }
+    }
+
+    public static void clearConsole(int delay) {
+        try {
+            Thread.sleep(delay);
+            if (System.getProperty("os.name").startsWith("Windows")) 
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else 
+                new ProcessBuilder("bash", "-c", "clear").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error clearing console");
             e.printStackTrace();
         }
     }
@@ -1009,7 +1022,7 @@ public class Controller {
         this.musicPlayer.increaseVolume(-20.0f);
         this.musicPlayer.playMusic(false);
 
-        this.setConsoleEncoding();
+        Controller.setConsoleEncoding();
 
         System.out.println(Constants.GAME_TITLE);
         Character player;

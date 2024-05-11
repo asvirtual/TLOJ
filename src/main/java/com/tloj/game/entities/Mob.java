@@ -142,7 +142,9 @@ public abstract class Mob extends CombatEntity {
     }
 
     private static int levelUpFactor(int lvl){
-        return (int)( 1 + Math.log(lvl) / (int) Math.log(8));
+        return
+            lvl = lvl == 1 ? 1
+            : (int) (1 + Math.log(lvl) / (int) Math.log(8));
     }
     
     @Override

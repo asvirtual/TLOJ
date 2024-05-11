@@ -353,7 +353,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.requiredXp += REQ_XP_BASE * this.lvl;
     }
 
-    public void levelUp(){
+    public void levelUp() {
         Dice fiveDice = new Dice(D5);
         Dice threeDice = new Dice(D3);
 

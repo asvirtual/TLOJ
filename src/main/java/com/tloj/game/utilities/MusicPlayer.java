@@ -61,7 +61,7 @@ public class MusicPlayer {
 
                 if (loop) this.playingClip.loop(Clip.LOOP_CONTINUOUSLY);
                 else this.playingClip.start();
-            } catch (LineUnavailableException e){
+            } catch (LineUnavailableException e) {
                 System.out.println("Error playing music file");
                 e.printStackTrace();
             } catch (IOException e){
