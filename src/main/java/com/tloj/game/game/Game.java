@@ -135,6 +135,7 @@ public class Game implements CharacterObserver {
 
                 endRoom.accept(new PlayerRoomVisitor(this.player));
                 System.out.println("Congratulations! You won the game with " + this.score + " points!");
+                this.player = null;
             }
 
             return;

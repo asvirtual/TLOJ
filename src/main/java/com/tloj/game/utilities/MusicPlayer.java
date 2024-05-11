@@ -5,6 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
@@ -15,9 +16,17 @@ public class MusicPlayer {
     private File file;
     private Thread playingThread;
     private Runnable onEnd;
+    private LineListener listener;
 
     public MusicPlayer(String pathName) {
         this.file = new File(pathName);
+        this.listener = new LineListener() {
+            @Override
+            public void update(LineEvent event) {
+                if (event.getType() == LineEvent.Type.STOP) 
+                    if (onEnd != null) onEnd.run();
+            }
+        };
     }
 
     public MusicPlayer(String pathName, Runnable onEnd) {
@@ -30,8 +39,23 @@ public class MusicPlayer {
     }
 
     public void stop() {
-        if (this.playingClip != null && this.playingClip.isRunning()) this.playingClip.stop();
-        if (this.playingThread != null) this.playingThread.interrupt();
+        if (this.playingClip == null) return;
+
+        this.playingClip.removeLineListener(this.listener);
+
+        if (this.playingClip.isRunning()) this.playingClip.stop();        
+        this.playingClip.close();
+
+        if (this.playingThread != null) {
+            try {
+                this.playingThread.interrupt();
+                this.playingThread.join(); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                this.playingThread = null;
+            }
+        }
     }
 
     public void increaseVolume(float amount) {
@@ -42,6 +66,7 @@ public class MusicPlayer {
     }
 
     public void playMusic(boolean loop) {
+        this.stop();
         this.playingThread = new Thread(() -> {
             if (!this.file.exists()) {
                 System.out.println("Required music file \"" + this.file.getName() + "\" not found. Please check the file path.");
@@ -54,10 +79,7 @@ public class MusicPlayer {
                     this.playingClip.open(stream);
                 }
 
-                this.playingClip.addLineListener(event -> {
-                    if (event.getType() == LineEvent.Type.STOP) 
-                        if (this.onEnd != null) this.onEnd.run();
-                });
+                this.playingClip.addLineListener(this.listener);
 
                 if (loop) this.playingClip.loop(Clip.LOOP_CONTINUOUSLY);
                 else this.playingClip.start();

@@ -743,7 +743,7 @@ class ChooseCharacterGameCommand extends GameCommand {
         this.controller.setPlayer(factory.create());
         this.controller.setState(GameState.MOVING);
 
-        System.out.println(this.controller.getPlayer() + this.controller.getPlayer().getASCII());
+        System.out.println(this.controller.getPlayer() + "\n" + this.controller.getPlayer().getASCII());
     }
 }
 
@@ -1145,7 +1145,6 @@ public class Controller {
                         "\nMana: " + this.player.getManaBar() + " " + this.player.getMana() + "/" + this.player.getMaxMana() + "\n\n"
                     );
 
-                    // this.game.printMap();
                     System.out.println("What to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
                 }
             }
@@ -1155,5 +1154,6 @@ public class Controller {
         }
 
         Controller.scanner.close();
+        this.musicPlayer.stop();
     }
 }

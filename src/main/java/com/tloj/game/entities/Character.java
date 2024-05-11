@@ -349,7 +349,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
         Item drop = mob.getDrop();
         if (drop == null) return;
-        if (this.getCarriedWeight() + mob.getDrop().getWeight() > this.maxWeight) return;
+        if (this.getCarriedWeight() + drop.getWeight() > this.maxWeight) return;
         if (this.addInventoryItem(drop)) System.out.println("You found a " + drop);
     }
 
@@ -449,7 +449,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             " ⸭ Def:  " + this.currentFightDef + "\n" +
             " ⸭ Weapon: " + this.weapon + "\n" +
             " ⸭ Weight: " + this.getWeightBar() + " " + this.getCarriedWeight() + "/" + this.maxWeight + " MB" + "\n" +
-            " ⸭ BTC: " + this.money;
+            " ⸭ BTC: " + this.money + "\n";
 
         return status;
     }
