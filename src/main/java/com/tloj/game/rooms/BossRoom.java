@@ -53,7 +53,7 @@ public class BossRoom extends HostileRoom {
 
     @Override
     public String toString() {
-        // return this.visited ? "\u00DF" : "\u00A0";
-        return this.visited ? "B" : " ";
+        return this.visited ? "\u00DF" : "\u00A0";
+        // return this.visited ? "B" : " ";
     }
 }

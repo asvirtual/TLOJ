@@ -401,13 +401,25 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if (!this.isAlive()) this.observers.forEach(observer -> observer.onPlayerDefeated());
     }
 
+    public String getManaBar() {
+        return this.getBar(this.mana, this.maxMana);
+    }
+
+    public String getPrettifiedStatus() {
+        return 
+            "You: \n" + 
+            "HP:   " + this.getHpBar() + " " + this.getHp() + "/" + this.getMaxHp() + 
+            "\nMana: " + this.getManaBar() + " " + this.getMana() + "/" + this.getMaxMana() + "\n\n";
+    }
+
     /**
      * TODO: Better graphical representation of the Character's status
      */
     @Override
     public String toString() {
         String status = 
-            "Lvl: " + this.lvl +
+            String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + 
+            " | Lvl: " + this.lvl +
             " | XP: " + this.xp + "/" + this.requiredXp + 
             " | HP: " + this.hp + "/" + this.maxHp + 
             " | Mana: " + this.mana + "/" + this.maxMana + 

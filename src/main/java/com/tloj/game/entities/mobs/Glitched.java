@@ -112,7 +112,7 @@ public class Glitched extends Mob implements MovingEntity {
     }
 
     @Override
-    public String getASCII(){
+    public String getCombatASCII(){
         return Constants.GLITCHED_ATTACK;
     }
 }

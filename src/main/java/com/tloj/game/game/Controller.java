@@ -192,6 +192,7 @@ class AttackCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        Controller.clearConsole(100);
         this.game.playerAttack();
     }
 }
@@ -593,6 +594,7 @@ class NewGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        Controller.clearConsole(100);
         this.controller.newGame();
         System.out.println("Choose your starting character: 1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
     }
@@ -614,6 +616,7 @@ class LoadGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        Controller.clearConsole(100);
         this.controller.loadGame();
     }
 }
@@ -633,6 +636,7 @@ class ExitGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        Controller.clearConsole(100);
         this.controller.setState(GameState.EXIT);
     }
 }
@@ -663,12 +667,13 @@ class ChooseCharacterGameCommand extends GameCommand {
         });
 
         if (!Controller.awaitConfirmation()) return;
+        Controller.clearConsole(100);
 
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
         this.controller.setPlayer(factory.create());
         this.controller.setState(GameState.MOVING);
 
-        System.out.println(this.controller.getPlayer());
+        System.out.println(this.controller.getPlayer() + this.controller.getPlayer().getASCII());
     }
 }
 
@@ -985,9 +990,9 @@ public class Controller {
     public static void setConsoleEncoding() {
         try {
             if (System.getProperty("os.name").startsWith("Windows"))
-                new ProcessBuilder("cmd", "/c", "chcp", "65001").start();
+                new ProcessBuilder("cmd", "/c", "chcp", "65001").inheritIO().start();
             else
-                new ProcessBuilder("bash", "-c", "export LANG=en_US.UTF-8").start();
+                new ProcessBuilder("bash", "-c", "export LANG=en_US.UTF-8").inheritIO().start();
         } catch (IOException e) {
             System.out.println("Error setting UTF-8 encoding to support special characters");
             e.printStackTrace();
@@ -1011,6 +1016,9 @@ public class Controller {
      * Main game loop
      */
     public void run() {
+        Controller.setConsoleEncoding();
+        Controller.clearConsole(100);
+
         this.musicPlayer = new MusicPlayer(
             Constants.INTRO_WAV_FILE_PATH,
             new Runnable() {
@@ -1025,19 +1033,17 @@ public class Controller {
         this.musicPlayer.increaseVolume(-20.0f);
         this.musicPlayer.playMusic(false);
 
-        Controller.setConsoleEncoding();
-
         System.out.println(Constants.GAME_TITLE);
-        Character player;
 
         while (this.getState() != GameState.EXIT) {
             if (this.game != null) {
-                player = this.game.getPlayer();
-                if (player != null)
+                this.player = this.game.getPlayer();
+                if (this.player != null)
                     System.out.print(
-                        "What to do? HP: " + player.getHp() + "/" + player.getMaxHp() + 
-                        " | Mana: " + player.getMana() + "/" + player.getMaxMana() + "\n" +
-                        this.getAvailableCommands() + " (write \"help\" for the complete list of commands): "
+                        "You: \n" + 
+                        "HP:   " + this.player.getHpBar() + " " + this.player.getHp() + "/" + this.player.getMaxHp() + 
+                        "\nMana: " + this.player.getManaBar() + " " + this.player.getMana() + "/" + this.player.getMaxMana() + "\n\n" +
+                        "What to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): "
                     );
             }
 

@@ -77,7 +77,7 @@ public class HostileRoom extends Room {
     
     @Override
     public String toString() {
-        // return this.visited ? "\u25A0" : "\u00A0";
-        return this.visited ? "M" : "*";
+        return this.visited ? "\u25A0" : "\u00A0";
+        // return this.visited ? "M" : " ";
     }
 }

@@ -9,6 +9,7 @@ package com.tloj.game.rooms;
  * @see TrapRoom
  * @see StartRoom
  * @see HostileRoom
+ * @see EndRoom
  */
 public enum RoomType {
     BOSS_ROOM,
@@ -17,4 +18,5 @@ public enum RoomType {
     LOOT_ROOM,
     TRAP_ROOM,
     START_ROOM,
+    END_ROOM
 }

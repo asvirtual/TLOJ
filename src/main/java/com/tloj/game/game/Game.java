@@ -139,7 +139,10 @@ public class Game implements CharacterObserver {
         Mob mob = room.getMob();
         this.player.attack(mob);
         
-        if (mob.isAlive()) mob.attack(this.player);
+        if (mob.isAlive()) {
+            Controller.clearConsole(2000);
+            mob.attack(this.player);
+        }
     }
 
     public void usePlayerSkill() throws IllegalStateException {
@@ -187,7 +190,7 @@ public class Game implements CharacterObserver {
         this.player.resetFightStats();
         this.player.lootMob(mob);
 
-        System.out.println("You've defeated the " + mob + "!");
+        System.out.println("You've defeated the " + mob + "!\n");
         
         this.updateScore(Mob.SCORE_DROP);
 
@@ -208,7 +211,7 @@ public class Game implements CharacterObserver {
         this.player.resetFightStats();
         this.player.lootMob(boss);
 
-        System.out.println("You've defeated " + boss +"!");
+        System.out.println("You've defeated " + boss + "!\n");
         this.updateScore(Boss.SCORE_DROP);
         this.controller.setState(GameState.BOSS_DEFEATED);
     }

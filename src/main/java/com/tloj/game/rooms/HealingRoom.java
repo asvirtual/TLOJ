@@ -46,7 +46,7 @@ public class HealingRoom extends Room {
 
     @Override
     public String toString() {
-        // return this.visited ? "\u256C" : "\u00A0";
-        return this.visited ? "H" : "*";
+        return this.visited ? "\u256C" : "\u00A0";
+        // return this.visited ? "H" : " ";
     }
 }

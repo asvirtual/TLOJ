@@ -56,7 +56,7 @@ public class TrapRoom extends Room {
 
     @Override
     public String toString() {
-        // return this.visited ? "\u2566" : "\u00A0";
-        return this.visited ? "T" : "*";
+        return this.visited ? "\u2566" : "\u00A0";
+        // return this.visited ? "T" : " ";
     }
 }

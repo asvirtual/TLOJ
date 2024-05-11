@@ -1,5 +1,6 @@
 package com.tloj.game.entities;
 
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -22,6 +23,17 @@ public abstract class Entity {
 
     public void setPosition(Coordinates position) {
         this.position = position;
+    }
+
+    public String getBar(int current, int max) {
+        int percentage = (int) (((double) current / max) * Constants.BAR_LENGTH);
+        StringBuilder bar = new StringBuilder();
+        for (int i = 0; i < Constants.BAR_LENGTH; i++) {
+            if (i < percentage) bar.append("█");
+            else bar.append("░");   
+        }
+        
+        return bar.toString();
     }
 
     public abstract String getASCII();

@@ -6,6 +6,8 @@ package com.tloj.game.utilities;
  */
 
 public class Constants {
+    public static final int BAR_LENGTH = 10;
+
     public static final String GAME_TITLE = 
     """
           _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
@@ -58,7 +60,8 @@ public class Constants {
 
     // 46
     public static final String CYBER_GOBLIN_ATTACK = 
-    """                                                             
+    """                               
+                                    
  ░▓              ▒▓▓▓▓▓█▓░          ░▓░ 
   █▒█▒        ▓▓░░▒▒▒▒▒▒▒▒▓█░      ▒▓▓█  
   ▒█▓▒▓▓    ▒▓▒▒▒░░░░▒▒▒▒  ▒▓▒  ░▓▓▓▓▓▓  
@@ -377,6 +380,12 @@ public class Constants {
               ░░▒▓▒▒      ░▒░▒▒▓▓░█▓█░   
         
         """;      
+
+    public static final String GLITCHED_ATTACK = """
+    """;
+
+    public static final String GLITCHED_STATIC = """
+    """;
         
     public static final String EVENBOSS= //38
         """

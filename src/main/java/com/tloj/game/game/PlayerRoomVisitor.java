@@ -56,6 +56,8 @@ public class PlayerRoomVisitor implements Visitor {
         if (room.isCleared()) return;
 
         System.out.println("You've encountered " + room.getMob() + room.getMob().getASCII() + "\n");
+        System.out.println(room.getMob().getPrettifiedStatus());
+
         this.controller.setState(GameState.FIGHTING_MOB);
         
         this.player.heal(1);

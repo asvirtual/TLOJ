@@ -40,7 +40,7 @@ public class StartRoom extends Room {
 
     @Override
     public String toString() {
-        // return this.visited ? Character.toString(0x2229) : Character.toString(0x00A0);
-        return this.visited ? "S" : "*";
+        return this.visited ? Character.toString(0x2229) : Character.toString(0x00A0);
+        // return this.visited ? "S" : " ";
     }
 }

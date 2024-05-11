@@ -2,14 +2,11 @@ package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 /**
@@ -70,7 +67,7 @@ public class LootRoom extends Room {
 
     @Override
     public String toString() {
-        // return this.visited ? "\u255A" : "\u00A0";
-        return this.visited ? "L" : "*";
+        return this.visited ? "\u255A" : "\u00A0";
+        // return this.visited ? "L" : " ";
     }
 }

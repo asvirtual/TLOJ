@@ -154,8 +154,13 @@ public abstract class Mob extends CombatEntity {
         Character target = (Character) t;
         MobAttack attack = new MobAttack(this, target);
 
+        System.out.println(this + " attacks you back!");
+        System.out.println(this.getCombatASCII());
+        
         attack.setDiceRoll(this.dice.roll());
         attack.perform();
+
+        System.out.println(this.getPrettifiedStatus());
     }
        
     public Item getDrop() {
@@ -164,8 +169,14 @@ public abstract class Mob extends CombatEntity {
         return null;
     }
 
+    public String getPrettifiedStatus() {
+        return 
+            this + ":\n" +
+            "HP: " + this.getHpBar() + " " + this.getHP() + "/" + this.getMaxHP() + "\n";
+    }
+
     @Override
     public String toString() {
         return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
-    };
+    }
 }
