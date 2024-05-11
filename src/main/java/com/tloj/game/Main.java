@@ -89,6 +89,6 @@ public class Main {
             levels
         );
 
-        gameData.saveToFile("test.json");
+        // gameData.saveToFile("test.json");
     }
 }

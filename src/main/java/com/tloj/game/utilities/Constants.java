@@ -55,6 +55,19 @@ public class Constants {
                                       [exit]   -  EXIT GAME
     """;
     
+    public static final String GAME_OVER =
+    """
+    
+ _______  _______  __   __  _______    _______  __   __  _______  ______   
+|       ||   _   ||  |_|  ||       |  |       ||  | |  ||       ||    _ |  
+|    ___||  |_|  ||       ||    ___|  |   _   ||  |_|  ||    ___||   | ||  
+|   | __ |       ||       ||   |___   |  | |  ||       ||   |___ |   |_||_ 
+|   ||  ||       ||       ||    ___|  |  |_|  ||       ||    ___||    __  |
+|   |_| ||   _   || ||_|| ||   |___   |       | |     | |   |___ |   |  | |
+|_______||__| |__||_|   |_||_______|  |_______|  |___|  |_______||___|  |_|
+
+    """;
+    
     public static final String INTRO_WAV_FILE_PATH = "src/main/resources/sounds/intro.wav";
     public static final String LOOP_WAV_FILE_PATH = "src/main/resources/sounds/loop.wav";
 

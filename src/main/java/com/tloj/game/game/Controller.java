@@ -106,7 +106,7 @@ class MoveNorthCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.NORTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            System.out.println("You can't go that way!");
         }
     }
 }
@@ -129,7 +129,7 @@ class MoveSouthCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.SOUTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            System.out.println("You can't go that way!");
         }
     }
 }
@@ -152,7 +152,7 @@ class MoveWestCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.WEST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            System.out.println("You can't go that way!");
         }
     }
 }
@@ -175,7 +175,7 @@ class MoveEastCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.EAST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            e.printStackTrace();
+            System.out.println("You can't go that way!");
         } 
     }
 }

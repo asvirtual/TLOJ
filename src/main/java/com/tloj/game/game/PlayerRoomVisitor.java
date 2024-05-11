@@ -67,9 +67,19 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(LootRoom room) {
         room.visit();
-        if (room.isLocked()) this.player.useItem(new SpecialKey());
+        if (room.isLocked()) {
+            if (!this.player.hasItem(new SpecialKey())) {
+                System.out.println("The room is locked! You need a special key to open it!"); // TODO: ASCII art
+                return;
+            }
+
+            this.player.useItem(new SpecialKey());
+            System.out.println("You've used a special key to unlock the room!");
+        }
         
         Item item = room.getItem();
+        if (item == null) return;
+
         System.out.println("You've found a " + item + "!");
         if (this.player.addInventoryItem(item)) {
             this.controller.setState(GameState.MOVING);

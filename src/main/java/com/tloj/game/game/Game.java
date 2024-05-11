@@ -34,6 +34,7 @@ public class Game implements CharacterObserver {
     private int score;
     private Level currentLevel;
     private Character player;
+    @JsonProperty
     private ArrayList<Level> levels;
     private Controller controller;
     @JsonProperty
@@ -157,8 +158,9 @@ public class Game implements CharacterObserver {
 
     public void saveLocally() {
         this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        GameData gameData = this.getGameData();
-        gameData.serializeJSON();
+        GameData.saveToFile(this, "test.json");
+        // GameData gameData = this.getGameData();
+        // gameData.serializeJSON();
         // TODO: Save in JSON file (and/or in cloud)
     }
 
@@ -218,8 +220,8 @@ public class Game implements CharacterObserver {
 
     @Override
     public void onPlayerDefeated() {
-        System.out.println("You've been defeated!");
-        System.out.println("Jordan ended his adventure with " + this.score + "!");
+        System.out.println( "\n" + Constants.GAME_OVER + "\n" );
+        System.out.println("Jordan ended his adventure with " + this.score + "points!");
         this.controller.setState(GameState.MAIN_MENU);
         System.out.println(Constants.GAME_TITLE);
     }

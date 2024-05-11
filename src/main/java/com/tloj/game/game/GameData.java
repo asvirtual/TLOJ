@@ -56,11 +56,11 @@ public class GameData {
         );
     }
 
-    public void saveToFile(String filename) {
+    public static void saveToFile(Game game, String filename) {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            mapper.writeValue(new File(filename), this);
+            mapper.writeValue(new File(filename), game);
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();

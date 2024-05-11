@@ -1,5 +1,6 @@
 package com.tloj.game.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
@@ -36,5 +37,6 @@ public abstract class Entity {
         return bar.toString();
     }
 
+    @JsonIgnore
     public abstract String getASCII();
 }
