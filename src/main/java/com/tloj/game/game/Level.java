@@ -6,11 +6,9 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.rooms.EndRoom;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -23,14 +21,11 @@ import com.tloj.game.utilities.Coordinates;
  * @see StartRoom
  * @see RoomType
  */
-
 public class Level {
     private int levelNumber;
     @JsonProperty
     private ArrayList<ArrayList<Room>> rooms;
     private StartRoom startRoom;
-    private HealingRoom healingRoom;
-    private EndRoom endRoom;
 
     @JsonCreator
     public Level(
@@ -41,28 +36,14 @@ public class Level {
         this.rooms = rooms;
         this.rooms.forEach(row -> { 
             row.forEach(room -> {
-                if (room != null && room.getType() == RoomType.START_ROOM) 
+                if (room != null && room instanceof StartRoom) 
                     this.startRoom = (StartRoom) room;
-                
-                if (room != null && room.getType() == RoomType.HEALING_ROOM) 
-                    this.healingRoom = (HealingRoom) room;
-                
-                if (room != null && room.getType() == RoomType.END_ROOM) 
-                    this.endRoom = (EndRoom) room;
             });
         });
     }
 
     public StartRoom getStartRoom() {
         return this.startRoom;
-    }
-
-    public HealingRoom getHealingRoom() {
-        return this.healingRoom;
-    }
-
-    public EndRoom getEndRoom() {
-        return this.endRoom;
     }
 
     @JsonIgnore

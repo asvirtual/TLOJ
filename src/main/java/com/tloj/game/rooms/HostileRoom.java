@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
@@ -28,6 +29,7 @@ public class HostileRoom extends Room {
         this.mobs = new ArrayList<Mob>();
     }
 
+    @JsonCreator
     public HostileRoom(
         @JsonProperty("coordinates") Coordinates coordinates, 
         @JsonProperty("mobs") ArrayList<Mob> mobs
@@ -70,14 +72,15 @@ public class HostileRoom extends Room {
         this.mobs.add(0, mob);
     }
 
-    public void clear() {
-        super.clear();
+    public void clear(Character player) {
+        super.clear(player);
+        player.heal(1);
+        player.restoreMana(1);
         this.mobs.clear();
     }
     
     @Override
     public String toString() {
         return this.visited ? "\u25A0" : "\u00A0";
-        // return this.visited ? "M" : " ";
     }
 }

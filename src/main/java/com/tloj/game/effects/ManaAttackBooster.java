@@ -30,8 +30,7 @@ public class ManaAttackBooster extends WeaponEffect {
         Character holder = attack.getAttacker();
         if (holder.getMana() < 3) return false;
 
-        Dice dice = this.weapon.getDice();
-        attack.setBonusDamage(dice.roll() + 5);
+        attack.setBonusDamage(this.weapon.diceRoll() + 5);
         holder.useMana(3);
 
         System.out.println("Critical mana damage!");

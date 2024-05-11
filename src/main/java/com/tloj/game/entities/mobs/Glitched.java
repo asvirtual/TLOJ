@@ -25,7 +25,6 @@ import com.tloj.game.entities.Character;
  * @see JunkSlime
  * @see MechaRat
  */
-
 public class Glitched extends Mob implements MovingEntity {
     private static final int HP = 50;
     private static final int ATTACK = 3;
@@ -33,7 +32,9 @@ public class Glitched extends Mob implements MovingEntity {
     private static final int DICE_FACES = 6;
     private static final int XP_DROP = 3;
     private static final int MONEY_DROP = 2;
-    private int turnsLeft = 5;
+    private static final int TURNS_BEFORE_DISAPPEARANCE = 5;
+
+    private int turnsLeft = TURNS_BEFORE_DISAPPEARANCE;
     
     @JsonCreator
     public Glitched(
@@ -58,28 +59,34 @@ public class Glitched extends Mob implements MovingEntity {
         
                 Character player = playerAttack.getAttacker();
                 Level level = player.getCurrentLevel();
-                boolean validLocation = false;
-        
+                
                 int rows = level.getRoomsRowCount();
                 int cols = level.getRoomsColCount();
+                boolean validLocation = false;
         
                 do {
-                    int row = (int) Math.floor(Math.random() * rows);
-                    int col = (int) Math.floor(Math.random() * cols);
-        
+                    int row = (int) Math.floor(Math.random() * rows); // Returns a random number between 0 (inclusive) and rows (exclusive)
+                    int col = (int) Math.floor(Math.random() * cols); // Returns a random number between 0 (inclusive) and cols (exclusive)
                     Coordinates newCoords = new Coordinates(row, col);
-                    if (!level.areCoordinatesValid(newCoords)) continue;
-                    if (level.getRoom(newCoords).getType() != RoomType.HOSTILE_ROOM) 
-                        continue;
-                    
-                    HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
-                    nextRoom.addMobToTop(target);
 
-                    if (target.turnsLeft != 0) target.move(newCoords);
-                    else {
-                        HostileRoom currentRoom = (HostileRoom) level.getRoom(target.getPosition());
+                    if (
+                        newCoords == player.getPosition() ||
+                        !level.areCoordinatesValid(newCoords) || 
+                        level.getRoom(newCoords).getType() != RoomType.HOSTILE_ROOM ||
+                        level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM
+                    ) continue;
+                    
+                    HostileRoom currentRoom = (HostileRoom) player.getCurrentRoom();
+                    HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
+
+                    currentRoom.removeMob(target);
+
+                    if (target.turnsLeft != 0) {
+                        target.move(newCoords);
+                        nextRoom.addMobToTop(target);
+                        System.out.println("A bug in the system teleported the Glitched away! Will it come back?"); // TODO: "Animation" with ASCII arts
+                    } else {
                         System.out.print("The Glitched has gone...");
-                        currentRoom.removeMob(target);
                     }
 
                     validLocation = true;
@@ -90,10 +97,7 @@ public class Glitched extends Mob implements MovingEntity {
 
     @Override
     public void move(Coordinates to) {
-        if (this.turnsLeft != 0) this.position = to;
-        else {
-            System.out.print("The Glitched has gone...");
-        }
+        this.position = to;
     }
 
     @Override

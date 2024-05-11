@@ -19,8 +19,6 @@ interface Visitor {
     void visit(TrapRoom room);
 }
 
-// TODO: What to do with statements here?
-
 public class PlayerRoomVisitor implements Visitor {
     private Character player;
     private Controller controller;
@@ -33,8 +31,9 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(StartRoom room) {
         room.visit();
-        room.clear();
+        room.clear(this.player);
 
+        this.controller.setState(GameState.MOVING);
         this.controller.printMap();
     }
 
@@ -42,7 +41,7 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(BossRoom room) {
         room.visit();
 
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         System.out.println("You've encountered " + room.getBoss() + "\n" + room.getBoss().getASCII() + "\n");
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
@@ -51,37 +50,36 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(HealingRoom room) {
         room.visit();
         this.player.setHp(this.player.getMaxHp());
-        this.player.setMana(this.player.getMana());
+        this.player.setMana(this.player.getMaxMana());
+
+        Controller.clearConsole();
 
         System.out.println(Constants.HEALING_ROOM + "\nWelcome to the healing rooom!");
-
         this.controller.setState(GameState.HEALING_ROOM);
     }
 
     @Override
     public void visit(HostileRoom room) {
         room.visit();
-        this.controller.printMap();
-        if (room.isCleared()) return;
+        if (room.isCleared()) {
+            this.controller.printMap();
+            return;
+        }
 
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         System.out.println("You've encountered " + room.getMob() + room.getMob().getASCII() + "\n");
         this.controller.setState(GameState.FIGHTING_MOB);
-        
-        this.player.heal(1);
-        this.player.restoreMana(1);
     }
 
     @Override
     public void visit(LootRoom room) {
         room.visit();
-    
         if (room.isCleared()) {
             this.controller.printMap();
             return;
         }
         
-        Controller.clearConsole(100);
+        Controller.clearConsole();
 
         if (room.isLocked()) {
             this.player.useItem(new SpecialKey());
@@ -96,7 +94,7 @@ public class PlayerRoomVisitor implements Visitor {
         
         if (this.player.addInventoryItem(item)) {
             this.controller.setState(GameState.MOVING);
-            room.clear();
+            room.clear(this.player);
         } else {
             this.controller.setState(GameState.LOOTING_ROOM);
         }
@@ -105,24 +103,19 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(TrapRoom room) {
         room.visit();
-
         if (room.isCleared()) {
             this.controller.printMap();
             return;
         }
 
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         
         if (!room.triggerTrap(this.player)) {
             this.controller.printMapAndArt(Constants.TRAP_DEFENDER);
             System.out.println("You've dodged the trap! Thanks Windows Defender!");
         }
       
-        room.clear();
-        
-        this.player.heal(1);
-        this.player.restoreMana(1);
-
+        room.clear(this.player);
         room.executeSideEffect();
     }
 
@@ -130,6 +123,9 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(EndRoom room) {
         room.visit();
         this.controller.setState(GameState.WIN);
+
+        Controller.clearConsole();
+        System.out.println("Congratulations! You won the game with " + this.controller.getScore() + " points!");
         System.out.println(Constants.GAME_WIN);
     }
 } 

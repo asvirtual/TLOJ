@@ -3,32 +3,25 @@ package com.tloj.game.entities;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.stream.Stream;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.collectables.items.AttackElixir;
 import com.tloj.game.collectables.items.HealthPotion;
-import com.tloj.game.collectables.items.ManaPotion;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.game.PlayerRoomVisitor;
+import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CharacterSkill;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 
 
-// Needed to avoid circular references with Weapon when serializing/deserializing 
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.IntSequenceGenerator.class, 
-  property = "@id")
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.CLASS, 
@@ -37,9 +30,11 @@ import com.tloj.game.utilities.Dice;
 
 /**
  * Abstract class to represent a character in the game.<br>
- * A Character is a moving entity that can engage in combat, and it is controlled by the user.<br>
+ * A Character is a moving entity that can engage in combat with Mobs, and it is controlled by the user.<br>
  * @see MovingEntity
  * @see CombatEntity
+ * @see Mob
+ * @see PlayerAttack
 */
 public abstract class Character extends CombatEntity implements MovingEntity {
     public static final int REQ_XP_BASE = 10;
@@ -57,17 +52,18 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     /** Experience points, needed to level up */
     protected int xp;
 
-    /** Experience points required */
+    /** Experience points required to reach next level */
     protected int requiredXp;
     /** Current level */
     protected int lvl;
-    /** The maximum weight a Character can carry. The sum of the items' weight in the {@link inventory} shall be lower or equal than this field */
+    /** The maximum weight a Character can carry. The sum of the items' weight in the inventory shall always be lower or equal than this field */
     protected int maxWeight;
     protected int money;
     /** A collection of {@link Item}s the Character carries during the game */
     protected ArrayList<Item> inventory;
     protected Weapon weapon;
     protected Level currentLevel;
+    protected Room currentRoom;
     protected PlayerAttack currentAttack;
     protected CharacterSkill skill;
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
@@ -86,8 +82,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
      * @param inventory The character's inventory<br>
      * @param position The character's position<br>
      * @see com.tloj.game.entities.Entity
-     * @see com.tloj.game.entities.MovingEntity
-     * @see com.tloj.game.entities.CombatEntity 
      */
     protected Character(
         int hp,
@@ -112,8 +106,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.inventory = inventory;
         this.weapon = weapon;
 
-        if (weapon != null) this.weapon.assignTo(this);
-        this.reqXpUpdate();
+        this.updateRequiredXp();
     }
 
     /** 
@@ -127,8 +120,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
      * @param weapon The character's weapon<br>
      * @param position The character's position<br>
      * @see Entity
-     * @see MovingEntity
-     * @see CombatEntity
     */
     protected Character(
         int hp,
@@ -148,10 +139,9 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.money = money;
         this.inventory = new ArrayList<Item>();
         this.weapon = weapon;
-        if (weapon != null) this.weapon.assignTo(this);
 
         this.inventory.add(new HealthPotion());
-        this.reqXpUpdate();
+        this.updateRequiredXp();
     }
 
     public Weapon getWeapon() {
@@ -161,9 +151,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @JsonIgnore
     public double getCarriedWeight() {
         double weight = this.weapon.getWeight();
-        for (Item item : this.inventory)
-            weight += item.getWeight();
-
+        for (Item item : this.inventory) weight += item.getWeight();
         return Math.floor(weight * 10) / 10;
     }
 
@@ -182,6 +170,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public boolean canAfford(PurchasableItem item) {
         return this.money >= item.getPrice();
+    }
+
+    public int getLvl() {
+        return this.lvl;
     }
 
     public int getHp() {
@@ -220,8 +212,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.currentLevel;
     }
 
+    public Room getCurrentRoom() {
+        return this.currentRoom;
+    }
+
     public void setCurrentLevel(Level level) {
         this.currentLevel = level;
+        this.currentRoom = this.currentLevel.getStartRoom();
+        this.position = this.currentRoom.getCoordinates();
     }
 
     public void useMana(int amount) {
@@ -275,16 +273,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return false;
     }
 
-    public Item getItem(String itemName) {
+    @JsonIgnore
+    public Item getItemByName(String itemName) {
         for (Item item : this.inventory) 
             if (itemName.equalsIgnoreCase(item.toString())) return item;
 
         return null;
-    }
-
-    @JsonIgnore
-    public Stream<Item> getInventoryStream() {
-        return this.inventory.stream();
     }
 
     /*
@@ -303,6 +297,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @Override
     public void move(Coordinates to) {
         this.position = to;
+        this.currentRoom = this.currentLevel.getRoom(to);
     }
 
     public void useSkill() {
@@ -317,13 +312,19 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         Mob target = (Mob) t;
 
         if (this.currentAttack == null) this.currentAttack = new PlayerAttack(this, target);
-        else this.currentAttack.setTarget(target);
+        else {
+            if (target != this.currentAttack.getTarget()) {
+                PlayerRoomVisitor visitor = new PlayerRoomVisitor(this);
+                this.currentRoom.accept(visitor);
+            }
+
+            this.currentAttack.setTarget(target);
+        }
 
         if (this.weapon != null) this.weapon.modifyAttack(this.currentAttack);
         target.defend(this.currentAttack);
 
         this.currentAttack.perform();
-        this.currentAttack = null;
 
         if (!target.isAlive()) {
             if (target instanceof Boss) this.observers.forEach(observer -> observer.onBossDefeated());
@@ -342,15 +343,15 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void lootMob(Mob mob) {
-        System.out.println("You gain " + mob.xpDrop * mob.lvl + " experience points and " + mob.moneyDrop + " BTC");
+        System.out.println("You gain " + mob.dropXp() + " experience points and " + mob.getMoneyDrop() + " BTC");
 
-        this.addXp(mob.xpDrop * mob.lvl);
-        this.money += mob.moneyDrop;
+        this.addXp(mob.dropXp());
+        this.money += mob.getMoneyDrop();
 
         Item drop = mob.getDrop();
         if (drop == null) return;
         if (this.getCarriedWeight() + drop.getWeight() > this.maxWeight) return;
-        if (this.addInventoryItem(drop)) System.out.println("You found a " + drop);
+        if (this.addInventoryItem(drop)) System.out.println(mob + " dropped a " + drop);
     }
 
     public void useItem(ConsumableItem item) {
@@ -362,7 +363,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if (this.xp >= this.requiredXp) this.levelUp();
     }
 
-    public void reqXpUpdate() {
+    public void updateRequiredXp() {
         this.requiredXp += REQ_XP_BASE * this.lvl;
     }
 
@@ -372,7 +373,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
         this.lvl++;
         this.xp = 0;
-        this.reqXpUpdate();
+        this.updateRequiredXp();
         this.maxHp += fiveDice.roll();
         this.hp = this.maxHp;
         this.maxMana += fiveDice.roll();
@@ -391,7 +392,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public void swapWeapon(int index) {
         if (index < 1 || index > this.getInventorySize()) {
-            System.out.println("Invalid index");
+            System.out.println("Invalid choice");
             return;
         }
 
@@ -400,11 +401,9 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             this.inventory.add(this.weapon);
 
             this.weapon = (Weapon) item;
-            this.weapon.assignTo(this);
-
             this.inventory.remove(item);
         } else {
-            System.out.println("This item is not a weapon");
+            System.out.println(item + " is not a weapon");
         }
     }
 
@@ -412,6 +411,20 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public void takeDamage(int damage) {
         super.takeDamage(damage);
         if (!this.isAlive()) this.observers.forEach(observer -> observer.onPlayerDefeated());
+    }
+
+    @JsonIgnore
+    public int getItemCount(Item item) {
+        int count = 0;
+        for (Item i : this.inventory) 
+            if (i.getId() == item.getId()) count++;
+
+        return count;
+    }
+
+    @Override 
+    public String getCombatASCII() {
+        return "";
     }
 
     @JsonIgnore
@@ -452,19 +465,5 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             " ⸭ BTC: " + this.money + "\n";
 
         return status;
-    }
-
-    @JsonIgnore
-    public int getItemCount(Item item) {
-        int count = 0;
-        for (Item i : this.inventory) 
-            if (i.getId() == item.getId()) count++;
-
-        return count;
-    }
-
-    @Override 
-    public String getCombatASCII() {
-        return "";
     }
 }

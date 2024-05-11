@@ -219,7 +219,7 @@ class AttackCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         this.game.playerAttack();
     }
 }
@@ -386,6 +386,7 @@ class QuitCommand extends GameCommand {
         this.game.uploadToCloud();
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
+        System.out.println(Constants.GAME_TITLE);
     }
 }
 
@@ -501,6 +502,7 @@ class ReturnCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         this.game.returnToStart();
+        this.game.printMap();
     }
 }
 /**
@@ -520,7 +522,7 @@ class PrintStatusCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        this.game.printPlayerStatus();
+        System.out.println(this.player + "\n");
     }
 }
 
@@ -560,9 +562,9 @@ class MerchantCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
-        Merchant merchant = (Merchant) room.getFriendlyEntity(Merchant.NAME);
+        Merchant merchant = (Merchant) room.getFriendlyEntityByName(Merchant.NAME);
         if (merchant != null) merchant.interact(this.player);
     }
 }
@@ -586,7 +588,7 @@ class BuyCommand extends GameCommand {
         if (!Controller.awaitConfirmation()) return;
 
         HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
-        Merchant merchant = (Merchant) room.getFriendlyEntity(Merchant.NAME);
+        Merchant merchant = (Merchant) room.getFriendlyEntityByName(Merchant.NAME);
         
         try {
             if (merchant != null) merchant.buy(Integer.parseInt(this.commands[1]));
@@ -612,9 +614,9 @@ class SmithCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
 
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
-        Smith smith = (Smith) room.getFriendlyEntity(Smith.NAME);
+        Smith smith = (Smith) room.getFriendlyEntityByName(Smith.NAME);
         if (smith != null) smith.interact(this.game.getPlayer());
     }
 }
@@ -659,7 +661,7 @@ class NewGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         this.controller.newGame();
         System.out.println("Choose your starting character: 1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
     }
@@ -681,7 +683,7 @@ class LoadGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         this.controller.loadGame();
     }
 }
@@ -701,7 +703,7 @@ class ExitGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole(100);
+        Controller.clearConsole();
         this.controller.setState(GameState.EXIT);
     }
 }
@@ -732,18 +734,18 @@ class ChooseCharacterGameCommand extends GameCommand {
         } + "\n");
 
         if (!Controller.awaitConfirmation()) {
-            Controller.clearConsole(100);
+            Controller.clearConsole();
             System.out.println("Choose your starting character: 1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
             return;
         }
 
-        Controller.clearConsole(100);
+        Controller.clearConsole();
 
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
-        this.controller.setPlayer(factory.create());
+        this.game.setPlayer(factory.create());
         this.controller.setState(GameState.MOVING);
 
-        System.out.println(this.controller.getPlayer() + "\n" + this.controller.getPlayer().getASCII());
+        System.out.println(this.game.getPlayer() + "\n" + this.game.getPlayer().getASCII());
     }
 }
 
@@ -874,7 +876,6 @@ public class Controller {
     private static Controller instance;
     private static Scanner scanner;
     private Game game;
-    private Character player;
     private MusicPlayer musicPlayer;
     /**
      * Stack to keep track of the game states<br>
@@ -887,10 +888,17 @@ public class Controller {
         this.history.push(GameState.MAIN_MENU);
     }
 
+    /**
+     * Await user confirmation before proceeding with an action
+     * @return true if the user confirms the action, false otherwise
+     */
     public static boolean awaitConfirmation() {
         System.out.println("Are you sure? (yes/no)");
+        String input;
+        do {
+            input = Controller.scanner.nextLine();
+        } while (!input.matches("(yes|y|no|n)"));
 
-        String input = Controller.scanner.nextLine();
         return input.matches("(yes|y)");
     }
 
@@ -915,40 +923,47 @@ public class Controller {
         this.history.pop();
     }
 
-    public Character getPlayer() {
-        return this.player;
+    public void setGame(Game game) {
+        this.game = game;
     }
 
-    public void setPlayer(Character player) {
-        this.player = player;
-        this.game.setPlayer(player);
-        this.player.setCurrentLevel(this.game.getLevel());
+    public int getScore() {
+        return this.game.getScore();
     }
 
     public void printMap() {
-        if (this.game != null) this.game.printMap();
+        this.game.printMap();
     }
-    
+
+    /**
+     * Prints an ASCII art and the game map side by side
+     * @param asciiArt the ASCII art to be printed
+     */
     public void printMapAndArt(String asciiArt){
         String[] asciiArtLines = asciiArt.split("\n");
         String[] mapLines = this.game.generateMapLines();
-    
+
+        // Offset of the map from the top of the console
+        final int OFFSET_ROWS = 5; 
+        
+        // Find the maximum number of rows between the ASCII art and the map
         int maxLines = Math.max(asciiArtLines.length, mapLines.length);
+
+        // Find the maximum number of columns in the ASCII art (to pad the map with spaces)
         int maxRows = asciiArtLines[0].length();
         for (int i = 1; i < asciiArtLines.length; i++)
             if (asciiArtLines[i].length() > maxRows) maxRows = asciiArtLines[i].length();
     
         for (int i = 0; i < maxLines; i++) {
             String asciiArtLine = i < asciiArtLines.length ? asciiArtLines[i] : "";
-            String filler = " ".repeat(maxRows - asciiArtLine.length());
-            String mapLine = (0 < (i - 5) && (i - 5) < mapLines.length) ? mapLines[i - 5] : "";
-    
-            System.out.println(asciiArtLine + filler + "\t\t\t\t\t\t\t" + mapLine);
+            String pad = " ".repeat(maxRows - asciiArtLine.length());
+            // Offset the map by 5 rows
+            String mapLine = (i >= OFFSET_ROWS && (i - OFFSET_ROWS) < mapLines.length) ? mapLines[i - OFFSET_ROWS] : "";
+            
+            // Print a label for the map just above it
+            if (i == OFFSET_ROWS - 1) mapLine = "  Map:";
+            System.out.println(asciiArtLine + pad + "\t\t\t\t" + mapLine);
         }
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
     }
 
     /*
@@ -957,7 +972,6 @@ public class Controller {
      */
     public void newGame() {
         ArrayList<Level> map = GameData.deserializeMap(Constants.MAP);
-        
         // ArrayList<Level> map = GameData.deserializeMapFromFile("map.json");
         Game game = new Game(map);
         game.setSeed(1);
@@ -983,6 +997,8 @@ public class Controller {
      * @return the command object to be executed
      */
     private GameCommand getCommand(String[] commands) {
+        if (commands[0].matches("\\d+")) return new ChooseCharacterGameCommand(this.game, commands);
+
         Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
             Map.ofEntries(
                 Map.entry("new", () -> new NewGameCommand(this.game, commands)),
@@ -1012,8 +1028,6 @@ public class Controller {
                 Map.entry("give", () -> new GiveCommand(this.game, commands))
             )
         );
-
-        if (commands[0].matches("\\d+")) return new ChooseCharacterGameCommand(this.game, commands);
         
         Supplier<GameCommand> command = commandMap.get(commands[0]);
         if (command != null) return command.get();
@@ -1046,7 +1060,7 @@ public class Controller {
      */
     public void handleUserInput(String input) {
         if (this.getState() == GameState.WIN) {
-            Controller.clearConsole(100);
+            Controller.clearConsole();
             System.out.println(Constants.GAME_TITLE);
             this.setState(GameState.MAIN_MENU);
             return;
@@ -1112,12 +1126,26 @@ public class Controller {
         }
     }
 
+    public static void clearConsole() {
+        final int DEFAULT_DELAY = 100;
+        Controller.clearConsole(DEFAULT_DELAY);
+    }
+
+    public static void wait(int delay) {
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            System.out.println("Error waiting");
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Main game loop
      */
     public void run() {
         Controller.setConsoleEncoding();
-        Controller.clearConsole(100);
+        Controller.clearConsole();
 
         this.musicPlayer = new MusicPlayer(
             Constants.INTRO_WAV_FILE_PATH,
@@ -1136,15 +1164,10 @@ public class Controller {
         System.out.println(Constants.GAME_TITLE);
 
         while (this.getState() != GameState.EXIT) {
-            if (this.game != null) {
-                this.player = this.game.getPlayer();
-                if (this.player != null) {
-                    System.out.print(
-                        "You: \n" + 
-                        "HP:   " + this.player.getHpBar() + " " + this.player.getHp() + "/" + this.player.getMaxHp() + 
-                        "\nMana: " + this.player.getManaBar() + " " + this.player.getMana() + "/" + this.player.getMaxMana() + "\n\n"
-                    );
-
+            if (this.game != null && this.getState() != GameState.WIN) {
+                Character player = this.game.getPlayer();
+                if (player != null) {
+                    System.out.print(player.getPrettifiedStatus());
                     System.out.println("What to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
                 }
             }

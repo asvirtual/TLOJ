@@ -55,6 +55,13 @@ public class TrapRoom extends Room {
     }
 
     @Override
+    public void clear(Character player) {
+        super.clear(player);
+        player.heal(1);
+        player.restoreMana(1);
+    }
+
+    @Override
     public String toString() {
         return this.visited ? "\u2566" : "\u00A0";
         // return this.visited ? "T" : " ";

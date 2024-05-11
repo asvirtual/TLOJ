@@ -4,6 +4,7 @@ import com.tloj.game.utilities.Coordinates;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tloj.game.entities.Character;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
@@ -56,8 +57,8 @@ public class LootRoom extends Room {
         visitor.visit(this);
     }
   
-    public void clear() {
-        super.clear();
+    public void clear(Character player) {
+        super.clear(player);
         this.item = null;
     }
 

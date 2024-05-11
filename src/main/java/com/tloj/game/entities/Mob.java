@@ -6,10 +6,12 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
+import com.tloj.game.entities.CombatEntity;
 
 
-// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+// Needed to serialize/deserialize subclasses of Mob, by including the class name in the JSON
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.CLASS, 
   include = JsonTypeInfo.As.PROPERTY, 
@@ -20,9 +22,8 @@ import com.tloj.game.game.MobAttack;
  * Represents a mob in the game. <br>
  * Mobs are entities that can be attacked and defeated by the player. <br>
  * @see CombatEntity
- * @see Attack
+ * @see MobAttack
  */
-
 public abstract class Mob extends CombatEntity {
     /** Mobs have a 10% chance to drop an item */
     public static final int DROP_CHANCE = 10;
@@ -40,6 +41,7 @@ public abstract class Mob extends CombatEntity {
     protected Item drop;
     
     /**
+     * Constructor for the Mob class with a random drop<br>
      * @param hp The mob's health points<br>
      * @param atk The mob's attack points<br>
      * @param def The mob's defense points<br>
@@ -61,7 +63,13 @@ public abstract class Mob extends CombatEntity {
         int moneyDrop,
         Coordinates position
     ) {
-        super(hp * lvl, atk * Mob.levelUpFactor(lvl), def * Mob.levelUpFactor(lvl), position);
+        super(
+            hp * lvl, 
+            atk * Mob.levelUpFactor(lvl), 
+            def * Mob.levelUpFactor(lvl), 
+            position
+        );
+
         this.lvl = lvl;
         this.xpDrop = xpDrop;
         this.moneyDrop = moneyDrop;
@@ -70,6 +78,7 @@ public abstract class Mob extends CombatEntity {
     }
 
     /**
+     * Constructor for the Mob class with a specific drop<br>
      * @param hp The mob's health points<br>
      * @param atk The mob's attack points<br>
      * @param def The mob's defense points<br>
@@ -94,18 +103,20 @@ public abstract class Mob extends CombatEntity {
         Item drop
         
     ) {
-        super(hp * lvl, atk * Mob.levelUpFactor(lvl) , def * Mob.levelUpFactor(lvl), position);
+        super(
+            hp * lvl, 
+            atk * Mob.levelUpFactor(lvl), 
+            def * Mob.levelUpFactor(lvl), 
+            position
+        );
+
         this.lvl = lvl;
-        
         this.xpDrop = xpDrop;
         this.moneyDrop = moneyDrop;
         this.dice = new Dice(diceFaces);
         this.drop = drop;   
     }
 
-    /*
-     * All getters and setters needed from Jackson
-     */
     public int getLvl() {
         return this.lvl;
     }
@@ -116,6 +127,10 @@ public abstract class Mob extends CombatEntity {
 
     public int getXpDrop() {
         return this.xpDrop;
+    }
+
+    public int dropXp() {
+        return this.xpDrop * this.lvl;
     }
 
     public void setXpDrop(int xpDrop) {
@@ -130,10 +145,6 @@ public abstract class Mob extends CombatEntity {
         this.moneyDrop = moneyDrop;
     }
 
-    public Dice getDice() {
-        return this.dice;
-    }
-
     public void setDice(Dice dice) {
         this.dice = dice;
     }
@@ -142,7 +153,13 @@ public abstract class Mob extends CombatEntity {
         this.drop = drop;
     }
 
-    private static int levelUpFactor(int lvl){
+    /**
+     * The level up factor for the mob<br>
+     * It is calculated as 1 + log(lvl) / log(8)<br>
+     * @param lvl
+     * @return
+     */
+    private static int levelUpFactor(int lvl) {
         return
             lvl = lvl == 1 ? 1
             : (int) (1 + Math.log(lvl) / (int) Math.log(8));
@@ -155,11 +172,20 @@ public abstract class Mob extends CombatEntity {
         Character target = (Character) t;
         MobAttack attack = new MobAttack(this, target);
 
+        Controller.clearConsole();
+
+        System.out.println(this + " attacks you back!");
+        System.out.println(this.getASCII());
+        
+        Controller.clearConsole(1500);
+
         System.out.println(this + " attacks you back!");
         System.out.println(this.getCombatASCII());
         
         attack.setDiceRoll(this.dice.roll());
         attack.perform();
+
+        Controller.wait(1000);
 
         System.out.println(this.getPrettifiedStatus());
     }

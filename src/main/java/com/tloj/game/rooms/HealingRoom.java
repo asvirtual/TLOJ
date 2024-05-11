@@ -2,13 +2,9 @@ package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.Coordinates;
 
-import java.util.ArrayList;
-import java.util.stream.Stream;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.FriendlyEntity;
-import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.game.PlayerRoomVisitor;
@@ -24,7 +20,7 @@ import com.tloj.game.game.PlayerRoomVisitor;
  * @see HostileRoom
  * @see StartRoom
  */
-public class HealingRoom extends Room {
+public class HealingRoom extends StartRoom {
     @JsonCreator
     public HealingRoom(
         @JsonProperty("coordinates") Coordinates coordinates

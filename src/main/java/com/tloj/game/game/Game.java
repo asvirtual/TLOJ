@@ -9,7 +9,6 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.SpecialKey;
-import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
@@ -27,11 +26,7 @@ import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
 
 
-public class Game implements CharacterObserver {    
-    public static final int DEFAULT_LEVELS_COUNT = 3;
-    public static final int DEFAULT_ROOMS_ROWS = 6;
-    public static final int DEFAULT_ROOMS_COLS = 6;
-
+public class Game implements CharacterObserver {
     private long seed;
     private int score;
     private Level currentLevel;
@@ -81,8 +76,8 @@ public class Game implements CharacterObserver {
         return this.score;
     }
 
-    public void updateScore(int score) {
-        this.score += score;
+    public void increaseScore(int amount) {
+        this.score += amount;
     }
     
     public long getSeed() {
@@ -96,6 +91,7 @@ public class Game implements CharacterObserver {
 
     public void setPlayer(Character player) {
         this.player = player;
+        this.player.setCurrentLevel(this.currentLevel);
         this.player.addObserver(this);
     }
 
@@ -107,57 +103,38 @@ public class Game implements CharacterObserver {
         return this.currentLevel;
     }
 
-    public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException, IllegalStateException {
-        if (this.controller.getState() == GameState.FIGHTING_BOSS || this.controller.getState() == GameState.FIGHTING_MOB)
-            throw new IllegalStateException("Cannot move while fighting");
-            
+    public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException {    
+        PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player); 
+
         if (this.controller.getState() == GameState.BOSS_DEFEATED || this.getCurrentRoom().getType() == RoomType.HEALING_ROOM) {
+            /**
+             * Move to the next level (level numbers are 1-based, so this.currentLevel.getLevelNumber() 
+             * is the index of the next level in the levels (0-based) list)
+            */
             this.currentLevel = this.levels.get(this.currentLevel.getLevelNumber());
             this.player.setCurrentLevel(this.currentLevel);
-            
-            if (this.currentLevel.getStartRoom() != null) {
-                this.player.setPosition(this.currentLevel.getStartRoom().getCoordinates());
-                this.controller.setState(GameState.MOVING);
-                this.currentLevel.getStartRoom().accept(new PlayerRoomVisitor(this.player));
-            } else if (this.currentLevel.getHealingRoom() != null) {
-                HealingRoom healingRoom = this.currentLevel.getHealingRoom();
-                this.player.setPosition(healingRoom.getCoordinates());
 
-                Controller.clearConsole(100);
-
-                this.controller.setState(GameState.HEALING_ROOM);
-                healingRoom.accept(new PlayerRoomVisitor(this.player));
-            } else {
-                EndRoom endRoom = this.currentLevel.getEndRoom();
-                this.player.setPosition(endRoom.getCoordinates());
-
-                Controller.clearConsole(100);
-
-                endRoom.accept(new PlayerRoomVisitor(this.player));
-                System.out.println("Congratulations! You won the game with " + this.score + " points!");
-                this.player = null;
-            }
+            if (this.currentLevel.getStartRoom() != null)
+                this.currentLevel.getStartRoom().accept(playerRoomVisitor);
 
             return;
         }
 
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
+
         if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
-        if (this.currentLevel.getRoom(newCoordinates).isLocked() && !this.player.hasItem(new SpecialKey())) throw new IllegalArgumentException("That room is locked");
+        if (
+            this.currentLevel.getRoom(newCoordinates).isLocked() && 
+            !this.player.hasItem(new SpecialKey())
+        ) throw new IllegalArgumentException("That room is locked");
         
         this.player.move(newCoordinates);
 
-        PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player);
-        this.currentLevel.getRoom(newCoordinates).accept(playerRoomVisitor);
+        Room room = this.currentLevel.getRoom(newCoordinates);
+        room.accept(playerRoomVisitor);
     }
 
-    public void playerAttack() throws IllegalStateException {
-        if (
-            (this.controller.getState() != GameState.FIGHTING_BOSS && this.controller.getState() != GameState.FIGHTING_MOB) ||
-            (this.getCurrentRoom().getType() != RoomType.BOSS_ROOM && this.getCurrentRoom().getType() != RoomType.HOSTILE_ROOM)
-        )
-            throw new IllegalStateException("Cannot attack outside of a fight");
-
+    public void playerAttack() {
         /** 
          * Player in a HostileRoom/BossRoom, attack its Mob/Boss
         */
@@ -166,26 +143,18 @@ public class Game implements CharacterObserver {
         this.player.attack(mob);
         
         if (mob.isAlive()) {
-            Controller.clearConsole(2000);
+            Controller.clearConsole(1000);
             mob.attack(this.player);
         }
     }
 
-    public void usePlayerSkill() throws IllegalStateException {
-        if (
-            (this.controller.getState() != GameState.FIGHTING_BOSS && this.controller.getState() != GameState.FIGHTING_MOB) ||
-            (this.getCurrentRoom().getType() != RoomType.BOSS_ROOM && this.getCurrentRoom().getType() != RoomType.HOSTILE_ROOM)
-        )
-            throw new IllegalStateException("Cannot use skill outside of a fight");
-
+    public void usePlayerSkill() {
         this.player.useSkill();
     }
 
     public void saveLocally() {
         this.elapsedTime += new Date().getTime() - this.sessionStartTime;
         GameData.saveToFile(this, "test.json");
-        // GameData gameData = this.getGameData();
-        // gameData.serializeJSON();
         // TODO: Save in JSON file (and/or in cloud)
     }
 
@@ -208,7 +177,7 @@ public class Game implements CharacterObserver {
         if (item instanceof PurchasableItem)
             this.player.setMoney(
                 this.player.getMoney() + 
-                ((PurchasableItem) this.player.getInventoryItem(index - 1)).getPrice()
+                ((PurchasableItem) this.player.getInventoryItem(index - 1)).getPrice() / 2
             );
 
         this.player.removeInventoryItem(index - 1);
@@ -224,12 +193,12 @@ public class Game implements CharacterObserver {
 
         System.out.println("You've defeated the " + mob + "!\n");
         
-        this.updateScore(Mob.SCORE_DROP);
+        this.increaseScore(Mob.SCORE_DROP);
 
         if (room.getMobsCount() == 1) {
-            room.clear();
+            room.clear(this.player);
             this.controller.setState(GameState.MOVING);
-            this.controller.printMap();
+            this.printMap();
         } else {
             room.removeMob(mob);
             Controller.clearConsole(2000);
@@ -242,23 +211,31 @@ public class Game implements CharacterObserver {
         BossRoom room = (BossRoom) this.getCurrentRoom();
         Boss boss = room.getBoss();
 
-        room.clear();
+        room.clear(this.player);
 
         /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
         this.player.resetFightStats();
         this.player.lootMob(boss);
 
         System.out.println("You've defeated " + boss + "!\n");
-        this.updateScore(Boss.SCORE_DROP);
+        this.increaseScore(Boss.SCORE_DROP);
         this.controller.setState(GameState.BOSS_DEFEATED);
     }
 
     @Override
     public void onPlayerDefeated() {
-        System.out.println( "\n" + Constants.GAME_OVER + "\n" );
-        System.out.println("Jordan ended his adventure with " + this.score + "points!");
-        System.out.println(Constants.GAME_TITLE);
+        System.out.println(
+            "\n" + Constants.GAME_OVER + "\n" +
+            "Jordan ended his adventure with " + this.score + "points!\n" +
+            Constants.GAME_TITLE
+        );
+
         this.controller.setState(GameState.MAIN_MENU);
+    }
+
+    @Override
+    public void onPlayerLevelUp() {
+        System.out.println("You've leveled up! You are now level " + this.player.getLvl() + "!\n");
     }
 
     public void printMap(){
@@ -305,18 +282,15 @@ public class Game implements CharacterObserver {
     }
     
     public void returnToStart() {
-        this.player.move(this.currentLevel.getStartRoom().getCoordinates());
-    }
-
-    public void printPlayerStatus() {
-        System.out.println(this.player + "\n");
+        Coordinates startCoordinates = this.currentLevel.getStartRoom().getCoordinates();
+        this.player.move(startCoordinates);
     }
 
     public void giveItem(String receiverName, String itemName) {
-        Item item = this.player.getItem(itemName);
+        Item item = this.player.getItemByName(itemName);
         if (item == null) return;
 
-        FriendlyEntity entity = this.getCurrentRoom().getFriendlyEntity(receiverName);
+        FriendlyEntity entity = this.getCurrentRoom().getFriendlyEntityByName(receiverName);
         
         if (entity == null) {
             System.out.println("There is no such entity in this room");
@@ -337,41 +311,33 @@ public class Game implements CharacterObserver {
     public String getAvailableDirections() {
         Coordinates coordinates = this.player.getPosition();
         String directions = "You can: \n";
-        String N = "[gn] ";
-        String S = "[gs] ";
-        String E = "[ge] ";
-        String W = "[gw] ";
-        String Nb = "[gn - Something's off... ]";
-        String Sb = "[gs - Something's off... ]";
-        String Eb = "[ge - Something's off... ]";
-        String Wb = "[gw - Something's off... ]";
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH)).getType() == RoomType.BOSS_ROOM)
-                directions += Nb;
+                directions += "[gn - Something's off... ]";
             else
-                directions += N;    
+                directions += "[gn] ";    
         }
         
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH)).getType() == RoomType.BOSS_ROOM)
-                directions += Sb;
+                directions += "[gs - Something's off... ]";
             else
-                directions += S;  
+                directions += "[gs] ";  
         }
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST)).getType() == RoomType.BOSS_ROOM)
-                directions += Eb;
+                directions += "[ge - Something's off... ]";
             else
-                directions += E;
+                directions += "[ge] ";
         }
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST)).getType() == RoomType.BOSS_ROOM)
-                directions += Wb;
+                directions += "[gw - Something's off... ]";
             else
-                directions += W;    
+                directions += "[gw] ";    
         }
         
         return directions;

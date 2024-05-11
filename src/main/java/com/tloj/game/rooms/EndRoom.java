@@ -6,7 +6,7 @@ import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.utilities.Coordinates;
 
 
-public class EndRoom extends Room {
+public class EndRoom extends StartRoom {
     @JsonCreator
     public EndRoom(@JsonProperty("coordinates") Coordinates coordinates) {
         super(coordinates);

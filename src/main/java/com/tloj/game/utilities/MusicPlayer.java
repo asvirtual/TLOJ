@@ -32,6 +32,13 @@ public class MusicPlayer {
     public MusicPlayer(String pathName, Runnable onEnd) {
         this.file = new File(pathName);
         this.onEnd = onEnd;
+        this.listener = new LineListener() {
+            @Override
+            public void update(LineEvent event) {
+                if (event.getType() == LineEvent.Type.STOP) 
+                    if (onEnd != null) onEnd.run();
+            }
+        };
     }
 
     public void setNewFile(String pathName) {
@@ -65,6 +72,10 @@ public class MusicPlayer {
         volumeControl.setValue(amount);
     }
 
+    public void playMusic() {
+        this.playMusic(false);
+    }
+
     public void playMusic(boolean loop) {
         this.stop();
         this.playingThread = new Thread(() -> {
@@ -77,12 +88,13 @@ public class MusicPlayer {
                 this.playingClip = AudioSystem.getClip();
                 try (AudioInputStream stream = AudioSystem.getAudioInputStream(this.file)) {
                     this.playingClip.open(stream);
+
+                    this.playingClip.addLineListener(this.listener);
+    
+                    this.playingClip.start();
+                    if (loop) this.playingClip.loop(Clip.LOOP_CONTINUOUSLY);
                 }
 
-                this.playingClip.addLineListener(this.listener);
-
-                if (loop) this.playingClip.loop(Clip.LOOP_CONTINUOUSLY);
-                else this.playingClip.start();
             } catch (LineUnavailableException e) {
                 System.out.println("Error playing music file");
                 e.printStackTrace();

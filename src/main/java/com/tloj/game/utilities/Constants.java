@@ -610,7 +610,7 @@ public static final String DATA_THIEF =
 
     """;
 
-    public static final String BASE_PAYER = 
+    public static final String BASE_PLAYER = 
     """
       ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
       ░░░░░░░░░░░░░░░░░░░░░░▒▓▓▓▓▒░░░░░░░░░░░░░░░░░░░░░
@@ -794,10 +794,6 @@ public static final String DATA_THIEF =
     ░░░▒▓▓█████▓█████████████▓▓▓▓▓▓▓██░░░░░░░
 
    """;
-
-  public static final String BASE_PLAYER = """
-      
-  """;
 
   public static final String MERCHANT = """
 

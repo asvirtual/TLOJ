@@ -4,7 +4,6 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.game.PlayerAttack;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**

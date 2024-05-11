@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * A dice is a random number generator with a minimum and maximum value<br>
  * The dice can be rolled to get a random number between the minimum and maximum values<br>
  */
-
 public class Dice {
     private int min;
     private int max;
@@ -44,14 +43,13 @@ public class Dice {
     
     public int roll() {
         return Dice.random.nextInt(max - min + 1) + min;
-        // return (int) (Math.random() * (this.max - this.min + 1)) + 1;
     }
 
     public static void setSeed(long seed) {
         Dice.random = new Random(seed);
     }
 
-    @Override 
+    @Override
     public String toString() {
         return "D" + (this.max - this.min + 1);
     }

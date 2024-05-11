@@ -7,7 +7,5 @@ public interface CharacterObserver {
     public void onMobDefeated(Mob mob);
     public void onBossDefeated();
     public void onPlayerDefeated();
-    // TODO: Decide if these methods should be deleted
-    // public void onPlayerLevelUp();
-    // public void onPlayerMove();
+    public void onPlayerLevelUp();
 }

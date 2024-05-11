@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.FriendlyEntity;
+import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
 
@@ -42,6 +43,7 @@ public abstract class Room {
     @JsonIgnore
     public abstract RoomType getType();
     public abstract void accept(PlayerRoomVisitor visitor);
+    
     public abstract String toString();
     
     public Coordinates getCoordinates() {
@@ -56,7 +58,7 @@ public abstract class Room {
         return cleared;
     }
 
-    public void clear() {
+    public void clear(Character player) {
         this.cleared = true;
     }
 
@@ -72,7 +74,7 @@ public abstract class Room {
         this.visited = false;
     }
 
-    public FriendlyEntity getFriendlyEntity(String name) {
+    public FriendlyEntity getFriendlyEntityByName(String name) {
         return this.friendlyEntities.stream().filter(entity -> entity.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 }

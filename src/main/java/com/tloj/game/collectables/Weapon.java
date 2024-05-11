@@ -1,21 +1,12 @@
 package com.tloj.game.collectables;
 
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Dice;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.tloj.game.effects.WeaponEffect;
-import com.tloj.game.entities.Character;
 
 
-
-// Needed to avoid circular references with Weapon when serializing/deserializing 
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.IntSequenceGenerator.class, 
-  property = "@id")
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.CLASS, 
@@ -36,7 +27,6 @@ public abstract class Weapon extends Item {
     @JsonIgnore
     protected WeaponEffect effect;
     protected Dice dice;
-    protected Character character;
     protected int lvl;
 
     public Weapon(double weight, int diceFaces, int ID) {
@@ -45,12 +35,12 @@ public abstract class Weapon extends Item {
         this.lvl = 0;
     }
 
-    public Dice getDice() {
-        return dice;
-    }
-
     public WeaponEffect getEffect() {
         return effect;
+    }
+
+    public int getDiceFaces() {
+        return dice.getFaces();
     }
 
     public void upgrade(int lvl) {
@@ -59,15 +49,6 @@ public abstract class Weapon extends Item {
     
     public int diceRoll() {
         return dice.roll() + this.lvl;
-    }
-
-    public void assignTo(Character character) {
-        this.character = character;
-    }
-
-    @JsonIgnore
-    public Character getHolder() {
-        return this.character;
     }
 
     /**
