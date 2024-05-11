@@ -166,4 +166,6 @@ public abstract class Mob extends CombatEntity {
     public String toString() {
         return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
     };
+
+    public abstract String showAscii(Boolean fighting);
 }

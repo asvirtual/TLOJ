@@ -1,5 +1,6 @@
 package com.tloj.game.entities.bosses;
 
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -44,4 +45,8 @@ public class HalverBoss extends Boss{
         return "Leth, Halver Lord of the Dice";
     }
 
+    @Override
+    public String showAscii(Boolean fighting){
+        return Constants.HALVERBOSS;
+    }
 }

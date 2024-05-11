@@ -1,5 +1,6 @@
 package com.tloj.game.entities.bosses;
 
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -42,5 +43,10 @@ public class FlyingBoss extends Boss {
     @Override
     public String toString() {
         return "Flygande, Flying Lord of the Dice";
+    }
+
+    @Override
+    public String showAscii(Boolean fighting){
+        return Constants.FLYBOSS;
     }
 }
