@@ -29,7 +29,7 @@ import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
-import com.tloj.game.utilities.Music;
+import com.tloj.game.utilities.MusicPlayer;
 
 
 /**
@@ -794,9 +794,10 @@ class NeoSamuraiFactory extends CharacterFactory {
 public class Controller {
     /** Singleton Controller unique instance */
     private static Controller instance;
+    private static Scanner scanner;
     private Game game;
     private Character player;
-    private static Scanner scanner;
+    private MusicPlayer musicPlayer;
     /**
      * Stack to keep track of the game states<br>
      */
@@ -963,7 +964,6 @@ public class Controller {
 
     @JsonIgnore
     public String getAvailableCommands() {
-
         return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
             case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Cheater] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
@@ -995,12 +995,24 @@ public class Controller {
      * Main game loop
      */
     public void run() {
+        this.musicPlayer = new MusicPlayer(
+            Constants.INTRO_WAV_FILE_PATH,
+            new Runnable() {
+                @Override
+                public void run() {
+                    musicPlayer.setNewFile(Constants.LOOP_WAV_FILE_PATH);
+                    musicPlayer.playMusic(true);
+                }
+            }
+        );
+
+        this.musicPlayer.increaseVolume(-20.0f);
+        this.musicPlayer.playMusic(false);
+
         this.setConsoleEncoding();
+
         System.out.println(Constants.GAME_TITLE);
         Character player;
-
-        Music music = new Music("src/main/resources/sounds/ambient.wav");
-        music.playMusic(false);
 
         while (this.getState() != GameState.EXIT) {
             if (this.game != null) {

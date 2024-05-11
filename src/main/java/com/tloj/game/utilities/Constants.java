@@ -27,7 +27,11 @@ public class Constants {
                                         [new]  - START GAME
                                         [load] - LOAD GAME
                                         [exit] - EXIT GAME
-""";
+    """;
+    
+    public static final String INTRO_WAV_FILE_PATH = "src/main/resources/sounds/intro.wav";
+    public static final String LOOP_WAV_FILE_PATH = "src/main/resources/sounds/loop.wav";
+
     // 46
     String CYBER_GOBLIN_ATTACK = 
     """                                                                                                                                                                                                             
