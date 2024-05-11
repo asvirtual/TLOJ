@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.game.Attack;
+import com.tloj.game.game.Controller;
+import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 
 
@@ -30,6 +32,26 @@ public abstract class Boss extends Mob {
         Coordinates position
     ) {
         super(hp, atk, def, diceFaces, BOSS_LVL, xpDrop, moneyDrop, position);
+    }
+    
+    @Override
+    public void attack(CombatEntity t) throws IllegalArgumentException {
+        if (!(t instanceof Character)) throw new IllegalArgumentException("Mobs can only attack Characters");
+        
+        Character target = (Character) t;
+        MobAttack attack = new MobAttack(this, target);
+
+        Controller.clearConsole();
+
+        System.out.println(this + " attacks you back!");
+        System.out.println(this.getASCII());
+        
+        attack.setDiceRoll(this.dice.roll());
+        attack.perform();
+
+        Controller.wait(1000);
+
+        System.out.println(this.getPrettifiedStatus());
     }
 
     @Override

@@ -114,7 +114,7 @@ public class PlayerRoomVisitor implements Visitor {
             this.controller.printMapAndArt(Constants.TRAP_DEFENDER);
             System.out.println("You've dodged the trap! Thanks Windows Defender!");
         }
-      
+        
         room.clear(this.player);
         room.executeSideEffect();
     }

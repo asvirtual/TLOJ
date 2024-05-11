@@ -4,7 +4,6 @@ import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.bosses.EvenBoss;
 import com.tloj.game.game.PlayerAttack;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * An ability that allows a boss to disable the attacker damage bonus if the attacker's weapon dice roll is an even number. <br>

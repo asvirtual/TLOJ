@@ -70,6 +70,8 @@ public class TpEffect extends RoomEffect {
             this.visitor = new PlayerRoomVisitor(character);
         } while (!validLocation);
 
+        Controller.wait(2500);
+
         return true;
     }
 

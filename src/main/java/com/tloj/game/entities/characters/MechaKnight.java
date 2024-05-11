@@ -7,20 +7,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.items.WeaponShard;
-import com.tloj.game.collectables.weapons.NaniteLeechBlade;
-import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
-import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.entities.Character;
-import com.tloj.game.skills.Focus;
 import com.tloj.game.skills.Guard;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
 public class MechaKnight extends Character {
     private static final int HP = 30;
-    // private static final int ATTACK = 2; 
-    private static final int ATTACK = 999; // TODO: Change back to 2
+    private static final int ATTACK = 2; 
     private static final int DEFENSE = 6;
     private static final int MANA = 5;
     private static final int MAX_WEIGHT = 5;
