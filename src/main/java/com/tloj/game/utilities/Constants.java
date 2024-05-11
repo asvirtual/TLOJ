@@ -33,7 +33,7 @@ public class Constants {
     public static final String LOOP_WAV_FILE_PATH = "src/main/resources/sounds/loop.wav";
 
     // 46
-    String CYBER_GOBLIN_ATTACK = 
+    public static final String CYBER_GOBLIN_ATTACK = 
     """                                                                                                                                                                                                             
       ░▓▓░                             ░▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒░░                          ▒▓▓░   
       ▓▓▒▓▓░                      ░▒▓▓▒░░░░░░░░░░░░░░░▒▒▓▓▓▒                    ▒▓▓▒▒▓░   
