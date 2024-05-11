@@ -1,11 +1,13 @@
 package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.Controller;
 import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.collectables.items.NorthStar;
 
@@ -32,9 +34,10 @@ public class TpEffect extends RoomEffect {
 
     @Override
     public boolean applyEffect(Character character) {
-
+        Controller.getInstance().printMapAndArt(this.getASCII());
+        
         System.out.println("Oh no! Unexpected System call teleported you to a random room!");
-        System.out.println("You forgot the rooms you visited...");
+        System.out.println("They hacked your GPS! You can't see the rooms you visited anymore!");
 
         Level level = character.getCurrentLevel();
         boolean validLocation = false;
@@ -68,5 +71,10 @@ public class TpEffect extends RoomEffect {
         } while (!validLocation);
 
         return true;
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.TP_EFFECT;
     }
 }

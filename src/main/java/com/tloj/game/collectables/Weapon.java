@@ -1,6 +1,7 @@
 package com.tloj.game.collectables;
 
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Dice;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -83,5 +84,10 @@ public abstract class Weapon extends Item {
     @Override 
     public String toString() {
         return super.toString() + " +" + this.lvl;
+    }
+
+    @Override
+    public String getASCII() {
+        return "";
     }
 }

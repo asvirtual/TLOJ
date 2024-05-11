@@ -1,6 +1,8 @@
 package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.Controller;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Dice;
 /**
  * Class that implements a room effect that inflicts damage to the character<br>
@@ -24,9 +26,15 @@ public class InflictDamage extends RoomEffect {
         int roll = dice.roll();
         if (roll < 3) return false;
 
+        Controller.getInstance().printMapAndArt(this.getASCII());
         System.out.println("You've been hit by a virus and lost " + DAMAGE + " HP!");
         character.takeDamage(DAMAGE);
 
         return true;
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.INFILCT_DAMAGE_EFFECT;
     }
 }

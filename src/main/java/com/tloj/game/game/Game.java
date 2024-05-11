@@ -16,6 +16,7 @@ import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.rooms.BossRoom;
+import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
@@ -112,16 +113,29 @@ public class Game implements CharacterObserver {
         if (this.controller.getState() == GameState.BOSS_DEFEATED || this.getCurrentRoom().getType() == RoomType.HEALING_ROOM) {
             this.currentLevel = this.levels.get(this.currentLevel.getLevelNumber());
             this.player.setCurrentLevel(this.currentLevel);
-            this.player.setPosition(this.currentLevel.getStartRoom().getCoordinates());
-            this.controller.setState(GameState.MOVING);
+            
+            if (this.currentLevel.getStartRoom() != null) {
+                this.player.setPosition(this.currentLevel.getStartRoom().getCoordinates());
+                this.controller.setState(GameState.MOVING);
+            } else {
+                HealingRoom healingRoom = this.currentLevel.getHealingRoom();
+                this.player.setPosition(healingRoom.getCoordinates());
+
+                Controller.clearConsole(100);
+
+                this.controller.setState(GameState.HEALING_ROOM);
+                healingRoom.accept(new PlayerRoomVisitor(this.player));
+            }
+
             return;
         }
 
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
         if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
-        if (this.currentLevel.getRoom(newCoordinates).isLocked() && !this.player.hasItem(new SpecialKey())) throw new IllegalArgumentException("Room is locked");
+        if (this.currentLevel.getRoom(newCoordinates).isLocked() && !this.player.hasItem(new SpecialKey())) throw new IllegalArgumentException("That room is locked");
         
         this.player.move(newCoordinates);
+
         PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player);
         this.currentLevel.getRoom(newCoordinates).accept(playerRoomVisitor);
     }
@@ -199,6 +213,7 @@ public class Game implements CharacterObserver {
         if (room.getMobsCount() == 1) {
             room.clear();
             this.controller.setState(GameState.MOVING);
+            this.controller.printMap();
         } else room.removeMob(mob);
     }
 
@@ -227,20 +242,28 @@ public class Game implements CharacterObserver {
     }
 
     public void printMap(){
+        System.out.println(String.join("\n", this.generateMapLines()) + "\n");
+    }
+    
+    public String[] generateMapLines() {
+        StringBuilder mapBuilder = new StringBuilder();
+    
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
                 Room room = this.currentLevel.getRoom(new Coordinates(j, i));
                 if (room == null){
-                    System.out.print("\u00A0" + " ");                    
+                    mapBuilder.append("\u00A0" + " ");                    
                     continue;
                 }
-
-                if (this.getCurrentRoom().equals(room)) System.out.print("\u0398" + " ");
-                else System.out.print(room + " ");
+    
+                if (this.getCurrentRoom().equals(room)) mapBuilder.append("\u0398" + " ");
+                else mapBuilder.append(room + " ");
             }
             
-            System.out.println();
+            mapBuilder.append("\n");
         }
+        
+        return mapBuilder.toString().split("\n");
     }
 
     public void printInventory() {
@@ -248,11 +271,16 @@ public class Game implements CharacterObserver {
         System.out.println("Inventory:");
 
         for (int i = 0; i < this.player.getInventorySize(); i++) 
-            System.out.println(i + ". " + this.player.getInventoryItem(i));
+            System.out.println((i + 1) + ". " + this.player.getInventoryItem(i));
     }
 
     public void useItem(int index) {
-        ConsumableItem item = (ConsumableItem) this.player.getInventoryItem(index);
+        if (index < 1 || index > this.player.getInventorySize()) {
+            System.out.println("Couldn't find that item in your inventory");
+            return;
+        }
+
+        ConsumableItem item = (ConsumableItem) this.player.getInventoryItem(index - 1);
         item.consume(this.player);
     }
     
@@ -261,7 +289,7 @@ public class Game implements CharacterObserver {
     }
 
     public void printPlayerStatus() {
-        System.out.println(this.player);
+        System.out.println(this.player + "\n");
     }
 
     public void giveItem(String receiverName, String itemName) {

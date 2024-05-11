@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import com.tloj.game.rooms.*;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
 import com.tloj.game.collectables.Item;
@@ -32,13 +33,16 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(StartRoom room) {
         room.visit();
         room.clear();
+
+        this.controller.printMap();
     }
 
     @Override
     public void visit(BossRoom room) {
         room.visit();
 
-        System.out.println("You've encountered" + room.getBoss() + "\n" + room.getBoss().getASCII() + "\n");
+        Controller.clearConsole(100);
+        System.out.println("You've encountered " + room.getBoss() + "\n" + room.getBoss().getASCII() + "\n");
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
@@ -46,18 +50,21 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(HealingRoom room) {
         room.visit();
         this.player.setHp(this.player.getMaxHp());
+        this.player.setMana(this.player.getMana());
+
+        System.out.println(Constants.HEALING_ROOM + "\nWelcome to the healing rooom!");
+
         this.controller.setState(GameState.HEALING_ROOM);
     }
 
     @Override
     public void visit(HostileRoom room) {
         room.visit();
-
+        this.controller.printMap();
         if (room.isCleared()) return;
 
+        Controller.clearConsole(100);
         System.out.println("You've encountered " + room.getMob() + room.getMob().getASCII() + "\n");
-        System.out.println(room.getMob().getPrettifiedStatus());
-
         this.controller.setState(GameState.FIGHTING_MOB);
         
         this.player.heal(1);
@@ -67,6 +74,14 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(LootRoom room) {
         room.visit();
+    
+        if (room.isCleared()) {
+            this.controller.printMap();
+            return;
+        }
+        
+        Controller.clearConsole(100);
+
         if (room.isLocked()) {
             if (!this.player.hasItem(new SpecialKey())) {
                 System.out.println("The room is locked! You need a special key to open it!"); // TODO: ASCII art
@@ -80,7 +95,9 @@ public class PlayerRoomVisitor implements Visitor {
         Item item = room.getItem();
         if (item == null) return;
 
+        this.controller.printMapAndArt(item.getASCII());
         System.out.println("You've found a " + item + "!");
+        
         if (this.player.addInventoryItem(item)) {
             this.controller.setState(GameState.MOVING);
             room.clear();
@@ -92,10 +109,18 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(TrapRoom room) {
         room.visit();
-        if (room.isCleared()) return;
+
+        if (room.isCleared()) {
+            this.controller.printMap();
+            return;
+        }
+
+        Controller.clearConsole(100);
         
-        if (!room.triggerTrap(this.player)) 
+        if (!room.triggerTrap(this.player)) {
+            System.out.println(Constants.TRAP_DEFENDER);
             System.out.println("You've dodged the trap! Thanks Windows Defender!");
+        }
       
         room.clear();
         

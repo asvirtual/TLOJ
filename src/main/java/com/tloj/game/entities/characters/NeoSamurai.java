@@ -84,7 +84,7 @@ public class NeoSamurai extends Character {
                "Mana: " + MANA + "\n" +
                "Weapon: " + CyberKatana.describe() + "\n" +
                "Ability: " + Daburu.describe() + "\n" +
-               "Money: " + MONEY;
+               "BTC: " + MONEY;
     }
 
     @Override

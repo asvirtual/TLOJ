@@ -1,6 +1,8 @@
 package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.Controller;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Dice;
 
 /**
@@ -25,9 +27,15 @@ public class StealMoney extends RoomEffect {
         int roll = dice.roll();
         if (roll < 3) return false;
 
+        Controller.getInstance().printMapAndArt(this.getASCII());
         System.out.println("You have been scammed by a Crypto Guru and you lost " + COST + " BTC!");
         character.pay(COST);
 
         return true;
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.STEAL_MONEY_EFFECT;
     }
 }

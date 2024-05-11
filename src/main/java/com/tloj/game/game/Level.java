@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.StartRoom;
@@ -27,6 +28,7 @@ public class Level {
     @JsonProperty
     private ArrayList<ArrayList<Room>> rooms;
     private StartRoom startRoom;
+    private HealingRoom healingRoom;
 
     @JsonCreator
     public Level(
@@ -39,12 +41,19 @@ public class Level {
             row.forEach(room -> {
                 if (room != null && room.getType() == RoomType.START_ROOM) 
                     this.startRoom = (StartRoom) room;
+                
+                if (room != null && room.getType() == RoomType.HEALING_ROOM) 
+                    this.healingRoom = (HealingRoom) room;
             });
         });
     }
 
     public StartRoom getStartRoom() {
         return this.startRoom;
+    }
+
+    public HealingRoom getHealingRoom() {
+        return this.healingRoom;
     }
 
     @JsonIgnore

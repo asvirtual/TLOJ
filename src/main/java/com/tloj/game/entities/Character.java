@@ -406,14 +406,17 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.getBar(this.mana, this.maxMana);
     }
 
+    @JsonIgnore
     public String getXpBar() {
         return this.getBar(this.xp, this.requiredXp);
     }
 
+    @JsonIgnore
     public String getWeightBar() {
         return this.getBar((int) this.getCarriedWeight(), this.maxWeight);
     }
 
+    @JsonIgnore
     public String getPrettifiedStatus() {
         return 
             "You: \n" + 
@@ -421,9 +424,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             "\nMana: " + this.getManaBar() + " " + this.getMana() + "/" + this.getMaxMana() + "\n\n";
     }
 
-    /**
-     * TODO: Better graphical representation of the Character's status
-     */
     @Override
     public String toString() {
         String status = 
@@ -452,6 +452,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     @Override 
     public String getCombatASCII() {
-        return null;
+        return "";
     }
 }

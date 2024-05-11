@@ -3,6 +3,7 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
+import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -41,5 +42,10 @@ public class GreatHealthPotion extends PurchasableItem implements ConsumableItem
         if (consumer.getHp() > consumer.getMaxHp()) consumer.setHp(consumer.getMaxHp());
         
         consumer.removeInventoryItem(this);
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.GREAT_HEALTH_POTION;
     }
 }

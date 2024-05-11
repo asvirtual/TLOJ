@@ -48,13 +48,21 @@ public class Merchant extends FriendlyEntity {
         super(position, NAME);
     }
 
+    public static String getItems() {
+        String items = "";
+        for (Map.Entry<Integer, PurchasableItem> entry : Merchant.items.entrySet()) 
+            items += entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC\n";
+
+        return items;
+    }
+
     @Override
     public void interact(Character player) {
         super.interact(player);
+        
         System.out.println("Merchant: Hello there! What do you want to buy today?");
         System.out.println("You currently have " + this.player.getMoney() + " BTC");
-        for (Map.Entry<Integer, PurchasableItem> entry : items.entrySet()) 
-            System.out.println(entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC");
+        System.out.println(Merchant.getItems());
 
         Controller.getInstance().setState(GameState.MERCHANT_SHOPPING);
     }
@@ -66,20 +74,25 @@ public class Merchant extends FriendlyEntity {
     }
 
     public void buy(int index) {
-        if (index < 0 || index >= Merchant.items.size()) {
-            System.out.println("Merchant: Please choose an item!");
+        PurchasableItem item = Merchant.items.get(index);
+        
+        if (item == null) {
+            System.out.println("Merchant: I don't have that!");
             return;
         }
 
-        PurchasableItem item = Merchant.items.get(index);
-
         if (!this.player.canAfford(item)) {
-            System.out.println("Merchant: You don't have enough gold!");
+            System.out.println("Merchant: You don't have enough BTC!");
             return;
         }
 
         item.purchase(this.player);
         items.remove(index);
+
+        System.out.println("Merchant: It's always a pleasure doing business with you!");
+
+        Controller.clearConsole(1000);
+        System.out.println(Merchant.getItems());
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
@@ -58,6 +59,7 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
+        this.inventory.add(new WeaponShard());
     }    
 
     /** 
@@ -80,6 +82,7 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
+        this.inventory.add(new WeaponShard());
     }
 
     public static String getDetailedInfo() {
@@ -89,7 +92,7 @@ public class MechaKnight extends Character {
                "Mana: " + MANA + "\n" +
                "Weapon: " + PlasmaGreatsword.describe() + "\n" +
                "Ability: " + Guard.describe() + "\n" +
-               "Money: " + MONEY;
+               "BTC: " + MONEY;
     }
 
     @Override

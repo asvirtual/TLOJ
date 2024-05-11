@@ -10,7 +10,7 @@ import com.tloj.game.collectables.items.ManaPotion;
 import com.tloj.game.collectables.items.NorthStar;
 import com.tloj.game.collectables.items.Ragu;
 import com.tloj.game.collectables.items.WeaponShard;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
@@ -102,4 +102,7 @@ public abstract class Item {
     public String toString() {
         return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
     };
+
+    @JsonIgnore
+    public abstract String getASCII();
 }

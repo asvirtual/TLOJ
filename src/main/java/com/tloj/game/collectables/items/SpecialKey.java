@@ -4,6 +4,7 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
+import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -39,6 +40,11 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     public void consume(Character consumer) {
         System.out.println("You've used the Special Key to unlock a special loot room!");
         consumer.removeInventoryItem(this);
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.SPECIAL_KEY;
     }
 }
 

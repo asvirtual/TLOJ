@@ -43,7 +43,6 @@ import com.tloj.game.utilities.MusicPlayer;
  * - Use item (use [item]) {@link UseItemCommand}<br>
  * - Drop item (drop [item]) {@link DropItemCommand}<br>
  * - Print seed (seed) {@link PrintSeedCommand}<br>
- * - Print map (map) {@link PrintMapCommand}<br>
  * - Print score (score) {@link PrintScoreCommand}<br>
  * - Quit (quit) {@link QuitCommand}<br>
  * - Back (back) {@link PreviousStateCommand} (used during complex interactions)<br>
@@ -95,7 +94,12 @@ abstract class GameCommand {
  */
 class MoveNorthCommand extends GameCommand {
     public MoveNorthCommand(Game game, String[] commands) {
-        super(game, null);        
+        super(game, null);
+        this.validListStates = List.of(
+            GameState.MOVING,
+            GameState.HEALING_ROOM,
+            GameState.BOSS_DEFEATED
+        );
     }
 
     @Override
@@ -119,6 +123,11 @@ class MoveNorthCommand extends GameCommand {
 class MoveSouthCommand extends GameCommand {
     public MoveSouthCommand(Game game, String[] commands) {
         super(game, null);
+        this.validListStates = List.of(
+            GameState.MOVING,
+            GameState.HEALING_ROOM,
+            GameState.BOSS_DEFEATED
+        );
     }
 
     @Override
@@ -142,6 +151,11 @@ class MoveSouthCommand extends GameCommand {
 class MoveWestCommand extends GameCommand {
     public MoveWestCommand(Game game, String[] commands) {
         super(game, null);
+        this.validListStates = List.of(
+            GameState.MOVING,
+            GameState.HEALING_ROOM,
+            GameState.BOSS_DEFEATED
+        );
     }
 
     @Override
@@ -165,6 +179,11 @@ class MoveWestCommand extends GameCommand {
 class MoveEastCommand extends GameCommand {
     public MoveEastCommand(Game game, String[] commands) {
         super(game, null);
+        this.validListStates = List.of(
+            GameState.MOVING,
+            GameState.HEALING_ROOM,
+            GameState.BOSS_DEFEATED
+        );
     }
 
     @Override
@@ -187,6 +206,10 @@ class MoveEastCommand extends GameCommand {
 class AttackCommand extends GameCommand {
     public AttackCommand(Game game, String[] commands) {
         super(game, null);
+        this.validListStates = List.of(
+            GameState.FIGHTING_BOSS,
+            GameState.FIGHTING_MOB
+        );
     }
 
     @Override
@@ -204,6 +227,10 @@ class AttackCommand extends GameCommand {
 class SkillCommand extends GameCommand {
     public SkillCommand(Game game, String[] commands) {
         super(game, null);
+        this.validListStates = List.of(
+            GameState.FIGHTING_BOSS,
+            GameState.FIGHTING_MOB
+        );
     }
 
     @Override
@@ -222,7 +249,7 @@ class InventoryCommand extends GameCommand {
         super(game, null);
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
-            GameState.SMITH_FORGING
+            GameState.MAIN_MENU
         );
     }
 
@@ -242,7 +269,8 @@ class UseItemCommand extends GameCommand {
         super(game, commands);
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
-            GameState.SMITH_FORGING
+            GameState.SMITH_FORGING,
+            GameState.MAIN_MENU
         );
     }
 
@@ -250,7 +278,12 @@ class UseItemCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         if (!Controller.awaitConfirmation()) return;
-        this.game.useItem(Integer.parseInt(commands[1]));
+        
+        try {
+            this.game.useItem(Integer.parseInt(commands[1]));
+        } catch (NumberFormatException e) {
+            System.out.println("Please insert a valid number");
+        }
     }
 }
 
@@ -263,7 +296,8 @@ class SwapWeaponCommand extends GameCommand {
         super(game, commands);
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
-            GameState.SMITH_FORGING
+            GameState.SMITH_FORGING,
+            GameState.MAIN_MENU
         );
     }
 
@@ -272,7 +306,7 @@ class SwapWeaponCommand extends GameCommand {
         super.execute();
         
         try {
-        this.game.getPlayer().swapWeapon(Integer.parseInt(commands[1]));
+            this.game.getPlayer().swapWeapon(Integer.parseInt(commands[1]));
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
@@ -288,7 +322,8 @@ class DropItemCommand extends GameCommand {
         super(game, commands);
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
-            GameState.SMITH_FORGING
+            GameState.SMITH_FORGING,
+            GameState.MAIN_MENU
         );
     }
 
@@ -310,7 +345,8 @@ class PrintSeedCommand extends GameCommand {
         super(game, null);
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
-            GameState.SMITH_FORGING
+            GameState.SMITH_FORGING,
+            GameState.MAIN_MENU
         );
     }
 
@@ -318,26 +354,6 @@ class PrintSeedCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         System.out.println("The game seed is: " + this.game.getSeed());
-    }
-}
-
-/**
- * Concrete command class to print the game map, showing visited rooms<br>
- * @see GameCommand <br>
- */
-class PrintMapCommand extends GameCommand {
-    public PrintMapCommand(Game game, String[] commands) {
-        super(game, null);
-        this.invalidStates = List.of(
-            GameState.MERCHANT_SHOPPING,
-            GameState.SMITH_FORGING
-        );
-    }
-
-    @Override
-    public void execute() throws IllegalStateException {
-        super.execute();
-        this.game.printMap();
     }
 }
 
@@ -371,8 +387,13 @@ class QuitCommand extends GameCommand {
 class PreviousStateCommand extends GameCommand {
     public PreviousStateCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(GameState.CHOOSING_CHARACTER,GameState.INV_MANAGEMENT,
-         GameState.MERCHANT_SHOPPING, GameState.SMITH_FORGING);
+        this.validListStates = List.of(
+            GameState.CHOOSING_CHARACTER,
+            GameState.INV_MANAGEMENT,
+            GameState.MERCHANT_SHOPPING, 
+            GameState.SMITH_FORGING,
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
@@ -389,6 +410,9 @@ class PreviousStateCommand extends GameCommand {
 class PrintScoreCommand extends GameCommand {
     public PrintScoreCommand(Game game, String[] commands) {
         super(game, null);
+        this.invalidStates = List.of(
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
@@ -405,6 +429,9 @@ class PrintScoreCommand extends GameCommand {
 class HelpCommand extends GameCommand {
     public HelpCommand() {
         super(null, null);
+        this.invalidStates = List.of(
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
@@ -456,7 +483,8 @@ class ReturnCommand extends GameCommand {
     public ReturnCommand(Game game, String[] commands) {
         super(game, null);
         this.validListStates = List.of(
-            GameState.MOVING
+            GameState.MOVING,
+            GameState.MAIN_MENU
         );
     }
 
@@ -475,7 +503,8 @@ class PrintStatusCommand extends GameCommand {
         super(game, null);
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
-            GameState.SMITH_FORGING
+            GameState.SMITH_FORGING,
+            GameState.MAIN_MENU
         );
     }
 
@@ -483,6 +512,26 @@ class PrintStatusCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         this.game.printPlayerStatus();
+    }
+}
+
+/**
+ * Concrete command class to print the game map, showing visited rooms<br>
+ * @see GameCommand <br>
+ */
+class PrintMapCommand extends GameCommand {
+    public PrintMapCommand(Game game, String[] commands) {
+        super(game, null);
+        this.invalidStates = List.of(
+            GameState.MERCHANT_SHOPPING,
+            GameState.SMITH_FORGING
+        );
+    }
+
+    @Override
+    public void execute() throws IllegalStateException {
+        super.execute();
+        this.game.printMap();
     }
 }
 
@@ -502,6 +551,7 @@ class MerchantCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         
+        Controller.clearConsole(100);
         HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
         Merchant merchant = (Merchant) room.getFriendlyEntity(Merchant.NAME);
         if (merchant != null) merchant.interact(this.player);
@@ -515,6 +565,9 @@ class MerchantCommand extends GameCommand {
 class BuyCommand extends GameCommand {
     public BuyCommand(Game game, String[] commands) {
         super(game, commands);
+        this.invalidStates = List.of(
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
@@ -550,8 +603,8 @@ class SmithCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
 
+        Controller.clearConsole(100);
         HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
-
         Smith smith = (Smith) room.getFriendlyEntity(Smith.NAME);
         if (smith != null) smith.interact(this.game.getPlayer());
     }
@@ -564,6 +617,9 @@ class SmithCommand extends GameCommand {
 class GiveCommand extends GameCommand {
     public GiveCommand(Game game, String[] commands) {
         super(game, commands);
+        this.invalidStates = List.of(
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
@@ -664,9 +720,14 @@ class ChooseCharacterGameCommand extends GameCommand {
             case "4" -> MechaKnight.getDetailedInfo();
             case "5" -> NeoSamurai.getDetailedInfo();
             default -> "Invalid character choice. Please choose a valid character.";
-        });
+        } + "\n");
 
-        if (!Controller.awaitConfirmation()) return;
+        if (!Controller.awaitConfirmation()) {
+            Controller.clearConsole(100);
+            System.out.println("Choose your starting character: 1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
+            return;
+        }
+
         Controller.clearConsole(100);
 
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
@@ -855,6 +916,28 @@ public class Controller {
         this.player.setCurrentLevel(this.game.getLevel());
     }
 
+    public void printMap() {
+        if (this.game != null) this.game.printMap();
+    }
+    
+    public void printMapAndArt(String asciiArt){
+        String[] asciiArtLines = asciiArt.split("\n");
+        String[] mapLines = this.game.generateMapLines();
+    
+        int maxLines = Math.max(asciiArtLines.length, mapLines.length);
+        int maxRows = asciiArtLines[0].length();
+        for (int i = 1; i < asciiArtLines.length; i++)
+            if (asciiArtLines[i].length() > maxRows) maxRows = asciiArtLines[i].length();
+    
+        for (int i = 0; i < maxLines; i++) {
+            String asciiArtLine = i < asciiArtLines.length ? asciiArtLines[i] : "";
+            String filler = " ".repeat(maxRows - asciiArtLine.length());
+            String mapLine = (0 < (i - 5) && (i - 5) < mapLines.length) ? mapLines[i - 5] : "";
+    
+            System.out.println(asciiArtLine + filler + "\t\t\t\t\t\t\t" + mapLine);
+        }
+    }
+
     public void setGame(Game game) {
         this.game = game;
     }
@@ -908,9 +991,9 @@ public class Controller {
                 Map.entry("drop", () -> new DropItemCommand(this.game, commands)),
                 Map.entry("swap", () -> new SwapWeaponCommand(this.game, commands)),
                 Map.entry("return", () -> new ReturnCommand(this.game, commands)),
-                Map.entry("map", () -> new PrintMapCommand(this.game, commands)),
                 Map.entry("status", () -> new PrintStatusCommand(this.game, commands)),
                 Map.entry("score", () -> new PrintScoreCommand(this.game, commands)),
+                Map.entry("map", () -> new PrintMapCommand(this.game, commands)),
                 Map.entry("seed", () -> new PrintSeedCommand(this.game, commands)),
                 Map.entry("quit", () -> new QuitCommand(this.game, commands)),
                 Map.entry("back", () -> new PreviousStateCommand(this.game, commands)),
@@ -966,7 +1049,7 @@ public class Controller {
         try {
             invoker.executeCommand();
         } catch (IllegalStateException e) {
-            e.printStackTrace();
+            System.out.println("You can't do that now!");
         }
     }
 
@@ -975,14 +1058,14 @@ public class Controller {
         return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
             case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Cheater] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
-            case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [inv]";
+            case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();
             case INV_MANAGEMENT -> "[use] - [drop] - [swap] - [back]";
             case MERCHANT_SHOPPING -> "[buy *number*] - [back]";
-            case SMITH_FORGING -> "[give smith weaponshard] -[back]";
-            case BOSS_DEFEATED -> "[inv, move to any direction to change floor]";
-            case HEALING_ROOM -> "[merchant] - [smith] - [inv] - [use] - [drop]";
+            case SMITH_FORGING -> "[give smith weaponshard] - [back]";
+            case BOSS_DEFEATED -> "[inv] - [gn, gs, gw ge to change floor]";
+            case HEALING_ROOM -> "[merchant] - [smith] - [inv] - [use] - [drop] - [gn, gs, gw ge to change floor]";
             default -> "";
         };
     }
@@ -1038,13 +1121,16 @@ public class Controller {
         while (this.getState() != GameState.EXIT) {
             if (this.game != null) {
                 this.player = this.game.getPlayer();
-                if (this.player != null)
+                if (this.player != null) {
                     System.out.print(
                         "You: \n" + 
                         "HP:   " + this.player.getHpBar() + " " + this.player.getHp() + "/" + this.player.getMaxHp() + 
-                        "\nMana: " + this.player.getManaBar() + " " + this.player.getMana() + "/" + this.player.getMaxMana() + "\n\n" +
-                        "What to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): "
+                        "\nMana: " + this.player.getManaBar() + " " + this.player.getMana() + "/" + this.player.getMaxMana() + "\n\n"
                     );
+
+                    // this.game.printMap();
+                    System.out.println("What to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
+                }
             }
 
             String input = Controller.scanner.nextLine();

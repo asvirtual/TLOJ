@@ -244,20 +244,16 @@
     "rooms": [
       [
         {
-          "@class": "com.tloj.game.rooms.StartRoom",
-          "coordinates": { "x": 0, "y": 0 }
-        },
-        {
           "@class": "com.tloj.game.rooms.HealingRoom",
-          "coordinates": { "x": 1, "y": 0 },
+          "coordinates": { "x": 0, "y": 0 },
           "friendlyEntities": [
             {
               "@class": "com.tloj.game.entities.npcs.Merchant",
-              "position": { "x": 1, "y": 0 }
+              "position": { "x": 0, "y": 0 }
             },
             {
               "@class": "com.tloj.game.entities.npcs.Smith",
-              "position": { "x": 1, "y": 0 }
+              "position": { "x": 0, "y": 0 }
             }
           ]
         }
@@ -527,20 +523,16 @@
     "rooms": [
       [
         {
-          "@class": "com.tloj.game.rooms.StartRoom",
-          "coordinates": { "x": 0, "y": 0 }
-        },
-        {
           "@class": "com.tloj.game.rooms.HealingRoom",
-          "coordinates": { "x": 1, "y": 0 },
+          "coordinates": { "x": 0, "y": 0 },
           "friendlyEntities": [
             {
               "@class": "com.tloj.game.entities.npcs.Merchant",
-              "position": { "x": 1, "y": 0 }
+              "position": { "x": 0, "y": 0 }
             },
             {
               "@class": "com.tloj.game.entities.npcs.Smith",
-              "position": { "x": 1, "y": 0 }
+              "position": { "x": 0, "y": 0 }
             }
           ]
         },

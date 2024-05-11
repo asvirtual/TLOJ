@@ -1,5 +1,6 @@
 package com.tloj.game.rooms.roomeffects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.tloj.game.entities.Character;
@@ -28,5 +29,7 @@ public abstract class RoomEffect {
         if (sideEffect != null) sideEffect.run();
     };
 
+    @JsonIgnore
+    public abstract String getASCII();
     public abstract boolean applyEffect(Character character);
 }

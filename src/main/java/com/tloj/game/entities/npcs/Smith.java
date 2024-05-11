@@ -51,6 +51,7 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
 
         this.player.removeInventoryItem(item);
         this.player.getWeapon().upgrade(1);
+        System.out.println("Smith: Here you go! Your weapon has been upgraded!");
         
         int shardsCount = this.player.getItemCount(new WeaponShard());
         if (shardsCount == 0) {

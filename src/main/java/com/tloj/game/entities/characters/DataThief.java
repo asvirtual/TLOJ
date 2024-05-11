@@ -86,7 +86,7 @@ public class DataThief extends Character {
                "Mana: " + MANA + "\n" +
                "Weapon: " + NanoDirk.describe() + " - " + DiceReroller.describe() + "\n" +
                "Ability: " + Steal.describe() + "\n" +
-               "Money: " + MONEY;
+               "BTC: " + MONEY;
     }
 
     @Override

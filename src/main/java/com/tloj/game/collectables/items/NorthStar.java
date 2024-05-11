@@ -1,6 +1,7 @@
 package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.Item;
+import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -28,6 +29,11 @@ public class NorthStar extends Item {
     @JsonCreator
     public NorthStar() {
         super(WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.NORTH_STAR;
     }
 }
 

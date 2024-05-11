@@ -1,6 +1,7 @@
 package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.PurchasableItem;
+import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
@@ -38,6 +39,11 @@ public class WeaponShard extends PurchasableItem {
     @Override
     public String toString() {
         return "WeaponShard";
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.WEAPON_SHARD;
     }
 }
 

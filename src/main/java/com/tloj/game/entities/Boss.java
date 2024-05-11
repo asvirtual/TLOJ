@@ -48,6 +48,6 @@ public abstract class Boss extends Mob {
 
     @Override
     public String getCombatASCII() {
-        return null;
+        return "";
     }
 }
