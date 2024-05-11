@@ -104,4 +104,16 @@ public class Glitched extends Mob implements MovingEntity {
     public void takeDamage(int damage) {
         super.takeDamage(damage);
     }
+
+    @Override
+    public String showAscii(Boolean fighting){
+        return " \n"
+            + "  _______  \n"
+            + " /       \\ \n"
+            + "/         \\ \n"
+            + "|  O   O  | \n"
+            + "|    ^    | \n"
+            + "|   ___   | \n"
+            + " \\_______/ \n";
+    }
 }

@@ -47,6 +47,11 @@ public class EvenBoss extends Boss {
 
     @Override
     public String toString() {
-        return "Cyfartal, Even Lord of the Dice + \n" + Constants.EVENBOSS_STATIC + "\n";
+        return "Cyfartal, Even Lord of the Dice";
+    }
+
+    @Override
+    public String showAscii(Boolean fighting){
+        return Constants.EVENBOSS;
     }
 }
