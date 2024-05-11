@@ -1684,7 +1684,7 @@ public class Constants {
           "coordinates": { "x": 2, "y": 4 },
           "visited": false,
           "cleared": false,
-          "locked": true,
+          "locked": true
         },
         null,
         null,
@@ -1714,7 +1714,7 @@ public class Constants {
           "locked": false,
           "mobs": [
             {
-              "@class": "com.tloj.game.entities.bosses.HalvenBoss",
+              "@class": "com.tloj.game.entities.bosses.HalverBoss",
               "position": { "x": 2, "y": 5 }
             }
           ]
