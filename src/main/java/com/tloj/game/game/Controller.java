@@ -11,14 +11,12 @@ import java.util.Stack;
 import java.util.function.Supplier;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.fusesource.jansi.Ansi;
+import org.fusesource.jansi.AnsiConsole;
 
-import com.tloj.game.rooms.Room;
+
 import com.tloj.game.rooms.HealingRoom;
-import com.tloj.game.rooms.HostileRoom;
-import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.Character;
-import com.tloj.game.entities.FriendlyEntity;
-import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.characters.Hacker;
 import com.tloj.game.entities.characters.DataThief;
@@ -1102,6 +1100,8 @@ public class Controller {
     }
 
     public static void setConsoleEncoding() {
+        AnsiConsole.systemInstall();
+
         try {
             if (System.getProperty("os.name").startsWith("Windows"))
                 new ProcessBuilder("cmd", "/c", "chcp", "65001").inheritIO().start();
@@ -1147,6 +1147,8 @@ public class Controller {
         Controller.setConsoleEncoding();
         Controller.clearConsole();
 
+        // System.out.println(Ansi.ansi().fg(Ansi.Color.RED).a("This text is red!").reset());
+
         this.musicPlayer = new MusicPlayer(
             Constants.INTRO_WAV_FILE_PATH,
             new Runnable() {
@@ -1178,5 +1180,6 @@ public class Controller {
 
         Controller.scanner.close();
         this.musicPlayer.stop();
+        AnsiConsole.systemUninstall(); 
     }
 }

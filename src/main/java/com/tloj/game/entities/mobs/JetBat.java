@@ -3,6 +3,8 @@ package com.tloj.game.entities.mobs;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.game.Attack;
+import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
@@ -30,6 +32,14 @@ public class JetBat extends Mob {
         @JsonProperty("lvl") int lvl
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
+    }
+
+    @Override
+    public void defend(Attack attack) {
+        super.defend(attack);
+        if (!(attack instanceof PlayerAttack)) return;
+        PlayerAttack playerAttack = (PlayerAttack) attack;
+        if (playerAttack.getWeaponRoll() > 5) attack.setTotalDamage(0);
     }
     
     @Override
