@@ -5,65 +5,57 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
-
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 
 
 public class Music {
-    public void playMusic(){
-        new Thread(() -> {
-            try {
-                
-                String LOOP = "src\\main\\java\\com\\tloj\\game\\utilities\\musicFile\\loop.wav";
-                String INTRO = "src\\main\\java\\com\\tloj\\game\\utilities\\musicFile\\intro.wav";
+    private Clip playingClip;
+    private File file;
 
-                File loopFile = new File(LOOP);
-                File introFile = new File(INTRO);
-
-                if(loopFile.exists() && introFile.exists()){ 
-
-                    AudioInputStream intro = AudioSystem.getAudioInputStream(introFile);
-                    
-                    Clip introClip = AudioSystem.getClip();
-                    introClip.open(intro);
-                    FloatControl introVolumeControl = (FloatControl) introClip.getControl(FloatControl.Type.MASTER_GAIN);
-                    introVolumeControl.setValue(-20.0f); // Decrease volume by 10 decibels
-                    introClip.start();
-
-                    introClip.addLineListener(event -> {
-                        if(event.getType() == LineEvent.Type.STOP){
-                            try {
-                                AudioInputStream loop = AudioSystem.getAudioInputStream(loopFile);
-                                Clip loopClip = AudioSystem.getClip();
-                                loopClip.open(loop);
-                                FloatControl loopVolumeControl = (FloatControl) loopClip.getControl(FloatControl.Type.MASTER_GAIN);
-                                loopVolumeControl.setValue(-20.0f); // Decrease volume by 10 decibels
-                                loopClip.loop(Clip.LOOP_CONTINUOUSLY);
-
-                            } 
-                            catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }   
-                    });
-                }
-                else{
-                    System.out.println("Couldn't find Music file");
-                }
-            }
-            catch (Exception ex){
-                ex.printStackTrace();
-            }
-        }).start();
+    public Music(String pathName) {
+        this.file = new File(pathName);
     }
 
-    public void stopMusic(){
-        try {
-            Clip clip = AudioSystem.getClip();
-            clip.stop();
+    public void loopMusic() {
+        
+    }
+
+    public void stop() {
+        if (this.playingClip != null && this.playingClip.isRunning())
+            this.playingClip.stop();
+    }
+
+    public void increaseVolume(float amount) {
+        if (this.playingClip == null) return;
+
+        FloatControl volumeControl = (FloatControl) this.playingClip.getControl(FloatControl.Type.MASTER_GAIN);
+        volumeControl.setValue(amount);
+    }
+
+    public void playMusic(boolean loop) {
+        if (!this.file.exists()) {
+            System.out.println("Required music file \"" + this.file.getName() + "\" not found. Please check the file path.");
+            return;
         }
-        catch (Exception ex){
-            ex.printStackTrace();
+
+        try {
+            this.playingClip = AudioSystem.getClip();
+            AudioInputStream stream = AudioSystem.getAudioInputStream(this.file);
+            this.playingClip.open(stream);
+
+            if (loop) this.playingClip.loop(Clip.LOOP_CONTINUOUSLY);
+            else this.playingClip.start();
+        } catch (LineUnavailableException e){
+            System.out.println("Error playing music file");
+            e.printStackTrace();
+        } catch (IOException e){
+            System.out.println("Error reading music file");
+            e.printStackTrace();
+        } catch (UnsupportedAudioFileException e){
+            System.out.println("Music file format not supported");
+            e.printStackTrace();
         }
     }
 }

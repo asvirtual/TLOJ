@@ -985,8 +985,8 @@ public class Controller {
         System.out.println(Constants.GAME_TITLE);
         Character player;
 
-        Music music = new Music();
-        music.playMusic();
+        Music music = new Music("src/main/resources/sounds/ambient.wav");
+        music.playMusic(false);
 
         while (this.getState() != GameState.EXIT) {
             if (this.game != null) {
