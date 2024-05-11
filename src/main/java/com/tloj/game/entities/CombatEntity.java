@@ -80,14 +80,17 @@ public abstract class CombatEntity extends Entity {
         attack.setTargetDef(this.currentFightDef);
     };
 
+    @JsonIgnore
     public String getHpBar() {
         return this.getBar(this.hp, this.maxHp);
     }
 
+    @JsonIgnore
     public String getXpBar() {
         return this.getBar(this.hp, this.maxHp);
     }
 
-    public abstract void attack(CombatEntity target);
+    @JsonIgnore
     public abstract String getCombatASCII();
+    public abstract void attack(CombatEntity target);
 }

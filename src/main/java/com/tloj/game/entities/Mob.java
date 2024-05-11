@@ -1,5 +1,6 @@
 package com.tloj.game.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.tloj.game.utilities.Coordinates;
@@ -169,6 +170,7 @@ public abstract class Mob extends CombatEntity {
         return null;
     }
 
+    @JsonIgnore
     public String getPrettifiedStatus() {
         return 
             this + ":\n" +

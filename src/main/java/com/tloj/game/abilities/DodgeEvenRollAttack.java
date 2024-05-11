@@ -20,7 +20,7 @@ public class DodgeEvenRollAttack extends BossAbility {
     public void use(PlayerAttack attack) {
         if (attack.getWeaponRoll() % 2 == 0) {
             System.out.println(this.boss + " used its mighty ability!");
-            attack.setBaseDamage(0);
+            attack.setWeaponRoll(0);
         }
     }
     

@@ -796,8 +796,7 @@ public static final String DATA_THIEF =
           "mobs": [
             {
               "@class": "com.tloj.game.entities.bosses.EvenBoss",
-              "position": { "x": 0, "y": 0 },
-              "lvl": 1
+              "position": { "x": 0, "y": 0 }
             }
           ]
         },
@@ -1076,8 +1075,7 @@ public static final String DATA_THIEF =
           "mobs": [
             {
               "@class": "com.tloj.game.entities.bosses.FlyingBoss",
-              "position": { "x": 0, "y": 0 },
-              "lvl": 1
+              "position": { "x": 5, "y": 0 }
             }
           ]
         }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.tloj.game.utilities.Coordinates;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.entities.Boss;
@@ -25,9 +26,9 @@ public class BossRoom extends HostileRoom {
     @JsonCreator
     public BossRoom(
         @JsonProperty("coordinates") Coordinates coordinates, 
-        @JsonProperty("bosses") ArrayList<Mob> bosses
+        @JsonProperty("mobs") ArrayList<Boss> bosses
     ) {
-        super(coordinates, bosses);
+        super(coordinates, new ArrayList<Mob>(bosses));
     }
 
     public BossRoom(
@@ -37,6 +38,7 @@ public class BossRoom extends HostileRoom {
         super(coordinates, boss);
     }
 
+    @JsonIgnore
     public Boss getBoss() {
         return (Boss) this.mobs.get(0);
     }

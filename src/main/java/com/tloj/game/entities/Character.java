@@ -401,10 +401,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if (!this.isAlive()) this.observers.forEach(observer -> observer.onPlayerDefeated());
     }
 
+    @JsonIgnore
     public String getManaBar() {
         return this.getBar(this.mana, this.maxMana);
     }
 
+    @JsonIgnore
     public String getPrettifiedStatus() {
         return 
             "You: \n" + 

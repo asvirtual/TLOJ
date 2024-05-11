@@ -4,7 +4,6 @@ import com.tloj.game.entities.Boss;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.bosses.HalverBoss;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -20,7 +19,6 @@ public class TakeHalfDamage extends BossAbility{
 
     @Override
     public void use(PlayerAttack attack) {
-        
-        attack.setTotalDamage(attack.getTotalDamage()/2);
+        attack.setTotalDamage(attack.getTotalDamage() / 2);
     }
 }
