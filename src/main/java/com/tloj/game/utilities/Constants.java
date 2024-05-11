@@ -755,28 +755,8 @@ public static final String DATA_THIEF =
 
    """;
 
-
-
-
-
   public static final String BASE_PLAYER = """
       
-  """;
-
-  public static final String DATA_THIEF = """
-  
-  """;
-
-  public static final String HACKER = """
-      
-  """;
-
-  public static final String MECHA_KNIGHT = """
-
-  """;
-
-  public static final String NEO_SAMURAI = """
-
   """;
 
   public static final String MERCHANT = """
