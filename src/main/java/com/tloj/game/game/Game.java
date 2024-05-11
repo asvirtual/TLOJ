@@ -296,10 +296,10 @@ public class Game implements CharacterObserver {
         String S = "[gs] ";
         String E = "[ge] ";
         String W = "[gw] ";
-        String Nb = "[gn] - Something's off... ";
-        String Sb = "[gs] - Something's off... ";
-        String Eb = "[ge] - Something's off... ";
-        String Wb = "[gw] - Something's off... ";
+        String Nb = "[gn - Something's off... ]";
+        String Sb = "[gs - Something's off... ]";
+        String Eb = "[ge - Something's off... ]";
+        String Wb = "[gw - Something's off... ]";
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
             if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH)).getType() == RoomType.BOSS_ROOM)

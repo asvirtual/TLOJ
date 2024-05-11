@@ -29,6 +29,7 @@ import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
+import com.tloj.game.utilities.Music;
 
 
 /**
@@ -997,6 +998,9 @@ public class Controller {
         this.setConsoleEncoding();
         System.out.println(Constants.GAME_TITLE);
         Character player;
+
+        Music music = new Music("src/main/resources/sounds/ambient.wav");
+        music.playMusic(false);
 
         while (this.getState() != GameState.EXIT) {
             if (this.game != null) {
