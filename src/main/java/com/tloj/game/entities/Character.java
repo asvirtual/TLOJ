@@ -208,6 +208,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = mana;
     }
 
+    public double getMaxWeight() {
+        return this.maxWeight;
+    }
+
+    public double getFreeWeight() {
+        return Math.floor((this.maxWeight - this.getCarriedWeight()) * 10) / 10;
+    }
+
     public Level getCurrentLevel() {
         return this.currentLevel;
     }
@@ -261,7 +269,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public boolean hasItem(Item item) {
-        return this.inventory.contains(item);
+        for (Item i : this.inventory)
+            if (i.getId() == item.getId()) return true;
+
+        return false;
     }
 
     public Item getItem(String itemName) {
@@ -331,12 +342,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void lootMob(Mob mob) {
-        System.out.println("You gain " + mob.xpDrop + " experience points and " + mob.moneyDrop + " BTC");
+        System.out.println("You gain " + mob.xpDrop * mob.lvl + " experience points and " + mob.moneyDrop + " BTC");
 
         this.addXp(mob.xpDrop * mob.lvl);
         this.money += mob.moneyDrop;
 
         Item drop = mob.getDrop();
+        if (drop == null) return;
+        if (this.getCarriedWeight() + mob.getDrop().getWeight() > this.maxWeight) return;
         if (this.addInventoryItem(drop)) System.out.println("You found a " + drop);
     }
 
@@ -377,12 +390,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void swapWeapon(int index) {
-        if (index < 0 || index >= this.getInventorySize()) {
+        if (index < 1 || index > this.getInventorySize()) {
             System.out.println("Invalid index");
             return;
         }
 
-        Item item = this.getInventoryItem(index);
+        Item item = this.getInventoryItem(index - 1);
         if (item instanceof Weapon) {
             this.inventory.add(this.weapon);
 
@@ -428,15 +441,15 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public String toString() {
         String status = 
             String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + "\n" +
-            " > Lvl:  " + this.lvl + "\n" +
-            " > XP:   " + this.getXpBar() + " " + this.xp + "/" + this.requiredXp + "\n" +
-            " > HP:   " + this.getHpBar() + " " + this.hp + "/" + this.maxHp + "\n" +
-            " > Mana: " + this.getManaBar() + " " + this.mana + "/" + this.maxMana + "\n" +
-            " > Atk:  " + this.currentFightAtk + "\n" +
-            " > Def:  " + this.currentFightDef + "\n" +
-            " > Weapon: " + this.weapon + "\n" +
-            " > Weight: " + this.getWeightBar() + " " + this.getCarriedWeight() + "/" + this.maxWeight + "\n" +
-            " > BTC: " + this.money;
+            " ⸭ Lvl:  " + this.lvl + "\n" +
+            " ⸭ XP:   " + this.getXpBar() + " " + this.xp + "/" + this.requiredXp + "\n" +
+            " ⸭ HP:   " + this.getHpBar() + " " + this.hp + "/" + this.maxHp + "\n" +
+            " ⸭ Mana: " + this.getManaBar() + " " + this.mana + "/" + this.maxMana + "\n" +
+            " ⸭ Atk:  " + this.currentFightAtk + "\n" +
+            " ⸭ Def:  " + this.currentFightDef + "\n" +
+            " ⸭ Weapon: " + this.weapon + "\n" +
+            " ⸭ Weight: " + this.getWeightBar() + " " + this.getCarriedWeight() + "/" + this.maxWeight + " MB" + "\n" +
+            " ⸭ BTC: " + this.money;
 
         return status;
     }

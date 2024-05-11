@@ -16,6 +16,7 @@ import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.rooms.BossRoom;
+import com.tloj.game.rooms.EndRoom;
 import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
@@ -117,7 +118,8 @@ public class Game implements CharacterObserver {
             if (this.currentLevel.getStartRoom() != null) {
                 this.player.setPosition(this.currentLevel.getStartRoom().getCoordinates());
                 this.controller.setState(GameState.MOVING);
-            } else {
+                this.currentLevel.getStartRoom().accept(new PlayerRoomVisitor(this.player));
+            } else if (this.currentLevel.getHealingRoom() != null) {
                 HealingRoom healingRoom = this.currentLevel.getHealingRoom();
                 this.player.setPosition(healingRoom.getCoordinates());
 
@@ -125,6 +127,14 @@ public class Game implements CharacterObserver {
 
                 this.controller.setState(GameState.HEALING_ROOM);
                 healingRoom.accept(new PlayerRoomVisitor(this.player));
+            } else {
+                EndRoom endRoom = this.currentLevel.getEndRoom();
+                this.player.setPosition(endRoom.getCoordinates());
+
+                Controller.clearConsole(100);
+
+                endRoom.accept(new PlayerRoomVisitor(this.player));
+                System.out.println("Congratulations! You won the game with " + this.score + " points!");
             }
 
             return;
@@ -187,15 +197,20 @@ public class Game implements CharacterObserver {
     }
 
     public void dropItem(int index) {
-        Item item = this.player.getInventoryItem(index);
+        if (index < 1 || index > this.player.getInventorySize()) {
+            System.out.println("Couldn't find that item in your inventory");
+            return;
+        }
+
+        Item item = this.player.getInventoryItem(index - 1);
 
         if (item instanceof PurchasableItem)
             this.player.setMoney(
                 this.player.getMoney() + 
-                ((PurchasableItem) this.player.getInventoryItem(index)).getPrice()
+                ((PurchasableItem) this.player.getInventoryItem(index - 1)).getPrice()
             );
 
-        this.player.removeInventoryItem(index);
+        this.player.removeInventoryItem(index - 1);
     }
 
     @Override
@@ -214,7 +229,11 @@ public class Game implements CharacterObserver {
             room.clear();
             this.controller.setState(GameState.MOVING);
             this.controller.printMap();
-        } else room.removeMob(mob);
+        } else {
+            room.removeMob(mob);
+            Controller.clearConsole(2000);
+            System.out.println("You've encountered " + room.getMob() + room.getMob().getASCII() + "\n");
+        }
     }
 
     @Override
@@ -237,8 +256,8 @@ public class Game implements CharacterObserver {
     public void onPlayerDefeated() {
         System.out.println( "\n" + Constants.GAME_OVER + "\n" );
         System.out.println("Jordan ended his adventure with " + this.score + "points!");
-        this.controller.setState(GameState.MAIN_MENU);
         System.out.println(Constants.GAME_TITLE);
+        this.controller.setState(GameState.MAIN_MENU);
     }
 
     public void printMap(){

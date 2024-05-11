@@ -51,7 +51,7 @@ public class Merchant extends FriendlyEntity {
     public static String getItems() {
         String items = "";
         for (Map.Entry<Integer, PurchasableItem> entry : Merchant.items.entrySet()) 
-            items += entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC\n";
+            items += entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC" + " - " + entry.getValue().getWeight() + " MB\n";
 
         return items;
     }
@@ -60,9 +60,12 @@ public class Merchant extends FriendlyEntity {
     public void interact(Character player) {
         super.interact(player);
         
-        System.out.println("Merchant: Hello there! What do you want to buy today?");
-        System.out.println("You currently have " + this.player.getMoney() + " BTC");
-        System.out.println(Merchant.getItems());
+        System.out.println(
+            "Merchant: Hello there! What do you want to buy today?\n" +
+            "You currently have " + this.player.getMoney() + " BTC" +
+            " and " + this.player.getFreeWeight() + " MB" + " of free space\n" + 
+            Merchant.getItems()
+        );
 
         Controller.getInstance().setState(GameState.MERCHANT_SHOPPING);
     }
@@ -92,7 +95,12 @@ public class Merchant extends FriendlyEntity {
         System.out.println("Merchant: It's always a pleasure doing business with you!");
 
         Controller.clearConsole(1000);
-        System.out.println(Merchant.getItems());
+
+        System.out.println(
+            "You currently have " + this.player.getMoney() + " BTC" +
+            " and " + this.player.getFreeWeight() + " MB" + " of free space\n" + 
+            Merchant.getItems()
+        );
     }
 
     @Override

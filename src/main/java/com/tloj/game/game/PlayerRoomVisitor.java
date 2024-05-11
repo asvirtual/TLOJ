@@ -14,6 +14,7 @@ interface Visitor {
     void visit(BossRoom room);
     void visit(HealingRoom room);
     void visit(HostileRoom room);
+    void visit(EndRoom room);
     void visit(LootRoom room);
     void visit(TrapRoom room);
 }
@@ -83,11 +84,6 @@ public class PlayerRoomVisitor implements Visitor {
         Controller.clearConsole(100);
 
         if (room.isLocked()) {
-            if (!this.player.hasItem(new SpecialKey())) {
-                System.out.println("The room is locked! You need a special key to open it!"); // TODO: ASCII art
-                return;
-            }
-
             this.player.useItem(new SpecialKey());
             System.out.println("You've used a special key to unlock the room!");
         }
@@ -118,7 +114,7 @@ public class PlayerRoomVisitor implements Visitor {
         Controller.clearConsole(100);
         
         if (!room.triggerTrap(this.player)) {
-            System.out.println(Constants.TRAP_DEFENDER);
+            this.controller.printMapAndArt(Constants.TRAP_DEFENDER);
             System.out.println("You've dodged the trap! Thanks Windows Defender!");
         }
       
@@ -128,5 +124,12 @@ public class PlayerRoomVisitor implements Visitor {
         this.player.restoreMana(1);
 
         room.executeSideEffect();
+    }
+
+    @Override
+    public void visit(EndRoom room) {
+        room.visit();
+        this.controller.setState(GameState.WIN);
+        System.out.println(Constants.GAME_WIN);
     }
 } 

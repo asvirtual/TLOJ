@@ -20,5 +20,6 @@ public enum GameState {
     HEALING_ROOM,
     BOSS_DEFEATED,
     EXIT,
-    GAME_OVER;
+    GAME_OVER,
+    WIN
 }

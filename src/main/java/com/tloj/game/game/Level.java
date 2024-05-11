@@ -10,6 +10,7 @@ import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.StartRoom;
+import com.tloj.game.rooms.EndRoom;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -29,6 +30,7 @@ public class Level {
     private ArrayList<ArrayList<Room>> rooms;
     private StartRoom startRoom;
     private HealingRoom healingRoom;
+    private EndRoom endRoom;
 
     @JsonCreator
     public Level(
@@ -44,6 +46,9 @@ public class Level {
                 
                 if (room != null && room.getType() == RoomType.HEALING_ROOM) 
                     this.healingRoom = (HealingRoom) room;
+                
+                if (room != null && room.getType() == RoomType.END_ROOM) 
+                    this.endRoom = (EndRoom) room;
             });
         });
     }
@@ -54,6 +59,10 @@ public class Level {
 
     public HealingRoom getHealingRoom() {
         return this.healingRoom;
+    }
+
+    public EndRoom getEndRoom() {
+        return this.endRoom;
     }
 
     @JsonIgnore

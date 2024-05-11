@@ -1,11 +1,14 @@
 package com.tloj.game.rooms;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.utilities.Coordinates;
 
 
 public class EndRoom extends Room {
-    public EndRoom(Coordinates coordinates) {
+    @JsonCreator
+    public EndRoom(@JsonProperty("coordinates") Coordinates coordinates) {
         super(coordinates);
     }
 
@@ -16,6 +19,7 @@ public class EndRoom extends Room {
 
     @Override
     public void accept(PlayerRoomVisitor visitor) {
+        visitor.visit(this);
     }
 
     @Override

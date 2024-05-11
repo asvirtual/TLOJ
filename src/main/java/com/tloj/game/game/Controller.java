@@ -98,7 +98,8 @@ class MoveNorthCommand extends GameCommand {
         this.validListStates = List.of(
             GameState.MOVING,
             GameState.HEALING_ROOM,
-            GameState.BOSS_DEFEATED
+            GameState.BOSS_DEFEATED,
+            GameState.LOOTING_ROOM
         );
     }
 
@@ -110,7 +111,7 @@ class MoveNorthCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.NORTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            System.out.println("You can't go that way!");
+            System.out.println(e.getMessage());
         }
     }
 }
@@ -126,7 +127,8 @@ class MoveSouthCommand extends GameCommand {
         this.validListStates = List.of(
             GameState.MOVING,
             GameState.HEALING_ROOM,
-            GameState.BOSS_DEFEATED
+            GameState.BOSS_DEFEATED,
+            GameState.LOOTING_ROOM
         );
     }
 
@@ -138,7 +140,7 @@ class MoveSouthCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.SOUTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            System.out.println("You can't go that way!");
+            System.out.println(e.getMessage());
         }
     }
 }
@@ -154,7 +156,8 @@ class MoveWestCommand extends GameCommand {
         this.validListStates = List.of(
             GameState.MOVING,
             GameState.HEALING_ROOM,
-            GameState.BOSS_DEFEATED
+            GameState.BOSS_DEFEATED,
+            GameState.LOOTING_ROOM
         );
     }
 
@@ -166,7 +169,7 @@ class MoveWestCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.WEST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            System.out.println("You can't go that way!");
+            System.out.println(e.getMessage());
         }
     }
 }
@@ -182,7 +185,8 @@ class MoveEastCommand extends GameCommand {
         this.validListStates = List.of(
             GameState.MOVING,
             GameState.HEALING_ROOM,
-            GameState.BOSS_DEFEATED
+            GameState.BOSS_DEFEATED,
+            GameState.LOOTING_ROOM
         );
     }
 
@@ -194,7 +198,7 @@ class MoveEastCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.EAST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            System.out.println("You can't go that way!");
+            System.out.println(e.getMessage());
         } 
     }
 }
@@ -332,7 +336,12 @@ class DropItemCommand extends GameCommand {
         super.execute();
 
         if (!Controller.awaitConfirmation()) return;
-        this.game.dropItem(Integer.parseInt(commands[1]));
+
+        try {
+            this.game.dropItem(Integer.parseInt(commands[1]));
+        } catch (NumberFormatException e) {
+            System.out.println("Please insert a valid number");
+        }
     }
 }
 
@@ -1036,6 +1045,13 @@ public class Controller {
      * @see GameState
      */
     public void handleUserInput(String input) {
+        if (this.getState() == GameState.WIN) {
+            Controller.clearConsole(100);
+            System.out.println(Constants.GAME_TITLE);
+            this.setState(GameState.MAIN_MENU);
+            return;
+        }
+
         String[] commands = input.split(" ");
         if (commands.length == 0) {
             System.out.println("Please enter a command or write \"help\" for a list of commands");
@@ -1066,6 +1082,7 @@ public class Controller {
             case SMITH_FORGING -> "[give smith weaponshard] - [back]";
             case BOSS_DEFEATED -> "[inv] - [gn, gs, gw ge to change floor]";
             case HEALING_ROOM -> "[merchant] - [smith] - [inv] - [use] - [drop] - [gn, gs, gw ge to change floor]";
+            case WIN -> "[gn, gs, gw ge to escape the dungeon and become a LEGEND!]";
             default -> "";
         };
     }

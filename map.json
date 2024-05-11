@@ -492,7 +492,10 @@
           "coordinates": { "x": 5, "y": 4 },
           "visited": false,
           "cleared": false,
-          "locked": false
+          "locked": true,
+          "item": {
+            "@class": "com.tloj.game.collectables.weapons.NaniteLeechBlade"
+          }
         }
       ],
       [
@@ -535,17 +538,8 @@
               "position": { "x": 0, "y": 0 }
             }
           ]
-        },
-        null,
-        null,
-        null,
-        null
-      ],
-      [null, null, null, null, null, null],
-      [null, null, null, null, null, null],
-      [null, null, null, null, null, null],
-      [null, null, null, null, null, null],
-      [null, null, null, null, null, null]
+        }
+      ]
     ]
   },
   {
@@ -735,7 +729,7 @@
           "coordinates": { "x": 2, "y": 4 },
           "visited": false,
           "cleared": false,
-          "locked": true
+          "locked": false
         },
         null,
         null,
@@ -785,5 +779,16 @@
       "@class": "com.tloj.game.rooms.StartRoom",
       "coordinates": { "x": 2, "y": 0 }
     }
+  },
+  {
+    "levelNumber": 6,
+    "rooms": [
+      [
+        {
+          "@class": "com.tloj.game.rooms.EndRoom",
+          "coordinates": { "x": 0, "y": 0 }
+        }
+      ]
+    ]
   }
 ]
