@@ -428,4 +428,9 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
         return count;
     }
+
+    @Override 
+    public String getCombatASCII() {
+        return null;
+    }
 }

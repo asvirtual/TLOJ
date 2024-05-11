@@ -17,6 +17,7 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.game.Controller;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -78,5 +79,10 @@ public class Merchant extends FriendlyEntity {
 
         item.purchase(this.player);
         items.remove(index);
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.MERCHANT;
     }
 }

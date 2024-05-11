@@ -8,6 +8,7 @@ import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.entities.Character;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.skills.Daburu;
 
@@ -86,6 +87,9 @@ public class NeoSamurai extends Character {
                "Money: " + MONEY;
     }
 
-
+    @Override
+    public String getASCII(){
+        return Constants.NEO_SAMURAI;
+    }
 }
 

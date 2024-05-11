@@ -45,4 +45,9 @@ public abstract class Boss extends Mob {
     public Item getDrop() {
         return this.drop;
     }
+
+    @Override
+    public String getCombatASCII() {
+        return null;
+    }
 }

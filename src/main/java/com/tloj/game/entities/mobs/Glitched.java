@@ -8,6 +8,7 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.RoomType;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -106,14 +107,12 @@ public class Glitched extends Mob implements MovingEntity {
     }
 
     @Override
-    public String showAscii(Boolean fighting){
-        return " \n"
-            + "  _______  \n"
-            + " /       \\ \n"
-            + "/         \\ \n"
-            + "|  O   O  | \n"
-            + "|    ^    | \n"
-            + "|   ___   | \n"
-            + " \\_______/ \n";
+    public String getASCII(){
+        return Constants.GLITCHED_STATIC;
+    }
+
+    @Override
+    public String getASCII(){
+        return Constants.GLITCHED_ATTACK;
     }
 }

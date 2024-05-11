@@ -33,7 +33,12 @@ public class CyberGoblin extends Mob {
     }
     
     @Override
-    public String showAscii(Boolean fighting){
-        return fighting ? Constants.CYBER_GOBLIN_ATTACK : Constants.CYBER_GOBLIN_STATIC;
+    public String getASCII(){
+        return Constants.CYBER_GOBLIN_STATIC;
+    }
+
+    @Override
+    public String getCombatASCII() {
+        return Constants.CYBER_GOBLIN_ATTACK;
     }
 }

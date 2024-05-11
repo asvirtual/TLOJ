@@ -47,10 +47,10 @@ public class Constants {
                |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
 
 
-                                    [continue] - CONTINUE LAST GAME
-                                        [new]  - START GAME
-                                        [load] - LOAD GAME
-                                        [exit] - EXIT GAME
+                                    [continue] -  CONTINUE LAST GAME
+                                      [new]    -  START GAME
+                                      [load]   -  LOAD GAME
+                                      [exit]   -  EXIT GAME
     """;
     
     public static final String INTRO_WAV_FILE_PATH = "src/main/resources/sounds/intro.wav";
@@ -518,6 +518,35 @@ public class Constants {
  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ 
  
  """;
+
+  public static final String BASE_PLAYER = """
+      
+  """;
+
+  public static final String DATA_THIEF = """
+  
+  """;
+
+  public static final String HACKER = """
+      
+  """;
+
+  public static final String MECHA_KNIGHT = """
+
+  """;
+
+  public static final String NEO_SAMURAI = """
+
+  """;
+
+  public static final String MERCHANT = """
+
+  """;
+
+  public static final String SMITH = """  
+      
+  """;
+  
 
     public static final String MAP = """
       [

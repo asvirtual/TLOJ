@@ -51,7 +51,7 @@ public class EvenBoss extends Boss {
     }
 
     @Override
-    public String showAscii(Boolean fighting){
+    public String getASCII() {
         return Constants.EVENBOSS;
     }
 }

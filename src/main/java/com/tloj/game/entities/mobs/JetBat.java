@@ -31,9 +31,14 @@ public class JetBat extends Mob {
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
     }
+    
+    @Override
+    public String getASCII(){
+        return Constants.JET_BAT_STATIC;
+    }
 
     @Override
-    public String showAscii(Boolean fighting){
-        return fighting ? Constants.JET_BAT_ATTACK : Constants.JET_BAT_STATIC;
+    public String getCombatASCII() {
+        return Constants.JET_BAT_ATTACK;
     }
 }

@@ -46,7 +46,7 @@ public class HalverBoss extends Boss{
     }
 
     @Override
-    public String showAscii(Boolean fighting){
+    public String getASCII(){
         return Constants.HALVERBOSS;
     }
 }

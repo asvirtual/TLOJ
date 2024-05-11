@@ -40,18 +40,6 @@ public class Game implements CharacterObserver {
     private long elapsedTime;
     private long sessionStartTime;
 
-    // public Game(ArrayList<ArrayList<ArrayList<Room>>> map) {
-    //     this.levels = new ArrayList<Level>();
-    //     for (int i = 0; i < map.size(); i++)
-    //         this.levels.add(new Level(i, map.get(i)));
-
-    //     this.currentLevel = this.levels.get(0);
-    //     this.controller = Controller.getInstance();
-    //     this.seed = new Date().getTime();
-    //     this.elapsedTime = 0;
-    //     this.sessionStartTime = new Date().getTime();
-    // }
-
     public Game(ArrayList<Level> levels) {
         this.levels = levels;
 
@@ -164,11 +152,15 @@ public class Game implements CharacterObserver {
         this.player.useSkill();
     }
 
-    public void save() {
-        // this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        // GameData gameData = this.getGameData();
-        // gameData.serializeJSON();
+    public void saveLocally() {
+        this.elapsedTime += new Date().getTime() - this.sessionStartTime;
+        GameData gameData = this.getGameData();
+        gameData.serializeJSON();
         // TODO: Save in JSON file (and/or in cloud)
+    }
+
+    public void uploadToCloud() {
+        // TODO: Upload to cloud
     }
 
     public Room getCurrentRoom() {

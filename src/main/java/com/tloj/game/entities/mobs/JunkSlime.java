@@ -31,9 +31,14 @@ public class JunkSlime extends Mob {
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
     }
+    
+    @Override
+    public String getASCII(){
+        return Constants.JUNK_SLIME_STATIC;
+    }
 
     @Override
-    public String showAscii(Boolean fighting){
-        return fighting ? Constants.JUNK_SLIME_ATTACK : Constants.JUNK_SLIME_STATIC;
+    public String getCombatASCII() {
+        return Constants.JUNK_SLIME_ATTACK;
     }
 }

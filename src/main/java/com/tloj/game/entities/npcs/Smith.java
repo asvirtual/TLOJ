@@ -9,6 +9,7 @@ import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.game.Controller;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
 
@@ -56,5 +57,10 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
             System.out.println("You've ran out of Weapon Shards!");
             this.endInteraction();
         }
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.SMITH;
     }
 }

@@ -10,6 +10,7 @@ import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.ManaAttackBooster;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.CheatEngine;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -88,5 +89,9 @@ public class Hacker extends Character {
                "Money: " + MONEY;
     }
 
+    @Override
+    public String getASCII() {
+        return Constants.HACKER;
+    }
 }
  

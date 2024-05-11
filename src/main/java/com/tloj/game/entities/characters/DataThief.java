@@ -10,6 +10,7 @@ import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.effects.DiceReroller;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Steal;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -87,5 +88,10 @@ public class DataThief extends Character {
                "Weapon: " + NanoDirk.describe() + " - " + DiceReroller.describe() + "\n" +
                "Ability: " + Steal.describe() + "\n" +
                "Money: " + MONEY;
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.DATA_THIEF;
     }
 }

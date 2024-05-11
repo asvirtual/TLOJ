@@ -31,9 +31,14 @@ public class MechaRat extends Mob  {
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
     }
+    
+    @Override
+    public String getASCII(){
+        return Constants.MECHA_RAT_STATIC;
+    }
 
     @Override
-    public String showAscii(Boolean fighting){
-        return fighting ? Constants.MECHA_RAT_ATTACK : Constants.MECHA_RAT_STATIC;
+    public String getCombatASCII() {
+        return Constants.MECHA_RAT_ATTACK;
     }
 }

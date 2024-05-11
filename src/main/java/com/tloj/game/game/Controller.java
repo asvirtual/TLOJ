@@ -104,7 +104,7 @@ class MoveNorthCommand extends GameCommand {
 
         try {
             this.game.movePlayer(Coordinates.Direction.NORTH);
-            this.game.save();
+            this.game.saveLocally();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -127,7 +127,7 @@ class MoveSouthCommand extends GameCommand {
 
         try {
             this.game.movePlayer(Coordinates.Direction.SOUTH);
-            this.game.save();
+            this.game.saveLocally();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -150,7 +150,7 @@ class MoveWestCommand extends GameCommand {
         
         try {
             this.game.movePlayer(Coordinates.Direction.WEST);
-            this.game.save();
+            this.game.saveLocally();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
@@ -173,7 +173,7 @@ class MoveEastCommand extends GameCommand {
         
         try {
             this.game.movePlayer(Coordinates.Direction.EAST);
-            this.game.save();
+            this.game.saveLocally();
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         } 
@@ -347,6 +347,9 @@ class PrintMapCommand extends GameCommand {
 class QuitCommand extends GameCommand {
     public QuitCommand(Game game, String[] commands) {
         super(game, null);
+        this.invalidStates = List.of(
+            GameState.MAIN_MENU
+        );
     }
 
     @Override
@@ -354,8 +357,8 @@ class QuitCommand extends GameCommand {
         super.execute();
         
         if (!Controller.awaitConfirmation()) return;
-        this.game.save();
-
+        this.game.uploadToCloud();
+        this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
     }
 }
@@ -895,7 +898,7 @@ public class Controller {
                 Map.entry("help", () -> new HelpCommand()),
                 Map.entry("atk", () -> new AttackCommand(this.game, commands)),
                 Map.entry("skill", () -> new SkillCommand(this.game, commands)),
-                Map.entry("inventory", () -> new InventoryCommand(this.game, commands)),
+                Map.entry("inv", () -> new InventoryCommand(this.game, commands)),
                 Map.entry("use", () -> new UseItemCommand(this.game, commands)),
                 Map.entry("drop", () -> new DropItemCommand(this.game, commands)),
                 Map.entry("swap", () -> new SwapWeaponCommand(this.game, commands)),

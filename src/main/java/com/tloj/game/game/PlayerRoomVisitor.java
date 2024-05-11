@@ -38,7 +38,7 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(BossRoom room) {
         room.visit();
 
-        System.out.println("You've encountered" + room.getBoss() + "\n" + room.getBoss().showAscii(false) + "\n");
+        System.out.println("You've encountered" + room.getBoss() + "\n" + room.getBoss().getASCII() + "\n");
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
@@ -55,7 +55,7 @@ public class PlayerRoomVisitor implements Visitor {
 
         if (room.isCleared()) return;
 
-        System.out.println("You've encountered " + room.getMob() + room.getMob().showAscii(false) + "\n");
+        System.out.println("You've encountered " + room.getMob() + room.getMob().getASCII() + "\n");
         this.controller.setState(GameState.FIGHTING_MOB);
         
         this.player.heal(1);

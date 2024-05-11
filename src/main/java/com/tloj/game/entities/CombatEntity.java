@@ -81,4 +81,5 @@ public abstract class CombatEntity extends Entity {
     };
 
     public abstract void attack(CombatEntity target);
+    public abstract String getCombatASCII();
 }

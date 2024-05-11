@@ -9,6 +9,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Focus;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -91,5 +92,10 @@ public class BasePlayer extends Character {
                "Weapon: " + LaserBlade.describe() + "\n" +
                "Ability: " + Focus.describe() + "\n" +
                "Money: " + MONEY;
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.BASE_PLAYER;
     }
 }

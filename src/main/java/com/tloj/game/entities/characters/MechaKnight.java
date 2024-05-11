@@ -13,6 +13,7 @@ import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Focus;
 import com.tloj.game.skills.Guard;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
 public class MechaKnight extends Character {
@@ -89,5 +90,10 @@ public class MechaKnight extends Character {
                "Weapon: " + PlasmaGreatsword.describe() + "\n" +
                "Ability: " + Guard.describe() + "\n" +
                "Money: " + MONEY;
+    }
+
+    @Override
+    public String getASCII(){
+        return Constants.MECHA_KNIGHT;
     }
 }
