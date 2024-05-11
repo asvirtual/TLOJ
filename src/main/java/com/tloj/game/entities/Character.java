@@ -405,6 +405,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.getBar(this.mana, this.maxMana);
     }
 
+    public String getXpBar() {
+        return this.getBar(this.xp, this.requiredXp);
+    }
+
+    public String getWeightBar() {
+        return this.getBar((int) this.getCarriedWeight(), this.maxWeight);
+    }
+
     public String getPrettifiedStatus() {
         return 
             "You: \n" + 
@@ -418,16 +426,16 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @Override
     public String toString() {
         String status = 
-            String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + 
-            " | Lvl: " + this.lvl +
-            " | XP: " + this.xp + "/" + this.requiredXp + 
-            " | HP: " + this.hp + "/" + this.maxHp + 
-            " | Mana: " + this.mana + "/" + this.maxMana + 
-            " | Atk: " + this.currentFightAtk + 
-            " | Def: " + this.currentFightDef + 
-            " | Weapon: " + this.weapon +
-            " | Weight: " + this.getCarriedWeight() + "/" + this.maxWeight +
-            " | BTC: " + this.money;
+            String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + "\n" +
+            " > Lvl:  " + this.lvl + "\n" +
+            " > XP:   " + this.getXpBar() + " " + this.xp + "/" + this.requiredXp + "\n" +
+            " > HP:   " + this.getHpBar() + " " + this.hp + "/" + this.maxHp + "\n" +
+            " > Mana: " + this.getManaBar() + " " + this.mana + "/" + this.maxMana + "\n" +
+            " > Atk:  " + this.currentFightAtk + "\n" +
+            " > Def:  " + this.currentFightDef + "\n" +
+            " > Weapon: " + this.weapon + "\n" +
+            " > Weight: " + this.getWeightBar() + " " + this.getCarriedWeight() + "/" + this.maxWeight + "\n" +
+            " > BTC: " + this.money;
 
         return status;
     }
