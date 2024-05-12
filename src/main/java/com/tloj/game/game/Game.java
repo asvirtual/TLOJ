@@ -262,31 +262,47 @@ public class Game implements CharacterObserver {
         mapBuilder
             .append("  ")
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - 1))
-            .append("GN")
+            .append(this.currentLevel.getRoomsColCount() % 2 == 0 ? "GN" : "N")
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - 1))
             .append("\n");
         
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
-            mapBuilder.append("| ");
+
+            if (this.currentLevel.getRoomsColCount() % 2 == 0) {
+                if (i == this.currentLevel.getRoomsColCount() / 2) mapBuilder.append("W ");
+                else mapBuilder.append("| ");
+            } else {
+                if (i == this.currentLevel.getRoomsColCount() / 2 - 1) mapBuilder.append("G ");
+                else if (i == this.currentLevel.getRoomsColCount() / 2) mapBuilder.append("W ");
+                else mapBuilder.append("| ");
+            }
 
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
                 Room room = this.currentLevel.getRoom(new Coordinates(j, i));
-                if (room == null){
+                if (room == null) {
                     mapBuilder.append("\u00A0" + " ");                    
                     continue;
                 }
     
-                if (this.getCurrentRoom().equals(room)) mapBuilder.append("\u0398" + " ");
+                if (this.getCurrentRoom().equals(room)) mapBuilder.append(ConsoleColors.YELLOW_BOLD_BRIGHT + "\u0398 " + ConsoleColors.RESET);
                 else mapBuilder.append(room + " ");
             }
+
+            if (this.currentLevel.getRoomsColCount() % 2 == 0) {
+                if (i == this.currentLevel.getRoomsColCount() / 2) mapBuilder.append("\bE\n");
+                else mapBuilder.append("\b|\n");
+            } else {
+                if (i == this.currentLevel.getRoomsColCount() / 2 - 1) mapBuilder.append("\bG\n");
+                else if (i == this.currentLevel.getRoomsColCount() / 2) mapBuilder.append("\bE\n");
+                else mapBuilder.append("\b|\n");
+            }
             
-            mapBuilder.append("\b|\n");
         }
         
         mapBuilder
             .append("  ")
             .append("--".repeat(this.currentLevel.getRoomsRowCount() / 2 - 1))
-            .append("GS")
+            .append(this.currentLevel.getRoomsColCount() % 2 == 0 ? "GS" : "S")
             .append("--".repeat(this.currentLevel.getRoomsRowCount() / 2 - 1))
             .append("\n");
         

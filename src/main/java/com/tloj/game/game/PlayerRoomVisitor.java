@@ -68,7 +68,7 @@ public class PlayerRoomVisitor implements Visitor {
         }
 
         Controller.clearConsole();
-        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.PURPLE + room.getMob().getASCII() + "\n");
+        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + room.getMob().getASCII() + "\n");
         this.controller.setState(GameState.FIGHTING_MOB);
     }
 

@@ -340,7 +340,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void lootMob(Mob mob) {
-        System.out.println("You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  "and" + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET);
+        System.out.println("You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  " and " + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET);
 
         this.addXp(mob.dropXp());
         this.money += mob.getMoneyDrop();

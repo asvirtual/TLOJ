@@ -1,5 +1,6 @@
 package com.tloj.game.rooms;
 
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -68,7 +69,7 @@ public class LootRoom extends Room {
 
     @Override
     public String toString() {
-        return this.visited ? "\u255A" : "\u00A0";
+        return this.visited ? ConsoleColors.GREEN + "\u255A" + ConsoleColors.RESET : "\u00A0";
         // return this.visited ? "L" : " ";
     }
 }

@@ -1,5 +1,6 @@
 package com.tloj.game.rooms;
 
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.game.PlayerRoomVisitor;
@@ -63,7 +64,7 @@ public class TrapRoom extends Room {
 
     @Override
     public String toString() {
-        return this.visited ? "\u2566" : "\u00A0";
+        return this.visited ? ConsoleColors.PURPLE + "\u2566" + ConsoleColors.RESET : "\u00A0";
         // return this.visited ? "T" : " ";
     }
 }

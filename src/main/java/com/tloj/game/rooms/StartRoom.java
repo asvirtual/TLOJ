@@ -1,5 +1,6 @@
 package com.tloj.game.rooms;
 
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
 
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class StartRoom extends Room {
 
     @Override
     public String toString() {
-        return this.visited ? Character.toString(0x2229) : Character.toString(0x00A0);
+        return this.visited ? ConsoleColors.YELLOW + "\u2229" + ConsoleColors.RESET : "\u00A0";
         // return this.visited ? "S" : " ";
     }
 }

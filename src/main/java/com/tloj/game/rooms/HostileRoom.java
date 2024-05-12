@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.Character;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
@@ -81,6 +82,6 @@ public class HostileRoom extends Room {
     
     @Override
     public String toString() {
-        return this.visited ? "\u25A0" : "\u00A0";
+        return this.visited ? ConsoleColors.RED + "\u25A0" + ConsoleColors.RESET : "\u00A0";
     }
 }
