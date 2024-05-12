@@ -26,8 +26,10 @@ public abstract class Entity {
         this.position = position;
     }
 
+    // Returns a string representation of the Entity's health bar
     public String getBar(int current, int max) {
-        int percentage = (int) (((double) current / max) * Constants.BAR_LENGTH);
+        // Calculate the percentage of the health bar that should be filled
+        int percentage = (int) (((double) current / max) * Constants.BAR_LENGTH);   
         StringBuilder bar = new StringBuilder();
         for (int i = 0; i < Constants.BAR_LENGTH; i++) {
             if (i < percentage) bar.append("█");

@@ -49,6 +49,7 @@ public abstract class Boss extends Mob {
         attack.setDiceRoll(this.dice.roll());
         attack.perform();
 
+        // Wait for a second before showing the result
         Controller.wait(1000);
 
         System.out.println(this.getPrettifiedStatus());

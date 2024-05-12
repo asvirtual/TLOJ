@@ -80,6 +80,12 @@ public abstract class Item {
         return id;
     }
 
+    /*
+     * used to get a random item based on their drop chances. 
+     * It first calculates the total drop chance of all items, then generates a random value within this range. 
+     * It then goes through the items again, adding each item's drop chance to a cumulative total 
+     * until this total is greater than or equal to the random value, at which point it returns the current item
+     */
     public static Item getRandomItem() {
         double totalProbability = 0.0;
         for (ConsumableItems i : ConsumableItems.values()) {

@@ -33,6 +33,7 @@ import com.tloj.game.utilities.GameState;
 public class Merchant extends FriendlyEntity {
     public static final String NAME = "MERCHANT";
 
+    // Map of the merchant's items
     private static Map<Integer, PurchasableItem> items = new LinkedHashMap<>();
     static {
         items.put(1, new HealthPotion());
@@ -49,10 +50,13 @@ public class Merchant extends FriendlyEntity {
         super(position, NAME);
     }
 
+    /**
+     * @return a string representation of the merchant's items
+     */
     public static String getItems() {
         String items = "";
         for (Map.Entry<Integer, PurchasableItem> entry : Merchant.items.entrySet()) 
-            items += entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC" + " - " + entry.getValue().getWeight() + " MB\n";
+            items += entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC" + " - " + entry.getValue().getWeight() + " MB\n";  
 
         return items;
     }
