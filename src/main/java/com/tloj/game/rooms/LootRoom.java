@@ -119,7 +119,12 @@ public class LootRoom extends Room {
      */
     @Override
     public String toString() {
-        return this.visited ? ConsoleColors.GREEN + "\u255A" + ConsoleColors.RESET : "\u00A0";
+        return this.visited ? this.getRoomRepresentation() : "\u00A0";
         // return this.visited ? "L" : " ";
+    }
+
+    @Override
+    public String getRoomRepresentation() {
+        return ConsoleColors.GREEN + "\u255A" + ConsoleColors.RESET;
     }
 }

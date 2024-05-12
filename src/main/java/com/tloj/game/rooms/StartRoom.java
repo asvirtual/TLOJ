@@ -67,7 +67,12 @@ public class StartRoom extends Room {
      */
     @Override
     public String toString() {
-        return this.visited ? ConsoleColors.YELLOW + "\u2229" + ConsoleColors.RESET : "\u00A0";
+        return this.visited ? this.getRoomRepresentation() : "\u00A0";
         // return this.visited ? "S" : " ";
+    }
+
+    @Override
+    public String getRoomRepresentation() {
+        return ConsoleColors.YELLOW + "\u2229" + ConsoleColors.RESET;
     }
 }

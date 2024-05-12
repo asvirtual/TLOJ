@@ -58,5 +58,9 @@ public class EndRoom extends StartRoom {
     public String toString() {
         return "E";
     }
-    
+
+    @Override
+    public String getRoomRepresentation() {
+        return "E";
+    }
 }

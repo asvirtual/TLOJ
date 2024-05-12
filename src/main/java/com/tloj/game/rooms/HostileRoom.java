@@ -148,6 +148,11 @@ public class HostileRoom extends Room {
      */
     @Override
     public String toString() {
-        return this.visited ? ConsoleColors.RED + "\u25A0" + ConsoleColors.RESET : "\u00A0";
+        return this.visited ? this.getRoomRepresentation() : "\u00A0";
+    }
+
+    @Override
+    public String getRoomRepresentation() {
+        return ConsoleColors.RED + "\u25A0" + ConsoleColors.RESET;
     }
 }

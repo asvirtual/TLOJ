@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
+import com.tloj.game.collectables.items.NorthStar;
 import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Character;
@@ -182,7 +183,6 @@ public class Game implements CharacterObserver {
         this.player.attack(mob);
         
         if (mob.isAlive()) {
-            // Controller.clearConsole();
             mob.attack(this.player);
 
             /**
@@ -302,22 +302,22 @@ public class Game implements CharacterObserver {
 
         // Append the top border of the map.
         mapBuilder
-            .append("  ")
+            .append(" -")
+            
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
             .append(this.currentLevel.getRoomsColCount() % 2 == 0 ? "GN" : "N")
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
-            .append("\n");
+            .append("--\n");
         
         // Iterate through each row of rooms in the current level.
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
-
             if ((this.currentLevel.getRoomsRowCount() + 1) % 2 == 0) {
                 if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bW ");
                 else mapBuilder.append("\b| ");
             } else {
-                if (i == this.currentLevel.getRoomsRowCount() / 2 - 1) mapBuilder.append("\bG ");
-                else if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bW ");
-                else mapBuilder.append("\b| ");
+                if (i == this.currentLevel.getRoomsRowCount() / 2 - 1) mapBuilder.append("G ");
+                else if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("W ");
+                else mapBuilder.append("| ");
             }
 
             // Iterate through each column of rooms in the current row.
@@ -330,7 +330,10 @@ public class Game implements CharacterObserver {
 
                 // Highlight the current room if it is the player's current location.
                 if (this.getCurrentRoom().equals(room)) mapBuilder.append(ConsoleColors.YELLOW_BOLD_BRIGHT + "\u0398 " + ConsoleColors.RESET);
-                else mapBuilder.append(room + " ");
+                else {
+                    if (this.player.hasItem(new NorthStar())) mapBuilder.append(room.getRoomRepresentation() + "\s");
+                    else mapBuilder.append(room + "\s");
+                }
             }
 
             // Append vertical borders or gates at the end of each row based on the current column count.
@@ -338,20 +341,20 @@ public class Game implements CharacterObserver {
                 if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bE\n");
                 else mapBuilder.append("\b|\n");
             } else {
-                if (i == this.currentLevel.getRoomsRowCount() / 2 - 1) mapBuilder.append("\bG\n");
-                else if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bE\n");
-                else mapBuilder.append("\b|\n");
+                if (i == this.currentLevel.getRoomsRowCount() / 2 - 1) mapBuilder.append("G\n");
+                else if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("E\n");
+                else mapBuilder.append("|\n");
             }
             
         }
 
         // Append the bottom border of the map.
         mapBuilder
-            .append("  ")
+            .append(" -")
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
             .append(this.currentLevel.getRoomsColCount() % 2 == 0 ? "GS" : "S")
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
-            .append("\n");
+            .append("--\n");
         
         return mapBuilder.toString().split("\n");
     }

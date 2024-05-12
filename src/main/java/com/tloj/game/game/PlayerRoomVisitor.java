@@ -3,9 +3,9 @@ package com.tloj.game.game;
 import com.tloj.game.rooms.*;
 import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.collectables.items.Lockpick;
 import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Character;
 
@@ -51,7 +51,6 @@ public class PlayerRoomVisitor implements Visitor {
         room.clear(this.player);
 
         this.controller.setState(GameState.MOVING);
-        // this.controller.printMap();
         this.controller.printMapAndStatus();
     }
 
@@ -71,14 +70,8 @@ public class PlayerRoomVisitor implements Visitor {
             room.getBoss().getASCII(), 
             room.getBoss().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus()
         );
+
         System.out.println();
-
-        // System.out.println(
-        //     ConsoleColors.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleColors.RESET + 
-        //     "\n" + room.getBoss().getASCII() + "\n" + 
-        //     room.getBoss().getPrettifiedStatus() + "\n"
-        // );
-
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
@@ -108,7 +101,6 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(HostileRoom room) {
         room.visit();
         if (room.isCleared()) {
-            // this.controller.printMap();
             this.controller.printMapAndStatus();
             return;
         }
@@ -120,13 +112,8 @@ public class PlayerRoomVisitor implements Visitor {
             room.getMob().getASCII(), 
             room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus()
         );
-        System.out.println();
 
-        // System.out.println(
-        //     ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + 
-        //     "\n" + room.getMob().getASCII() + "\n" +
-        //     room.getMob().getPrettifiedStatus() + "\n"
-        // );
+        System.out.println();
 
         this.controller.setState(GameState.FIGHTING_MOB);
     }
@@ -140,7 +127,6 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(LootRoom room) {
         room.visit();
         if (room.isCleared()) {
-            // this.controller.printMap();
             this.controller.printMapAndStatus();
             return;
         }
@@ -175,9 +161,19 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(TrapRoom room) {
         room.visit();
         if (room.isCleared()) {
-            // this.controller.printMap();
             this.controller.printMapAndStatus();
             return;
+        }
+
+        Lockpick lockpick = new Lockpick();
+        if (this.player.hasItem(lockpick)) {
+            System.out.println("You've encountered a trap! Do you want to use a lockpick to disarm it? (Y/N)");
+            if (Controller.awaitConfirmation()) {
+                this.player.useItem(lockpick);
+                System.out.println(ConsoleColors.CYAN_BRIGHT + "You've disarmed the trap!" + ConsoleColors.RESET);
+                room.clear(this.player);
+                return;
+            }
         }
 
         Controller.clearConsole();

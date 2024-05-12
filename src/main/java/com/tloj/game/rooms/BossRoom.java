@@ -91,7 +91,12 @@ public class BossRoom extends HostileRoom {
      */
     @Override
     public String toString() {
-        return this.visited ? "\u00DF" : "\u00A0";
+        return this.visited ? this.getRoomRepresentation() : "\u00A0";
         // return this.visited ? "B" : " ";
+    }
+
+    @Override
+    public String getRoomRepresentation() {
+        return "\u00DF";
     }
 }

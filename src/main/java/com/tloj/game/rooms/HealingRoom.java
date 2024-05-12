@@ -67,7 +67,12 @@ public class HealingRoom extends StartRoom {
      */
     @Override
     public String toString() {
-        return this.visited ? "\u256C" : "\u00A0";
+        return this.visited ? this.getRoomRepresentation() : "\u00A0";
         // return this.visited ? "H" : " ";
+    }
+    
+    @Override
+    public String getRoomRepresentation() {
+        return "\u256C";
     }
 }

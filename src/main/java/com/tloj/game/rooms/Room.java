@@ -81,6 +81,14 @@ public abstract class Room {
     public abstract String toString();
 
     /**
+     * Returns a string representation of the room
+     * based on its type indipedently of the visited status.
+     *
+     * @return a string representation of the room
+     */
+    public abstract String getRoomRepresentation();
+
+    /**
      * Returns the coordinates of the room.
      *
      * @return the coordinates of the room

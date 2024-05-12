@@ -3,7 +3,6 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the Consumable Item NorthStar in the game.<br>

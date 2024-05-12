@@ -36,6 +36,7 @@ public class InflictDamage extends RoomEffect {
 
         Controller.getInstance().printMapAndArt(this.getASCII());
         System.out.println("\n" + ConsoleColors.RED + "You've been hit by a virus and lost " + DAMAGE + " HP!" + ConsoleColors.RESET);
+        
         // Inflict damage to the character
         character.takeDamage(DAMAGE);
 

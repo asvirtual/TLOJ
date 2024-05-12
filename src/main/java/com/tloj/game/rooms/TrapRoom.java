@@ -2,16 +2,13 @@ package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
-
-import java.util.ArrayList;
+import com.tloj.game.entities.Character;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.entities.Character;
-import com.tloj.game.entities.Mob;
+
 
 /**
  * Class that represents a trap room in the game<br>
@@ -63,7 +60,7 @@ public class TrapRoom extends Room {
      * Triggers the trap effect on a character.
      *
      * @param character The character triggering the trap.
-     * @return True if the trap effect was successfully applied, false otherwise.
+     * @return true if the trap effect was successfully applied, false otherwise.
      */
     public boolean triggerTrap(Character character) {
         return this.effect.applyEffect(character);
@@ -94,7 +91,6 @@ public class TrapRoom extends Room {
     @Override
     public void clear(Character player) {
         super.clear(player);
-        player.heal(1);
         player.restoreMana(1);
     }
 
@@ -105,7 +101,12 @@ public class TrapRoom extends Room {
      */
     @Override
     public String toString() {
-        return this.visited ? ConsoleColors.PURPLE + "\u2566" + ConsoleColors.RESET : "\u00A0";
+        return this.visited ? this.getRoomRepresentation() : "\u00A0";
         // return this.visited ? "T" : " ";
+    }
+
+    @Override
+    public String getRoomRepresentation() {
+        return ConsoleColors.PURPLE + "\u2566" + ConsoleColors.RESET;
     }
 }
