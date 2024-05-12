@@ -2,6 +2,7 @@ package com.tloj.game.game;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.utilities.ConsoleColors;
 
 
 /**
@@ -61,7 +62,7 @@ public class PlayerAttack extends Attack {
     @Override
     public void perform() {
         super.perform();
-        System.out.println("You inflicted " + (this.totalDamage >= 0 ? totalDamage : 0) + " damage to " + this.target + "!");
-        if (this.target.getHP() > 0) System.out.println(this.target + " has " + this.target.getHP() + " HP left!");
+        System.out.println("You inflicted " +  ConsoleColors.RED_BRIGHT + (this.totalDamage >= 0 ? totalDamage : 0) + " damage" + ConsoleColors.RESET + "to " + this.target + "!");
+        if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleColors.RED + this.target.getHP() + " HP" + ConsoleColors.RESET + " left!");
     }
 }
