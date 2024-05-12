@@ -25,6 +25,7 @@ public class Coordinates {
      * @param x The x-coordinate.
      * @param y The y-coordinate.
      */
+    @JsonCreator
     public Coordinates(int x, int y) {
         this.x = x;
         this.y = y;
