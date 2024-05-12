@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 
 
 /**
@@ -34,7 +35,7 @@ public class Daburu extends CharacterSkill{
 
         attack.setTotalDamage(attack.getTotalDamage() * 2);
         attacker.useMana(10);
-        System.out.println("Daburu modo! Next attack will deal double damage");
+        System.out.println(ConsoleColors.CYAN + "Daburu modo! Next attack will deal double damage" + ConsoleColors.RESET);
     }
 
     public static String describe() {
