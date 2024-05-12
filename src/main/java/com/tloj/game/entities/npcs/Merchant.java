@@ -32,26 +32,23 @@ import com.tloj.game.utilities.GameState;
 
 public class Merchant extends FriendlyEntity {
     public static final String NAME = "MERCHANT";
-
-    private static Map<Integer, PurchasableItem> items = new LinkedHashMap<>();
-    static {
-        items.put(1, new HealthPotion());
-        items.put(2, new GreatHealthPotion());
-        items.put(3, new ManaPotion());
-        items.put(4, new GreatManaPotion());
-        items.put(5, new AttackElixir());
-        items.put(6, new DefenseElixir());
-        items.put(7, new Lockpick());
-    }
-
+    private Map<Integer, PurchasableItem> items = new LinkedHashMap<>();
+    
     @JsonCreator
     public Merchant(@JsonProperty("position") Coordinates position) {
         super(position, NAME);
+        this.items.put(1, new HealthPotion());
+        this.items.put(2, new ManaPotion());
+        this.items.put(3, new GreatHealthPotion());
+        this.items.put(4, new GreatManaPotion());
+        this.items.put(5, new AttackElixir());
+        this.items.put(6, new DefenseElixir());
+        this.items.put(7, new Lockpick());
     }
 
-    public static String getItems() {
+    public String getItems() {
         String items = "";
-        for (Map.Entry<Integer, PurchasableItem> entry : Merchant.items.entrySet()) 
+        for (Map.Entry<Integer, PurchasableItem> entry : this.items.entrySet()) 
             items += entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC" + " - " + entry.getValue().getWeight() + " MB\n";
 
         return items;
@@ -64,8 +61,8 @@ public class Merchant extends FriendlyEntity {
         System.out.println(
             ConsoleColors.YELLOW + "Merchant: Hello there! What do you want to buy today?\n" +
             ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
-            ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + " of free space\n" + 
-            ConsoleColors.RESET + Merchant.getItems()
+            ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
+            ConsoleColors.RESET + " of free space\n" + this.getItems()
         );
 
         Controller.getInstance().setState(GameState.MERCHANT_SHOPPING);
@@ -78,7 +75,7 @@ public class Merchant extends FriendlyEntity {
     }
 
     public void buy(int index) {
-        PurchasableItem item = Merchant.items.get(index);
+        PurchasableItem item = this.items.get(index);
         
         if (item == null) {
             System.out.println("Merchant: I don't have that!");
@@ -95,12 +92,13 @@ public class Merchant extends FriendlyEntity {
 
         System.out.println("Merchant: It's always a pleasure doing business with you!");
 
-        Controller.clearConsole(1000);
+        Controller.clearConsole(2000);
 
         System.out.println(
-            "You currently have " + this.player.getMoney() + " BTC" +
-            " and " + this.player.getFreeWeight() + " MB" + " of free space\n" + 
-            Merchant.getItems()
+            this.getASCII() + "\n" +
+            ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
+            ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
+            ConsoleColors.RESET + " of free space\n" + this.getItems() 
         );
     }
 

@@ -1,6 +1,7 @@
 package com.tloj.game.effects;
 
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,12 +21,14 @@ public class DiceReroller extends WeaponEffect {
 
     @Override
     public boolean apply(PlayerAttack attack) {
+        if (Math.random() > 0.5) return false;
+        
         attack.setWeaponRoll(
             this.weapon.diceRoll() + 
             this.weapon.diceRoll()
         );
 
-        System.out.println("Double hit!");
+        System.out.println(ConsoleColors.YELLOW_BRIGHT + "Double hit!\n" + ConsoleColors.RESET);
         return true;
     }
 

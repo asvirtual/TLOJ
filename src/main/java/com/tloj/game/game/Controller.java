@@ -387,6 +387,7 @@ class QuitCommand extends GameCommand {
         this.game.uploadToCloud();
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
+        Controller.clearConsole();
         System.out.println(Constants.GAME_TITLE);
     }
 }
@@ -735,7 +736,6 @@ class ChooseCharacterGameCommand extends GameCommand {
         } + "\n");
 
         if (!Controller.awaitConfirmation()) {
-            Controller.clearConsole();
             System.out.println("Choose your starting character: 1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
             return;
         }
@@ -746,7 +746,9 @@ class ChooseCharacterGameCommand extends GameCommand {
         this.game.setPlayer(factory.create());
         this.controller.setState(GameState.MOVING);
 
-        System.out.println(this.game.getPlayer() + "\n" + this.game.getPlayer().getASCII());
+        Controller.printSideBySideText(this.game.getPlayer().getASCII(), this.game.getPlayer().toString());
+        System.out.println();
+        // System.out.println(this.game.getPlayer() + "\n" + this.game.getPlayer().getASCII());
     }
 }
 
@@ -903,6 +905,14 @@ public class Controller {
         return input.matches("(yes|y)");
     }
 
+    /**
+     * Await user input before proceeding with an action
+     */
+    public static void awaitEnter() {
+        System.out.println("Press Enter to continue...");
+        Controller.scanner.nextLine();
+    }
+
     /** 
      * Singleton pattern to ensure only one instance of the Controller class is created
      * @return the unique instance of the Controller class
@@ -936,35 +946,61 @@ public class Controller {
         this.game.printMap();
     }
 
+    public void printMapAndStatus() {
+        String[] firstLines = this.game.generateMapLines();
+        String[] secondLines = ("\n" + this.game.getPlayer().getPrettifiedStatus()).split("\n");
+        
+        // Find the maximum number of rows between the ASCII art and the map
+        int maxLines = Math.max(firstLines.length, secondLines.length);
+
+        // Find the maximum number of columns in the ASCII art (to pad the map with spaces)
+        int maxRows = firstLines[0].length();
+        for (int i = 1; i < firstLines.length; i++)
+            if (firstLines[i].length() > maxRows) maxRows = firstLines[i].length();
+    
+        for (int i = 0; i < maxLines; i++) {
+            String firstLine = i < firstLines.length ? firstLines[i] : "";
+
+            String secondLine = i < secondLines.length ? secondLines[i] : "";
+            System.out.println(firstLine + "\t\t\t\t" + secondLine);
+        }
+
+    }
+
+    public static void printSideBySideText(String first, String second, int offsetRows) {
+        String[] firstLines = first.split("\n");
+        String[] secondLines = second.split("\n");
+        
+        // Find the maximum number of rows between the ASCII art and the map
+        int maxLines = Math.max(firstLines.length, secondLines.length);
+
+        // Find the maximum number of columns in the ASCII art (to pad the map with spaces)
+        int maxRows = firstLines[0].length();
+        for (int i = 1; i < firstLines.length; i++)
+            if (firstLines[i].length() > maxRows) maxRows = firstLines[i].length();
+    
+        for (int i = 0; i < maxLines; i++) {
+            String firstLine = i < firstLines.length ? firstLines[i] : "";
+            String pad = " ".repeat(maxRows - firstLine.length());
+
+            // Offset the map by 5 rows
+            String secondLine = (i >= offsetRows && (i - offsetRows) < secondLines.length) ? secondLines[i - offsetRows] : "";
+            System.out.println(firstLine + pad + "\t\t\t\t" + secondLine);
+        }
+    }
+
+    public static void printSideBySideText(String first, String second) {
+        // Offset of the String second from the top of the console
+        final int DEFAULT_OFFSET_ROWS = 7; 
+        Controller.printSideBySideText(first, second, DEFAULT_OFFSET_ROWS);
+    }
+
     /**
      * Prints an ASCII art and the game map side by side
      * @param asciiArt the ASCII art to be printed
      */
-    public void printMapAndArt(String asciiArt){
-        String[] asciiArtLines = asciiArt.split("\n");
-        String[] mapLines = this.game.generateMapLines();
-
-        // Offset of the map from the top of the console
-        final int OFFSET_ROWS = 7; 
-        
-        // Find the maximum number of rows between the ASCII art and the map
-        int maxLines = Math.max(asciiArtLines.length, mapLines.length);
-
-        // Find the maximum number of columns in the ASCII art (to pad the map with spaces)
-        int maxRows = asciiArtLines[0].length();
-        for (int i = 1; i < asciiArtLines.length; i++)
-            if (asciiArtLines[i].length() > maxRows) maxRows = asciiArtLines[i].length();
-    
-        for (int i = 0; i < maxLines; i++) {
-            String asciiArtLine = i < asciiArtLines.length ? asciiArtLines[i] : "";
-            String pad = " ".repeat(maxRows - asciiArtLine.length());
-            // Offset the map by 5 rows
-            String mapLine = (i >= OFFSET_ROWS && (i - OFFSET_ROWS) < mapLines.length) ? mapLines[i - OFFSET_ROWS] : "";
-            
-            // Print a label for the map just above it
-            if (i == OFFSET_ROWS - 2) mapLine = " ".repeat((mapLines[0].length() - 2) / 2) + "Map:";
-            System.out.println(asciiArtLine + pad + "\t\t\t\t" + mapLine);
-        }
+    public void printMapAndArt(String asciiArt) {
+        Controller.printSideBySideText(asciiArt, String.join("\n", this.game.generateMapLines()));
     }
 
     /*
@@ -1174,8 +1210,8 @@ public class Controller {
             if (this.game != null && this.getState() != GameState.WIN) {
                 Character player = this.game.getPlayer();
                 if (player != null) {
-                    System.out.print(player.getPrettifiedStatus());
-                    System.out.println("What to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
+                    // System.out.print(player.getPrettifiedStatus());
+                    System.out.println("\nWhat to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
                 }
             }
 

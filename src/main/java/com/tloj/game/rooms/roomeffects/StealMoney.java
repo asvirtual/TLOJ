@@ -29,7 +29,7 @@ public class StealMoney extends RoomEffect {
         if (roll < 3) return false;
 
         Controller.getInstance().printMapAndArt(this.getASCII());
-        System.out.println(ConsoleColors.RED +"You have been scammed by a Crypto Guru and you lost " + COST + " BTC!" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleColors.RED +"You have been scammed by a Crypto Guru and you lost " + COST + " BTC!" + ConsoleColors.RESET);
         character.pay(COST);
 
         return true;

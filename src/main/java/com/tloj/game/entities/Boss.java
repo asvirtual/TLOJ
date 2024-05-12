@@ -44,14 +44,14 @@ public abstract class Boss extends Mob {
         Controller.clearConsole();
 
         System.out.println(this + " attacks you back!");
-        System.out.println(this.getASCII());
         
         attack.setDiceRoll(this.dice.roll());
         attack.perform();
 
-        Controller.wait(1000);
-
-        System.out.println(this.getPrettifiedStatus());
+        Controller.printSideBySideText(
+            this.getASCII(), 
+            this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus()
+        );
     }
 
     @Override

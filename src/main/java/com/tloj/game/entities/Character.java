@@ -377,6 +377,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = this.maxMana;
         this.atk += threeDice.roll();
         this.def += threeDice.roll();
+
+        this.observers.forEach(observer -> observer.onPlayerLevelUp());
     }
 
     public void addObserver(CharacterObserver observer) {
@@ -404,10 +406,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         }
     }
 
+    public void notifyDefeat() {
+        this.observers.forEach(observer -> observer.onPlayerDefeated());
+    }
+
     @Override
     public void takeDamage(int damage) {
         super.takeDamage(damage);
-        if (!this.isAlive()) this.observers.forEach(observer -> observer.onPlayerDefeated());
     }
 
     @JsonIgnore
@@ -442,15 +447,16 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @JsonIgnore
     public String getPrettifiedStatus() {
         return 
-            "You: \n" + 
+            "Jordan: \n\n" + 
             " ⸭ HP:   " + ConsoleColors.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleColors.RESET + "\n" +
-            " ⸭ Mana: " + ConsoleColors.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleColors.RESET + "\n\n";
+            " ⸭ Mana: " + ConsoleColors.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleColors.RESET + "\n" +
+            " ⸭ Xp:   " + ConsoleColors.GREEN + this.getXpBar() + " " + this.xp + "/" + this.requiredXp + ConsoleColors.RESET + "\n\n";
     }
 
     @Override
     public String toString() {
         String status = 
-            String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + "\n" +
+            String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + "\n\n" +
             " ⸭ Lvl:  " + ConsoleColors.GREEN + this.lvl + ConsoleColors.RESET + "\n" +
             " ⸭ XP:   " + Ansi.ansi().fg(Ansi.Color.GREEN).a(this.getXpBar() + " " + this.xp + "/" + this.requiredXp).reset() + "\n" +
             " ⸭ HP:   " + ConsoleColors.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleColors.RESET + "\n" +

@@ -72,7 +72,7 @@ public class Glitched extends Mob implements MovingEntity {
                     Coordinates newCoords = new Coordinates(row, col);
 
                     if (
-                        newCoords == player.getPosition() ||
+                        newCoords.equals(player.getPosition()) ||
                         !level.areCoordinatesValid(newCoords) || 
                         level.getRoom(newCoords).getType() != RoomType.HOSTILE_ROOM ||
                         level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM

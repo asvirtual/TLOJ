@@ -19,6 +19,7 @@ public class TakeHalfDamage extends BossAbility{
 
     @Override
     public void use(PlayerAttack attack) {
+        System.out.println(this.boss + " used its mighty ability!\n"); // TODO: Maybe add ascii of the boss here with delay (no enter confirmation)
         attack.setTotalDamage(attack.getTotalDamage() / 2);
     }
 }

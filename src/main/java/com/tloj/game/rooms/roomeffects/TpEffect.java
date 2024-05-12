@@ -37,7 +37,7 @@ public class TpEffect extends RoomEffect {
     public boolean applyEffect(Character character) {
         Controller.getInstance().printMapAndArt(this.getASCII());
         
-        System.out.println(ConsoleColors.PURPLE + "Oh no! Unexpected System call teleported you to a random room!" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleColors.PURPLE + "Oh no! Unexpected System call teleported you to a random room!" + ConsoleColors.RESET);
         System.out.println("They hacked your GPS! You can't see the rooms you visited anymore!");
 
         Level level = character.getCurrentLevel();
@@ -71,7 +71,7 @@ public class TpEffect extends RoomEffect {
             this.visitor = new PlayerRoomVisitor(character);
         } while (!validLocation);
 
-        Controller.wait(2500);
+        Controller.awaitEnter();
 
         return true;
     }

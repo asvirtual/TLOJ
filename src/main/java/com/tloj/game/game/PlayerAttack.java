@@ -1,8 +1,10 @@
 package com.tloj.game.game;
 
+import com.tloj.game.collectables.Weapon;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.Dice;
 
 
 /**
@@ -62,7 +64,15 @@ public class PlayerAttack extends Attack {
     @Override
     public void perform() {
         super.perform();
-        System.out.println("You inflicted " +  ConsoleColors.RED_BRIGHT + (this.totalDamage >= 0 ? totalDamage : 0) + " damage" + ConsoleColors.RESET + "to " + this.target + "!");
+        
+        Controller.printSideBySideText(
+            this.attacker.getASCII(), 
+            this.getAttacker().getPrettifiedStatus() + "\n\n\n" + this.getTarget().getPrettifiedStatus()
+        );
+
+        System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + (this.totalDamage >= 0 ? totalDamage : 0) + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
         if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleColors.RED + this.target.getHP() + " HP" + ConsoleColors.RESET + " left!");
+
+        Controller.awaitEnter();
     }
 }

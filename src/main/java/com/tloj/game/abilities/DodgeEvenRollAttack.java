@@ -18,7 +18,7 @@ public class DodgeEvenRollAttack extends BossAbility {
     @Override
     public void use(PlayerAttack attack) {
         if (attack.getWeaponRoll() % 2 == 0) {
-            System.out.println(this.boss + " used its mighty ability!");
+            System.out.println(this.boss + " used its mighty ability!\n"); // TODO: Maybe add ascii of the boss here with delay (no enter confirmation)
             attack.setWeaponRoll(0);
         }
     }

@@ -3,6 +3,7 @@ package com.tloj.game.effects;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
@@ -27,7 +28,7 @@ public class HealthAbsorber extends WeaponEffect {
             public void run() {
                 int totalDamage = attack.getTotalDamage();
                 if (totalDamage > 0) attack.getAttacker().heal(totalDamage / 2);
-                System.out.println("You healed for " + totalDamage / 2 + " hp");
+                System.out.println(ConsoleColors.YELLOW_BRIGHT + "You healed for " + totalDamage / 2 + " hp" + ConsoleColors.RESET);
             }
         });
 

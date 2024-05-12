@@ -4,7 +4,7 @@ import org.fusesource.jansi.Ansi;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.collectables.Item;
@@ -178,20 +178,24 @@ public abstract class Mob extends CombatEntity {
 
         Controller.clearConsole();
 
-        System.out.println(this + " attacks you back!");
         System.out.println(this.getASCII());
+        System.out.println(this + " attacks you back!");
         
         Controller.clearConsole(1500);
 
         System.out.println(this + " attacks you back!");
-        System.out.println(this.getCombatASCII());
-        
+
         attack.setDiceRoll(this.dice.roll());
         attack.perform();
 
-        Controller.wait(1000);
+        // if (!attack.getTarget().isAlive()) return;
 
-        System.out.println(this.getPrettifiedStatus());
+        Controller.printSideBySideText(
+            this.getCombatASCII(), 
+            this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus()
+        );
+
+        if (!target.isAlive()) target.notifyDefeat();
     }
        
     public Item getDrop() {
@@ -203,8 +207,8 @@ public abstract class Mob extends CombatEntity {
     @JsonIgnore
     public String getPrettifiedStatus() {
         return 
-            this + ":\n" +
-            "HP: " + Ansi.ansi().fg(Ansi.Color.RED).a(this.getHpBar() + " " + this.hp + "/" + this.maxHp).reset() + "\n";
+            this + " - " + ConsoleColors.GREEN + "Lvl " + this.lvl + ConsoleColors.RESET + ":\n\n" +
+            " ⸭ HP: " + Ansi.ansi().fg(Ansi.Color.RED).a(this.getHpBar() + " " + this.hp + "/" + this.maxHp).reset() + "\n";
     }
 
     @Override

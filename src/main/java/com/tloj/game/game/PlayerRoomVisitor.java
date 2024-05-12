@@ -35,7 +35,8 @@ public class PlayerRoomVisitor implements Visitor {
         room.clear(this.player);
 
         this.controller.setState(GameState.MOVING);
-        this.controller.printMap();
+        // this.controller.printMap();
+        this.controller.printMapAndStatus();
     }
 
     @Override
@@ -43,7 +44,20 @@ public class PlayerRoomVisitor implements Visitor {
         room.visit();
 
         Controller.clearConsole();
-        System.out.println(ConsoleColors.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleColors.RESET + "\n" + room.getBoss().getASCII() + "\n");
+
+        System.out.println(ConsoleColors.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleColors.RESET +  "\n");
+        Controller.printSideBySideText(
+            room.getBoss().getASCII(), 
+            room.getBoss().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus()
+        );
+        System.out.println();
+
+        // System.out.println(
+        //     ConsoleColors.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleColors.RESET + 
+        //     "\n" + room.getBoss().getASCII() + "\n" + 
+        //     room.getBoss().getPrettifiedStatus() + "\n"
+        // );
+
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
@@ -63,12 +77,26 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(HostileRoom room) {
         room.visit();
         if (room.isCleared()) {
-            this.controller.printMap();
+            // this.controller.printMap();
+            this.controller.printMapAndStatus();
             return;
         }
 
         Controller.clearConsole();
-        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + room.getMob().getASCII() + "\n");
+
+        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n");
+        Controller.printSideBySideText(
+            room.getMob().getASCII(), 
+            room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus()
+        );
+        System.out.println();
+
+        // System.out.println(
+        //     ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + 
+        //     "\n" + room.getMob().getASCII() + "\n" +
+        //     room.getMob().getPrettifiedStatus() + "\n"
+        // );
+
         this.controller.setState(GameState.FIGHTING_MOB);
     }
 
@@ -76,7 +104,8 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(LootRoom room) {
         room.visit();
         if (room.isCleared()) {
-            this.controller.printMap();
+            // this.controller.printMap();
+            this.controller.printMapAndStatus();
             return;
         }
         
@@ -105,7 +134,8 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(TrapRoom room) {
         room.visit();
         if (room.isCleared()) {
-            this.controller.printMap();
+            // this.controller.printMap();
+            this.controller.printMapAndStatus();
             return;
         }
 

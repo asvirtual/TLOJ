@@ -39,7 +39,9 @@ public class JetBat extends Mob {
         super.defend(attack);
         if (!(attack instanceof PlayerAttack)) return;
         PlayerAttack playerAttack = (PlayerAttack) attack;
-        if (playerAttack.getWeaponRoll() > 5) attack.setTotalDamage(0);
+
+        if (Math.random() > 0.35) return;
+        playerAttack.setWeaponRoll(0);
     }
     
     @Override

@@ -29,7 +29,7 @@ public class InflictDamage extends RoomEffect {
         if (roll < 3) return false;
 
         Controller.getInstance().printMapAndArt(this.getASCII());
-        System.out.println(ConsoleColors.RED + "You've been hit by a virus and lost " + DAMAGE + " HP!" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleColors.RED + "You've been hit by a virus and lost " + DAMAGE + " HP!" + ConsoleColors.RESET);
         character.takeDamage(DAMAGE);
 
         return true;

@@ -4,6 +4,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Dice;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -33,7 +34,7 @@ public class ManaAttackBooster extends WeaponEffect {
         attack.setBonusDamage(this.weapon.diceRoll() + 5);
         holder.useMana(2);
 
-        System.out.println("Critical mana damage!");
+        System.out.println(ConsoleColors.YELLOW_BRIGHT + "Critical mana damage!" + ConsoleColors.RESET);
         return true;
     }
 

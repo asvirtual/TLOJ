@@ -144,13 +144,13 @@ public class Game implements CharacterObserver {
         this.player.attack(mob);
         
         if (mob.isAlive()) {
-            Controller.clearConsole(1000);
+            // Controller.clearConsole();
             mob.attack(this.player);
 
             /**
              * No further action, the fight continues
              */
-            if (mob.getPosition() == this.player.getPosition()) return; 
+            if (mob.getPosition().equals(this.player.getPosition())) return; 
         }
 
         // Get new mob if there is one
@@ -158,7 +158,7 @@ public class Game implements CharacterObserver {
         mob = room.getMob();
 
         Controller.clearConsole(2000);
-        System.out.println("You've encountered " + mob + mob.getASCII() + "\n");
+        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n" + mob.getASCII() + "\n");
     }
 
     public void usePlayerSkill() {
@@ -185,12 +185,13 @@ public class Game implements CharacterObserver {
             return;
         }
 
-        Item item = this.player.getInventoryItem(index - 1);
         this.player.removeInventoryItem(index - 1);
     }
 
     @Override
     public void onMobDefeated(Mob mob) {
+        Controller.clearConsole();
+
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
 
         /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
@@ -208,12 +209,14 @@ public class Game implements CharacterObserver {
         } else {
             room.removeMob(mob);
             Controller.clearConsole(2000);
-            System.out.println("You've encountered " + room.getMob() + room.getMob().getASCII() + "\n");
+            System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n" + room.getMob().getASCII() + "\n");
         }
     }
 
     @Override
     public void onBossDefeated() {
+        Controller.clearConsole();
+
         BossRoom room = (BossRoom) this.getCurrentRoom();
         Boss boss = room.getBoss();
 
@@ -230,9 +233,12 @@ public class Game implements CharacterObserver {
 
     @Override
     public void onPlayerDefeated() {
+        System.out.println();
+        Controller.awaitEnter();
+        Controller.clearConsole();
         System.out.println(ConsoleColors.RED_BOLD_BRIGHT +
             "\n" + Constants.GAME_OVER + ConsoleColors.RESET + "\n" +
-            "Jordan ended his adventure with " + this.score + "points!\n" +
+            "Jordan ended his adventure with " + this.score + "points!\n\n" +
             Constants.GAME_TITLE
         );
 
@@ -250,30 +256,29 @@ public class Game implements CharacterObserver {
     
     public String[] generateMapLines() {
         StringBuilder mapBuilder = new StringBuilder();
-
         
         mapBuilder
             .append("  ")
-            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - 1))
+            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
             .append(this.currentLevel.getRoomsColCount() % 2 == 0 ? "GN" : "N")
-            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - 1))
+            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
             .append("\n");
         
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
 
-            if (this.currentLevel.getRoomsColCount() % 2 == 0) {
-                if (i == this.currentLevel.getRoomsColCount() / 2) mapBuilder.append("W ");
-                else mapBuilder.append("| ");
+            if ((this.currentLevel.getRoomsRowCount() + 1) % 2 == 0) {
+                if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bW ");
+                else mapBuilder.append("\b| ");
             } else {
-                if (i == this.currentLevel.getRoomsColCount() / 2 - 1) mapBuilder.append("G ");
-                else if (i == this.currentLevel.getRoomsColCount() / 2) mapBuilder.append("W ");
-                else mapBuilder.append("| ");
+                if (i == this.currentLevel.getRoomsRowCount() / 2 - 1) mapBuilder.append("\bG ");
+                else if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bW ");
+                else mapBuilder.append("\b| ");
             }
 
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
                 Room room = this.currentLevel.getRoom(new Coordinates(j, i));
                 if (room == null) {
-                    mapBuilder.append("\u00A0" + " ");                    
+                    mapBuilder.append("\u00A0 ");                    
                     continue;
                 }
     
@@ -281,12 +286,12 @@ public class Game implements CharacterObserver {
                 else mapBuilder.append(room + " ");
             }
 
-            if (this.currentLevel.getRoomsColCount() % 2 == 0) {
-                if (i == this.currentLevel.getRoomsColCount() / 2) mapBuilder.append("\bE\n");
+            if ((this.currentLevel.getRoomsRowCount() + 1) % 2 == 0) {
+                if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bE\n");
                 else mapBuilder.append("\b|\n");
             } else {
-                if (i == this.currentLevel.getRoomsColCount() / 2 - 1) mapBuilder.append("\bG\n");
-                else if (i == this.currentLevel.getRoomsColCount() / 2) mapBuilder.append("\bE\n");
+                if (i == this.currentLevel.getRoomsRowCount() / 2 - 1) mapBuilder.append("\bG\n");
+                else if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bE\n");
                 else mapBuilder.append("\b|\n");
             }
             
@@ -294,9 +299,9 @@ public class Game implements CharacterObserver {
         
         mapBuilder
             .append("  ")
-            .append("--".repeat(this.currentLevel.getRoomsRowCount() / 2 - 1))
+            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
             .append(this.currentLevel.getRoomsColCount() % 2 == 0 ? "GS" : "S")
-            .append("--".repeat(this.currentLevel.getRoomsRowCount() / 2 - 1))
+            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
             .append("\n");
         
         return mapBuilder.toString().split("\n");
@@ -352,31 +357,31 @@ public class Game implements CharacterObserver {
         String directions = "You can: \n";
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
-            if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH)).getType() == RoomType.BOSS_ROOM)
-                directions += "[gn - Something's off... ]";
-            else
-                directions += "[gn] ";    
+            Room northRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH));
+
+            if (northRoom.getType() == RoomType.BOSS_ROOM) directions += "[gn - Something's off... ]";
+            else directions += northRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gn" + ConsoleColors.RESET + "] " : "[gn] ";    
         }
         
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))) {
-            if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH)).getType() == RoomType.BOSS_ROOM)
-                directions += "[gs - Something's off... ]";
-            else
-                directions += "[gs] ";  
+            Room southRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH));
+
+            if (southRoom.getType() == RoomType.BOSS_ROOM) directions += "[gs - Something's off... ]";
+            else directions += southRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gs" + ConsoleColors.RESET + "] " : "[gs] ";    
         }
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))) {
-            if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST)).getType() == RoomType.BOSS_ROOM)
-                directions += "[ge - Something's off... ]";
-            else
-                directions += "[ge] ";
+            Room eastRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST));
+
+            if (eastRoom.getType() == RoomType.BOSS_ROOM) directions += "[ge - Something's off... ]";
+            else directions += eastRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "ge" + ConsoleColors.RESET + "] " : "[ge] ";    
         }
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))) {
-            if (currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST)).getType() == RoomType.BOSS_ROOM)
-                directions += "[gw - Something's off... ]";
-            else
-                directions += "[gw] ";    
+            Room westRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST));
+
+            if (westRoom.getType() == RoomType.BOSS_ROOM) directions += "[gw - Something's off... ]";
+            else directions += westRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gw" + ConsoleColors.RESET + "] " : "[gw] ";    
         }
         
         return directions;
