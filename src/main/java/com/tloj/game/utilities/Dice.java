@@ -16,6 +16,7 @@ public class Dice {
     private int min;
     private int max;
     private static Random random;
+    private int roll;
 
     public Dice(int faces) {
         this.min = 1;
@@ -42,11 +43,33 @@ public class Dice {
     }
     
     public int roll() {
-        return Dice.random.nextInt(max - min + 1) + min;
+        this.roll = Dice.random.nextInt(max - min + 1) + min;
+        return this.roll;
     }
 
     public static void setSeed(long seed) {
         Dice.random = new Random(seed);
+    }
+
+    public static String getASCII(int roll) {
+        return switch (roll) {
+            case 1 -> Constants.DICE_ONE;
+            case 2 -> Constants.DICE_TWO;
+            case 3 -> Constants.DICE_THREE;
+            case 4 -> Constants.DICE_FOUR;
+            case 5 -> Constants.DICE_FIVE;
+            case 6 -> Constants.DICE_SIX;
+            case 7 -> Constants.DICE_SEVEN;
+            case 8 -> Constants.DICE_EIGHT;
+            case 9 -> Constants.DICE_NINE;
+            case 10 -> Constants.DICE_TEN;
+            case 11 -> Constants.DICE_ELEVEN;
+            case 12 -> Constants.DICE_TWELVE;
+            case 13 -> Constants.DICE_THIRTHEEN;
+            case 14 -> Constants.DICE_FOURTEEN;
+            case 15 -> Constants.DICE_FIFTEEN;
+            default -> Constants.DICE_TEN;
+        };
     }
 
     @Override

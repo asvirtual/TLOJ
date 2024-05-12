@@ -472,28 +472,28 @@ class HelpCommand extends GameCommand {
                 System.out.println("Commands: new, load, exit");
                 break;
             case CHOOSING_CHARACTER:
-                System.out.println("Choose a character: default, cheater, data thief, mecha knight, neo samurai");
+                System.out.println("Choose a character: default [1], cheater [2], data thief [3], mecha knight [4], neo samurai [5]");
                 break;
             case MOVING:
-                System.out.println("Commands: gn, gs, gw, ge, return, inventory, status, map, score, seed, quit, swap");
+                System.out.println("Commands: gn, gs, gw, ge, return, inv, status, map, score, seed, quit, swap *number*");
                 break;
             case MERCHANT_SHOPPING:
-                System.out.println("Commands: buy, back");
+                System.out.println("Commands: buy *number*, back");
                 break;
             case SMITH_FORGING:
-                System.out.println("Commands: give (to upgrade), back");
+                System.out.println("Commands: give smith weaponshard, back");
                 break;
             case FIGHTING_MOB:
-                System.out.println("Commands: attack, skill, inventory, use, drop");
+                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*");
                 break;
             case FIGHTING_BOSS:
-                System.out.println("Commands: attack, skill, inventory, use, drop");
+                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*");
                 break;
             case LOOTING_ROOM:
-                System.out.println("Commands: confirm, inventory, use, drop, swap");
+                System.out.println("Commands: confirm, inv, use *number*, drop *number*, swap *number*");
                 break;
             case HEALING_ROOM:
-                System.out.println("Commands: merchant, smith, inventory, use, drop, swap");
+                System.out.println("Commands: merchant, smith, inv, use *number*, drop *number*, swap *number*");
                 break;
 
             default:
@@ -1012,7 +1012,8 @@ public class Controller {
 
     public static void printSideBySideText(String first, String second) {
         // Offset of the String second from the top of the console
-        final int DEFAULT_OFFSET_ROWS = 7; 
+        // final int DEFAULT_OFFSET_ROWS = 7; 
+        final int DEFAULT_OFFSET_ROWS = 1; 
         Controller.printSideBySideText(first, second, DEFAULT_OFFSET_ROWS);
     }
 
@@ -1146,13 +1147,13 @@ public class Controller {
         return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
             case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Cheater] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
-            case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use] - [inv]";
+            case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use *number*] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();
             case MERCHANT_SHOPPING -> "[buy *number*] - [back]";
             case SMITH_FORGING -> "[give smith weaponshard] - [back]";
             case BOSS_DEFEATED -> "[inv] - [gn, gs, gw ge to change floor]";
-            case HEALING_ROOM -> "[merchant] - [smith] - [inv] - [use] - [drop] - [gn, gs, gw ge to change floor]";
+            case HEALING_ROOM -> "[merchant] - [smith] - [inv] - [use *number*] - [drop *number*] - [gn, gs, gw ge to change floor]";
             case WIN -> "[gn, gs, gw ge to escape the dungeon and become a LEGEND!]";
             default -> "";
         };
@@ -1230,7 +1231,6 @@ public class Controller {
             if (this.game != null && this.getState() != GameState.WIN) {
                 Character player = this.game.getPlayer();
                 if (player != null) {
-                    // System.out.print(player.getPrettifiedStatus());
                     System.out.println("\nWhat to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
                 }
             }

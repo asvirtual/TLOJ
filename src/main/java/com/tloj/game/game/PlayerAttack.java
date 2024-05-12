@@ -114,7 +114,8 @@ public class PlayerAttack extends Attack {
         
         Controller.printSideBySideText(
             this.attacker.getASCII(), 
-            this.getAttacker().getPrettifiedStatus() + "\n\n\n" + this.getTarget().getPrettifiedStatus()
+            this.getAttacker().getPrettifiedStatus() + "\n\n" + this.getTarget().getPrettifiedStatus() + "\n\n\n" +
+            "Jordan rolled " + this.getWeaponRoll() + ":\n\n" + Dice.getASCII(this.getWeaponRoll())
         );
 
         System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + (this.totalDamage >= 0 ? totalDamage : 0) + " damage" + ConsoleColors.RESET + " to " + this.target + "!");

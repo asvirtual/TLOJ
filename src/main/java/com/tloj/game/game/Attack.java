@@ -55,7 +55,6 @@ public abstract class Attack {
     public int getTotalDamage() {
         return this.totalDamage;
     }
-
     
     public void setOnHit(Runnable onHit) {
         this.onHit = onHit;
@@ -78,8 +77,6 @@ public abstract class Attack {
     public void setTotalDamage(int totalDamage) {
         this.totalDamage = totalDamage;
     }
-
-    
 
     public void perform() {
         if (this.totalDamage >= 0) 

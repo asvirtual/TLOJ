@@ -140,10 +140,9 @@ public class Game implements CharacterObserver {
      * @param direction The direction in which to move the player.
      * @throws IllegalArgumentException If the move is invalid.
      */
-
     public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException {  
-        // Create a visitor for the player to interact with the room.  
-        PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player); 
+        // Create a visitor for the player to interact with the room.
+        PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player);
 
         if (this.controller.getState() == GameState.BOSS_DEFEATED || this.getCurrentRoom().getType() == RoomType.HEALING_ROOM) {
             /**
@@ -283,14 +282,10 @@ public class Game implements CharacterObserver {
         this.controller.setState(GameState.MAIN_MENU);
     }
 
-    @Override
-    public void onPlayerLevelUp() {
-        System.out.println(ConsoleColors.GREEN_BRIGHT + "You've leveled up! You are now level " + this.player.getLvl() + "!\n" + ConsoleColors.RESET);
-    }
-
-    public void printMap(){
+    public void printMap() {
         System.out.println(String.join("\n", this.generateMapLines()) + "\n");
     }
+
     /**
      * Generates an array of strings representing the map layout.
      * Each string in the array represents a row of the map.

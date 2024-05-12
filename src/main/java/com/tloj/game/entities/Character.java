@@ -343,7 +343,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         else this.mana += amount;
     }
 
-    //
     public void lootMob(Mob mob) {
         System.out.println("You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  " and " + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET);
 
@@ -388,14 +387,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = this.maxMana;
         this.atk += threeDice.roll();
         this.def += threeDice.roll();
+
+        System.out.println(ConsoleColors.GREEN_BRIGHT + "You've leveled up! You are now level " + this.lvl + "!\n" + ConsoleColors.RESET);
     
         // Print changes in stats
         System.out.println("\n" + "HP: " + ConsoleColors.RED + initialMaxHp + ConsoleColors.RESET + " --> " + ConsoleColors.RED_BRIGHT + this.maxHp + ConsoleColors.RESET);
         System.out.println("Mana: " + ConsoleColors.BLUE + initialMaxMana + ConsoleColors.RESET + " --> " + ConsoleColors.BLUE_BRIGHT + this.maxMana + ConsoleColors.RESET);
         System.out.println("Attack: " + ConsoleColors.PURPLE + initialAtk + ConsoleColors.RESET + " --> " + ConsoleColors.PURPLE_BRIGHT + this.atk + ConsoleColors.RESET);
         System.out.println("Defense: " + ConsoleColors.PURPLE + initialDef + ConsoleColors.RESET + " --> " + ConsoleColors.PURPLE_BRIGHT + this.def + ConsoleColors.RESET + "\n");
-    
-        this.observers.forEach(observer -> observer.onPlayerLevelUp());
     }
 
     public void addObserver(CharacterObserver observer) {

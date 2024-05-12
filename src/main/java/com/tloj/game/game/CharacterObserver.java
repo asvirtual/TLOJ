@@ -11,5 +11,4 @@ public interface CharacterObserver {
     public void onMobDefeated(Mob mob);
     public void onBossDefeated();
     public void onPlayerDefeated();
-    public void onPlayerLevelUp();
 }

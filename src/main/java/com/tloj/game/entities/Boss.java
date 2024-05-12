@@ -1,6 +1,7 @@
 package com.tloj.game.entities;
 
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.Dice;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.Item;
@@ -50,7 +51,8 @@ public abstract class Boss extends Mob {
         
         Controller.printSideBySideText(
             this.getASCII(), 
-            this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus()
+            this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus() + "\n\n\n" + 
+            this + " rolled " + attack.getDiceRoll() + ":\n\n" + Dice.getASCII(attack.getDiceRoll())
         );
     }
 
