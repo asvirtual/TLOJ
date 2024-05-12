@@ -47,7 +47,7 @@ public abstract class Boss extends Mob {
         
         attack.setDiceRoll(this.dice.roll());
         attack.perform();
-
+        
         Controller.printSideBySideText(
             this.getASCII(), 
             this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus()

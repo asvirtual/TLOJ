@@ -19,13 +19,24 @@ import com.tloj.game.collectables.Weapon;
  */
 
 public class CheatEngine extends CharacterSkill{
+    /**
+     * Constructs a CheatEngine object with the given character.
+     *
+     * @param character The character that uses the skill.
+     */
     @JsonCreator
     public CheatEngine(@JsonProperty("character") Character character) {
         super(character);
     }
 
+    /**
+     * Method for using ability.
+     *
+     * @param attack The attack being performed.
+     */
     @Override
     public void use(PlayerAttack attack) {
+        // Get the attacker and the weapon
         Character attacker = attack.getAttacker();
         Weapon weapon = attacker.getWeapon();
 

@@ -27,18 +27,38 @@ import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
 
 
+
+/**
+ * The Game class represents the main game logic and state management<br>.
+ * It controls player movement, interactions with rooms and entities,
+ * combat, inventory management, saving and loading game data, and more.
+ * <p>
+ */
 public class Game implements CharacterObserver {
+    /** The random seed used for generating random numbers in the game. */
     private long seed;
+    /** The current score of the player. */
     private int score;
+    /** The current level the player is in. */
     private Level currentLevel;
+     /** The player character controlled by the player. */
     private Character player;
+    /** The list of levels in the game. */
     @JsonProperty
     private ArrayList<Level> levels;
+    /** The controller responsible for managing game state. */
     private Controller controller;
+     /** The elapsed time since the start of the game session. */
     @JsonProperty
     private long elapsedTime;
+    /** The start time of the game session. */
     private long sessionStartTime;
 
+
+    /**
+     * Constructs a new Game object with the given list of levels.
+     * @param levels The list of levels in the game.
+     */
     public Game(ArrayList<Level> levels) {
         this.levels = levels;
 
@@ -51,6 +71,14 @@ public class Game implements CharacterObserver {
         Dice.setSeed(this.seed);
     }
     
+    /**
+     * Constructs a new Game object with the given parameters.
+     *
+     * @param seed        The random seed used for generating random numbers in the game.
+     * @param currentLevel The current level the player is in.
+     * @param player      The player character controlled by the player.
+     * @param levels      The list of levels in the game.
+     */
     public Game(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
         this.player = player;
         this.levels = levels;
@@ -104,7 +132,16 @@ public class Game implements CharacterObserver {
         return this.currentLevel;
     }
 
-    public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException {    
+    /**
+     * Moves the player character in the specified direction.
+     * Throws an IllegalArgumentException if the move is invalid.
+     *
+     * @param direction The direction in which to move the player.
+     * @throws IllegalArgumentException If the move is invalid.
+     */
+
+    public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException {  
+        // Create a visitor for the player to interact with the room.  
         PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player); 
 
         if (this.controller.getState() == GameState.BOSS_DEFEATED || this.getCurrentRoom().getType() == RoomType.HEALING_ROOM) {
@@ -123,6 +160,7 @@ public class Game implements CharacterObserver {
 
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
 
+        // Check if the room at the new coordinates is locked and the player does not have a special key.
         if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
         if (
             this.currentLevel.getRoom(newCoordinates).isLocked() && 
@@ -253,10 +291,16 @@ public class Game implements CharacterObserver {
     public void printMap(){
         System.out.println(String.join("\n", this.generateMapLines()) + "\n");
     }
-    
+    /**
+     * Generates an array of strings representing the map layout.
+     * Each string in the array represents a row of the map.
+     *
+     * @return An array of strings representing the map layout.
+     */
     public String[] generateMapLines() {
         StringBuilder mapBuilder = new StringBuilder();
-        
+
+        // Append the top border of the map.
         mapBuilder
             .append("  ")
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
@@ -264,6 +308,7 @@ public class Game implements CharacterObserver {
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
             .append("\n");
         
+        // Iterate through each row of rooms in the current level.
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
 
             if ((this.currentLevel.getRoomsRowCount() + 1) % 2 == 0) {
@@ -275,17 +320,20 @@ public class Game implements CharacterObserver {
                 else mapBuilder.append("\b| ");
             }
 
+            // Iterate through each column of rooms in the current row.
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
                 Room room = this.currentLevel.getRoom(new Coordinates(j, i));
                 if (room == null) {
                     mapBuilder.append("\u00A0 ");                    
                     continue;
                 }
-    
+
+                // Highlight the current room if it is the player's current location.
                 if (this.getCurrentRoom().equals(room)) mapBuilder.append(ConsoleColors.YELLOW_BOLD_BRIGHT + "\u0398 " + ConsoleColors.RESET);
                 else mapBuilder.append(room + " ");
             }
 
+            // Append vertical borders or gates at the end of each row based on the current column count.
             if ((this.currentLevel.getRoomsRowCount() + 1) % 2 == 0) {
                 if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bE\n");
                 else mapBuilder.append("\b|\n");
@@ -296,7 +344,8 @@ public class Game implements CharacterObserver {
             }
             
         }
-        
+
+        // Append the bottom border of the map.
         mapBuilder
             .append("  ")
             .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
@@ -352,6 +401,12 @@ public class Game implements CharacterObserver {
         receiver.giveItem(item);
     }
 
+    /**
+     * Returns a string indicating the available directions for the player to move.
+     * The string includes symbols representing each valid direction and any special notes.
+     *
+     * @return A string indicating the available directions for the player to move.
+     */
     public String getAvailableDirections() {
         Coordinates coordinates = this.player.getPosition();
         String directions = "You can: \n";

@@ -21,6 +21,7 @@ import com.tloj.game.utilities.Dice;
  * @see TpEffect
  */
 public abstract class RoomEffect {
+    // Runnable side effect to be executed when the effect is applied
     protected Runnable sideEffect;
 
     protected RoomEffect() {}

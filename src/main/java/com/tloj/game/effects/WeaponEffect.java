@@ -25,8 +25,12 @@ public abstract class WeaponEffect {
      */
     public abstract boolean apply(PlayerAttack attack);
 
+   /*
+    * Split the class name by capital letters and join the resulting array with spaces
+    */
     @Override
-    public String toString() {
-        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + ": ";
+    public String toString() {  
+        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + ": "; 
     };
+
 }

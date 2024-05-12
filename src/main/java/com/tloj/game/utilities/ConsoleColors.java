@@ -1,5 +1,8 @@
 package com.tloj.game.utilities;
 
+/**
+ * Class that contains ANSI escape codes for text colors in the console.
+ */
 public class ConsoleColors {
     public static final String RESET = "\033[0m";  // Text Reset
 

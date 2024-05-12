@@ -20,7 +20,17 @@ import com.tloj.game.game.PlayerRoomVisitor;
  * @see HostileRoom
  */
 
+/**
+ * Represents the starting room in the game.<br>
+ * This room is always visited since the game starts here.
+ */
 public class StartRoom extends Room {
+
+    /**
+     * Constructs a StartRoom object with the specified coordinates.
+     *
+     * @param coordinates the coordinates of the room
+     */
     @JsonCreator
     public StartRoom(
         @JsonProperty("coordinates") Coordinates coordinates
@@ -29,16 +39,32 @@ public class StartRoom extends Room {
         this.visited = true; // StartRoom is always visited, since we start here
     }
 
+    /**
+     * Returns the type of the room.
+     *
+     * @return the type of the room
+     */
     @Override
     public RoomType getType() {
         return RoomType.START_ROOM;
     }
 
+    /**
+     * Accepts a visitor and calls the appropriate visit method.
+     *
+     * @param visitor the visitor to accept
+     */
     @Override
     public void accept(PlayerRoomVisitor visitor) {
         visitor.visit(this);
     }
 
+    /**
+     * Returns a string representation of the room.
+     * If the room is visited, it returns a yellow triangle symbol, otherwise a space.
+     *
+     * @return a string representation of the room
+     */
     @Override
     public String toString() {
         return this.visited ? ConsoleColors.YELLOW + "\u2229" + ConsoleColors.RESET : "\u00A0";

@@ -29,11 +29,10 @@ import com.tloj.game.utilities.GameState;
  * Merchants can be interacted with by the player to access their shop <br>
  * @see Smith
  */
-
 public class Merchant extends FriendlyEntity {
     public static final String NAME = "MERCHANT";
     private Map<Integer, PurchasableItem> items = new LinkedHashMap<>();
-    
+
     @JsonCreator
     public Merchant(@JsonProperty("position") Coordinates position) {
         super(position, NAME);
@@ -45,7 +44,9 @@ public class Merchant extends FriendlyEntity {
         this.items.put(6, new DefenseElixir());
         this.items.put(7, new Lockpick());
     }
-
+    /**
+     * @return a string representation of the merchant's items
+     */
     public String getItems() {
         String items = "";
         for (Map.Entry<Integer, PurchasableItem> entry : this.items.entrySet()) 

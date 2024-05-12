@@ -69,6 +69,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected Room currentRoom;
     protected PlayerAttack currentAttack;
     protected CharacterSkill skill;
+    // Observers to notify when the player is defeated or a mob is defeated
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
 
     /**
@@ -207,6 +208,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.maxWeight;
     }
 
+
+    
     public double getFreeWeight() {
         return Math.floor((this.maxWeight - this.getCarriedWeight()) * 10) / 10;
     }
@@ -340,6 +343,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         else this.mana += amount;
     }
 
+    //
     public void lootMob(Mob mob) {
         System.out.println("You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  " and " + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET);
 
@@ -445,6 +449,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.getBar((int) this.getCarriedWeight(), this.maxWeight);
     }
 
+    //
     @JsonIgnore
     public String getPrettifiedStatus() {
         return 

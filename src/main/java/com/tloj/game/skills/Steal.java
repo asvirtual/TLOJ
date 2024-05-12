@@ -21,13 +21,24 @@ import com.tloj.game.utilities.Dice;
  */
 
 public class Steal extends CharacterSkill {
+    /**
+     * Constructs a Steal object with the given character.
+     *
+     * @param character The character that uses the skill.
+     */
     @JsonCreator
     public Steal(@JsonProperty("character") Character character) {
         super(character);
     }
 
+    /**
+     * Method for using ability.
+     *
+     * @param attack The attack being performed.
+     */
     @Override
     public void use(PlayerAttack attack) {
+        // Get the attacker
         Character attacker = attack.getAttacker();
         
         if (attacker.getMana() < 10) {
