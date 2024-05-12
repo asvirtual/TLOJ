@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import com.tloj.game.rooms.*;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
@@ -42,7 +43,7 @@ public class PlayerRoomVisitor implements Visitor {
         room.visit();
 
         Controller.clearConsole();
-        System.out.println("You've encountered " + room.getBoss() + "\n" + room.getBoss().getASCII() + "\n");
+        System.out.println(ConsoleColors.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleColors.RESET + "\n" + room.getBoss().getASCII() + "\n");
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
@@ -54,7 +55,7 @@ public class PlayerRoomVisitor implements Visitor {
 
         Controller.clearConsole();
 
-        System.out.println(Constants.HEALING_ROOM + "\nWelcome to the healing rooom!");
+        System.out.println(Constants.HEALING_ROOM + ConsoleColors.GREEN_BRIGHT + "\nWelcome to the healing rooom!" + ConsoleColors.RESET);
         this.controller.setState(GameState.HEALING_ROOM);
     }
 
@@ -67,7 +68,7 @@ public class PlayerRoomVisitor implements Visitor {
         }
 
         Controller.clearConsole();
-        System.out.println("You've encountered " + room.getMob() + room.getMob().getASCII() + "\n");
+        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.PURPLE + room.getMob().getASCII() + "\n");
         this.controller.setState(GameState.FIGHTING_MOB);
     }
 
@@ -83,14 +84,14 @@ public class PlayerRoomVisitor implements Visitor {
 
         if (room.isLocked()) {
             this.player.useItem(new SpecialKey());
-            System.out.println("You've used a special key to unlock the room!");
+            System.out.println(ConsoleColors.CYAN_BRIGHT + "You've used a special key to unlock the room!" + ConsoleColors.RESET);
         }
         
         Item item = room.getItem();
         if (item == null) return;
 
         this.controller.printMapAndArt(item.getASCII());
-        System.out.println("You've found a " + item + "!");
+        System.out.println(ConsoleColors.YELLOW_BRIGHT + "You've found a " + item + "!" + ConsoleColors.RESET);
         
         if (this.player.addInventoryItem(item)) {
             this.controller.setState(GameState.MOVING);
@@ -112,7 +113,7 @@ public class PlayerRoomVisitor implements Visitor {
         
         if (!room.triggerTrap(this.player)) {
             this.controller.printMapAndArt(Constants.TRAP_DEFENDER);
-            System.out.println("You've dodged the trap! Thanks Windows Defender!");
+            System.out.println(ConsoleColors.BLUE_BRIGHT + "You've dodged the trap! Thanks Windows Defender!" + ConsoleColors.RESET);
         }
         
         room.clear(this.player);
@@ -125,7 +126,7 @@ public class PlayerRoomVisitor implements Visitor {
         this.controller.setState(GameState.WIN);
 
         Controller.clearConsole();
-        System.out.println("Congratulations! You won the game with " + this.controller.getScore() + " points!");
-        System.out.println(Constants.GAME_WIN);
+        System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleColors.RESET);
+        System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + Constants.GAME_WIN + ConsoleColors.RESET);
     }
 } 

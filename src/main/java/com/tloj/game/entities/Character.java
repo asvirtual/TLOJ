@@ -18,8 +18,11 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CharacterSkill;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
+
+import org.fusesource.jansi.Ansi;
 
 
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
@@ -342,7 +345,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void lootMob(Mob mob) {
-        System.out.println("You gain " + mob.dropXp() + " experience points and " + mob.getMoneyDrop() + " BTC");
+        System.out.println("You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  "and" + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET);
 
         this.addXp(mob.dropXp());
         this.money += mob.getMoneyDrop();
@@ -350,7 +353,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         Item drop = mob.getDrop();
         if (drop == null) return;
         if (this.getCarriedWeight() + drop.getWeight() > this.maxWeight) return;
-        if (this.addInventoryItem(drop)) System.out.println(mob + " dropped a " + drop);
+        if (this.addInventoryItem(drop)) System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + mob + " dropped a " + drop + ConsoleColors.RESET);
     }
 
     public void useItem(ConsumableItem item) {
@@ -445,23 +448,23 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public String getPrettifiedStatus() {
         return 
             "You: \n" + 
-            "HP:   " + this.getHpBar() + " " + this.getHp() + "/" + this.getMaxHp() + 
-            "\nMana: " + this.getManaBar() + " " + this.getMana() + "/" + this.getMaxMana() + "\n\n";
+            " ⸭ HP:   " + ConsoleColors.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleColors.RESET + "\n" +
+            " ⸭ Mana: " + ConsoleColors.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleColors.RESET + "\n\n";
     }
 
     @Override
     public String toString() {
         String status = 
             String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + "\n" +
-            " ⸭ Lvl:  " + this.lvl + "\n" +
-            " ⸭ XP:   " + this.getXpBar() + " " + this.xp + "/" + this.requiredXp + "\n" +
-            " ⸭ HP:   " + this.getHpBar() + " " + this.hp + "/" + this.maxHp + "\n" +
-            " ⸭ Mana: " + this.getManaBar() + " " + this.mana + "/" + this.maxMana + "\n" +
-            " ⸭ Atk:  " + this.currentFightAtk + "\n" +
-            " ⸭ Def:  " + this.currentFightDef + "\n" +
-            " ⸭ Weapon: " + this.weapon + "\n" +
-            " ⸭ Weight: " + this.getWeightBar() + " " + this.getCarriedWeight() + "/" + this.maxWeight + " MB" + "\n" +
-            " ⸭ BTC: " + this.money + "\n";
+            " ⸭ Lvl:  " + ConsoleColors.GREEN + this.lvl + ConsoleColors.RESET + "\n" +
+            " ⸭ XP:   " + Ansi.ansi().fg(Ansi.Color.GREEN).a(this.getXpBar() + " " + this.xp + "/" + this.requiredXp).reset() + "\n" +
+            " ⸭ HP:   " + ConsoleColors.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleColors.RESET + "\n" +
+            " ⸭ Mana: " + ConsoleColors.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleColors.RESET + "\n" +
+            " ⸭ Atk:  " + ConsoleColors.PURPLE + this.currentFightAtk + ConsoleColors.RESET + "\n" +
+            " ⸭ Def:  " + ConsoleColors.PURPLE + this.currentFightDef + ConsoleColors.RESET + "\n" +
+            " ⸭ Weapon: " + ConsoleColors.CYAN + this.weapon + ConsoleColors.RESET + "\n" +
+            " ⸭ Weight: " + ConsoleColors.YELLOW + this.getWeightBar() + " " + this.getCarriedWeight() + "/" + this.maxWeight + " MB" + ConsoleColors.RESET + "\n" +
+            " ⸭ BTC: " + ConsoleColors.YELLOW + this.money + ConsoleColors.RESET + "\n";
 
         return status;
     }

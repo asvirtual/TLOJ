@@ -14,8 +14,8 @@ import com.tloj.game.skills.Daburu;
 
 public class NeoSamurai extends Character {
     private static final int HP = 20;
-    private static final int ATTACK = 7;
-    private static final int DEFENSE = 1;
+    private static final int ATTACK = 6;
+    private static final int DEFENSE = 2;
     private static final int MANA = 10;
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 15;

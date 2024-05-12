@@ -2,8 +2,10 @@ package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Dice;
+
 /**
  * Class that implements a room effect that inflicts damage to the character<br>
  * Inflicts {@value #DAMAGE} damage to the player if it rolls {@literal <} 5 on D6<br>
@@ -27,7 +29,7 @@ public class InflictDamage extends RoomEffect {
         if (roll < 3) return false;
 
         Controller.getInstance().printMapAndArt(this.getASCII());
-        System.out.println("You've been hit by a virus and lost " + DAMAGE + " HP!");
+        System.out.println(ConsoleColors.RED + "You've been hit by a virus and lost " + DAMAGE + " HP!" + ConsoleColors.RESET);
         character.takeDamage(DAMAGE);
 
         return true;

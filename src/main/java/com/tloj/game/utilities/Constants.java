@@ -1,6 +1,7 @@
 
 package com.tloj.game.utilities;
 
+
 /**
  *This class contains all the constants used in the game.<br> 
  */
@@ -8,7 +9,8 @@ package com.tloj.game.utilities;
 public class Constants {
     public static final int BAR_LENGTH = 10;
 
-    public static final String GAME_TITLE = 
+    public static final String GAME_TITLE =
+    ConsoleColors.RED_BOLD_BRIGHT + 
     """
           _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
          |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
@@ -25,13 +27,15 @@ public class Constants {
                |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
                |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
 
-
+    """ + ConsoleColors.RESET +
+    """
                                         [new]  - START GAME
                                         [load] - LOAD GAME
                                         [exit] - EXIT GAME
     """;
     
     public static final String GAME_TITLE_CONTINUE = 
+    ConsoleColors.RED_BOLD_BRIGHT + 
     """
           _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
          |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
@@ -48,7 +52,8 @@ public class Constants {
                |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
                |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
 
-
+    """ + ConsoleColors.RESET +
+    """
                                     [continue] -  CONTINUE LAST GAME
                                       [new]    -  START GAME
                                       [load]   -  LOAD GAME

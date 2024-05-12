@@ -24,10 +24,10 @@ import com.tloj.game.entities.Boss;
  * @see WeaponShard
  */
 public class FlyingBoss extends Boss {
-    public static final int HP = 80;
-    public static final int ATTACK = 10;
-    public static final int DEFENSE = 6;
-    public static final int DICE_FACES = 12;
+    public static final int HP = 70;
+    public static final int ATTACK = 7;
+    public static final int DEFENSE = 5;
+    public static final int DICE_FACES = 10;
     public static final int XP_DROP = 50;
     public static final int MONEY_DROP = 80;
     

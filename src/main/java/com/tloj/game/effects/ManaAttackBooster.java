@@ -28,10 +28,10 @@ public class ManaAttackBooster extends WeaponEffect {
     @Override
     public boolean apply(PlayerAttack attack) {
         Character holder = attack.getAttacker();
-        if (holder.getMana() < 3) return false;
+        if (holder.getMana() < 2) return false;
 
         attack.setBonusDamage(this.weapon.diceRoll() + 5);
-        holder.useMana(3);
+        holder.useMana(2);
 
         System.out.println("Critical mana damage!");
         return true;
@@ -39,10 +39,10 @@ public class ManaAttackBooster extends WeaponEffect {
 
     @Override
     public String toString() {
-        return super.toString() + "costs 3 mana to use";
+        return super.toString() + "costs 2 mana to use";
     }
 
     public static String describe() {
-        return "costs 3 mana to use";
+        return "costs 2 mana to use";
     }
 }
