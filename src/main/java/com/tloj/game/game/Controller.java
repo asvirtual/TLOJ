@@ -942,7 +942,7 @@ public class Controller {
         String[] mapLines = this.game.generateMapLines();
 
         // Offset of the map from the top of the console
-        final int OFFSET_ROWS = 5; 
+        final int OFFSET_ROWS = 7; 
         
         // Find the maximum number of rows between the ASCII art and the map
         int maxLines = Math.max(asciiArtLines.length, mapLines.length);
@@ -959,7 +959,7 @@ public class Controller {
             String mapLine = (i >= OFFSET_ROWS && (i - OFFSET_ROWS) < mapLines.length) ? mapLines[i - OFFSET_ROWS] : "";
             
             // Print a label for the map just above it
-            if (i == OFFSET_ROWS - 1) mapLine = "  Map:";
+            if (i == OFFSET_ROWS - 2) mapLine = " ".repeat((mapLines[0].length() - 2) / 2) + "Map:";
             System.out.println(asciiArtLine + pad + "\t\t\t\t" + mapLine);
         }
     }
@@ -1140,14 +1140,16 @@ public class Controller {
         }
     }
 
+    public static void printColored(String text, Ansi.Color color) {
+        System.out.println(Ansi.ansi().fg(color).a(text).reset());
+    }
+
     /**
      * Main game loop
      */
     public void run() {
         Controller.setConsoleEncoding();
         Controller.clearConsole();
-
-        // System.out.println(Ansi.ansi().fg(Ansi.Color.RED).a("This text is red!").reset());
 
         this.musicPlayer = new MusicPlayer(
             Constants.INTRO_WAV_FILE_PATH,

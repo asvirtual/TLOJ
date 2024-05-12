@@ -145,7 +145,19 @@ public class Game implements CharacterObserver {
         if (mob.isAlive()) {
             Controller.clearConsole(1000);
             mob.attack(this.player);
+
+            /**
+             * No further action, the fight continues
+             */
+            if (mob.getPosition() == this.player.getPosition()) return; 
         }
+
+        // Get new mob if there is one
+        if (room.getMobsCount() == 0) return;
+        mob = room.getMob();
+
+        Controller.clearConsole(2000);
+        System.out.println("You've encountered " + mob + mob.getASCII() + "\n");
     }
 
     public void usePlayerSkill() {
