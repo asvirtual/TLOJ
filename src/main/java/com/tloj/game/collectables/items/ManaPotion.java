@@ -24,8 +24,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @see NorthStar
  */
 public class ManaPotion extends PurchasableItem implements ConsumableItem {
-    private static final double WEIGHT = 0.1;
-    private static final int PRICE = 7;
+    private static final double WEIGHT = 0.2;
+    private static final int PRICE = 12;
     private static final int MANA_RESTORE = 10;
     private static final double DROP_CHANCE = 0.17;
     private static final int DROP_MONEY = PRICE / 2;

@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @see NorthStar
  */
 public class GreatHealthPotion extends PurchasableItem implements ConsumableItem {
-    private static final double WEIGHT = 0.2;
+    private static final double WEIGHT = 0.3;
     private static final int PRICE = 20;
     private static final int HEAL_AMOUNT = 50;
     private static final double DROP_CHANCE = 0.12;

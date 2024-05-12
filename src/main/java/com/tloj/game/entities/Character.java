@@ -372,7 +372,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public void levelUp() {
         Dice fiveDice = new Dice(D5);
         Dice threeDice = new Dice(D3);
-
+    
+        // Store initial stats
+        int initialMaxHp = this.maxHp;
+        int initialMaxMana = this.maxMana;
+        int initialAtk = this.atk;
+        int initialDef = this.def;
+    
         this.xp = REQ_XP_BASE * this.lvl - this.xp;
         this.lvl++;
         this.updateRequiredXp();
@@ -382,7 +388,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = this.maxMana;
         this.atk += threeDice.roll();
         this.def += threeDice.roll();
-
+    
+        // Print changes in stats
+        System.out.println("\n" + "HP: " + ConsoleColors.RED + initialMaxHp + ConsoleColors.RESET + " --> " + ConsoleColors.RED_BRIGHT + this.maxHp + ConsoleColors.RESET);
+        System.out.println("Mana: " + ConsoleColors.BLUE + initialMaxMana + ConsoleColors.RESET + " --> " + ConsoleColors.BLUE_BRIGHT + this.maxMana + ConsoleColors.RESET);
+        System.out.println("Attack: " + ConsoleColors.PURPLE + initialAtk + ConsoleColors.RESET + " --> " + ConsoleColors.PURPLE_BRIGHT + this.atk + ConsoleColors.RESET);
+        System.out.println("Defense: " + ConsoleColors.PURPLE + initialDef + ConsoleColors.RESET + " --> " + ConsoleColors.PURPLE_BRIGHT + this.def + ConsoleColors.RESET + "\n");
+    
         this.observers.forEach(observer -> observer.onPlayerLevelUp());
     }
 
