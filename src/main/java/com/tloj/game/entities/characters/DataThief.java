@@ -15,7 +15,7 @@ import com.tloj.game.utilities.Coordinates;
 
 
 public class DataThief extends Character {
-    private static final int HP = 16;
+    private static final int HP = 20;
     private static final int ATTACK = 5;
     private static final int DEFENSE = 3;
     private static final int MANA = 10;

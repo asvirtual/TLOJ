@@ -7,6 +7,7 @@ import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.collectables.items.NorthStar;
@@ -36,7 +37,7 @@ public class TpEffect extends RoomEffect {
     public boolean applyEffect(Character character) {
         Controller.getInstance().printMapAndArt(this.getASCII());
         
-        System.out.println("Oh no! Unexpected System call teleported you to a random room!");
+        System.out.println(ConsoleColors.PURPLE + "Oh no! Unexpected System call teleported you to a random room!" + ConsoleColors.RESET);
         System.out.println("They hacked your GPS! You can't see the rooms you visited anymore!");
 
         Level level = character.getCurrentLevel();

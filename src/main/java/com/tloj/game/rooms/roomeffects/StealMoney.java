@@ -2,6 +2,7 @@ package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Dice;
 
@@ -28,7 +29,7 @@ public class StealMoney extends RoomEffect {
         if (roll < 3) return false;
 
         Controller.getInstance().printMapAndArt(this.getASCII());
-        System.out.println("You have been scammed by a Crypto Guru and you lost " + COST + " BTC!");
+        System.out.println(ConsoleColors.RED +"You have been scammed by a Crypto Guru and you lost " + COST + " BTC!" + ConsoleColors.RESET);
         character.pay(COST);
 
         return true;

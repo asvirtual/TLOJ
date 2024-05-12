@@ -15,7 +15,7 @@ import com.tloj.game.utilities.Coordinates;
 
 
 public class Hacker extends Character {
-    private static final int HP = 15;
+    private static final int HP = 18;
     private static final int ATTACK = 3;
     private static final int DEFENSE = 3;
     private static final int MANA = 30;

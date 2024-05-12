@@ -1,5 +1,7 @@
 package com.tloj.game.entities;
 
+import org.fusesource.jansi.Ansi;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -9,6 +11,8 @@ import com.tloj.game.collectables.Item;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.entities.CombatEntity;
+
+import org.fusesource.jansi.Ansi;
 
 
 // Needed to serialize/deserialize subclasses of Mob, by including the class name in the JSON
@@ -200,7 +204,7 @@ public abstract class Mob extends CombatEntity {
     public String getPrettifiedStatus() {
         return 
             this + ":\n" +
-            "HP: " + this.getHpBar() + " " + this.getHP() + "/" + this.getMaxHP() + "\n";
+            "HP: " + Ansi.ansi().fg(Ansi.Color.RED).a(this.getHpBar() + " " + this.hp + "/" + this.maxHp).reset() + "\n";
     }
 
     @Override

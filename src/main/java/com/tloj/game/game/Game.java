@@ -20,6 +20,7 @@ import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
@@ -229,15 +230,15 @@ public class Game implements CharacterObserver {
         this.player.resetFightStats();
         this.player.lootMob(boss);
 
-        System.out.println("You've defeated " + boss + "!\n");
+        System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "You've defeated " + boss + "!" + ConsoleColors.RESET + "\n");
         this.increaseScore(Boss.SCORE_DROP);
         this.controller.setState(GameState.BOSS_DEFEATED);
     }
 
     @Override
     public void onPlayerDefeated() {
-        System.out.println(
-            "\n" + Constants.GAME_OVER + "\n" +
+        System.out.println(ConsoleColors.RED_BOLD_BRIGHT +
+            "\n" + Constants.GAME_OVER + ConsoleColors.RESET + "\n" +
             "Jordan ended his adventure with " + this.score + "points!\n" +
             Constants.GAME_TITLE
         );
@@ -247,7 +248,7 @@ public class Game implements CharacterObserver {
 
     @Override
     public void onPlayerLevelUp() {
-        System.out.println("You've leveled up! You are now level " + this.player.getLvl() + "!\n");
+        System.out.println(ConsoleColors.GREEN_BRIGHT + "You've leveled up! You are now level " + this.player.getLvl() + "!\n" + ConsoleColors.RESET);
     }
 
     public void printMap(){
