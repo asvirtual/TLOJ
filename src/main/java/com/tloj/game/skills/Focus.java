@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 
 
 /**
@@ -34,7 +35,7 @@ public class Focus extends CharacterSkill {
 
         attack.setBaseDamage(this.character.getCurrentFightAtk() + 3);
         attacker.useMana(5);
-        System.out.println("Focus mode on! Next attack will deal 3 more damage");
+        System.out.println(ConsoleColors.CYAN + "Focus mode on! Next attack will deal 3 more damage" + ConsoleColors.RESET);
     }
 
     public static String describe() {

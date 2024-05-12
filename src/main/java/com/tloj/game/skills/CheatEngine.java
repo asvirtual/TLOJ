@@ -3,6 +3,7 @@ package com.tloj.game.skills;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.Hacker;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Weapon;
@@ -35,7 +36,7 @@ public class CheatEngine extends CharacterSkill{
         
         attack.setWeaponRoll(weapon.getDiceFaces());
         attacker.useMana(5);
-        System.out.println("Hacking going on! MAX ROLL INCOMING!");
+        System.out.println(ConsoleColors.CYAN + "Hacking going on! MAX ROLL INCOMING!" + ConsoleColors.RESET);
     }
 
     public static String describe() {

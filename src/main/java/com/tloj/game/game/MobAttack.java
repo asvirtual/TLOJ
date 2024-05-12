@@ -2,6 +2,7 @@ package com.tloj.game.game;
 
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.Character;
+import com.tloj.game.utilities.ConsoleColors;
 
 
 /**
@@ -42,7 +43,7 @@ public class MobAttack extends Attack {
 
     @Override
     public void perform() {
-        System.out.println(this.attacker + " inflicted " + this.totalDamage + " damage to you!");
+        System.out.println(this.attacker + " inflicted " + ConsoleColors.RED_BRIGHT + this.totalDamage + " damage" + ConsoleColors.RESET + " to you!");
         super.perform();
     }
 }

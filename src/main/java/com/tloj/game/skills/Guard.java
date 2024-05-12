@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 
 
 /**
@@ -34,7 +35,7 @@ public class Guard extends CharacterSkill {
 
         attack.getAttacker().setCurrentFightDef(this.character.getCurrentFightDef() + 3);
         attacker.useMana(5);
-        System.out.println("Guard activated! Defense increased by 3 points!");
+        System.out.println(ConsoleColors.CYAN + "Guard activated! Defense increased by 3 points!" + ConsoleColors.RESET);
     }
 
     public static String describe() {
