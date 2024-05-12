@@ -24,11 +24,22 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  */
 
 public abstract class CharacterSkill {
+    // The character that uses the skill
     protected Character character;
 
+    /**
+     * Constructs a CharacterSkill object with the given character.
+     *
+     * @param character The character that uses the skill.
+     */
     protected CharacterSkill(Character character) {
         this.character = character;
     }
 
+    /**
+     * Retrieves the character that uses the skill.
+     *
+     * @return The character that uses the skill.
+     */
     public abstract void use(PlayerAttack attack);
 }

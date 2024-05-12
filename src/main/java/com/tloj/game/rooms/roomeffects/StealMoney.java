@@ -22,6 +22,12 @@ public class StealMoney extends RoomEffect {
      */
     public StealMoney() {}
 
+    /**
+     * Applies the effect of stealing money from the character.
+     *
+     * @param character the character from whom the money will be stolen
+     * @return true if the effect is successfully applied, false otherwise
+     */
     @Override
     public boolean applyEffect(Character character) {
         Dice dice = new Dice(6);

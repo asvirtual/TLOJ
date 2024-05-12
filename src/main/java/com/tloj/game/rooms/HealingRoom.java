@@ -19,8 +19,16 @@ import com.tloj.game.game.PlayerRoomVisitor;
  * @see TrapRoom
  * @see HostileRoom
  * @see StartRoom
+ * @see EndRoom
  */
+
 public class HealingRoom extends StartRoom {
+
+    /**
+     * Constructs a Healing Room object with the given coordinates.
+     *
+     * @param coordinates the coordinates of the Healing Room
+     */
     @JsonCreator
     public HealingRoom(
         @JsonProperty("coordinates") Coordinates coordinates
@@ -30,16 +38,33 @@ public class HealingRoom extends StartRoom {
         this.friendlyEntities.add(new Merchant(this.coordinates));
     }
 
+    /**
+     * Returns the type of the room.
+     *
+     * @return the type of the room
+     */
     @Override
     public RoomType getType() {
         return RoomType.HEALING_ROOM;
     }
 
+    /**
+     * Accepts a PlayerRoomVisitor and calls the appropriate visit method.
+     *
+     * @param visitor the PlayerRoomVisitor to accept
+     */
     @Override
     public void accept(PlayerRoomVisitor visitor) {
         visitor.visit(this);
     }
 
+    /**
+     * Returns a string representation of the Healing Room.
+     * If the room has been visited, it returns the Unicode character for a horizontal line.
+     * If the room has not been visited, it returns a space character.
+     *
+     * @return a string representation of the Healing Room
+     */
     @Override
     public String toString() {
         return this.visited ? "\u256C" : "\u00A0";

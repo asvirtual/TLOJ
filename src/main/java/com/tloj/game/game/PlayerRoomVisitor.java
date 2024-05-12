@@ -10,6 +10,10 @@ import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Character;
 
 
+/**
+ * Represents a visitor for different types of rooms in the game.
+ * Each method in this class represents a visit to a specific type of room.
+ */
 interface Visitor {
     void visit(StartRoom room);
     void visit(BossRoom room);
@@ -21,14 +25,26 @@ interface Visitor {
 }
 
 public class PlayerRoomVisitor implements Visitor {
+    // The player character
     private Character player;
+    // The game controller
     private Controller controller;
 
+    /**
+     * Constructs a PlayerRoomVisitor object with the given player character.<br>
+     * @param player The player character.
+     * @param controller The game controller.
+     */
     public PlayerRoomVisitor(Character player) {
         this.player = player;
         this.controller = Controller.getInstance();
     }
 
+    /**
+     * Visit method for a StartRoom.<br>
+     * @param room The StartRoom to visit.
+     * Visits a start room, clears the room, and sets the game state to MOVING
+     */
     @Override
     public void visit(StartRoom room) {
         room.visit();
@@ -38,6 +54,11 @@ public class PlayerRoomVisitor implements Visitor {
         this.controller.printMap();
     }
 
+    /**
+     * Visit method for a BossRoom.<br>
+     * @param room The BossRoom to visit.
+     * Visits a boss room, triggers a fight with the boss, and sets the game state to FIGHTING_BOSS
+     */
     @Override
     public void visit(BossRoom room) {
         room.visit();
@@ -47,6 +68,11 @@ public class PlayerRoomVisitor implements Visitor {
         this.controller.setState(GameState.FIGHTING_BOSS);
     }
 
+    /**
+     * Visit method for a HealingRoom.<br>
+     * @param room The HealingRoom to visit.
+     * Visits a healing room, heals the player, and sets the game state to HEALING_ROOM
+     */
     @Override
     public void visit(HealingRoom room) {
         room.visit();
@@ -59,6 +85,11 @@ public class PlayerRoomVisitor implements Visitor {
         this.controller.setState(GameState.HEALING_ROOM);
     }
 
+    /**
+     * Visit method for a HostileRoom.<br>
+     * @param room The HostileRoom to visit.
+     * Visits a hostile room, triggers a fight with the mob, and sets the game state to FIGHTING_MOB
+     */
     @Override
     public void visit(HostileRoom room) {
         room.visit();
@@ -72,6 +103,11 @@ public class PlayerRoomVisitor implements Visitor {
         this.controller.setState(GameState.FIGHTING_MOB);
     }
 
+    /**
+     * Visit method for a LootRoom.<br>
+     * @param room The LootRoom to visit.
+     * Visits a loot room, adds the item to the player's inventory, and clears the room
+     */
     @Override
     public void visit(LootRoom room) {
         room.visit();
@@ -101,6 +137,11 @@ public class PlayerRoomVisitor implements Visitor {
         }
     }
 
+    /**
+     * Visit method for a TrapRoom.<br>
+     * @param room The TrapRoom to visit.
+     * Visits a trap room, triggers the trap, and executes the side effect of the room
+     */
     @Override
     public void visit(TrapRoom room) {
         room.visit();
@@ -120,6 +161,11 @@ public class PlayerRoomVisitor implements Visitor {
         room.executeSideEffect();
     }
 
+    /**
+     * Visit method for a EndRoom.<br>
+     * @param room The EndRoom to visit.
+     * Visits an end room, sets the game state to WIN, and displays game win message
+     */
     @Override
     public void visit(EndRoom room) {
         room.visit();

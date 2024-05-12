@@ -28,11 +28,23 @@ import com.tloj.game.entities.Character;
   generator = ObjectIdGenerators.PropertyGenerator.class, 
   property = "seed")
 public class GameData {
+    /** The seed of the game. */
     public long seed;
+    /** The current level of the game. */
     public Level currentLevel;
+    /** The player character of the game. */
     public Character player;
+    /** The levels of the game. */
     public ArrayList<Level> levels;
 
+    /**
+     * Constructs a new GameData object with the given seed, current level, player, and levels.
+     *
+     * @param seed The seed of the game.
+     * @param currentLevel The current level of the game.
+     * @param player The player character of the game.
+     * @param levels The levels of the game.
+     */
     @JsonCreator
     public GameData(
         @JsonProperty("seed") long seed, 
@@ -46,6 +58,11 @@ public class GameData {
         this.levels = levels;
     }
 
+    /**
+     * Returns a new Game instance based on the data in this GameData.
+     *
+     * @return A new Game instance.
+     */
     @JsonIgnore
     public Game getGame() {
         return new Game(
@@ -56,6 +73,12 @@ public class GameData {
         );
     }
 
+    /**
+     * Saves the given Game object to a JSON file with the specified filename.
+     *
+     * @param game The Game object to be saved.
+     * @param filename The filename for the JSON file.
+     */
     public static void saveToFile(Game game, String filename) {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -73,6 +96,12 @@ public class GameData {
         } 
     }
 
+    /**
+     * Loads GameData from a JSON file with the specified filename.
+     *
+     * @param filename The filename of the JSON file.
+     * @return The loaded GameData object.
+     */
     public static GameData loadFromFile(String filename) {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -92,6 +121,11 @@ public class GameData {
         return null;
     }
 
+    /**
+     * Serializes this GameData object to a JSON string.
+     *
+     * @return The JSON string representing this GameData.
+     */
     public String serializeJSON() {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -111,6 +145,12 @@ public class GameData {
         return null;
     }
 
+    /**
+     * Deserializes a GameData object from a JSON string.
+     *
+     * @param json The JSON string to deserialize.
+     * @return The deserialized GameData object.
+     */
     public static GameData deserializeJSON(String json) {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -130,6 +170,12 @@ public class GameData {
         return null;
     }
 
+    /**
+     * Deserializes a list of levels from a JSON string.
+     *
+     * @param json The JSON string representing the levels.
+     * @return The deserialized list of levels.
+     */
     public static ArrayList<Level> deserializeMap(String json) {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -149,6 +195,12 @@ public class GameData {
         return null;
     }
 
+    /**
+     * Deserializes a list of levels from a JSON file with the specified filename.
+     *
+     * @param filename The filename of the JSON file.
+     * @return The deserialized list of levels.
+     */
     public static ArrayList<Level> deserializeMapFromFile(String filename) {
         ObjectMapper mapper = new ObjectMapper();
 

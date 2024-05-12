@@ -21,7 +21,14 @@ import com.tloj.game.collectables.items.NorthStar;
  */
 
 public class TpEffect extends RoomEffect {
+    /**
+     * The visitor able to visit the new room after teleportation.
+     */
     private PlayerRoomVisitor visitor;
+
+    /**
+     * The new room to teleport to.
+     */
     private Room newRoom;
 
     public TpEffect() {
@@ -33,6 +40,13 @@ public class TpEffect extends RoomEffect {
         };
     }
 
+    /**
+     * Applies the teleportation effect to the specified character.
+     * Teleports the character to a random room in the current level, while printing relevant messages and updating the game state.
+     *
+     * @param character the character to apply the teleportation effect to
+     * @return true if the effect was successfully applied, false otherwise
+     */
     @Override
     public boolean applyEffect(Character character) {
         Controller.getInstance().printMapAndArt(this.getASCII());
@@ -46,6 +60,7 @@ public class TpEffect extends RoomEffect {
         int rows = level.getRoomsRowCount();
         int cols = level.getRoomsColCount();
 
+        // Loop until a valid location is found
         do {
             int row = (int) Math.floor(Math.random() * rows);
             int col = (int) Math.floor(Math.random() * cols);
@@ -53,11 +68,16 @@ public class TpEffect extends RoomEffect {
             Coordinates newCoords = new Coordinates(row, col);
             this.newRoom = character.getCurrentLevel().getRoom(newCoords);
 
+            // Skip if new location is the same as current location
             if (newCoords == character.getPosition()) continue;
+            // Skip if new location is not valid on the level grid
             if (!level.areCoordinatesValid(newCoords)) continue;
+            // Skip if new location is a boss room
             if (this.newRoom.getType() == RoomType.BOSS_ROOM) continue;
+            // Skip if new location is a locked loot room
             if (this.newRoom.getType() == RoomType.LOOT_ROOM && ((LootRoom) this.newRoom).isLocked()) continue;
 
+            // Forget all visited rooms
             level.getRoomStream().forEach(rowRooms -> {
                 rowRooms.forEach(room -> {
                     if (room != null) room.forget();

@@ -19,13 +19,24 @@ import com.tloj.game.utilities.ConsoleColors;
  */
 
 public class Guard extends CharacterSkill {
+    /**
+     * Constructs a Guard object with the given character.
+     *
+     * @param character The character that uses the skill.
+     */
     @JsonCreator
     public Guard(@JsonProperty("character") Character character) {
         super(character);
     }
 
+    /**
+     * Method for using ability.
+     *
+     * @param attack The attack being performed.
+     */
     @Override
     public void use(PlayerAttack attack) {
+        // Get the attacker
         Character attacker = attack.getAttacker();
         
         if (attacker.getMana() < 5) {

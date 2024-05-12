@@ -11,13 +11,30 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.*;
 
 
+/**
+ * Class that represents a music player in the game<br>
+ * Used to play music files in the game<br>
+ */
+/**
+ * The MusicPlayer class is responsible for playing music files.
+ */
 public class MusicPlayer {
+    // The clip that is currently playing
     private Clip playingClip;
+    // The file that is being played
     private File file;
+    // The thread that is playing the music
     private Thread playingThread;
+    // The action to be performed when the music ends
     private Runnable onEnd;
+    // The listener that listens to the music clip
     private LineListener listener;
 
+    /**
+     * Constructs a MusicPlayer object with the specified file path.
+     * 
+     * @param pathName the path of the music file to be played
+     */
     public MusicPlayer(String pathName) {
         this.file = new File(pathName);
         this.listener = new LineListener() {
@@ -29,6 +46,12 @@ public class MusicPlayer {
         };
     }
 
+    /**
+     * Constructs a MusicPlayer object with the specified file path and action to be performed when the music ends.
+     * 
+     * @param pathName the path of the music file to be played
+     * @param onEnd the action to be performed when the music ends
+     */
     public MusicPlayer(String pathName, Runnable onEnd) {
         this.file = new File(pathName);
         this.onEnd = onEnd;
@@ -41,10 +64,18 @@ public class MusicPlayer {
         };
     }
 
+    /**
+     * Sets a new file to be played.
+     * 
+     * @param pathName the path of the new music file
+     */
     public void setNewFile(String pathName) {
         this.file = new File(pathName);
     }
 
+    /**
+     * Stops the currently playing music.
+     */
     public void stop() {
         if (this.playingClip == null) return;
 
@@ -65,6 +96,11 @@ public class MusicPlayer {
         }
     }
 
+    /**
+     * Increases the volume of the currently playing music.
+     * 
+     * @param amount the amount by which to increase the volume
+     */
     public void increaseVolume(float amount) {
         if (this.playingClip == null) return;
 
@@ -72,10 +108,18 @@ public class MusicPlayer {
         volumeControl.setValue(amount);
     }
 
+    /**
+     * Plays the music file.
+     */
     public void playMusic() {
         this.playMusic(false);
     }
 
+    /**
+     * Plays the music file with the option to loop.
+     * 
+     * @param loop true if the music should loop, false otherwise
+     */
     public void playMusic(boolean loop) {
         this.stop();
         this.playingThread = new Thread(() -> {

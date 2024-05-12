@@ -22,6 +22,12 @@ public class InflictDamage extends RoomEffect {
      */
     public InflictDamage() {}
 
+    /**
+     * Applies the effect of inflicting damage to a character.
+     *
+     * @param character the character to apply the effect to
+     * @return true if the effect was successfully applied, false otherwise
+     */
     @Override
     public boolean applyEffect(Character character) {
         Dice dice = new Dice(6);
@@ -30,6 +36,7 @@ public class InflictDamage extends RoomEffect {
 
         Controller.getInstance().printMapAndArt(this.getASCII());
         System.out.println(ConsoleColors.RED + "You've been hit by a virus and lost " + DAMAGE + " HP!" + ConsoleColors.RESET);
+        // Inflict damage to the character
         character.takeDamage(DAMAGE);
 
         return true;
