@@ -186,13 +186,6 @@ public class Game implements CharacterObserver {
         }
 
         Item item = this.player.getInventoryItem(index - 1);
-
-        if (item instanceof PurchasableItem)
-            this.player.setMoney(
-                this.player.getMoney() + 
-                ((PurchasableItem) this.player.getInventoryItem(index - 1)).getPrice() / 2
-            );
-
         this.player.removeInventoryItem(index - 1);
     }
 

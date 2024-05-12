@@ -17,6 +17,7 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.game.Controller;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -61,10 +62,10 @@ public class Merchant extends FriendlyEntity {
         super.interact(player);
         
         System.out.println(
-            "Merchant: Hello there! What do you want to buy today?\n" +
-            "You currently have " + this.player.getMoney() + " BTC" +
-            " and " + this.player.getFreeWeight() + " MB" + " of free space\n" + 
-            Merchant.getItems()
+            ConsoleColors.YELLOW + "Merchant: Hello there! What do you want to buy today?\n" +
+            ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
+            ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + " of free space\n" + 
+            ConsoleColors.RESET + Merchant.getItems()
         );
 
         Controller.getInstance().setState(GameState.MERCHANT_SHOPPING);

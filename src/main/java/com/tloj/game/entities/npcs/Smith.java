@@ -9,6 +9,7 @@ import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.game.Controller;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -30,8 +31,11 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
     @Override
     public void interact(Character player) {
         super.interact(player);
-        System.out.println("Smith: Hello there! I can upgrade your weapon with a Weapon Shard.");
-        System.out.println("You currently have " + this.player.getItemCount(new WeaponShard()) + " Weapon Shards.");
+        System.out.println(
+            ConsoleColors.YELLOW + "Smith: Hello there! I can upgrade your weapon with a Weapon Shard.\n" +
+            ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET
+        );
+        
         Controller.getInstance().setState(GameState.SMITH_FORGING);
     }
 
