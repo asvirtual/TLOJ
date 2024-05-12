@@ -29,7 +29,7 @@ public class FlyingBoss extends Boss {
     public static final int DEFENSE = 5;
     public static final int DICE_FACES = 10;
     public static final int XP_DROP = 50;
-    public static final int MONEY_DROP = 80;
+    public static final int MONEY_DROP = 30;
     
     @JsonCreator
     public FlyingBoss(

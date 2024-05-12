@@ -26,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AttackElixir extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0.2;
-    private static final int PRICE = 10;
+    private static final int PRICE = 15;
     private static final int ATTACK_BOOST = 5;
     private static final double DROP_CHANCE = 0.1;
     private static final int DROP_MONEY = PRICE / 2;

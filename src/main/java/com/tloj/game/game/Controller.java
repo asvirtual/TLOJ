@@ -757,7 +757,7 @@ class ChooseCharacterGameCommand extends GameCommand {
         } + "\n");
 
         if (!Controller.awaitConfirmation()) {
-            System.out.println("Choose your starting character: 1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
+            System.out.println("Choose your starting character: [1] - BasePlayer, [2] - Cheater, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai");
             return;
         }
 

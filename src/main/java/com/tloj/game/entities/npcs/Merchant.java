@@ -11,6 +11,7 @@ import com.tloj.game.collectables.items.AttackElixir;
 import com.tloj.game.collectables.items.GreatHealthPotion;
 import com.tloj.game.collectables.items.GreatManaPotion;
 import com.tloj.game.collectables.items.ManaPotion;
+import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.collectables.items.Lockpick;
 import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.entities.Character;
@@ -43,6 +44,7 @@ public class Merchant extends FriendlyEntity {
         this.items.put(5, new AttackElixir());
         this.items.put(6, new DefenseElixir());
         this.items.put(7, new Lockpick());
+        this.items.put(8, new WeaponShard());
     }
     /**
      * @return a string representation of the merchant's items
