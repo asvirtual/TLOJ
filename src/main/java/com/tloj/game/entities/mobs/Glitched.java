@@ -84,6 +84,7 @@ public class Glitched extends Mob implements MovingEntity {
                     if (target.turnsLeft != 0) {
                         target.move(newCoords);
                         nextRoom.addMobToTop(target);
+                        nextRoom.setCleared(false);
                         System.out.println("A bug in the system teleported the Glitched away! Will it come back?"); // TODO: "Animation" with ASCII arts
                     } else {
                         System.out.print("The Glitched has gone...");

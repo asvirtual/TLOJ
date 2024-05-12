@@ -58,6 +58,10 @@ public abstract class Room {
         return cleared;
     }
 
+    public void setCleared(boolean cleared) {
+        this.cleared = cleared;
+    } 
+
     public void clear(Character player) {
         this.cleared = true;
     }

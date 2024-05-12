@@ -244,8 +244,18 @@ public class Game implements CharacterObserver {
     
     public String[] generateMapLines() {
         StringBuilder mapBuilder = new StringBuilder();
-    
+
+        
+        mapBuilder
+            .append("  ")
+            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - 1))
+            .append("GN")
+            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - 1))
+            .append("\n");
+        
         for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
+            mapBuilder.append("| ");
+
             for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
                 Room room = this.currentLevel.getRoom(new Coordinates(j, i));
                 if (room == null){
@@ -257,8 +267,15 @@ public class Game implements CharacterObserver {
                 else mapBuilder.append(room + " ");
             }
             
-            mapBuilder.append("\n");
+            mapBuilder.append("\b|\n");
         }
+        
+        mapBuilder
+            .append("  ")
+            .append("--".repeat(this.currentLevel.getRoomsRowCount() / 2 - 1))
+            .append("GS")
+            .append("--".repeat(this.currentLevel.getRoomsRowCount() / 2 - 1))
+            .append("\n");
         
         return mapBuilder.toString().split("\n");
     }
