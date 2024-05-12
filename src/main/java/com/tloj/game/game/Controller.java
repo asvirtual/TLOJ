@@ -106,6 +106,7 @@ class MoveNorthCommand extends GameCommand {
         super.execute();
 
         try {
+            Controller.clearConsole();
             this.game.movePlayer(Coordinates.Direction.NORTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
@@ -135,6 +136,7 @@ class MoveSouthCommand extends GameCommand {
         super.execute();
 
         try {
+            Controller.clearConsole();
             this.game.movePlayer(Coordinates.Direction.SOUTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
@@ -164,6 +166,7 @@ class MoveWestCommand extends GameCommand {
         super.execute();
         
         try {
+            Controller.clearConsole();
             this.game.movePlayer(Coordinates.Direction.WEST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
@@ -193,6 +196,7 @@ class MoveEastCommand extends GameCommand {
         super.execute();
         
         try {
+            Controller.clearConsole();
             this.game.movePlayer(Coordinates.Direction.EAST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
