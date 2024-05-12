@@ -321,7 +321,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         target.defend(this.currentAttack);
 
         this.currentAttack.perform();
-        this.currentAttack = null;
+        // TODO: Establish whether setting to null is needed or not (probably not)
+        // this.currentAttack = null;
 
         if (!target.isAlive()) {
             if (target instanceof Boss) this.observers.forEach(observer -> observer.onBossDefeated());
@@ -368,8 +369,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         Dice fiveDice = new Dice(D5);
         Dice threeDice = new Dice(D3);
 
+        this.xp = REQ_XP_BASE * this.lvl - this.xp;
         this.lvl++;
-        this.xp = 0;
         this.updateRequiredXp();
         this.maxHp += fiveDice.roll();
         this.hp = this.maxHp;

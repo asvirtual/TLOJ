@@ -282,10 +282,17 @@ class UseItemCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+
+        if (commands.length != 2) {
+            System.out.println("Invalid command. Correct Syntax: use [item]");
+            return;
+        }
+
         if (!Controller.awaitConfirmation()) return;
         
         try {
             this.game.useItem(Integer.parseInt(commands[1]));
+            System.out.println("\n" + this.game.getPlayer().getPrettifiedStatus());
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
@@ -302,13 +309,21 @@ class SwapWeaponCommand extends GameCommand {
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
             GameState.SMITH_FORGING,
-            GameState.MAIN_MENU
+            GameState.MAIN_MENU,
+            GameState.FIGHTING_BOSS,
+            GameState.FIGHTING_MOB,
+            GameState.CHOOSING_CHARACTER
         );
     }
 
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+
+        if (commands.length != 2) {
+            System.out.println("Invalid command. Correct Syntax: swap [weapon]");
+            return;
+        }
         
         try {
             this.game.getPlayer().swapWeapon(Integer.parseInt(commands[1]));
@@ -335,6 +350,11 @@ class DropItemCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+
+        if (commands.length != 2) {
+            System.out.println("Invalid command. Correct Syntax: drop [item]");
+            return;
+        }
 
         if (!Controller.awaitConfirmation()) return;
 
@@ -401,7 +421,6 @@ class PreviousStateCommand extends GameCommand {
         super(game, null);
         this.validListStates = List.of(
             GameState.CHOOSING_CHARACTER,
-            GameState.INV_MANAGEMENT,
             GameState.MERCHANT_SHOPPING, 
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU
@@ -456,10 +475,7 @@ class HelpCommand extends GameCommand {
                 System.out.println("Choose a character: default, cheater, data thief, mecha knight, neo samurai");
                 break;
             case MOVING:
-                System.out.println("Commands: gn, gs, gw, ge, return, inventory, status, map, score, seed, quit");
-                break;
-            case INV_MANAGEMENT:
-                System.out.println("Commands: use, drop, back");
+                System.out.println("Commands: gn, gs, gw, ge, return, inventory, status, map, score, seed, quit, swap");
                 break;
             case MERCHANT_SHOPPING:
                 System.out.println("Commands: buy, back");
@@ -474,10 +490,10 @@ class HelpCommand extends GameCommand {
                 System.out.println("Commands: attack, skill, inventory, use, drop");
                 break;
             case LOOTING_ROOM:
-                System.out.println("Commands: confirm, inventory, use, drop");
+                System.out.println("Commands: confirm, inventory, use, drop, swap");
                 break;
             case HEALING_ROOM:
-                System.out.println("Commands: merchant, smith, inventory, use, drop");
+                System.out.println("Commands: merchant, smith, inventory, use, drop, swap");
                 break;
 
             default:
@@ -586,6 +602,11 @@ class BuyCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+
+        if (commands.length != 2) {
+            System.out.println("Invalid command. Correct Syntax: buy [item]");
+            return;
+        }
         
         if (!Controller.awaitConfirmation()) return;
 
@@ -1128,7 +1149,6 @@ public class Controller {
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();
-            case INV_MANAGEMENT -> "[use] - [drop] - [swap] - [back]";
             case MERCHANT_SHOPPING -> "[buy *number*] - [back]";
             case SMITH_FORGING -> "[give smith weaponshard] - [back]";
             case BOSS_DEFEATED -> "[inv] - [gn, gs, gw ge to change floor]";
