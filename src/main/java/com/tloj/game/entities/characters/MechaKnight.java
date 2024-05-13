@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.items.HealthPotion;
+import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Guard;
@@ -54,6 +56,10 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
+        this.inventory.add(new NaniteLeechBlade());
+        this.inventory.add(new HealthPotion());
+        this.inventory.add(new HealthPotion());
+        this.inventory.add(new HealthPotion());
     }    
 
     /** 
@@ -76,6 +82,12 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
+        this.inventory.add(new NaniteLeechBlade());
+        this.inventory.add(new HealthPotion());
+        this.inventory.add(new HealthPotion());
+        this.inventory.add(new HealthPotion());
+        this.inventory.add(new HealthPotion());
+        this.inventory.add(new HealthPotion());
     }
 
     public static String getDetailedInfo() {

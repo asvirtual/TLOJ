@@ -229,13 +229,13 @@ public class Game implements CharacterObserver {
         return this.currentLevel.getRoom(this.player.getPosition());
     }
 
-    public void dropItem(int index) {
+    public Item dropItem(int index) {
         if (index < 1 || index > this.player.getInventorySize()) {
             System.out.println("Couldn't find that item in your inventory");
-            return;
+            return null;
         }
 
-        this.player.removeInventoryItem(index - 1);
+        return this.player.removeInventoryItem(index - 1);
     }
 
     @Override
@@ -371,14 +371,22 @@ public class Game implements CharacterObserver {
             System.out.println((i + 1) + ". " + this.player.getInventoryItem(i));
     }
 
-    public void useItem(int index) {
+    public Item useItem(int index) {
         if (index < 1 || index > this.player.getInventorySize()) {
-            System.out.println("Couldn't find that item in your inventory");
-            return;
+            System.out.println(ConsoleColors.RED + "Couldn't find that item in your inventory" + ConsoleColors.RESET);
+            return null;
         }
 
-        ConsumableItem item = (ConsumableItem) this.player.getInventoryItem(index - 1);
-        item.consume(this.player);
+        Item item = this.player.getInventoryItem(index - 1);
+        if (!(item instanceof ConsumableItem)) {
+            System.out.println(ConsoleColors.RED + item + " cannot be consumed!" + ConsoleColors.RESET);
+            return null;
+        }
+
+        ConsumableItem consumableItem = (ConsumableItem) item;
+        consumableItem.consume(this.player);
+        
+        return item;
     }
 
     public void infoItem(int index) {

@@ -252,9 +252,11 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.sortInventory();
     }
 
-    public void removeInventoryItem(int index) {
-        this.inventory.remove(index);
+    public Item removeInventoryItem(int index) {
+        Item item = this.inventory.remove(index);
         this.sortInventory();
+        
+        return item;
     }
 
     public boolean addInventoryItem(Item item) {
@@ -417,10 +419,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.observers.remove(observer);
     }
 
-    public void swapWeapon(int index) {
+    public boolean swapWeapon(int index) {
         if (index < 1 || index > this.getInventorySize()) {
-            System.out.println("Invalid choice");
-            return;
+            System.out.println(ConsoleColors.RED + "Invalid choice" + ConsoleColors.RESET);
+            return false;
         }
 
         Item item = this.getInventoryItem(index - 1);
@@ -429,8 +431,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
             this.weapon = (Weapon) item;
             this.inventory.remove(item);
+            return true;
         } else {
-            System.out.println(item + " is not a weapon");
+            System.out.println(ConsoleColors.RED + item + " is not a weapon" + ConsoleColors.RESET);
+            return false;
         }
     }
 

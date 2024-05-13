@@ -15,6 +15,8 @@ import org.fusesource.jansi.AnsiConsole;
 
 
 import com.tloj.game.rooms.HealingRoom;
+import com.tloj.game.collectables.ConsumableItem;
+import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.characters.Hacker;
@@ -23,6 +25,7 @@ import com.tloj.game.entities.characters.MechaKnight;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.entities.npcs.Smith;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -295,8 +298,24 @@ class UseItemCommand extends GameCommand {
         if (!Controller.awaitConfirmation()) return;
         
         try {
-            this.game.useItem(Integer.parseInt(commands[1]));
-            System.out.println("\n" + this.game.getPlayer().getPrettifiedStatus());
+            Controller.clearConsole();
+            Item consumed = this.game.useItem(Integer.parseInt(commands[1]));
+
+            if (consumed == null) {
+                System.out.println();
+                this.game.printMap();
+                return;
+            }
+
+            Controller.printSideBySideText(
+                consumed.getASCII(), 
+                ConsoleColors.GREEN + "Jordan consumed " + consumed + ConsoleColors.RESET + 
+                "\n\n\n" + this.game.getPlayer().getPrettifiedStatus(), 
+                7
+            );
+
+            System.out.println();
+            this.game.printMap();
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
@@ -358,7 +377,16 @@ class SwapWeaponCommand extends GameCommand {
         }
         
         try {
-            this.game.getPlayer().swapWeapon(Integer.parseInt(commands[1]));
+            Controller.clearConsole();
+            if (!this.game.getPlayer().swapWeapon(Integer.parseInt(commands[1]))) {
+                System.out.println();
+                this.game.printMap();
+                return;
+            }
+
+            Controller.printSideBySideText(this.player.getWeapon().getASCII(), ConsoleColors.GREEN + "Jordan equipped " + this.player.getWeapon() + ConsoleColors.RESET, 7);
+            System.out.println();
+            this.game.printMap();
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
@@ -391,7 +419,17 @@ class DropItemCommand extends GameCommand {
         if (!Controller.awaitConfirmation()) return;
 
         try {
-            this.game.dropItem(Integer.parseInt(commands[1]));
+            Controller.clearConsole();
+            Item dropped = this.game.dropItem(Integer.parseInt(commands[1]));
+            if (dropped == null) {
+                System.out.println();
+                this.game.printMap();
+                return;
+            }
+
+            Controller.printSideBySideText(dropped.getASCII(), ConsoleColors.RED + "Jordan dropped " + dropped + ConsoleColors.RESET, 7);
+            System.out.println();
+            this.game.printMap();
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
@@ -415,7 +453,9 @@ class PrintSeedCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        System.out.println("The game seed is: " + this.game.getSeed());
+        Controller.clearConsole();
+        System.out.println(ConsoleColors.PURPLE + "The game seed is: " + this.game.getSeed() + ConsoleColors.RESET + "\n");
+        this.game.printMap();
     }
 }
 
@@ -484,7 +524,9 @@ class PrintScoreCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        System.out.println("The game score is: " + this.game.getScore());
+        Controller.clearConsole();
+        System.out.println(ConsoleColors.GREEN + "The game current score is: " + this.game.getScore() + ConsoleColors.RESET + "\n");
+        this.game.printMap();
     }
 }
 
@@ -493,8 +535,8 @@ class PrintScoreCommand extends GameCommand {
  * @see GameCommand
  */
 class HelpCommand extends GameCommand {
-    public HelpCommand() {
-        super(null, null);
+    public HelpCommand(Game game) {
+        super(game, null);
         this.invalidStates = List.of(
             GameState.MAIN_MENU
         );
@@ -502,6 +544,7 @@ class HelpCommand extends GameCommand {
 
     @Override
     public void execute() {
+        Controller.clearConsole();
         switch (this.controller.getState()) {
             case MAIN_MENU:
                 System.out.println("Commands: new, load, exit");
@@ -530,11 +573,12 @@ class HelpCommand extends GameCommand {
             case HEALING_ROOM:
                 System.out.println("Commands: merchant, smith, inv, use *number*, drop *number*, swap *number*");
                 break;
-
             default:
                 break;
         }
-        
+
+        System.out.println();
+        this.game.printMap();
     }
 }
 
@@ -554,6 +598,7 @@ class ReturnCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        Controller.clearConsole();
         this.game.returnToStart();
         this.game.printMap();
     }
@@ -1122,7 +1167,7 @@ public class Controller {
                 Map.entry("gs", () -> new MoveSouthCommand(this.game, commands)),
                 Map.entry("gw", () -> new MoveWestCommand(this.game, commands)),
                 Map.entry("ge", () -> new MoveEastCommand(this.game, commands)),
-                Map.entry("help", () -> new HelpCommand()),
+                Map.entry("help", () -> new HelpCommand(this.game)),
                 Map.entry("atk", () -> new AttackCommand(this.game, commands)),
                 Map.entry("skill", () -> new SkillCommand(this.game, commands)),
                 Map.entry("inv", () -> new InventoryCommand(this.game, commands)),
@@ -1194,7 +1239,7 @@ public class Controller {
         try {
             invoker.executeCommand();
         } catch (IllegalStateException e) {
-            System.out.println("You can't do that now!");
+            System.out.println("Jordan can't do that now!");
         }
     }
 
