@@ -7,6 +7,7 @@ import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.effects.ManaAttackBooster;
+import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -41,5 +42,10 @@ public class PulseStaff extends Weapon {
     public String describe() {
         return "Pulse-Staff, built with a special dice that can roll between 5 and 10, a special staff that exploits its user mana reserves" + "\n" +
                "Its effect is consuming 2 mana points to deal 5 to 10 extra damage points";
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.PULSE_STAFF;
     }
 }

@@ -3,6 +3,7 @@ package com.tloj.game.collectables.weapons;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.collectables.weapons.PulseStaff;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
@@ -39,5 +40,10 @@ public class CyberKatana extends Weapon {
     public String describe() {
         return "Cyber Katana, built with a D10 dice, it's the Samurai best and only friend" + "\n" +
                "Its effect is his master's skill and precision";
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.CYBER_CATANA;
     }
 }

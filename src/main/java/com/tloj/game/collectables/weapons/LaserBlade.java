@@ -4,6 +4,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.PulseStaff;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -39,5 +40,10 @@ public class LaserBlade extends Weapon {
     public String describe() {
         return "Laser Blade, built with a D8 dice, the most famous in all universe" + "\n" +
                "No effect, just swing it and cut everything in your way!";
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.LASER_BLADE;
     }
 }

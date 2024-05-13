@@ -7,6 +7,7 @@ import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.DiceReroller;
+import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -41,5 +42,10 @@ public class NanoDirk extends Weapon {
     public String describe() {
         return "Nano Dirk, built with a D6 dice, it's a small dagger that can cut through anything" + "\n" +
                "Its effect is the possibility (70%) to roll twice the dice per attack";
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.NANO_DIRK;
     }
 }

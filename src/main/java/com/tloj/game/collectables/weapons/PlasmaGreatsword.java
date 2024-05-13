@@ -4,6 +4,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.PulseStaff;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -38,5 +39,10 @@ public class PlasmaGreatsword extends Weapon {
     public String describe() {
         return "Plasma Great Sword, built with a D15 dice, it's strong, cool and MechaKnight's companion" + "\n" +
                "No effect, muscle power only!";
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.PLASMA_GREATSWORD;
     }
 }

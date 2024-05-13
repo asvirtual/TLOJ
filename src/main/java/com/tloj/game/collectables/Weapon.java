@@ -67,10 +67,5 @@ public abstract class Weapon extends Item {
         return super.toString() + " +" + this.lvl;
     }
 
-    @Override
-    public String getASCII() {
-        return "";
-    }
-
     public abstract String describe();
 }

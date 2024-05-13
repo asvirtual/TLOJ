@@ -796,9 +796,13 @@ class ChooseCharacterGameCommand extends GameCommand {
         this.game.setPlayer(factory.create());
         this.controller.setState(GameState.MOVING);
 
-        Controller.printSideBySideText(this.game.getPlayer().getASCII(), this.game.getPlayer().toString() + "\n\n\n" + Constants.NANITE_LEECH_BLADE);
+        Controller.printSideBySideText(
+            this.game.getPlayer().getASCII(), 
+            this.game.getPlayer().toString() + "\n\n\n" + Constants.NANITE_LEECH_BLADE + "\n" +
+            this.game.getPlayer().getWeapon().getASCII()
+        );
+        
         System.out.println();
-        // System.out.println(this.game.getPlayer() + "\n" + this.game.getPlayer().getASCII());
     }
 }
 

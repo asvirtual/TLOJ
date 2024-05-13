@@ -356,7 +356,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         Item drop = mob.getDrop();
         if (drop == null) return;
         if (this.getCarriedWeight() + drop.getWeight() > this.maxWeight) return;
-        if (this.addInventoryItem(drop)) System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + mob + " dropped a " + drop + ConsoleColors.RESET);
+        if (this.addInventoryItem(drop)) {
+            System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + mob + " dropped a " + drop + ConsoleColors.RESET);
+            System.out.println(drop.getASCII());
+        }
     }
 
     public void useItem(ConsumableItem item) {

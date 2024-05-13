@@ -1647,7 +1647,7 @@ public static final String DATA_THIEF = """
 
             """;
 
-            public static final String PLASMA_KATANA = """
+            public static final String PULSE_STAFF = """
 
                                                         
     ███ ███                                 

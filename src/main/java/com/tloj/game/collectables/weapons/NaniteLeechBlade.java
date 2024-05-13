@@ -7,6 +7,7 @@ import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.HealthAbsorber;
+import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -40,5 +41,10 @@ public class NaniteLeechBlade extends Weapon {
     public String describe() {
         return "Nanite Leech Blade, built with a D12 dice, it's a legendary scythe sealed away for its cursed power" + "\n" +
                "Its effect is stealing health from the enemies, turning half of the damage dealt into health for the wielder";
+    }
+
+    @Override
+    public String getASCII() {
+        return Constants.NANITE_LEECH_BLADE;
     }
 }
