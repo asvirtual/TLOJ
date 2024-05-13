@@ -60,12 +60,13 @@ public class Merchant extends FriendlyEntity {
     @Override
     public void interact(Character player) {
         super.interact(player);
-        
-        System.out.println(
+
+        Controller.printSideBySideText(
             ConsoleColors.YELLOW + "Merchant: Hello there! What do you want to buy today?\n" +
             ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
             ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
-            ConsoleColors.RESET + " of free space\n" + this.getItems()
+            ConsoleColors.RESET + " of free space\n",
+            this.getItems() 
         );
 
         Controller.getInstance().setState(GameState.MERCHANT_SHOPPING);
@@ -97,11 +98,11 @@ public class Merchant extends FriendlyEntity {
 
         Controller.clearConsole(2000);
 
-        System.out.println(
-            this.getASCII() + "\n" +
+        Controller.printSideBySideText(
             ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
             ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
-            ConsoleColors.RESET + " of free space\n" + this.getItems() 
+            ConsoleColors.RESET + " of free space\n",
+            this.getItems() 
         );
     }
 

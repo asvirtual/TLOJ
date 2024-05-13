@@ -207,8 +207,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public double getMaxWeight() {
         return this.maxWeight;
     }
-
-
     
     public double getFreeWeight() {
         return Math.floor((this.maxWeight - this.getCarriedWeight()) * 10) / 10;
@@ -304,6 +302,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public void move(Coordinates to) {
         this.position = to;
         this.currentRoom = this.currentLevel.getRoom(to);
+        this.currentAttack = null;
     }
 
     public void useSkill() {
@@ -318,16 +317,18 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         Mob target = (Mob) t;
 
         if (this.currentAttack == null) this.currentAttack = new PlayerAttack(this, target);
-        else this.currentAttack.setTarget(target);
+        else {
+            this.currentAttack.setBaseDamage(this.currentFightAtk);
+            this.currentAttack.setTarget(target);
+        }
 
         if (this.weapon != null) this.weapon.modifyAttack(this.currentAttack);
         target.defend(this.currentAttack);
 
         this.currentAttack.perform();
-        // TODO: Establish whether setting to null is needed or not (probably not)
-        // this.currentAttack = null;
 
         if (!target.isAlive()) {
+            this.currentAttack = null;
             if (target instanceof Boss) this.observers.forEach(observer -> observer.onBossDefeated());
             else this.observers.forEach(observer -> observer.onMobDefeated(target));
         }
@@ -365,7 +366,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void updateRequiredXp() {
-        this.requiredXp += REQ_XP_BASE * this.lvl;
+        // this.requiredXp = REQ_XP_BASE * (this.lvl * (this.lvl + 1)) / 2;
+        this.requiredXp = REQ_XP_BASE * this.lvl;
     }
 
     public void levelUp() {
@@ -378,7 +380,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         int initialAtk = this.atk;
         int initialDef = this.def;
     
-        this.xp = REQ_XP_BASE * this.lvl - this.xp;
+        this.xp = this.xp - REQ_XP_BASE * this.lvl;
         this.lvl++;
         this.updateRequiredXp();
         this.maxHp += fiveDice.roll();
@@ -387,6 +389,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana = this.maxMana;
         this.atk += threeDice.roll();
         this.def += threeDice.roll();
+        
+        // Update current fight stats keeping eventual buffs from items/skills
+        this.currentFightAtk = (this.currentFightAtk - this.atk) + this.atk;
+        this.currentFightDef = (this.currentFightDef - this.def) + this.def;
 
         System.out.println(ConsoleColors.GREEN_BRIGHT + "You've leveled up! You are now level " + this.lvl + "!\n" + ConsoleColors.RESET);
     
@@ -460,7 +466,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.getBar((int) this.getCarriedWeight(), this.maxWeight);
     }
 
-    //
     @JsonIgnore
     public String getPrettifiedStatus() {
         return 

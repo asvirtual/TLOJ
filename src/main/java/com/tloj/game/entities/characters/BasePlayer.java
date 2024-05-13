@@ -63,6 +63,8 @@ public class BasePlayer extends Character {
             inventory,
             position
         );
+
+        this.skill = new Focus(this);
     }
 
     /** 
@@ -82,6 +84,8 @@ public class BasePlayer extends Character {
             new LaserBlade(),
             position
         );
+
+        this.skill = new Focus(this);
     }
 
     public static String getDetailedInfo() {

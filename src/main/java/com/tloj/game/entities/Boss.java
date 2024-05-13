@@ -1,7 +1,12 @@
 package com.tloj.game.entities;
 
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
+
+import org.fusesource.jansi.Ansi;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.Item;
@@ -68,6 +73,13 @@ public abstract class Boss extends Mob {
     @Override
     public Item getDrop() {
         return this.drop;
+    }
+
+    @JsonIgnore
+    public String getPrettifiedStatus() {
+        return 
+            this + ":\n\n" +
+            " ⸭ HP: " + Ansi.ansi().fg(Ansi.Color.RED).a(this.getHpBar() + " " + this.hp + "/" + this.maxHp).reset() + "\n";
     }
 
     @Override

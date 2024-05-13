@@ -767,7 +767,7 @@ class ChooseCharacterGameCommand extends GameCommand {
         this.game.setPlayer(factory.create());
         this.controller.setState(GameState.MOVING);
 
-        Controller.printSideBySideText(this.game.getPlayer().getASCII(), this.game.getPlayer().toString());
+        Controller.printSideBySideText(this.game.getPlayer().getASCII(), this.game.getPlayer().toString() + "\n\n\n" + Constants.NANITE_LEECH_BLADE);
         System.out.println();
         // System.out.println(this.game.getPlayer() + "\n" + this.game.getPlayer().getASCII());
     }
@@ -1033,7 +1033,7 @@ public class Controller {
         ArrayList<Level> map = GameData.deserializeMap(Constants.MAP);
         // ArrayList<Level> map = GameData.deserializeMapFromFile("map.json");
         Game game = new Game(map);
-        game.setSeed(1);
+        // game.setSeed(1);
 
         this.setState(GameState.CHOOSING_CHARACTER);
         this.setGame(game);

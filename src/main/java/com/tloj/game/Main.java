@@ -10,6 +10,7 @@ import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.LootRoom;
+import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
 import java.io.FileWriter;
@@ -38,6 +39,8 @@ public class Main {
     }
 
     public static void testRead() {
+        System.out.println(Constants.NANITE_LEECH_BLADE);
+
         Random random = new Random(1);
 
         try {

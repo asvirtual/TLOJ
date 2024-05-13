@@ -4,6 +4,8 @@ package com.tloj.game.utilities;
  * Class that contains ANSI escape codes for text colors in the console.
  */
 public class ConsoleColors {
+    private ConsoleColors() {}
+    
     public static final String RESET = "\033[0m";  // Text Reset
 
     // Regular Colors
@@ -15,6 +17,7 @@ public class ConsoleColors {
     public static final String PURPLE = "\033[0;35m";  // PURPLE
     public static final String CYAN = "\033[0;36m";    // CYAN
     public static final String WHITE = "\033[0;37m";   // WHITE
+    public static final String SILVER = "\033[0;97m";  // SILVER
 
     // Bold
     public static final String BLACK_BOLD = "\033[1;30m";  // BLACK

@@ -75,6 +75,7 @@ public class PlayerAttack extends Attack {
      */
     public void setBonusDamage(int bonusDamage) {
         this.bonusDamage = bonusDamage;
+        this.setTotalDamage();
     }
 
     /**
@@ -118,7 +119,9 @@ public class PlayerAttack extends Attack {
             "Jordan rolled " + this.getWeaponRoll() + ":\n\n" + Dice.getASCII(this.getWeaponRoll())
         );
 
-        System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + (this.totalDamage >= 0 ? totalDamage : 0) + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
+        this.setBonusDamage(0);
+
+        System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + (this.totalDamage >= 0 ? this.totalDamage : 0) + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
         if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleColors.RED + this.target.getHP() + " HP" + ConsoleColors.RESET + " left!");
 
         Controller.awaitEnter();
