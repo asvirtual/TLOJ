@@ -132,7 +132,7 @@ public class PlayerRoomVisitor implements Visitor {
         System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n");
         Controller.printSideBySideText(
             room.getMob().getASCII(), 
-            room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus()
+            room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus() + "\n\n"
         );
 
         System.out.println();

@@ -38,12 +38,12 @@ public class Guard extends CharacterSkill {
      */
     @Override
     public void use(Attack attack) {
-        if (this.character.getMana() < 8) {
-            System.out.println("Not enough mana to use Focus");
+        if (this.character.getMana() < 5) {
+            System.out.println("Not enough mana to use Guard");
             return;
         }
 
-        this.character.useMana(8);
+        this.character.useMana(5);
         System.out.println(ConsoleColors.CYAN + "Guard activated! Defense increased by 3 points!" + ConsoleColors.RESET);
 
         super.use(attack);

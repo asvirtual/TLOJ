@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.collectables.items.HealthPotion;
-import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Guard;
@@ -16,8 +14,8 @@ import com.tloj.game.utilities.Coordinates;
 
 public class MechaKnight extends Character {
     private static final int HP = 30;
-    // private static final int ATTACK = 2; 
-    private static final int ATTACK = 999; 
+    private static final int ATTACK = 2; 
+    // private static final int ATTACK = 999; 
     private static final int DEFENSE = 6;
     private static final int MANA = 5;
     private static final int MAX_WEIGHT = 5;
@@ -56,10 +54,6 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
-        this.inventory.add(new NaniteLeechBlade());
-        this.inventory.add(new HealthPotion());
-        this.inventory.add(new HealthPotion());
-        this.inventory.add(new HealthPotion());
     }    
 
     /** 
@@ -82,12 +76,6 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
-        this.inventory.add(new NaniteLeechBlade());
-        this.inventory.add(new HealthPotion());
-        this.inventory.add(new HealthPotion());
-        this.inventory.add(new HealthPotion());
-        this.inventory.add(new HealthPotion());
-        this.inventory.add(new HealthPotion());
     }
 
     public static String getDetailedInfo() {

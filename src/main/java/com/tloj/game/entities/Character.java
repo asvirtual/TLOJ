@@ -255,7 +255,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public Item removeInventoryItem(int index) {
         Item item = this.inventory.remove(index);
         this.sortInventory();
-        
+
         return item;
     }
 
