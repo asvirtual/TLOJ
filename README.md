@@ -43,4 +43,15 @@ A detailed list of commands can be found ...
 
 ---
 ### Rights and Licenses
+***Ascii***
+- images generated with DALL-E (ChatGpt 4)
+- converted to ascii format using [Ascii Art Archive](https://www.asciiart.eu/image-to-ascii) <br>
+
+***Music***
+- generated using [suno.ai](https://suno.com) and [Soundraw](https://soundraw.io)
+- Flying boss has music from The Binding Of Isaac Cathedral theme <br>
+
+All Rights Reserved ®
+
+
 
