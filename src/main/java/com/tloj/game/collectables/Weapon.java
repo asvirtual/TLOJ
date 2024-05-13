@@ -35,8 +35,18 @@ public abstract class Weapon extends Item {
         this.lvl = 0;
     }
 
+    public Weapon(double weight, int diceMin, int diceMax, int ID) {
+        super(weight, DROP_MONEY, ID);
+        this.dice = new Dice(diceMin, diceMax);
+        this.lvl = 0;
+    }
+
     public WeaponEffect getEffect() {
         return effect;
+    }
+
+    public int getDiceMax() {
+        return dice.getMax();
     }
 
     public int getDiceFaces() {

@@ -261,7 +261,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if(item == null) return false;
 
         if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
-            System.out.println("You can't carry more weight, drop something first.");
+            System.out.println(ConsoleColors.RED + "You can't carry more weight, drop something first." + ConsoleColors.RESET);
             return false;
         }
         

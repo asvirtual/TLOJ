@@ -196,8 +196,9 @@ public class Game implements CharacterObserver {
         // Boss defeated
         if (room.getType() == RoomType.BOSS_ROOM) return;
 
-        // If no mobs left in the room, go back to moving state
+        // If no mobs left in the room, clear it and go back to moving state
         if (room.getMobsCount() == 0) {
+            room.setCleared(true);
             this.printMap();
             this.controller.setState(GameState.MOVING);
             return;
@@ -283,7 +284,7 @@ public class Game implements CharacterObserver {
         Controller.clearConsole();
         System.out.println(ConsoleColors.RED_BOLD_BRIGHT +
             "\n" + Constants.GAME_OVER + ConsoleColors.RESET + "\n" +
-            "Jordan ended his adventure with " + this.score + "points!\n\n" +
+            "Jordan ended his adventure with " + this.score + " points!\n\n" +
             Constants.GAME_TITLE
         );
 

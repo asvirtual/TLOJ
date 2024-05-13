@@ -56,7 +56,7 @@ public class CheatEngine extends CharacterSkill{
         this.onUse = new Runnable() {
             @Override
             public void run() {
-                attack.setWeaponRoll(weapon.getDiceFaces());
+                attack.setWeaponRoll(weapon.getDiceMax());
             }
         };
     }

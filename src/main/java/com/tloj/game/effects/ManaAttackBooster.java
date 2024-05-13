@@ -5,9 +5,7 @@ import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleColors;
-import com.tloj.game.utilities.Dice;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -17,6 +15,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @see PulseStaff
  */
 public class ManaAttackBooster extends WeaponEffect {
+    private static final int MANA_COST = 3;
+
     @JsonCreator
     public ManaAttackBooster(Weapon weapon) {
         super(weapon);
@@ -29,10 +29,10 @@ public class ManaAttackBooster extends WeaponEffect {
     @Override
     public boolean apply(PlayerAttack attack) {
         Character holder = attack.getAttacker();
-        if (holder.getMana() < 2) return false;
+        if (holder.getMana() < MANA_COST) return false;
 
-        attack.setWeaponRoll(this.weapon.diceRoll() + 5);
-        holder.useMana(2);
+        attack.setWeaponRoll(this.weapon.diceRoll());
+        holder.useMana(MANA_COST);
 
         System.out.println(ConsoleColors.YELLOW_BRIGHT + "Critical mana damage!" + ConsoleColors.RESET);
         return true;

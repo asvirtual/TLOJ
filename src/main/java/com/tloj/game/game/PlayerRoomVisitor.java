@@ -63,6 +63,13 @@ public class PlayerRoomVisitor implements Visitor {
     public void visit(BossRoom room) {
         room.visit();
 
+        this.controller.changeMusic(
+            this.player.getCurrentLevel().getLevelNumber() == 5 ?
+                Constants.FINAL_BOSS_WAV_FILE_PATH
+                : Constants.BOSSFIGHT_WAV_FILE_PATH,
+            true
+        );
+
         Controller.clearConsole();
 
         System.out.println(ConsoleColors.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleColors.RESET +  "\n");
@@ -83,6 +90,21 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(HealingRoom room) {
         room.visit();
+            
+        this.controller.changeMusic(
+            Constants.INTRO_WAV_FILE_PATH,
+            false,
+            new Runnable() {
+                @Override
+                public void run() {
+                    Controller.getInstance().changeMusic(
+                        Constants.LOOP_WAV_FILE_PATH,
+                        true
+                    );
+                }
+            }
+        );
+
         this.player.setHp(this.player.getMaxHp());
         this.player.setMana(this.player.getMaxMana());
 
@@ -195,6 +217,8 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(EndRoom room) {
         room.visit();
+        
+        this.controller.changeMusic(Constants.ENDING_WAV_FILE_PATH, true);
         this.controller.setState(GameState.WIN);
 
         Controller.clearConsole();

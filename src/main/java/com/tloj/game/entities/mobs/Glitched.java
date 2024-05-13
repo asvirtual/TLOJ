@@ -8,6 +8,7 @@ import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.RoomType;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.CombatEntity;
 
 
 /**
@@ -45,7 +47,7 @@ public class Glitched extends Mob implements MovingEntity {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position, new SpecialKey());
     }
 
-    @Override
+    /* @Override
     public void defend(Attack attack) {
         super.defend(attack);
         PlayerAttack playerAttack = (PlayerAttack) attack;
@@ -95,6 +97,62 @@ public class Glitched extends Mob implements MovingEntity {
                 } while (!validLocation);
             }
         });
+    }*/
+
+    @Override
+    public void attack(CombatEntity t) {
+        super.attack(t);
+
+        Character player = (Character) t;
+
+        if (!this.isAlive()) return;
+        Controller.awaitEnter();
+        Controller.clearConsole();
+
+        this.turnsLeft--;
+
+        Level level = player.getCurrentLevel();
+        
+        int rows = level.getRoomsRowCount();
+        int cols = level.getRoomsColCount();
+        boolean validLocation = false;
+
+        do {
+            int row = (int) Math.floor(Math.random() * rows); // Returns a random number between 0 (inclusive) and rows (exclusive)
+            int col = (int) Math.floor(Math.random() * cols); // Returns a random number between 0 (inclusive) and cols (exclusive)
+            Coordinates newCoords = new Coordinates(row, col);
+
+            if (
+                newCoords.equals(player.getPosition()) ||
+                !level.areCoordinatesValid(newCoords) || 
+                level.getRoom(newCoords).getType() != RoomType.HOSTILE_ROOM ||
+                level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM
+            ) continue;
+            
+            HostileRoom currentRoom = (HostileRoom) player.getCurrentRoom();
+            HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
+
+            currentRoom.removeMob(this);
+
+            Controller.printSideBySideText(
+                this.getASCII(),
+                ConsoleColors.PURPLE + 
+                    (this.turnsLeft != 0 ? 
+                    "A bug in the system teleported the Glitched away!" + ConsoleColors.RESET + "\n" + ConsoleColors.PURPLE + "Will it come back?\n" :
+                    "The Glitched has gone...") +
+                ConsoleColors.RESET
+            );
+
+            if (this.turnsLeft != 0) {
+                this.move(newCoords);
+                nextRoom.addMobToTop(this);
+                nextRoom.setCleared(false);
+            }
+
+            validLocation = true;
+        } while (!validLocation);
+
+        Controller.awaitEnter();
     }
 
     @Override

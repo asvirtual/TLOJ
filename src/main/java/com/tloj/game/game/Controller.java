@@ -262,7 +262,10 @@ class InventoryCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        Controller.clearConsole();
         this.game.printInventory();
+        System.out.println();
+        this.game.printMap();
     }
 }
 
@@ -433,6 +436,9 @@ class QuitCommand extends GameCommand {
         super.execute();
         
         if (!Controller.awaitConfirmation()) return;
+
+        this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
+
         this.game.uploadToCloud();
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
@@ -501,7 +507,7 @@ class HelpCommand extends GameCommand {
                 System.out.println("Commands: new, load, exit");
                 break;
             case CHOOSING_CHARACTER:
-                System.out.println("Choose a character: default [1], cheater [2], data thief [3], mecha knight [4], neo samurai [5]");
+                System.out.println("Choose a character: default [1], hacker [2], data thief [3], mecha knight [4], neo samurai [5]");
                 break;
             case MOVING:
                 System.out.println("Commands: gn, gs, gw, ge, return, inv, status, map, score, seed, quit, use *number*, drop *number*, swap *number*");
@@ -569,7 +575,9 @@ class PrintStatusCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        Controller.clearConsole();
         System.out.println(this.player + "\n");
+        this.game.printMap();
     }
 }
 
@@ -715,7 +723,7 @@ class NewGameCommand extends GameCommand {
         super.execute();
         Controller.clearConsole();
         this.controller.newGame();
-        System.out.println("Choose your starting character: 1.BasePlayer, 2.Cheater, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
+        System.out.println("Choose your starting character: 1.BasePlayer, 2.Hacker, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
     }
 }
 
@@ -786,9 +794,23 @@ class ChooseCharacterGameCommand extends GameCommand {
         } + "\n");
 
         if (!Controller.awaitConfirmation()) {
-            System.out.println("Choose your starting character: [1] - BasePlayer, [2] - Cheater, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai");
+            System.out.println("Choose your starting character: [1] - BasePlayer, [2] - Hacker, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai");
             return;
         }
+            
+        this.controller.changeMusic(
+            Constants.INTRO_WAV_FILE_PATH,
+            false,
+            new Runnable() {
+                @Override
+                public void run() {
+                    Controller.getInstance().changeMusic(
+                        Constants.LOOP_WAV_FILE_PATH,
+                        true
+                    );
+                }
+            }
+        );
 
         Controller.clearConsole();
 
@@ -1039,7 +1061,7 @@ public class Controller {
 
             // Offset the map by 5 rows
             String secondLine = (i >= offsetRows && (i - offsetRows) < secondLines.length) ? secondLines[i - offsetRows] : "";
-            System.out.println(firstLine + pad + "\t\t\t\t" + secondLine);
+            System.out.println(firstLine + pad + "\t\t\t" + secondLine);
         }
     }
 
@@ -1180,7 +1202,7 @@ public class Controller {
     public String getAvailableCommands() {
         return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
-            case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Cheater] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
+            case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Hacker] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use *number*] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();
@@ -1193,13 +1215,24 @@ public class Controller {
         };
     }
 
+    public void changeMusic(String filename, boolean loop) {
+        this.musicPlayer.setNewFile(filename);
+        this.musicPlayer.playMusic(loop);
+    }
+
+    public void changeMusic(String filename, boolean loop, Runnable callback) {
+        this.musicPlayer.stop();
+        this.musicPlayer = new MusicPlayer(filename, callback);
+        this.musicPlayer.playMusic(loop);
+    }
+
     public static void setConsoleEncoding() {
-        AnsiConsole.systemInstall();
 
         try {
-            if (System.getProperty("os.name").startsWith("Windows"))
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                AnsiConsole.systemInstall();
                 new ProcessBuilder("cmd", "/c", "chcp", "65001").inheritIO().start();
-            else
+            } else
                 new ProcessBuilder("bash", "-c", "export LANG=en_US.UTF-8").inheritIO().start();
         } catch (IOException e) {
             System.out.println("Error setting UTF-8 encoding to support special characters");
@@ -1238,79 +1271,31 @@ public class Controller {
         System.out.println(Ansi.ansi().fg(color).a(text).reset());
     }
 
-    public void musicHandler() {
-        switch (this.getState()) {
-            case MAIN_MENU:
-                this.musicPlayer.setNewFile(Constants.MAIN_MENU_WAV_FILE_PATH);
-                this.musicPlayer.playMusic(false);
-                break;
-            case FIGHTING_BOSS:
-                this.musicPlayer.setNewFile(
-                    this.game.getLevel().getLevelNumber() == 5 ?
-                        Constants.FINAL_BOSS_WAV_FILE_PATH
-                        : Constants.BOSSFIGHT_WAV_FILE_PATH
-                );
-
-                this.musicPlayer.playMusic(true);
-                break;
-            case WIN:
-                this.musicPlayer.setNewFile(Constants.ENDING_WAV_FILE_PATH);
-                this.musicPlayer.playMusic(false);
-                break;
-            default:
-                this.musicPlayer = new MusicPlayer(
-                    Constants.INTRO_WAV_FILE_PATH,
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            musicPlayer.setNewFile(Constants.LOOP_WAV_FILE_PATH);
-                            musicPlayer.playMusic(true);
-                        }
-                    }
-                );
-
-                this.musicPlayer.playMusic(false);
-                break;
-        }
-    }
-
     /**
      * Main game loop
      */
     public void run() {
         Controller.setConsoleEncoding();
         Controller.clearConsole();
-        
-        this.musicPlayer = new MusicPlayer(
-            Constants.INTRO_WAV_FILE_PATH,
-            new Runnable() {
-                @Override
-                public void run() {
-                    musicPlayer.setNewFile(Constants.LOOP_WAV_FILE_PATH);
-                    musicPlayer.playMusic(true);
-                }
-            }
-        );
 
-        this.musicPlayer.playMusic(false);
+        this.musicPlayer = new MusicPlayer(Constants.MAIN_MENU_WAV_FILE_PATH);
+        this.musicPlayer.playMusic(true);
 
         System.out.println(Constants.GAME_TITLE);
 
         while (this.getState() != GameState.EXIT) {
             if (this.game != null && this.getState() != GameState.WIN) {
                 Character player = this.game.getPlayer();
-                if (player != null) {
-                    System.out.println("\nWhat to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
-                }
+                if (player != null) System.out.println("\nWhat to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
             }
             
             String input = Controller.scanner.nextLine();
             this.handleUserInput(input);
-            //this.musicHandler();
         }
         
         Controller.scanner.close();
         this.musicPlayer.stop();
-        AnsiConsole.systemUninstall(); 
+
+        if (System.getProperty("os.name").startsWith("Windows")) AnsiConsole.systemUninstall(); 
     }
 }

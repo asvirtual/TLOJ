@@ -57,8 +57,10 @@ public abstract class Boss extends Mob {
         Controller.printSideBySideText(
             this.getASCII(), 
             this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus() + "\n\n\n" + 
-            this + " rolled " + attack.getDiceRoll() + ":\n\n" + Dice.getASCII(attack.getDiceRoll())
+            "The boss rolled " + attack.getDiceRoll() + ":\n\n" + Dice.getASCII(attack.getDiceRoll())
         );
+        
+        if (!target.isAlive()) target.notifyDefeat();
     }
 
     @Override
