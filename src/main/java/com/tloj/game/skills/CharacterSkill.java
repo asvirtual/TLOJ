@@ -1,8 +1,11 @@
 package com.tloj.game.skills;
 
 import com.tloj.game.game.Attack;
+import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.rooms.HostileRoom;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.entities.Character;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -50,6 +53,18 @@ public abstract class CharacterSkill {
     public void use(Attack attack) {
         if (attack instanceof MobAttack) this.useOnDefend((MobAttack) attack);
         if (attack instanceof PlayerAttack) this.useOnAttack((PlayerAttack) attack);
+
+        Controller.clearConsole();
+        HostileRoom room = (HostileRoom) this.character.getCurrentRoom();
+
+        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n");
+        Controller.printSideBySideText(
+            room.getMob().getASCII(), 
+            room.getMob().getPrettifiedStatus() + "\n\n\n" + this.character.getPrettifiedStatus() + "\n" + 
+            ConsoleColors.PURPLE + String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + " activated! " + ConsoleColors.RESET + "\n\n"
+        );
+
+        System.out.println();
     }
 
     public abstract void useOnDefend(MobAttack attack);
