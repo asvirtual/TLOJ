@@ -30,7 +30,13 @@ public class PlasmaGreatsword extends Weapon {
         super(WEIGHT, DICE_FACES, ID); 
     }
 
-    public static String describe() {
-        return "Plasma Great Sword (D15)";
+    public static String weaponInfo() {
+        return "Plasma Great Sword - D15 - No effect";
+    }
+
+    @Override
+    public String describe() {
+        return "Plasma Great Sword, built with a D15 dice, it's strong, cool and MechaKnight's companion" + "\n" +
+               "No effect, muscle power only!";
     }
 }

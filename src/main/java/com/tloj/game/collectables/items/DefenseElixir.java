@@ -46,5 +46,10 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
     public String getASCII() {
         return Constants.DEFENSE_ELIXIR;
     }
+
+    @Override
+    public String describe() {
+        return "An elixir that boosts your defense by " + DEFENSE_BOOST + " for the duration of a fight";
+    }
 }
 

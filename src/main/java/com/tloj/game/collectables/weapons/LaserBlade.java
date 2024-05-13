@@ -31,7 +31,13 @@ public class LaserBlade extends Weapon {
         super(WEIGHT, DICE_FACES, ID); 
     }
 
-    public static String describe() {
-        return "Laser Blade (D8)";
+    public static String weaponInfo() {
+        return "Laser Blade - D8 - No effect";
+    }
+
+    @Override
+    public String describe() {
+        return "Laser Blade, built with a D8 dice, the most famous in all universe" + "\n" +
+               "No effect, just swing it and cut everything in your way!";
     }
 }

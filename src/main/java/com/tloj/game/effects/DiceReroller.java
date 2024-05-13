@@ -21,7 +21,7 @@ public class DiceReroller extends WeaponEffect {
 
     @Override
     public boolean apply(PlayerAttack attack) {
-        if (Math.random() > 0.5) return false;
+        if (Math.random() > 0.7) return false;
         
         attack.setWeaponRoll(
             this.weapon.diceRoll() + 

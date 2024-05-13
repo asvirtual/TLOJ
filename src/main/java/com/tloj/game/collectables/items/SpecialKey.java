@@ -46,5 +46,10 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     public String getASCII() {
         return Constants.SPECIAL_KEY;
     }
+
+    @Override
+    public String describe() {
+        return "An ancient key, guarded by the lost glitched adventurer, that opens a special locked loot room somewhere in the dungeon...";
+    }
 }
 

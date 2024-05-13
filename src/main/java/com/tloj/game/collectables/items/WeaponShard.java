@@ -45,5 +45,11 @@ public class WeaponShard extends PurchasableItem {
     public String getASCII() {
         return Constants.WEAPON_SHARD;
     }
+
+    @Override
+    public String describe() {
+        return "A shard that can upgrade your weapon + \n" +
+               "Nothing is created, nothing is destroyed, everything can be recycled!";
+    }
 }
 

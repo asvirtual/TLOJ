@@ -34,5 +34,10 @@ public class NorthStar extends Item {
     public String getASCII() {
         return Constants.NORTH_STAR;
     }
+
+    @Override
+    public String describe() {
+        return "A magical star that guides heroes to their destination, revealing the entire map";
+    }
 }
 

@@ -89,7 +89,7 @@ public class BasePlayer extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: " + LaserBlade.describe() + "\n" +
+               "Weapon: " + LaserBlade.weaponInfo() + "\n" +
                "Ability: " + Focus.describe() + "\n" +
                "BTC: " + MONEY;
     }

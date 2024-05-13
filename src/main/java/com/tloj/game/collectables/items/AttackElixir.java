@@ -48,5 +48,10 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
     public String getASCII() {
         return Constants.ATTACK_ELIXIR;
     }
+
+    @Override
+    public String describe() {
+        return "An elixir that boosts your attack by " + ATTACK_BOOST + " for the duration of a fight";
+    }
 }
 

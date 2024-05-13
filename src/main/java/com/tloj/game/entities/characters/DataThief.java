@@ -84,7 +84,7 @@ public class DataThief extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: " + NanoDirk.describe() + " - " + DiceReroller.describe() + "\n" +
+               "Weapon: " + NanoDirk.weaponInfo() + " - " + DiceReroller.describe() + "\n" +
                "Ability: " + Steal.describe() + "\n" +
                "BTC: " + MONEY;
     }

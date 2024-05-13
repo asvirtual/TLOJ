@@ -83,7 +83,7 @@ public class MechaKnight extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: " + PlasmaGreatsword.describe() + "\n" +
+               "Weapon: " + PlasmaGreatsword.weaponInfo() + "\n" +
                "Ability: " + Guard.describe() + "\n" +
                "BTC: " + MONEY;
     }

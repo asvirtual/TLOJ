@@ -48,4 +48,9 @@ public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
     public String getASCII() {
         return Constants.GREAT_MANA_POTION;
     }
+
+    @Override
+    public String describe() {
+        return "A potion that restores " + MANA_RESTORE + " Mana Points";
+    }
 }
