@@ -35,7 +35,6 @@ public abstract class FriendlyEntity extends Entity {
 
     public void interact(Character player) {
         this.player = player;
-        System.out.println(this.getASCII());
     }
 
     public void endInteraction() {

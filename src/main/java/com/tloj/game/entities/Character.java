@@ -318,6 +318,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
         if (this.currentAttack == null) this.currentAttack = new PlayerAttack(this, target);
         else {
+            this.currentAttack.setOnHit(null);
             this.currentAttack.setBaseDamage(this.currentFightAtk);
             this.currentAttack.setTarget(target);
         }

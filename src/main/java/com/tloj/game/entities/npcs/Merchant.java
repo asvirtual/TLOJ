@@ -62,10 +62,11 @@ public class Merchant extends FriendlyEntity {
         super.interact(player);
 
         Controller.printSideBySideText(
-            ConsoleColors.YELLOW + "Merchant: Hello there! What do you want to buy today?\n" +
-            ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
+            this.getASCII(),
+            ConsoleColors.YELLOW + "Merchant: Hello there! What do you want to buy today?" + ConsoleColors.RESET + "\n" +
+            "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
             ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
-            ConsoleColors.RESET + " of free space\n",
+            ConsoleColors.RESET + " of free space\n" +
             this.getItems() 
         );
 
@@ -99,9 +100,10 @@ public class Merchant extends FriendlyEntity {
         Controller.clearConsole(2000);
 
         Controller.printSideBySideText(
+            this.getASCII(),
             ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
             ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
-            ConsoleColors.RESET + " of free space\n",
+            ConsoleColors.RESET + " of free space\n" +
             this.getItems() 
         );
     }

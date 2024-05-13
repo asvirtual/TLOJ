@@ -31,9 +31,11 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
     @Override
     public void interact(Character player) {
         super.interact(player);
-        System.out.println(
-            ConsoleColors.YELLOW + "Smith: Hello there! I can upgrade your weapon with a Weapon Shard.\n" +
-            ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET
+
+        Controller.printSideBySideText(
+            this.getASCII(),
+            ConsoleColors.YELLOW + "Smith: Hello there! I can upgrade your weapon with a Weapon Shard." + ConsoleColors.RESET + "\n" +
+            "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET
         );
         
         Controller.getInstance().setState(GameState.SMITH_FORGING);
