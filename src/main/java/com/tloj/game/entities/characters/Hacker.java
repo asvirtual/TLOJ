@@ -84,7 +84,7 @@ public class Hacker extends Character {
                "Attack: " + ATTACK + "\n" +
                "Defense: " + DEFENSE + "\n" +
                "Mana: " + MANA + "\n" +
-               "Weapon: " + PulseStaff.describe() + " - " + ManaAttackBooster.describe() + "\n" +
+               "Weapon: " + PulseStaff.weaponInfo() + " - " + ManaAttackBooster.describe() + "\n" +
                "Ability: " + CheatEngine.describe() + "\n" +
                "BTC: " + MONEY;
     }

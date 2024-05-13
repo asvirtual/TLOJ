@@ -32,7 +32,13 @@ public class NaniteLeechBlade extends Weapon {
         this.effect = new HealthAbsorber(this);
     }
 
-    public static String describe() {
-        return "Nanite Leech Blade (D12)";
+    public static String weaponInfo() {
+        return "Nanite Leech Blade - D12 - Steal health from your enemies";
+    }
+
+    @Override
+    public String describe() {
+        return "Nanite Leech Blade, built with a D12 dice, it's a legendary scythe sealed away for its cursed power" + "\n" +
+               "Its effect is stealing health from the enemies, turning half of the damage dealt into health for the wielder";
     }
 }

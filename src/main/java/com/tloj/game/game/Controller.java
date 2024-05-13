@@ -37,8 +37,9 @@ import com.tloj.game.utilities.MusicPlayer;
  * - Go West (gw) {@link MoveWestCommand}<br>
  * - Go East (ge) {@link MoveEastCommand}<br>
  * - Attack (atk) {@link AttackCommand}<br>
- * - Use item (use [item]) {@link UseItemCommand}<br>
- * - Drop item (drop [item]) {@link DropItemCommand}<br>
+ * - Use item (use [number]) {@link UseItemCommand}<br>
+ * - Drop item (drop [number]) {@link DropItemCommand}<br>
+ * - Info item (info [number]) {@link DescribeCommand}<br>
  * - Print seed (seed) {@link PrintSeedCommand}<br>
  * - Print score (score) {@link PrintScoreCommand}<br>
  * - Quit (quit) {@link QuitCommand}<br>
@@ -48,9 +49,9 @@ import com.tloj.game.utilities.MusicPlayer;
  * - Print status (status) {@link PrintStatusCommand}<br>
  * - Merchant (merchant) {@link MerchantCommand} (talk with merchant in healing room)<br>
  * - Show list (showlist) {@link ShowListCommand} (show merchant items list)<br>
- * - Buy (buy [item]) {@link BuyCommand} (buy item from merchant)<br>
+ * - Buy (buy [number]) {@link BuyCommand} (buy item from merchant)<br>
  * - Smith (smith) {@link SmithCommand} (talk with smith in healing room)<br>
- * - Give (give [item]) {@link GiveCommand} (give item to npc)<br>
+ * - Give (give [smith] [weaponshard]) {@link GiveCommand} (give item to npc)<br>
  * - Confirm (confirm) {@link ConfirmCommand} (confirm action)<br>
  * - New game (new) {@link NewGameCommand} (start a new game)<br>
  * - Load game (load) {@link LoadGameCommand} (load a saved game)<br>
@@ -299,6 +300,34 @@ class UseItemCommand extends GameCommand {
     }
 }
 
+
+class InfoItemCommand extends GameCommand {
+    public InfoItemCommand(Game game, String[] commands) {
+        super(game, commands);
+        this.invalidStates = List.of(
+            GameState.SMITH_FORGING,
+            GameState.MAIN_MENU
+        );
+    }
+
+    @Override
+    public void execute() throws IllegalStateException {
+        super.execute();
+
+        if (commands.length != 2) {
+            System.out.println("Invalid command. Correct Syntax: use [item]");
+            return;
+        }
+        
+        try {
+            this.game.infoItem(Integer.parseInt(commands[1]));
+            System.out.println("\n" + this.game.getPlayer().getPrettifiedStatus());
+        } catch (NumberFormatException e) {
+            System.out.println("Please insert a valid number");
+        }
+    }
+}
+
 /**
  * Concrete command class to swap the player's weapon<br>
  * @see GameCommand <br>
@@ -475,7 +504,7 @@ class HelpCommand extends GameCommand {
                 System.out.println("Choose a character: default [1], cheater [2], data thief [3], mecha knight [4], neo samurai [5]");
                 break;
             case MOVING:
-                System.out.println("Commands: gn, gs, gw, ge, return, inv, status, map, score, seed, quit, swap *number*");
+                System.out.println("Commands: gn, gs, gw, ge, return, inv, status, map, score, seed, quit, use *number*, drop *number*, swap *number*");
                 break;
             case MERCHANT_SHOPPING:
                 System.out.println("Commands: buy *number*, back");
@@ -484,10 +513,10 @@ class HelpCommand extends GameCommand {
                 System.out.println("Commands: give smith weaponshard, back");
                 break;
             case FIGHTING_MOB:
-                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*");
+                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*, info *number*");
                 break;
             case FIGHTING_BOSS:
-                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*");
+                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*, info *number*");
                 break;
             case LOOTING_ROOM:
                 System.out.println("Commands: confirm, inv, use *number*, drop *number*, swap *number*");
@@ -1073,6 +1102,7 @@ public class Controller {
                 Map.entry("inv", () -> new InventoryCommand(this.game, commands)),
                 Map.entry("use", () -> new UseItemCommand(this.game, commands)),
                 Map.entry("drop", () -> new DropItemCommand(this.game, commands)),
+                Map.entry("info", () -> new InfoItemCommand(this.game, commands)),
                 Map.entry("swap", () -> new SwapWeaponCommand(this.game, commands)),
                 Map.entry("return", () -> new ReturnCommand(this.game, commands)),
                 Map.entry("status", () -> new PrintStatusCommand(this.game, commands)),

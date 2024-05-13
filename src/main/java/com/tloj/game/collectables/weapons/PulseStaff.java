@@ -33,7 +33,13 @@ public class PulseStaff extends Weapon {
         this.effect = new ManaAttackBooster(this); 
     }
 
-    public static String describe() {
-        return "Pulse-Staff (D5-10)";
+    public static String weaponInfo() {
+        return "Pulse-Staff - (D5-10) - Consumes 2 mana points to deal 5 to 10 extra damage";
+    }
+
+    @Override
+    public String describe() {
+        return "Pulse-Staff, built with a special dice that can roll between 5 and 10, a special staff that exploits its user mana reserves" + "\n" +
+               "Its effect is consuming 2 mana points to deal 5 to 10 extra damage points";
     }
 }

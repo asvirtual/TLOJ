@@ -33,7 +33,13 @@ public class NanoDirk extends Weapon {
         this.effect = new DiceReroller(this);
     }
 
-    public static String describe() {
-        return "Nano Dirk (D6)";
+    public static String weaponInfo() {
+        return "Nano Dirk - D6 - Chance to roll twice";
+    }
+
+    @Override
+    public String describe() {
+        return "Nano Dirk, built with a D6 dice, it's a small dagger that can cut through anything" + "\n" +
+               "Its effect is the possibility (70%) to roll twice the dice per attack";
     }
 }

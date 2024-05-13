@@ -71,4 +71,6 @@ public abstract class Weapon extends Item {
     public String getASCII() {
         return "";
     }
+
+    public abstract String describe();
 }

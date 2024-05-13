@@ -48,4 +48,9 @@ public class HealthPotion extends PurchasableItem implements ConsumableItem {
     public String getASCII() {
         return Constants.HEALTH_POTION;
     }
+
+    @Override
+    public String describe() {
+        return "A potion that restores " + HEAL_AMOUNT + " Health Points";
+    }
 }

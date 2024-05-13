@@ -44,5 +44,10 @@ public class Lockpick extends PurchasableItem implements ConsumableItem {
     public String getASCII() {
         return Constants.LOCKPICK;
     }
+
+    @Override
+    public String describe() {
+        return "A tool that allows you to skip trap rooms without dice rolls";
+    }
 }
 

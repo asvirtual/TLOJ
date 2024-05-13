@@ -111,4 +111,7 @@ public abstract class Item {
 
     @JsonIgnore
     public abstract String getASCII();
+
+    @JsonIgnore
+    public abstract String describe();
 }

@@ -24,7 +24,7 @@ public class DiceReroller extends WeaponEffect {
         int roll = this.weapon.diceRoll();
         attack.setWeaponRoll(roll);
         
-        if (Math.random() > 0.5) return false;
+        if (Math.random() > 0.7) return false;
         
         attack.setWeaponRoll(
             roll + 

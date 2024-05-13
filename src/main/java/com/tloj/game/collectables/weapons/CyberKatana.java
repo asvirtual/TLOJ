@@ -31,7 +31,13 @@ public class CyberKatana extends Weapon {
         super(WEIGHT, DICE_FACES, ID); 
     }
 
-    public static String describe() {
-        return "Cyber Katana (D10)";
+    public static String weaponInfo() {
+        return "Cyber Katana - D10 - No effect";
+    }
+
+    @Override
+    public String describe() {
+        return "Cyber Katana, built with a D10 dice, it's the Samurai best and only friend" + "\n" +
+               "Its effect is his master's skill and precision";
     }
 }

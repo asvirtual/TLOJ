@@ -372,6 +372,17 @@ public class Game implements CharacterObserver {
         ConsumableItem item = (ConsumableItem) this.player.getInventoryItem(index - 1);
         item.consume(this.player);
     }
+
+    public void infoItem(int index) {
+        if (index < 1 || index > this.player.getInventorySize()) {
+            System.out.println("Couldn't find that item in your inventory");
+            return;
+        }
+
+        Item item = this.player.getInventoryItem(index - 1);
+        System.out.println("\n" + item.describe());
+
+    }
     
     public void returnToStart() {
         Coordinates startCoordinates = this.currentLevel.getStartRoom().getCoordinates();
