@@ -248,7 +248,11 @@ public class Game implements CharacterObserver {
         this.increaseScore(Mob.SCORE_DROP);
 
         // There are other mobs in the room
-        if (room.getMobsCount() > 1) {
+        if (room.getMobsCount() == 1){
+            room.clear(this.player);
+            this.controller.setState(GameState.MOVING);
+        }     
+        else {
             room.removeMob(mob);
             Controller.clearConsole(2000);
             System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n" + room.getMob().getASCII() + "\n");
