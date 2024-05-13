@@ -44,8 +44,14 @@ public class CheatEngine extends CharacterSkill{
             System.out.println("Not enough mana to use Cheat Engine");
             return;
         }
+
+        this.onUse = new Runnable() {
+            @Override
+            public void run() {
+                attack.setWeaponRoll(weapon.getDiceFaces());
+            }
+        };
         
-        attack.setWeaponRoll(weapon.getDiceFaces());
         attacker.useMana(5);
         System.out.println(ConsoleColors.CYAN + "Hacking going on! MAX ROLL INCOMING!" + ConsoleColors.RESET);
     }

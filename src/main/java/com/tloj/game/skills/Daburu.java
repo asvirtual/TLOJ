@@ -44,7 +44,14 @@ public class Daburu extends CharacterSkill{
             return;
         }
 
-        attack.setTotalDamage(attack.getTotalDamage() * 2);
+        this.onUse = new Runnable() {
+            @Override
+            public void run() {
+                attack.setBaseDamage(attack.getBaseDamage() * 2);
+                attack.setWeaponRoll(attack.getWeaponRoll() * 2);
+            }
+        };
+
         attacker.useMana(10);
         System.out.println(ConsoleColors.CYAN + "Daburu modo! Next attack will deal double damage" + ConsoleColors.RESET);
     }

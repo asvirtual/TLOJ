@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class CharacterSkill {
     // The character that uses the skill
     protected Character character;
+    protected Runnable onUse;
 
     /**
      * Constructs a CharacterSkill object with the given character.
@@ -34,6 +35,10 @@ public abstract class CharacterSkill {
      */
     protected CharacterSkill(Character character) {
         this.character = character;
+    }
+
+    public void executeOnUse() {
+        if (onUse != null) onUse.run();
     }
 
     /**

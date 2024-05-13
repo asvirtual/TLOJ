@@ -84,6 +84,7 @@ public class PlayerAttack extends Attack {
     @Override
     public void setTotalDamage() {
         this.totalDamage = this.baseDamage + this.weaponRoll + this.bonusDamage - this.targetDef;
+        if (this.totalDamage < 0) this.totalDamage = 0;
     }
 
     /**
@@ -121,7 +122,7 @@ public class PlayerAttack extends Attack {
 
         this.setBonusDamage(0);
 
-        System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + (this.totalDamage >= 0 ? this.totalDamage : 0) + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
+        System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + this.totalDamage + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
         if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleColors.RED + this.target.getHP() + " HP" + ConsoleColors.RESET + " left!");
 
         Controller.awaitEnter();

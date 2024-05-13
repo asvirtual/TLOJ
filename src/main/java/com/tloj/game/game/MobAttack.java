@@ -29,6 +29,7 @@ public class MobAttack extends Attack {
     @Override
     public void setTotalDamage() {
         this.totalDamage = this.baseDamage + this.diceRoll - this.targetDef;
+        if (this.totalDamage < 0) this.totalDamage = 0;
     }
 
     @Override

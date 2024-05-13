@@ -167,6 +167,9 @@ public class Game implements CharacterObserver {
             !this.player.hasItem(new SpecialKey())
         ) throw new IllegalArgumentException("That room is locked");
         
+        /** Reset fight stats, so that elixirs' effects are canceled */
+        this.player.resetFightStats();
+
         this.player.move(newCoordinates);
 
         Room room = this.currentLevel.getRoom(newCoordinates);
@@ -231,8 +234,6 @@ public class Game implements CharacterObserver {
 
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
 
-        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
-        this.player.resetFightStats();
         this.player.lootMob(mob);
 
         System.out.println("You've defeated the " + mob + "!\n");

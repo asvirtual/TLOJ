@@ -37,24 +37,21 @@ public class Steal extends CharacterSkill {
      * @param attack The attack being performed.
      */
     @Override
-    public void use(PlayerAttack attack) {
-        // Get the attacker
-        Character attacker = attack.getAttacker();
-        
-        if (attacker.getMana() < 10) {
+    public void use(PlayerAttack attack) {        
+        if (this.character.getMana() < 10) {
             System.out.println("Not enough mana to use Steal");
             return;
         }
 
         Dice dice = new Dice(10);
-        attacker.useMana(10);
+        this.character.useMana(10);
         if (dice.roll() < 4) {
             System.out.println("Couldn't insert the USB drive! Steal failed");
             return;
         }
         
         Item item = Item.getRandomItem();
-        if (attacker.addInventoryItem(item)) System.out.println(ConsoleColors.CYAN + "Data acquired! You stole a " + item + ConsoleColors.RESET);
+        if (this.character.addInventoryItem(item)) System.out.println(ConsoleColors.CYAN + "Data acquired! You stole a " + item + ConsoleColors.RESET);
         else System.out.println("Steal failed! " + item + " fell out of your pocket because your inventory is full");
     }
 

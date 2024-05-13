@@ -325,6 +325,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if (this.weapon != null) this.weapon.modifyAttack(this.currentAttack);
         target.defend(this.currentAttack);
 
+        // If skill has an effect to be executed on use, do it
+        this.skill.executeOnUse();
         this.currentAttack.perform();
 
         if (!target.isAlive()) {
