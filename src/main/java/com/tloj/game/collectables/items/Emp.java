@@ -48,5 +48,10 @@ public class Emp extends PurchasableItem implements ConsumableItem {
     public String describe() {
         return "A tool that allows you to skip trap rooms without dice rolls";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Emp;
+    }
 }
 

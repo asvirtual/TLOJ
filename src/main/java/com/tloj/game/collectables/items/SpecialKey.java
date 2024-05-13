@@ -51,5 +51,10 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     public String describe() {
         return "An ancient key, guarded by the lost glitched adventurer, that opens a special locked loot room somewhere in the dungeon...";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Emp;
+    }
 }
 

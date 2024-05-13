@@ -135,7 +135,7 @@ public class GameData {
 
         Storage storage = StorageOptions.getDefaultInstance().getService();
         BlobId blobId = BlobId.of(bucketName, filename);
-        Blob blob = storage.create(blobId, json.getBytes()); 
+        // Blob blob = storage.create(blobId, json.getBytes()); 
 
 
         System.out.println("JSON saved to Google Cloud bucket");

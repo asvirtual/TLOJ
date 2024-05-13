@@ -63,7 +63,15 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
         if (shardsCount == 0) {
             System.out.println("You've ran out of Weapon Shards!");
             this.endInteraction();
+            return;
         }
+
+        Controller.clearConsole(2000);
+
+        Controller.printSideBySideText(
+            this.getASCII(),
+            "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET
+        );
     }
 
     @Override
