@@ -18,6 +18,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tloj.game.entities.Character;
 
 
+/*
+ * Google Cloud Storage imports
+ */
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
+
+
+
 /**
  * Represents the Game Data of a game.<br>
  * The Game Data contains the seed of the game, the current level, the player and the levels of the game.<br>
@@ -105,6 +116,33 @@ public class GameData {
     }
 
     /**
+     * Saves the given Game object to a JSON file in a Google Cloud bucket with the specified bucket name and filename.
+     *
+     * @param game The Game object to be saved.
+     * @param bucketName The name of the Google Cloud bucket.
+     * @param filename The filename for the JSON file.
+     */
+    public static void saveToCloudBucket(Game game, String bucketName, String filename) {
+        ObjectMapper mapper = new ObjectMapper();
+        String json;
+        try {
+            json = mapper.writeValueAsString(game);
+        } catch (JsonProcessingException e) {
+            System.out.println("Error generating JSON from GameData");
+            e.printStackTrace();
+            return;
+        }
+
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+        BlobId blobId = BlobId.of(bucketName, filename);
+        Blob blob = storage.create(blobId, json.getBytes()); 
+
+
+        System.out.println("JSON saved to Google Cloud bucket");
+    }
+
+
+    /**
      * Loads GameData from a JSON file with the specified filename.
      *
      * @param filename The filename of the JSON file.
@@ -128,6 +166,42 @@ public class GameData {
 
         return null;
     }
+
+
+    /**
+     * Loads GameData from a JSON file in a Google Cloud bucket with the specified bucket name and filename.
+     *
+     * @param bucketName The name of the Google Cloud bucket.
+     * @param filename The filename of the JSON file.
+     * @return The loaded GameData object.
+     */
+    public static GameData loadFromCloudBucket(String bucketName, String filename) {
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+
+        BlobId blobId = BlobId.of(bucketName, filename);
+        Blob blob = storage.get(blobId);
+        if (blob == null) {
+            System.out.println("Error: Blob not found in the specified bucket");
+            return null;
+        }
+        byte[] content = blob.getContent();
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(content, GameData.class);
+        } catch (JsonGenerationException e) {
+            System.out.println("Error generating JSON from GameData");
+            e.printStackTrace();
+        } catch (JsonMappingException e) {
+            System.out.println("Error mapping JSON from GameData");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.out.println("Error opening file " + filename + " for reading");
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
 
     /**
      * Serializes this GameData object to a JSON string.
