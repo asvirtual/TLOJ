@@ -89,7 +89,9 @@ public class Main {
             Long.parseLong("1234567890"), 
             level,
             new NeoSamurai(new Coordinates(0, 0)),
-            levels
+            levels,
+            0,
+            0
         );
 
         // gameData.saveToFile("test.json");

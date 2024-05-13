@@ -36,6 +36,10 @@ public class GameData {
     public Character player;
     /** The levels of the game. */
     public ArrayList<Level> levels;
+    @JsonProperty
+    public int score;
+    @JsonProperty
+    public long elapsedTime;
 
     /**
      * Constructs a new GameData object with the given seed, current level, player, and levels.
@@ -48,14 +52,18 @@ public class GameData {
     @JsonCreator
     public GameData(
         @JsonProperty("seed") long seed, 
-        @JsonProperty("currentLevel") Level currentLevel, 
+        @JsonProperty("level") Level currentLevel, 
         @JsonProperty("player") Character player, 
-        @JsonProperty("levels") ArrayList<Level> levels
+        @JsonProperty("levels") ArrayList<Level> levels,
+        @JsonProperty("score") int score,
+        @JsonProperty("elapsedTime") long elapsedTime
     ) {
         this.seed = seed;
         this.currentLevel = currentLevel;
         this.player = player;
         this.levels = levels;
+        this.score = score;
+        this.elapsedTime = elapsedTime;
     }
 
     /**

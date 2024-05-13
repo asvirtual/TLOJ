@@ -5,7 +5,7 @@ import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.GameState;
 import com.tloj.game.collectables.Item;
-import com.tloj.game.collectables.items.Lockpick;
+import com.tloj.game.collectables.items.Emp;
 import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Character;
 
@@ -187,11 +187,11 @@ public class PlayerRoomVisitor implements Visitor {
             return;
         }
 
-        Lockpick lockpick = new Lockpick();
-        if (this.player.hasItem(lockpick)) {
-            System.out.println("You've encountered a trap! Do you want to use a lockpick to disarm it? (Y/N)");
+        Emp emp = new Emp();
+        if (this.player.hasItem(emp)) {
+            System.out.println("You've encountered a trap! Do you want to use an EMP to disarm it? (Y/N)");
             if (Controller.awaitConfirmation()) {
-                this.player.useItem(lockpick);
+                this.player.useItem(emp);
                 System.out.println(ConsoleColors.CYAN_BRIGHT + "You've disarmed the trap!" + ConsoleColors.RESET);
                 room.clear(this.player);
                 return;

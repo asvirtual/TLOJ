@@ -45,6 +45,8 @@ public class Focus extends CharacterSkill {
 
         this.character.useMana(5);
         System.out.println(ConsoleColors.CYAN + "Focus mode on! Next attack will deal 3 more damage" + ConsoleColors.RESET);
+        
+        super.use(attack);
     }
 
     @Override

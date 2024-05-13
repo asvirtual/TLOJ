@@ -98,7 +98,9 @@ public class Game implements CharacterObserver {
             this.seed,
             this.currentLevel,
             this.player,
-            this.levels
+            this.levels,
+            this.score,
+            this.elapsedTime
         );
     }
 
@@ -205,10 +207,17 @@ public class Game implements CharacterObserver {
         }
         
         // Get new mob if there is one
-        mob = room.getMob();
+        mob = room.getMob();        
 
-        Controller.clearConsole(2000);
-        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n" + mob.getASCII() + "\n");
+        Controller.clearConsole();
+
+        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n");
+        Controller.printSideBySideText(
+            room.getMob().getASCII(), 
+            room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus() + "\n\n"
+        );
+
+        System.out.println();
     }
 
     public void usePlayerSkill() {
@@ -224,7 +233,8 @@ public class Game implements CharacterObserver {
     public void uploadToCloud() {
         // TODO: Upload to cloud
     }
-
+    
+    @JsonIgnore
     public Room getCurrentRoom() {
         return this.currentLevel.getRoom(this.player.getPosition());
     }
@@ -385,7 +395,7 @@ public class Game implements CharacterObserver {
 
         ConsumableItem consumableItem = (ConsumableItem) item;
         consumableItem.consume(this.player);
-        
+
         return item;
     }
 
@@ -433,6 +443,7 @@ public class Game implements CharacterObserver {
      *
      * @return A string indicating the available directions for the player to move.
      */
+    @JsonIgnore
     public String getAvailableDirections() {
         Coordinates coordinates = this.player.getPosition();
         String directions = "You can: \n";

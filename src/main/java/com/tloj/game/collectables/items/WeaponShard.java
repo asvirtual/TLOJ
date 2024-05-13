@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see GreatManaPotion
  * @see AttackElixir
  * @see DefenseElixir
- * @see Lockpick
+ * @see Emp
  * @see Ragu
  * @see SpecialKey
  * @see NorthStar

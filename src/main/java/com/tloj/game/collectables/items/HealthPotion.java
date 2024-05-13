@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @see GreatManaPotion
  * @see AttackElixir
  * @see DefenseElixir
- * @see Lockpick
+ * @see Emp
  * @see WeaponShard
  * @see Ragu
  * @see SpecialKey

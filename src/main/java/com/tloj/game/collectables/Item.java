@@ -5,7 +5,7 @@ import com.tloj.game.collectables.items.DefenseElixir;
 import com.tloj.game.collectables.items.GreatHealthPotion;
 import com.tloj.game.collectables.items.GreatManaPotion;
 import com.tloj.game.collectables.items.HealthPotion;
-import com.tloj.game.collectables.items.Lockpick;
+import com.tloj.game.collectables.items.Emp;
 import com.tloj.game.collectables.items.ManaPotion;
 import com.tloj.game.collectables.items.NorthStar;
 import com.tloj.game.collectables.items.Ragu;
@@ -40,7 +40,7 @@ public abstract class Item {
         ATTACK_ELIXIR(new AttackElixir()),
         DEFENSE_ELIXIR(new DefenseElixir()),
         WEAPON_SHARD(new WeaponShard()),
-        LOCKPICK(new Lockpick()),
+        EMP(new Emp()),
         RAGU(new Ragu()),
         NORTH_STAR(new NorthStar());
 

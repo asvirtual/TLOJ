@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.tloj.game.collectables.ConsumableItem;
@@ -15,7 +16,6 @@ import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CharacterSkill;
 import com.tloj.game.utilities.ConsoleColors;
@@ -63,6 +63,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected int maxWeight;
     protected int money;
     /** A collection of {@link Item}s the Character carries during the game */
+    @JsonProperty("inventory")
     protected ArrayList<Item> inventory;
     protected Weapon weapon;
     protected Level currentLevel;
@@ -208,6 +209,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.maxWeight;
     }
     
+    @JsonIgnore
     public double getFreeWeight() {
         return Math.floor((this.maxWeight - this.getCarriedWeight()) * 10) / 10;
     }

@@ -46,6 +46,8 @@ public class Daburu extends CharacterSkill{
 
         this.character.useMana(10);
         System.out.println(ConsoleColors.CYAN + "Daburu modo! Next attack will deal double damage" + ConsoleColors.RESET);
+        
+        super.use(attack);
     }
 
     @Override
