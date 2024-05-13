@@ -1238,13 +1238,49 @@ public class Controller {
         System.out.println(Ansi.ansi().fg(color).a(text).reset());
     }
 
+    public void musicHandler() {
+        switch (this.getState()) {
+            case MAIN_MENU:
+                this.musicPlayer.setNewFile(Constants.MAIN_MENU_WAV_FILE_PATH);
+                this.musicPlayer.playMusic(false);
+                break;
+            case FIGHTING_BOSS:
+                this.musicPlayer.setNewFile(
+                    this.game.getLevel().getLevelNumber() == 5 ?
+                        Constants.FINAL_BOSS_WAV_FILE_PATH
+                        : Constants.BOSSFIGHT_WAV_FILE_PATH
+                );
+
+                this.musicPlayer.playMusic(true);
+                break;
+            case WIN:
+                this.musicPlayer.setNewFile(Constants.ENDING_WAV_FILE_PATH);
+                this.musicPlayer.playMusic(false);
+                break;
+            default:
+                this.musicPlayer = new MusicPlayer(
+                    Constants.INTRO_WAV_FILE_PATH,
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            musicPlayer.setNewFile(Constants.LOOP_WAV_FILE_PATH);
+                            musicPlayer.playMusic(true);
+                        }
+                    }
+                );
+
+                this.musicPlayer.playMusic(false);
+                break;
+        }
+    }
+
     /**
      * Main game loop
      */
     public void run() {
         Controller.setConsoleEncoding();
         Controller.clearConsole();
-
+        
         this.musicPlayer = new MusicPlayer(
             Constants.INTRO_WAV_FILE_PATH,
             new Runnable() {
@@ -1256,7 +1292,6 @@ public class Controller {
             }
         );
 
-        this.musicPlayer.increaseVolume(-20.0f);
         this.musicPlayer.playMusic(false);
 
         System.out.println(Constants.GAME_TITLE);
@@ -1268,11 +1303,12 @@ public class Controller {
                     System.out.println("\nWhat to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
                 }
             }
-
+            
             String input = Controller.scanner.nextLine();
             this.handleUserInput(input);
+            //this.musicHandler();
         }
-
+        
         Controller.scanner.close();
         this.musicPlayer.stop();
         AnsiConsole.systemUninstall(); 

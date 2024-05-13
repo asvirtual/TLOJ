@@ -103,6 +103,10 @@ public class Constants {
     
     public static final String INTRO_WAV_FILE_PATH = "src/main/resources/sounds/intro.wav";
     public static final String LOOP_WAV_FILE_PATH = "src/main/resources/sounds/loop.wav";
+    public static final String MAIN_MENU_WAV_FILE_PATH = "src/main/resources/sounds/MainMenu.wav";
+    public static final String ENDING_WAV_FILE_PATH = "src/main/resources/sounds/Ending.wav";
+    public static final String BOSSFIGHT_WAV_FILE_PATH = "src/main/resources/sounds/BossFight.wav";
+    public static final String FINAL_BOSS_WAV_FILE_PATH = "src/main/resources/sounds/FinalBoss.wav";
 
     // 46
     public static final String CYBER_GOBLIN_ATTACK = 
