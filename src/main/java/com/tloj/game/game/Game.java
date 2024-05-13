@@ -193,8 +193,15 @@ public class Game implements CharacterObserver {
             if (mob.getPosition().equals(this.player.getPosition())) return; 
         }
 
+        // If no mobs left in the room, clear it
+        if (room.getMobsCount() == 0) {
+            room.clear(this.player);
+            this.printMap();
+            this.controller.setState(GameState.MOVING);
+            return;
+        }
+        
         // Get new mob if there is one
-        if (room.getMobsCount() == 0) return;
         mob = room.getMob();
 
         Controller.clearConsole(2000);
@@ -240,11 +247,8 @@ public class Game implements CharacterObserver {
         
         this.increaseScore(Mob.SCORE_DROP);
 
-        if (room.getMobsCount() == 1) {
-            room.clear(this.player);
-            this.controller.setState(GameState.MOVING);
-            this.printMap();
-        } else {
+        // There are other mobs in the room
+        if (room.getMobsCount() > 1) {
             room.removeMob(mob);
             Controller.clearConsole(2000);
             System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n" + room.getMob().getASCII() + "\n");

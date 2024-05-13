@@ -1,5 +1,7 @@
 package com.tloj.game.skills;
 
+import com.tloj.game.game.Attack;
+import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
 
@@ -42,9 +44,13 @@ public abstract class CharacterSkill {
     }
 
     /**
-     * Retrieves the character that uses the skill.
-     *
-     * @return The character that uses the skill.
+     * Applies the skill's effect depending on the type of attack.
      */
-    public abstract void use(PlayerAttack attack);
+    public void use(Attack attack) {
+        if (attack instanceof MobAttack) this.useOnDefend((MobAttack) attack);
+        if (attack instanceof PlayerAttack) this.useOnAttack((PlayerAttack) attack);
+    }
+
+    public abstract void useOnDefend(MobAttack attack);
+    public abstract void useOnAttack(PlayerAttack attack);
 }

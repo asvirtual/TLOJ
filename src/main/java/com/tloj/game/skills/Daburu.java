@@ -2,8 +2,11 @@ package com.tloj.game.skills;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tloj.game.collectables.Weapon;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.NeoSamurai;
+import com.tloj.game.game.Attack;
+import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleColors;
 
@@ -35,15 +38,18 @@ public class Daburu extends CharacterSkill{
      * @param attack The attack being performed.
      */
     @Override
-    public void use(PlayerAttack attack) {
-        // Get the attacker
-        Character attacker = attack.getAttacker();
-        
-        if (attacker.getMana() < 10) {
+    public void use(Attack attack) {
+        if (this.character.getMana() < 10) {
             System.out.println("Not enough mana to use Daburu");
             return;
         }
 
+        this.character.useMana(10);
+        System.out.println(ConsoleColors.CYAN + "Daburu modo! Next attack will deal double damage" + ConsoleColors.RESET);
+    }
+
+    @Override
+    public void useOnAttack(PlayerAttack attack) {
         this.onUse = new Runnable() {
             @Override
             public void run() {
@@ -51,10 +57,10 @@ public class Daburu extends CharacterSkill{
                 attack.setWeaponRoll(attack.getWeaponRoll() * 2);
             }
         };
-
-        attacker.useMana(10);
-        System.out.println(ConsoleColors.CYAN + "Daburu modo! Next attack will deal double damage" + ConsoleColors.RESET);
     }
+
+    @Override
+    public void useOnDefend(MobAttack attack) {}
 
     public static String describe() {
         return "Daburu: Doubles next attack damage";

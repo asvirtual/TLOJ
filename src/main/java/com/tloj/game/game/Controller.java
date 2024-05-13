@@ -798,7 +798,7 @@ class ChooseCharacterGameCommand extends GameCommand {
 
         Controller.printSideBySideText(
             this.game.getPlayer().getASCII(), 
-            this.game.getPlayer().toString() + "\n\n\n" + Constants.NANITE_LEECH_BLADE + "\n" +
+            this.game.getPlayer().toString() + "\n\n\n" + this.game.getPlayer().getWeapon() + "\n" +
             this.game.getPlayer().getWeapon().getASCII()
         );
         

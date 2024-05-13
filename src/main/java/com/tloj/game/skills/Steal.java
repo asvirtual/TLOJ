@@ -2,10 +2,13 @@ package com.tloj.game.skills;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.DataThief;
+import com.tloj.game.game.Attack;
+import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.collectables.Weapon;
 import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Dice;
 
@@ -37,7 +40,7 @@ public class Steal extends CharacterSkill {
      * @param attack The attack being performed.
      */
     @Override
-    public void use(PlayerAttack attack) {        
+    public void use(Attack attack) {        
         if (this.character.getMana() < 10) {
             System.out.println("Not enough mana to use Steal");
             return;
@@ -54,6 +57,12 @@ public class Steal extends CharacterSkill {
         if (this.character.addInventoryItem(item)) System.out.println(ConsoleColors.CYAN + "Data acquired! You stole a " + item + ConsoleColors.RESET);
         else System.out.println("Steal failed! " + item + " fell out of your pocket because your inventory is full");
     }
+
+    @Override
+    public void useOnAttack(PlayerAttack attack) {}
+
+    @Override
+    public void useOnDefend(MobAttack attack) {}
 
     public static String describe() {
         return "Steal: Chance to steal a random item";

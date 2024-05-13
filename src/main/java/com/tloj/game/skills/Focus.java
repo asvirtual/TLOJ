@@ -4,6 +4,8 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.Attack;
+import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleColors;
 
@@ -35,19 +37,23 @@ public class Focus extends CharacterSkill {
      * @param attack The attack being performed.
      */
     @Override
-    public void use(PlayerAttack attack) {
-        // Get the attacker
-        Character attacker = attack.getAttacker();
-        
-        if (attacker.getMana() < 5) {
+    public void use(Attack attack) {
+        if (this.character.getMana() < 5) {
             System.out.println("Not enough mana to use Focus");
             return;
         }
 
-        attack.setBaseDamage(this.character.getCurrentFightAtk() + 3);
-        attacker.useMana(5);
+        this.character.useMana(5);
         System.out.println(ConsoleColors.CYAN + "Focus mode on! Next attack will deal 3 more damage" + ConsoleColors.RESET);
     }
+
+    @Override
+    public void useOnAttack(PlayerAttack attack) {
+        attack.setBaseDamage(this.character.getCurrentFightAtk() + 3);
+    }
+
+    @Override
+    public void useOnDefend(MobAttack attack) {}
 
     public static String describe() {
         return "Focus: Adds 3 dmg points on next attack";

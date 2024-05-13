@@ -191,7 +191,9 @@ public abstract class Mob extends CombatEntity {
         Controller.printSideBySideText(
             this.getCombatASCII(), 
             this.getPrettifiedStatus() + "\n\n" + target.getPrettifiedStatus() + "\n\n" +
-            this + " rolled: " + attack.getDiceRoll() + "\n\n" + Dice.getASCII(attack.getDiceRoll())
+            (attack.getDiceRoll() != 0 ?
+                this + " rolled " + attack.getDiceRoll() + ":\n\n" + Dice.getASCII(attack.getDiceRoll()) :
+                this + "'s roll was disabled!\n\n" + Dice.getASCII(0))
         );
 
         if (!target.isAlive()) target.notifyDefeat();

@@ -4,6 +4,8 @@ import com.tloj.game.entities.characters.MechaKnight;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.Attack;
+import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleColors;
 
@@ -35,19 +37,32 @@ public class Guard extends CharacterSkill {
      * @param attack The attack being performed.
      */
     @Override
-    public void use(PlayerAttack attack) {        
+    public void use(Attack attack) {
         if (this.character.getMana() < 8) {
             System.out.println("Not enough mana to use Focus");
             return;
         }
 
-        this.character.setCurrentFightDef(Integer.MAX_VALUE);
         this.character.useMana(8);
         System.out.println(ConsoleColors.CYAN + "Guard activated! Defense increased by 3 points!" + ConsoleColors.RESET);
+
+        super.use(attack);
     }
 
     public static String describe() {
         return "Guard: Adds 3 defense points during fight";
     }
+
+    @Override
+    public void useOnDefend(MobAttack attack) {
+        attack.setDiceRoll(0);
+        attack.setTotalDamage(0);
+    }
+
+    /**
+     * This ability is only used on defending attack
+     */
+    @Override
+    public void useOnAttack(PlayerAttack attack) {}
 }
 

@@ -6,12 +6,11 @@ import com.tloj.game.game.Attack;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.HostileRoom;
-import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.GameState;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
@@ -87,7 +86,7 @@ public class Glitched extends Mob implements MovingEntity {
                         target.move(newCoords);
                         nextRoom.addMobToTop(target);
                         nextRoom.setCleared(false);
-                        System.out.println("A bug in the system teleported the Glitched away! Will it come back?"); // TODO: "Animation" with ASCII arts
+                        System.out.println("A bug in the system teleported the Glitched away! Will it come back?\n");
                     } else {
                         System.out.print("The Glitched has gone...");
                     }

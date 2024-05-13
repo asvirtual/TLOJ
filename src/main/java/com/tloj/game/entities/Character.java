@@ -475,7 +475,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @JsonIgnore
     public String getPrettifiedStatus() {
         return 
-            "Jordan: \n\n" + 
+            "Jordan - lvl " + this.lvl + ": \n\n" + 
             " ⸭ HP:   " + ConsoleColors.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleColors.RESET + "\n" +
             " ⸭ Mana: " + ConsoleColors.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleColors.RESET + "\n" +
             " ⸭ Xp:   " + ConsoleColors.GREEN + this.getXpBar() + " " + this.xp + "/" + this.requiredXp + ConsoleColors.RESET + "\n\n";

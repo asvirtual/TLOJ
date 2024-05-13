@@ -2,6 +2,8 @@ package com.tloj.game.skills;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.Hacker;
+import com.tloj.game.game.Attack;
+import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleColors;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -35,15 +37,21 @@ public class CheatEngine extends CharacterSkill{
      * @param attack The attack being performed.
      */
     @Override
-    public void use(PlayerAttack attack) {
-        // Get the attacker and the weapon
-        Character attacker = attack.getAttacker();
-        Weapon weapon = attacker.getWeapon();
-
-        if (attacker.getMana() < 5) {
+    public void use(Attack attack) {
+        if (this.character.getMana() < 5) {
             System.out.println("Not enough mana to use Cheat Engine");
             return;
         }
+
+        this.character.useMana(5);
+        System.out.println(ConsoleColors.CYAN + "Hacking going on! MAX ROLL INCOMING!" + ConsoleColors.RESET);
+
+        super.use(attack);
+    }
+
+    @Override
+    public void useOnAttack(PlayerAttack attack) {
+        Weapon weapon = this.character.getWeapon();
 
         this.onUse = new Runnable() {
             @Override
@@ -51,10 +59,10 @@ public class CheatEngine extends CharacterSkill{
                 attack.setWeaponRoll(weapon.getDiceFaces());
             }
         };
-        
-        attacker.useMana(5);
-        System.out.println(ConsoleColors.CYAN + "Hacking going on! MAX ROLL INCOMING!" + ConsoleColors.RESET);
     }
+
+    @Override
+    public void useOnDefend(MobAttack attack) {}
 
     public static String describe() {
         return "Cheat Engine: Forces the max weapon roll";

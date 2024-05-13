@@ -142,7 +142,7 @@ public class PlayerRoomVisitor implements Visitor {
         if (item == null) return;
 
         this.controller.printMapAndArt(item.getASCII());
-        System.out.println(ConsoleColors.YELLOW_BRIGHT + "You've found a " + item + "!" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleColors.YELLOW_BRIGHT + "You've found a " + item + "!" + ConsoleColors.RESET);
         
         if (this.player.addInventoryItem(item)) {
             this.controller.setState(GameState.MOVING);

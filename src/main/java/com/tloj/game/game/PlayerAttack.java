@@ -117,7 +117,9 @@ public class PlayerAttack extends Attack {
         Controller.printSideBySideText(
             this.attacker.getASCII(), 
             this.getAttacker().getPrettifiedStatus() + "\n\n" + this.getTarget().getPrettifiedStatus() + "\n\n\n" +
-            "Jordan rolled " + this.getWeaponRoll() + ":\n\n" + Dice.getASCII(this.getWeaponRoll())
+            (this.getWeaponRoll() != 0 ?
+                "Jordan rolled " + this.getWeaponRoll() + ":\n\n" + Dice.getASCII(this.getWeaponRoll()) :
+                "Oh no! Jordan's roll was disabled!\n\n" + Dice.getASCII(0))
         );
 
         this.setBonusDamage(0);

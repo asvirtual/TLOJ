@@ -53,6 +53,7 @@ public class Dice {
 
     public static String getASCII(int roll) {
         return switch (roll) {
+            case 0 -> Constants.DICE_NEGATED;
             case 1 -> Constants.DICE_ONE;
             case 2 -> Constants.DICE_TWO;
             case 3 -> Constants.DICE_THREE;
@@ -68,7 +69,7 @@ public class Dice {
             case 13 -> Constants.DICE_THIRTHEEN;
             case 14 -> Constants.DICE_FOURTEEN;
             case 15 -> Constants.DICE_FIFTEEN;
-            default -> Constants.DICE_TEN;
+            default -> Constants.DICE_NEGATED;
         };
     }
 
