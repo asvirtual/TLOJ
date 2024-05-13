@@ -33,7 +33,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 2, "y": 0 },
-              "lvl": 1
+              "lvl": 2
             }
           ]
         },
@@ -66,7 +66,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 5, "y": 1 },
-              "lvl": 1
+              "lvl": 2
             }
           ]
         }
@@ -167,7 +167,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 4, "y": 3 },
-              "lvl": 1
+              "lvl": 2
             }
           ]
         },
@@ -277,7 +277,7 @@
           "locked": false,
           "mobs": [
             {
-              "@class": "com.tloj.game.entities.bosses.FlyingBoss",
+              "@class": "com.tloj.game.entities.bosses.HalverBoss",
               "position": { "x": 5, "y": 0 }
             }
           ]
@@ -312,7 +312,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.JetBat",
               "position": { "x": 2, "y": 1 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -381,7 +381,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 4, "y": 2 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -483,7 +483,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.JunkSlime",
               "position": { "x": 4, "y": 4 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -604,7 +604,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 5, "y": 1 },
-              "lvl": 3
+              "lvl": 4
             }          
           ]
         }
@@ -687,7 +687,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.JunkSlime",
               "position": { "x": 2, "y": 3 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         },
@@ -759,7 +759,7 @@
           "locked": false,
           "mobs": [
             {
-              "@class": "com.tloj.game.entities.bosses.HalverBoss",
+              "@class": "com.tloj.game.entities.bosses.FlyingBoss",
               "position": { "x": 2, "y": 5 }
             }
           ]
