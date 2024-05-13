@@ -14,8 +14,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.tloj.game.entities.Character;
+
+/*
+ * Google Cloud Storage imports
+ */
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 
 
 /**
@@ -97,6 +105,33 @@ public class GameData {
     }
 
     /**
+     * Saves the given Game object to a JSON file in a Google Cloud bucket with the specified bucket name and filename.
+     *
+     * @param game The Game object to be saved.
+     * @param bucketName The name of the Google Cloud bucket.
+     * @param filename The filename for the JSON file.
+     */
+    public static void saveToCloudBucket(Game game, String bucketName, String filename) {
+        ObjectMapper mapper = new ObjectMapper();
+        String json;
+        try {
+            json = mapper.writeValueAsString(game);
+        } catch (JsonProcessingException e) {
+            System.out.println("Error generating JSON from GameData");
+            e.printStackTrace();
+            return;
+        }
+
+        Storage storage = StorageOptions.getDefaultInstance().getService();
+        BlobId blobId = BlobId.of(bucketName, filename);
+        Blob blob = storage.create(blobId, json.getBytes()); 
+
+
+        System.out.println("JSON saved to Google Cloud bucket");
+    }
+
+    
+    /**
      * Loads GameData from a JSON file with the specified filename.
      *
      * @param filename The filename of the JSON file.
@@ -120,92 +155,26 @@ public class GameData {
 
         return null;
     }
-
     /**
-     * Serializes this GameData object to a JSON string.
+     * Loads GameData from a JSON file in a Google Cloud bucket with the specified bucket name and filename.
      *
-     * @return The JSON string representing this GameData.
-     */
-    public String serializeJSON() {
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            return mapper.writeValueAsString(this);
-        } catch (JsonGenerationException e) {
-            System.out.println("Error generating JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            System.out.println("Error mapping JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            System.out.println("Error processing JSON from GameData");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * Deserializes a GameData object from a JSON string.
-     *
-     * @param json The JSON string to deserialize.
-     * @return The deserialized GameData object.
-     */
-    public static GameData deserializeJSON(String json) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            return mapper.readValue(json, GameData.class);
-        } catch (JsonGenerationException e) {
-            System.out.println("Error generating JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            System.out.println("Error mapping JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            System.out.println("Error processing JSON from GameData");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * Deserializes a list of levels from a JSON string.
-     *
-     * @param json The JSON string representing the levels.
-     * @return The deserialized list of levels.
-     */
-    public static ArrayList<Level> deserializeMap(String json) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            return mapper.readValue(json, new TypeReference<ArrayList<Level>>(){});
-        } catch (JsonGenerationException e) {
-            System.out.println("Error generating JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            System.out.println("Error mapping JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            System.out.println("Error processing JSON from GameData");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
-     * Deserializes a list of levels from a JSON file with the specified filename.
-     *
+     * @param bucketName The name of the Google Cloud bucket.
      * @param filename The filename of the JSON file.
-     * @return The deserialized list of levels.
+     * @return The loaded GameData object.
      */
-    public static ArrayList<Level> deserializeMapFromFile(String filename) {
-        ObjectMapper mapper = new ObjectMapper();
+    public static GameData loadFromCloudBucket(String bucketName, String filename) {
+        Storage storage = StorageOptions.getDefaultInstance().getService();
 
+        BlobId blobId = BlobId.of(bucketName, filename);
+        Blob blob = storage.get(blobId);
+        if (blob == null) {
+            System.out.println("Error: Blob not found in the specified bucket");
+            return null;
+        }
+        byte[] content = blob.getContent();
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.readValue(new File(filename), new TypeReference<ArrayList<Level>>(){});
+            return mapper.readValue(content, GameData.class);
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();
@@ -216,7 +185,6 @@ public class GameData {
             System.out.println("Error opening file " + filename + " for reading");
             e.printStackTrace();
         }
-
         return null;
     }
 
