@@ -31,7 +31,7 @@ public class ManaAttackBooster extends WeaponEffect {
         Character holder = attack.getAttacker();
         if (holder.getMana() < 2) return false;
 
-        attack.setBonusDamage(this.weapon.diceRoll() + 5);
+        attack.setWeaponRoll(this.weapon.diceRoll() + 5);
         holder.useMana(2);
 
         System.out.println(ConsoleColors.YELLOW_BRIGHT + "Critical mana damage!" + ConsoleColors.RESET);

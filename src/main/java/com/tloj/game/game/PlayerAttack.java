@@ -19,7 +19,6 @@ import com.tloj.game.utilities.Dice;
 
 public class PlayerAttack extends Attack {
     private int weaponRoll;
-    private int bonusDamage;
 
     /**
      * Constructs a PlayerAttack object with the given attacker and target.
@@ -50,15 +49,6 @@ public class PlayerAttack extends Attack {
     }
 
     /**
-     * Retrieves the bonus damage of the player.
-     *
-     * @return The bonus damage.
-     */
-    public int getBonusDamage() {
-        return this.bonusDamage;
-    }
-
-    /**
      * Sets the weapon roll of the player.
      *
      * @param weaponRoll The weapon roll to set.
@@ -69,21 +59,11 @@ public class PlayerAttack extends Attack {
     }
 
     /**
-     * Sets the bonus damage of the player.
-     *
-     * @param bonusDamage The bonus damage to set.
-     */
-    public void setBonusDamage(int bonusDamage) {
-        this.bonusDamage = bonusDamage;
-        this.setTotalDamage();
-    }
-
-    /**
      * Calculates the total damage of the attack.
      */
     @Override
     public void setTotalDamage() {
-        this.totalDamage = this.baseDamage + this.weaponRoll + this.bonusDamage - this.targetDef;
+        this.totalDamage = this.baseDamage + this.weaponRoll - this.targetDef;
         if (this.totalDamage < 0) this.totalDamage = 0;
     }
 
@@ -121,8 +101,6 @@ public class PlayerAttack extends Attack {
                 "Jordan rolled " + this.getWeaponRoll() + ":\n\n" + Dice.getASCII(this.getWeaponRoll()) :
                 "Oh no! Jordan's roll was disabled!\n\n" + Dice.getASCII(0))
         );
-
-        this.setBonusDamage(0);
 
         System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + this.totalDamage + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
         if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleColors.RED + this.target.getHP() + " HP" + ConsoleColors.RESET + " left!");

@@ -41,6 +41,7 @@ public abstract class CharacterSkill {
 
     public void executeOnUse() {
         if (onUse != null) onUse.run();
+        this.onUse = null;
     }
 
     /**

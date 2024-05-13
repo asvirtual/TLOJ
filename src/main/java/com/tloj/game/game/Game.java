@@ -193,9 +193,11 @@ public class Game implements CharacterObserver {
             if (mob.getPosition().equals(this.player.getPosition())) return; 
         }
 
-        // If no mobs left in the room, clear it
+        // Boss defeated
+        if (room.getType() == RoomType.BOSS_ROOM) return;
+
+        // If no mobs left in the room, go back to moving state
         if (room.getMobsCount() == 0) {
-            room.clear(this.player);
             this.printMap();
             this.controller.setState(GameState.MOVING);
             return;
@@ -248,7 +250,8 @@ public class Game implements CharacterObserver {
         this.increaseScore(Mob.SCORE_DROP);
 
         // There are other mobs in the room
-        if (room.getMobsCount() > 1) {
+        if (room.getMobsCount() == 1) room.clear(this.player);
+        else {
             room.removeMob(mob);
             Controller.clearConsole(2000);
             System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n" + room.getMob().getASCII() + "\n");
@@ -428,28 +431,28 @@ public class Game implements CharacterObserver {
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
             Room northRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH));
 
-            if (northRoom.getType() == RoomType.BOSS_ROOM) directions += "[gn - Something's off... ]";
+            if (northRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleColors.RED + "[gn - Something's off... ]" + ConsoleColors.RESET;
             else directions += northRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gn" + ConsoleColors.RESET + "] " : "[gn] ";    
         }
         
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))) {
             Room southRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH));
 
-            if (southRoom.getType() == RoomType.BOSS_ROOM) directions += "[gs - Something's off... ]";
+            if (southRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleColors.RED + "[gs - Something's off... ]" + ConsoleColors.RESET;
             else directions += southRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gs" + ConsoleColors.RESET + "] " : "[gs] ";    
         }
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))) {
             Room eastRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST));
 
-            if (eastRoom.getType() == RoomType.BOSS_ROOM) directions += "[ge - Something's off... ]";
+            if (eastRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleColors.RED + "[ge - Something's off... ]" + ConsoleColors.RESET;
             else directions += eastRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "ge" + ConsoleColors.RESET + "] " : "[ge] ";    
         }
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))) {
             Room westRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST));
 
-            if (westRoom.getType() == RoomType.BOSS_ROOM) directions += "[gw - Something's off... ]";
+            if (westRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleColors.RED + "[gw - Something's off... ]" + ConsoleColors.RESET;
             else directions += westRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gw" + ConsoleColors.RESET + "] " : "[gw] ";    
         }
         
