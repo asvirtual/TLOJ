@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
-import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.NorthStar;
 import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Boss;
@@ -16,8 +15,6 @@ import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.rooms.BossRoom;
-import com.tloj.game.rooms.EndRoom;
-import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
@@ -31,10 +28,9 @@ import com.tloj.game.utilities.GameState;
 
 
 /**
- * The Game class represents the main game logic and state management<br>.
+ * The Game class represents the main game logic and state management.<br>
  * It controls player movement, interactions with rooms and entities,
  * combat, inventory management, saving and loading game data, and more.
- * <p>
  */
 public class Game implements CharacterObserver {
     /** The random seed used for generating random numbers in the game. */

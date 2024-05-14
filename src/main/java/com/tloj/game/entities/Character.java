@@ -161,6 +161,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return Math.floor(weight * 10) / 10;
     }
 
+    public boolean canCarry(Item item) {
+        return this.getCarriedWeight() + item.getWeight() <= this.maxWeight;
+    }
+
     public int getMoney() {
         return this.money;
     }
@@ -253,6 +257,15 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @JsonIgnore
     public Item getInventoryItem(int index) {
         return this.inventory.get(index);
+    }
+
+    @JsonIgnore
+    public String getInventory() {
+        String inventory = ConsoleColors.YELLOW + "Jordan's Inventory:" + ConsoleColors.RESET + "\n";
+        for (int i = 0; i < this.inventory.size(); i++)
+            inventory += (i + 1) + ". " + this.inventory.get(i) + "\n";
+
+        return inventory;
     }
 
     public Item searchInventoryItem(Item item){

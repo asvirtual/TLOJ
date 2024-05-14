@@ -281,7 +281,6 @@ class UseItemCommand extends GameCommand {
     public UseItemCommand(Game game, String[] commands) {
         super(game, commands);
         this.invalidStates = List.of(
-            GameState.MERCHANT_SHOPPING,
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU
         );
@@ -309,7 +308,7 @@ class UseItemCommand extends GameCommand {
 
             if (consumed == null) {
                 System.out.println();
-                if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
+                if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                     this.game.printMap();
 
                 return;
@@ -323,7 +322,7 @@ class UseItemCommand extends GameCommand {
             );
 
             System.out.println();
-            if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
+            if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                 this.game.printMap();
 
         } catch (NumberFormatException e) {
@@ -398,7 +397,7 @@ class SwapWeaponCommand extends GameCommand {
             Controller.printSideBySideText(this.player.getWeapon().getASCII(), ConsoleColors.GREEN + "Jordan equipped " + this.player.getWeapon() + ConsoleColors.RESET, 7);
             System.out.println();
             
-            if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
+            if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                 this.game.printMap();
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
@@ -414,7 +413,6 @@ class DropItemCommand extends GameCommand {
     public DropItemCommand(Game game, String[] commands) {
         super(game, commands);
         this.invalidStates = List.of(
-            GameState.MERCHANT_SHOPPING,
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU
         );
@@ -437,7 +435,7 @@ class DropItemCommand extends GameCommand {
             if (dropped == null) {
                 System.out.println();
                    
-                if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
+                if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                     this.game.printMap();
                 return;
             }
@@ -458,7 +456,7 @@ class DropItemCommand extends GameCommand {
                 return;
             }
 
-            if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
+            if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                 this.game.printMap();
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");

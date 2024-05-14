@@ -69,6 +69,11 @@ public class Dice {
             case 13 -> Constants.DICE_THIRTHEEN;
             case 14 -> Constants.DICE_FOURTEEN;
             case 15 -> Constants.DICE_FIFTEEN;
+            case 16 -> Constants.DICE_SIXTEEN;
+            case 17 -> Constants.DICE_SEVENTEEN;
+            case 18 -> Constants.DICE_EIGHTEEN;
+            case 19 -> Constants.DICE_NINETEEN;
+            case 20 -> Constants.DICE_TWENTY;
             default -> Constants.DICE_NEGATED;
         };
     }

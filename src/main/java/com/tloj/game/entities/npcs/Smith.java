@@ -36,7 +36,8 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
         Controller.printSideBySideText(
             this.getASCII(),
             ConsoleColors.YELLOW + "Smith: Hello there! I can upgrade your weapon with a Weapon Shard." + ConsoleColors.RESET + "\n" +
-            "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET
+            "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET,
+            7
         );
         
         Controller.getInstance().setState(GameState.SMITH_FORGING);
@@ -44,40 +45,63 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
 
     @Override
     public void endInteraction() {
-        System.out.println("Smith: Goodbye!");
         Controller.getInstance().setState(GameState.HEALING_ROOM);
         super.endInteraction();
     }
     
     @Override
     public void giveItem(Item item) {
+        Controller.clearConsole();
+        
         if (!(item instanceof WeaponShard)) {
-            System.out.println(ConsoleColors.RED + "Smith: I need a Weapon Shard to forge!" + ConsoleColors.RESET);
+            Controller.printSideBySideText(
+                this.getASCII(),
+                ConsoleColors.RED + "Smith: I need a Weapon Shard to forge!" + ConsoleColors.RESET + "\n",
+                7
+            );
             return;
         }
 
         if (this.player.getWeapon().getLevel() == Weapon.MAX_LEVEL) {
-            System.out.println(ConsoleColors.RED + "Smith: Your weapon is already at its maximum level!" + ConsoleColors.RESET);
+            Controller.printSideBySideText(
+                this.getASCII(),
+                ConsoleColors.RED + "Smith: Your weapon is already at its maximum level!" + ConsoleColors.RESET + "\n",
+                7
+            );
             return;
         }
 
         this.player.removeInventoryItem(item);
         this.player.getWeapon().upgrade(1);
-        System.out.println("Smith: Here you go! Your weapon has been upgraded!");
-        
-        int shardsCount = this.player.getItemCount(new WeaponShard());
-        if (shardsCount == 0) {
-            System.out.println("You've ran out of Weapon Shards!");
-            this.endInteraction();
-            return;
-        }
-
-        Controller.clearConsole(2000);
 
         Controller.printSideBySideText(
             this.getASCII(),
-            "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET
+            ConsoleColors.YELLOW + "Smith: Here you go! Your weapon has been upgraded!" + ConsoleColors.RESET + "\n" +
+            this.player.getWeapon().getASCII() + "\n" +
+            this.player.getWeapon() + "\n" +
+            this.getCurrentStatus(),
+            7
         );
+
+        
+        int shardsCount = this.player.getItemCount(new WeaponShard());
+        if (shardsCount == 0) {
+            Controller.awaitEnter();
+            Controller.clearConsole();
+            Controller.printSideBySideText(
+                this.getASCII(),
+                ConsoleColors.RED + "Smith: You've ran out of Weapon Shards, Goodbye!" + ConsoleColors.RESET + "\n" +
+                this.getCurrentStatus(),
+                7
+            );
+
+            this.endInteraction();
+            return;
+        }
+    }
+
+    private String getCurrentStatus() {
+        return "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET;
     }
 
     @Override

@@ -63,11 +63,9 @@ public class Merchant extends FriendlyEntity {
 
         Controller.printSideBySideText(
             this.getASCII(),
-            ConsoleColors.YELLOW + "Merchant: Hello there! What do you want to buy today?" + ConsoleColors.RESET + "\n" +
-            "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
-            ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
-            ConsoleColors.RESET + " of free space\n" +
-            this.getItems() 
+            ConsoleColors.YELLOW + "Merchant: Hello there! What do you want to buy?" + ConsoleColors.RESET + "\n" +
+            this.getCurrentStatus(),
+            4
         );
 
         Controller.getInstance().setState(GameState.MERCHANT_SHOPPING);
@@ -80,32 +78,58 @@ public class Merchant extends FriendlyEntity {
     }
 
     public void buy(int index) {
+        Controller.clearConsole();
         PurchasableItem item = this.items.get(index);
         
         if (item == null) {
-            System.out.println("Merchant: I don't have that!");
+            Controller.printSideBySideText(
+                this.getASCII(),
+                ConsoleColors.RED + "Merchant: I don't have that!" + ConsoleColors.RESET + "\n" +
+                this.getCurrentStatus(),
+                4
+            );
             return;
         }
 
         if (!this.player.canAfford(item)) {
-            System.out.println("Merchant: You don't have enough BTC!");
+            Controller.printSideBySideText(
+                this.getASCII(),
+                ConsoleColors.RED + "Merchant: You don't have enough BTC!" + ConsoleColors.RESET + "\n" +
+                this.getCurrentStatus(),
+                4
+            );
+            return;
+        }
+
+        if (!this.player.canCarry(item)) {
+            Controller.printSideBySideText(
+                this.getASCII(),
+                ConsoleColors.RED + "Merchant: You don't have enough space in your inventory!" + ConsoleColors.RESET + "\n" +
+                this.getCurrentStatus(),
+                4
+            );
             return;
         }
 
         item.purchase(this.player);
         items.remove(index);
 
-        System.out.println("Merchant: It's always a pleasure doing business with you!");
-
-        Controller.clearConsole(2000);
-
         Controller.printSideBySideText(
             this.getASCII(),
-            ConsoleColors.RESET + "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
-            ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
-            ConsoleColors.RESET + " of free space\n" +
-            this.getItems() 
+            ConsoleColors.YELLOW + "Merchant: It's always a pleasure doing business with you!" + ConsoleColors.RESET + "\n " + 
+            ConsoleColors.YELLOW + "Do you need anything else?" + ConsoleColors.RESET + "\n" +
+            this.getCurrentStatus(),
+            4
         );
+    }
+
+    private String getCurrentStatus() {
+        return 
+            "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
+            ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
+            ConsoleColors.RESET + " of free space.\n" +
+            ConsoleColors.RESET + this.getItems() + "\n\n\n" +
+            ConsoleColors.RESET + this.player.getInventory();
     }
 
     @Override
