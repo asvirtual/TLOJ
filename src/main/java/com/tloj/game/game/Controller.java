@@ -610,7 +610,15 @@ class HelpCommand extends GameCommand {
         }
 
         System.out.println();
-        if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
+        if (
+            !List.of(
+                GameState.FIGHTING_BOSS, 
+                GameState.FIGHTING_MOB, 
+                GameState.HEALING_ROOM, 
+                GameState.MAIN_MENU, 
+                GameState.CHOOSING_CHARACTER
+            ).contains(this.controller.getState())
+        )
             this.game.printMap();
     }
 }
