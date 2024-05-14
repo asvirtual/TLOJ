@@ -2,6 +2,9 @@ package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.Item;
 import com.tloj.game.utilities.Constants;
+
+import org.checkerframework.checker.units.qual.g;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
@@ -37,7 +40,8 @@ public class NorthStar extends Item {
 
     @Override
     public String describe() {
-        return "A magical star that guides heroes to their destination, revealing the entire map";
+        return this.getASCII() + "\n" +
+                "A magical star that guides heroes to their destination, revealing the entire map";
     }
 }
 

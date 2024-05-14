@@ -575,7 +575,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 2, "y": 1 },
-              "lvl": 3
+              "lvl": 4
             }          
           ]
         },
@@ -658,7 +658,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 3, "y": 2 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         },
@@ -743,7 +743,7 @@
             {
               "@class": "com.tloj.game.entities.mobs.JetBat",
               "position": { "x": 5, "y": 4 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         }
