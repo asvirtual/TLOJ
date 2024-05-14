@@ -28,6 +28,7 @@ public abstract class Attack {
         this.target = target;
         this.targetDef = target.getCurrentFightDef();
         this.baseDamage = attacker.getCurrentFightAtk();
+        this.totalAttack = -1;
     }
 
     public CombatEntity getAttacker() {
@@ -81,7 +82,7 @@ public abstract class Attack {
 
     @JsonIgnore
     public int getTotalDamage() {
-        if (this.totalAttack > 0) 
+        if (this.totalAttack != -1) 
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
             
         int totalDamage = this.baseDamage - this.targetDef;

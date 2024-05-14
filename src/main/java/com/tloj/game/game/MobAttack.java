@@ -36,7 +36,7 @@ public class MobAttack extends Attack {
     @Override
     @JsonIgnore
     public int getTotalDamage() {
-        if (this.totalAttack > 0) 
+        if (this.totalAttack != -1) 
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
 
         int totalDamage = this.baseDamage + this.diceRoll - this.targetDef;
@@ -61,7 +61,7 @@ public class MobAttack extends Attack {
         Controller.printSideBySideText(
             this.getAttacker().getCombatASCII().isBlank() ? this.getAttacker().getASCII() : this.getAttacker().getCombatASCII(), 
             this.getAttacker().getPrettifiedStatus() + "\n\n" + this.getTarget().getPrettifiedStatus() + "\n\n" +
-            (this.diceRoll != 0 ?
+            (this.diceRoll != 0 && this.totalAttack != 0 ?
                 this.getAttacker() + " rolled " + this.diceRoll + ":\n\n" + Dice.getASCII(this.diceRoll) :
                 this.getAttacker() + "'s roll was disabled!\n\n" + Dice.getASCII(0))
         );

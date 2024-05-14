@@ -51,7 +51,6 @@ public class Steal extends CharacterSkill {
         HostileRoom room = (HostileRoom) this.character.getCurrentRoom();
 
         Dice dice = new Dice(10);
-        this.character.useMana(10);
         if (dice.roll() < 4) {
             this.activationMessage = ConsoleColors.RED + "Couldn't insert the USB drive! Steal failed" + ConsoleColors.RESET;
             return;
