@@ -48,17 +48,15 @@ public abstract class Boss extends Mob {
         MobAttack attack = new MobAttack(this, target);
 
         Controller.clearConsole();
-
-        System.out.println(this + " attacks you back!");
         
         attack.setDiceRoll(this.dice.roll());
         attack.perform();
         
-        Controller.printSideBySideText(
-            this.getASCII(), 
-            this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus() + "\n\n\n" + 
-            "The boss rolled " + attack.getDiceRoll() + ":\n\n" + Dice.getASCII(attack.getDiceRoll())
-        );
+        // Controller.printSideBySideText(
+        //     this.getASCII(), 
+        //     this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus() + "\n\n\n" + 
+        //     "The boss rolled " + attack.getDiceRoll() + ":\n\n" + Dice.getASCII(attack.getDiceRoll())
+        // );
         
         if (!target.isAlive()) target.notifyDefeat();
     }
@@ -69,7 +67,8 @@ public abstract class Boss extends Mob {
         if (!(attack instanceof PlayerAttack)) return;
 
         if (this.ability == null) return;
-        this.ability.use((PlayerAttack) attack);
+        PlayerAttack playerAttack = (PlayerAttack) attack;
+        this.ability.use(playerAttack);
     }
 
     @Override

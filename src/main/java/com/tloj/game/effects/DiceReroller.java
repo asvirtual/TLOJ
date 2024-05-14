@@ -31,7 +31,7 @@ public class DiceReroller extends WeaponEffect {
             this.weapon.diceRoll()
         );
 
-        System.out.println(ConsoleColors.YELLOW_BRIGHT + "Double hit!\n" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleColors.YELLOW_BRIGHT + "Double hit!\n" + ConsoleColors.RESET);
         return true;
     }
 

@@ -36,7 +36,7 @@ public class HalverBoss extends Boss{
     public HalverBoss(
         @JsonProperty("position") Coordinates position
     ) {
-        super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP,position);
+        super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP, position);
         this.ability = new TakeHalfDamage(this);
     }
 

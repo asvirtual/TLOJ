@@ -7,12 +7,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
+import com.tloj.game.abilities.BossAbility;
+import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
-import com.tloj.game.entities.CombatEntity;
-
-import org.fusesource.jansi.Ansi;
 
 
 // Needed to serialize/deserialize subclasses of Mob, by including the class name in the JSON
@@ -43,6 +42,8 @@ public abstract class Mob extends CombatEntity {
     protected Dice dice;
     /** Mob has a chance to drop a random item to the player upon defeating */
     protected Item drop;
+    /** Mob might have an ability assinged */
+    protected MobAbility ability;
     
     /**
      * Constructor for the Mob class with a random drop<br>
@@ -157,6 +158,10 @@ public abstract class Mob extends CombatEntity {
         this.drop = drop;
     }
 
+    public MobAbility getAbility() {
+        return this.ability;
+    }
+
     /**
      * The level up factor for the mob<br>
      * It is calculated as 1 + log(lvl) / log(8)<br>
@@ -175,26 +180,17 @@ public abstract class Mob extends CombatEntity {
         
         Character target = (Character) t;
         MobAttack attack = new MobAttack(this, target);
-
+        
         Controller.clearConsole();
-
+        
         System.out.println(this.getASCII());
         System.out.println(this + " attacks you back!");
         
         Controller.clearConsole(1500);
-
-        System.out.println(this + " attacks you back!");
-
+                
         attack.setDiceRoll(this.dice.roll());
+        target.getSkill().execute(attack);
         attack.perform();
-
-        Controller.printSideBySideText(
-            this.getCombatASCII(), 
-            this.getPrettifiedStatus() + "\n\n" + target.getPrettifiedStatus() + "\n\n" +
-            (attack.getDiceRoll() != 0 ?
-                this + " rolled " + attack.getDiceRoll() + ":\n\n" + Dice.getASCII(attack.getDiceRoll()) :
-                this + "'s roll was disabled!\n\n" + Dice.getASCII(0))
-        );
 
         if (!target.isAlive()) target.notifyDefeat();
     }

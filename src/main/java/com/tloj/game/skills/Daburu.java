@@ -21,7 +21,9 @@ import com.tloj.game.utilities.ConsoleColors;
  * @see Steal
  */
 
-public class Daburu extends CharacterSkill{
+public class Daburu extends CharacterSkill {
+    private static final int MANA_COST = 10;
+
     /**
      * Constructs a Daburu object with the given character.
      *
@@ -29,40 +31,28 @@ public class Daburu extends CharacterSkill{
      */
     @JsonCreator
     public Daburu(@JsonProperty("character") Character character) {
-        super(character);
+        super(character, MANA_COST);
+        this.activationMessage = ConsoleColors.PURPLE + "Daburu modo! Next attack will deal double damage!" + ConsoleColors.RESET;
     }
+    
 
     /**
      * Method for using ability.
      *
      * @param attack The attack being performed.
      */
-    @Override
-    public void use(Attack attack) {
-        if (this.character.getMana() < 10) {
-            System.out.println("Not enough mana to use Daburu");
-            return;
-        }
+    @Override 
+    public void execute(Attack attack) {
+        // This skill only works on player attacks
+        if (!this.activated || !(attack instanceof PlayerAttack)) return;
 
-        this.character.useMana(10);
-        System.out.println(ConsoleColors.CYAN + "Daburu modo! Next attack will deal double damage" + ConsoleColors.RESET);
+        PlayerAttack playerAttack = (PlayerAttack) attack;
         
-        super.use(attack);
-    }
+        playerAttack.setBaseDamage(playerAttack.getBaseDamage() * 2);
+        playerAttack.setWeaponRoll(playerAttack.getWeaponRoll() * 2);
 
-    @Override
-    public void useOnAttack(PlayerAttack attack) {
-        this.onUse = new Runnable() {
-            @Override
-            public void run() {
-                attack.setBaseDamage(attack.getBaseDamage() * 2);
-                attack.setWeaponRoll(attack.getWeaponRoll() * 2);
-            }
-        };
+        super.execute(attack);
     }
-
-    @Override
-    public void useOnDefend(MobAttack attack) {}
 
     public static String describe() {
         return "Daburu: Doubles next attack damage";

@@ -2,6 +2,7 @@ package com.tloj.game.abilities;
 
 import com.tloj.game.entities.Boss;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.entities.bosses.HalverBoss;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -11,15 +12,17 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * It is paired with the {@link HalverBoss}.<br>
  * @see Boss 
  */
-public class TakeHalfDamage extends BossAbility{
+public class TakeHalfDamage extends BossAbility {
+    private final static String ACTIVATION_MESSAGE = ConsoleColors.PURPLE + "The boss used its mighty ability and deflected half of the attack!" + ConsoleColors.RESET;
+
     @JsonCreator
     public TakeHalfDamage(Boss boss){
-        super(boss);
+        super(boss, ACTIVATION_MESSAGE);
     }
 
     @Override
-    public void use(PlayerAttack attack) {
-        System.out.println(this.boss + " used its mighty ability!\n"); // TODO: Maybe add ascii of the boss here with delay (no enter confirmation)
+    public boolean use(PlayerAttack attack) {
         attack.setTotalDamage(attack.getTotalDamage() / 2);
+        return this.used = true;
     }
 }

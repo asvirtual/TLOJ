@@ -3,8 +3,10 @@ package com.tloj.game.skills;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.DataThief;
 import com.tloj.game.game.Attack;
+import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.rooms.HostileRoom;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
@@ -24,6 +26,8 @@ import com.tloj.game.utilities.Dice;
  */
 
 public class Steal extends CharacterSkill {
+    private static final int MANA_COST = 10;
+
     /**
      * Constructs a Steal object with the given character.
      *
@@ -31,7 +35,40 @@ public class Steal extends CharacterSkill {
      */
     @JsonCreator
     public Steal(@JsonProperty("character") Character character) {
-        super(character);
+        super(character, MANA_COST);
+    }
+
+    @Override 
+    public void activate() {
+        if (this.character.getMana() < this.manaCost) {
+            System.out.println(ConsoleColors.RED + "Not enough mana to use Steal!" + ConsoleColors.RESET);
+            return;
+        }
+
+        this.character.useMana(this.manaCost);
+        this.activated = true;
+
+        HostileRoom room = (HostileRoom) this.character.getCurrentRoom();
+
+        Dice dice = new Dice(10);
+        this.character.useMana(10);
+        if (dice.roll() < 4) {
+            this.activationMessage = ConsoleColors.RED + "Couldn't insert the USB drive! Steal failed" + ConsoleColors.RESET;
+            return;
+        }
+        
+        Item item = Item.getRandomItem();
+        if (this.character.addInventoryItem(item)) this.activationMessage = ConsoleColors.CYAN + "Data acquired! You stole a " + item + ConsoleColors.RESET;
+        else this.activationMessage = ConsoleColors.RED + "Steal failed! " + item + " fell out of your pocket because your inventory is full" + ConsoleColors.RESET;
+
+        Controller.clearConsole();
+        Controller.printSideBySideText(
+            room.getMob().getASCII(), 
+            room.getMob().getPrettifiedStatus() + "\n\n\n" + this.character.getPrettifiedStatus() + "\n" + 
+            ConsoleColors.PURPLE + this.activationMessage + ConsoleColors.RESET + "\n\n"
+        );
+
+        System.out.println();
     }
 
     /**
@@ -40,29 +77,7 @@ public class Steal extends CharacterSkill {
      * @param attack The attack being performed.
      */
     @Override
-    public void use(Attack attack) {        
-        if (this.character.getMana() < 10) {
-            System.out.println("Not enough mana to use Steal");
-            return;
-        }
-
-        Dice dice = new Dice(10);
-        this.character.useMana(10);
-        if (dice.roll() < 4) {
-            System.out.println("Couldn't insert the USB drive! Steal failed");
-            return;
-        }
-        
-        Item item = Item.getRandomItem();
-        if (this.character.addInventoryItem(item)) System.out.println(ConsoleColors.CYAN + "Data acquired! You stole a " + item + ConsoleColors.RESET);
-        else System.out.println("Steal failed! " + item + " fell out of your pocket because your inventory is full");
-    }
-
-    @Override
-    public void useOnAttack(PlayerAttack attack) {}
-
-    @Override
-    public void useOnDefend(MobAttack attack) {}
+    public void execute(Attack attack) {}
 
     public static String describe() {
         return "Steal: Chance to steal a random item";

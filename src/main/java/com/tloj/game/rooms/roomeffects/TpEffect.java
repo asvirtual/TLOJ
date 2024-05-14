@@ -92,7 +92,7 @@ public class TpEffect extends RoomEffect {
         } while (!validLocation);
 
         Controller.awaitEnter();
-
+        Controller.clearConsole();  
         return true;
     }
 

@@ -2,6 +2,7 @@ package com.tloj.game.entities.mobs;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tloj.game.abilities.JetBatAbility;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.game.Attack;
 import com.tloj.game.game.PlayerAttack;
@@ -32,16 +33,17 @@ public class JetBat extends Mob {
         @JsonProperty("lvl") int lvl
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
+        this.ability = new JetBatAbility(this);
     }
 
     @Override
     public void defend(Attack attack) {
         super.defend(attack);
         if (!(attack instanceof PlayerAttack)) return;
-        PlayerAttack playerAttack = (PlayerAttack) attack;
 
-        if (Math.random() > 0.35) return;
-        playerAttack.setWeaponRoll(0);
+        if (this.ability == null) return;
+        PlayerAttack playerAttack = (PlayerAttack) attack;
+        this.ability.use(playerAttack);
     }
     
     @Override

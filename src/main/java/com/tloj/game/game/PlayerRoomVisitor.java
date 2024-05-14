@@ -224,5 +224,22 @@ public class PlayerRoomVisitor implements Visitor {
         Controller.clearConsole();
         System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleColors.RESET);
         System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + Constants.GAME_WIN + ConsoleColors.RESET);
+
+        Controller.awaitEnter();
+        this.controller.setState(GameState.MAIN_MENU);
+            
+        this.controller.changeMusic(
+            Constants.INTRO_WAV_FILE_PATH,
+            false,
+            new Runnable() {
+                @Override
+                public void run() {
+                    Controller.getInstance().changeMusic(
+                        Constants.LOOP_WAV_FILE_PATH,
+                        true
+                    );
+                }
+            }
+        );
     }
 } 

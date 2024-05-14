@@ -256,7 +256,7 @@ public class Game implements CharacterObserver {
 
         this.player.lootMob(mob);
 
-        System.out.println("You've defeated the " + mob + "!\n");
+        // Controller.awaitEnter();
         
         this.increaseScore(Mob.SCORE_DROP);
 
@@ -282,7 +282,6 @@ public class Game implements CharacterObserver {
         this.player.resetFightStats();
         this.player.lootMob(boss);
 
-        System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "You've defeated " + boss + "!" + ConsoleColors.RESET + "\n");
         this.increaseScore(Boss.SCORE_DROP);
         this.controller.setState(GameState.BOSS_DEFEATED);
     }

@@ -21,6 +21,8 @@ import com.tloj.game.utilities.ConsoleColors;
  */
 
 public class Guard extends CharacterSkill {
+    private static final int MANA_COST = 5;
+
     /**
      * Constructs a Guard object with the given character.
      *
@@ -28,41 +30,29 @@ public class Guard extends CharacterSkill {
      */
     @JsonCreator
     public Guard(@JsonProperty("character") Character character) {
-        super(character);
+        super(character, MANA_COST);
+        this.activationMessage = ConsoleColors.PURPLE + "Guard activated! Jordan will completely deflect the opponent's attack!" + ConsoleColors.RESET;
     }
+    
 
     /**
      * Method for using ability.
      *
      * @param attack The attack being performed.
      */
-    @Override
-    public void use(Attack attack) {
-        if (this.character.getMana() < 5) {
-            System.out.println("Not enough mana to use Guard");
-            return;
-        }
+    @Override 
+    public void execute(Attack attack) {
+        // This skill only works on mob attacks
+        if (!this.activated || !(attack instanceof MobAttack)) return;
 
-        this.character.useMana(5);
-        System.out.println(ConsoleColors.CYAN + "Guard activated! Defense increased by 3 points!" + ConsoleColors.RESET);
-
-        super.use(attack);
+        MobAttack mobAttack = (MobAttack) attack;
+        mobAttack.setTotalDamage(0);
+        
+        super.execute(attack);
     }
 
     public static String describe() {
         return "Guard: Adds 3 defense points during fight";
     }
-
-    @Override
-    public void useOnDefend(MobAttack attack) {
-        attack.setDiceRoll(0);
-        attack.setTotalDamage(0);
-    }
-
-    /**
-     * This ability is only used on defending attack
-     */
-    @Override
-    public void useOnAttack(PlayerAttack attack) {}
 }
 

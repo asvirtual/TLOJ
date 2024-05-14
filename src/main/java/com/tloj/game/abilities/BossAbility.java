@@ -11,12 +11,15 @@ import com.tloj.game.entities.Boss;
  * This class is meant to be extended by specific boss abilities, guaranteeing modularity. <br>
  * @see Boss
  */
-public abstract class BossAbility {
+public abstract class BossAbility extends MobAbility {
     protected Boss boss;
+    protected String activationMessage;
 
     protected BossAbility(Boss boss) {
-        this.boss = boss;
+        super(boss);
     }
-    
-    public abstract void use(PlayerAttack attack);
+
+    protected BossAbility(Boss boss, String activationMessage) {
+        super(boss, activationMessage);
+    }
 }

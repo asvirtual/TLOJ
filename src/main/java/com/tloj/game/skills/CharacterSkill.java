@@ -32,6 +32,9 @@ public abstract class CharacterSkill {
     // The character that uses the skill
     protected Character character;
     protected Runnable onUse;
+    protected boolean activated = false;
+    protected int manaCost;
+    protected String activationMessage;
 
     /**
      * Constructs a CharacterSkill object with the given character.
@@ -40,33 +43,36 @@ public abstract class CharacterSkill {
      */
     protected CharacterSkill(Character character) {
         this.character = character;
+        this.manaCost = 0;
     }
 
-    public void executeOnUse() {
-        if (onUse != null) onUse.run();
-        this.onUse = null;
+    protected CharacterSkill(Character character, int manaCost) {
+        this.character = character;
+        this.manaCost = manaCost;
     }
 
-    /**
-     * Applies the skill's effect depending on the type of attack.
-     */
-    public void use(Attack attack) {
-        if (attack instanceof MobAttack) this.useOnDefend((MobAttack) attack);
-        if (attack instanceof PlayerAttack) this.useOnAttack((PlayerAttack) attack);
+    public void activate() {
+        if (this.character.getMana() < this.manaCost) {
+            System.out.println(ConsoleColors.RED + "Not enough mana to use " + this.getClass().getSimpleName().split("(?=[A-Z])") + ConsoleColors.RESET);
+            return;
+        }
+
+        this.character.useMana(this.manaCost);
+        this.activated = true;
 
         Controller.clearConsole();
         HostileRoom room = (HostileRoom) this.character.getCurrentRoom();
 
-        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n");
         Controller.printSideBySideText(
             room.getMob().getASCII(), 
             room.getMob().getPrettifiedStatus() + "\n\n\n" + this.character.getPrettifiedStatus() + "\n" + 
-            ConsoleColors.PURPLE + String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + " activated! " + ConsoleColors.RESET + "\n\n"
+            this.activationMessage + "\n\n"
         );
 
         System.out.println();
     }
 
-    public abstract void useOnDefend(MobAttack attack);
-    public abstract void useOnAttack(PlayerAttack attack);
+    public void execute(Attack attack) {
+        this.activated = false;
+    };
 }

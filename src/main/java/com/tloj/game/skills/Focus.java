@@ -21,6 +21,8 @@ import com.tloj.game.utilities.ConsoleColors;
  */
 
 public class Focus extends CharacterSkill {
+    private static final int MANA_COST = 5;
+
     /**
      * Constructs a Focus object with the given character.
      *
@@ -28,34 +30,26 @@ public class Focus extends CharacterSkill {
      */
     @JsonCreator
     public Focus(@JsonProperty("character") Character character) {
-        super(character);
+        super(character, MANA_COST);
+        this.activationMessage = ConsoleColors.PURPLE + "Focus mode on! Next attack will deal 3 more damage" + ConsoleColors.RESET;
     }
+    
 
     /**
      * Method for using ability.
      *
      * @param attack The attack being performed.
      */
-    @Override
-    public void use(Attack attack) {
-        if (this.character.getMana() < 5) {
-            System.out.println("Not enough mana to use Focus");
-            return;
-        }
+    @Override 
+    public void execute(Attack attack) {
+        // This skill only works on player attacks
+        if (!this.activated || !(attack instanceof PlayerAttack)) return;
 
-        this.character.useMana(5);
-        System.out.println(ConsoleColors.CYAN + "Focus mode on! Next attack will deal 3 more damage" + ConsoleColors.RESET);
+        PlayerAttack playerAttack = (PlayerAttack) attack;
+        playerAttack.setBaseDamage(playerAttack.getBaseDamage() + 3);
         
-        super.use(attack);
+        super.execute(attack);
     }
-
-    @Override
-    public void useOnAttack(PlayerAttack attack) {
-        attack.setBaseDamage(this.character.getCurrentFightAtk() + 3);
-    }
-
-    @Override
-    public void useOnDefend(MobAttack attack) {}
 
     public static String describe() {
         return "Focus: Adds 3 dmg points on next attack";

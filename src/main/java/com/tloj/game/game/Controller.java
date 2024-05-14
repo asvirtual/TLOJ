@@ -15,6 +15,7 @@ import org.fusesource.jansi.AnsiConsole;
 
 
 import com.tloj.game.rooms.HealingRoom;
+import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.Character;
@@ -292,7 +293,7 @@ class UseItemCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println("Invalid command. Correct Syntax: use [item]");
+            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleColors.RESET);
             return;
         }
 
@@ -342,7 +343,7 @@ class InfoItemCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println("Invalid command. Correct Syntax: use [item]");
+            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleColors.RESET);
             return;
         }
         
@@ -377,7 +378,7 @@ class SwapWeaponCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println("Invalid command. Correct Syntax: swap [weapon]");
+            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: swap [weapon]" + ConsoleColors.RESET);
             return;
         }
         
@@ -420,7 +421,7 @@ class DropItemCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println("Invalid command. Correct Syntax: drop [item]");
+            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: drop [item]" + ConsoleColors.RESET);
             return;
         }
 
@@ -439,6 +440,19 @@ class DropItemCommand extends GameCommand {
 
             Controller.printSideBySideText(dropped.getASCII(), ConsoleColors.RED + "Jordan dropped " + dropped + ConsoleColors.RESET, 7);
             System.out.println();
+
+            if (this.controller.getState() == GameState.LOOTING_ROOM) {
+                LootRoom room = (LootRoom) this.player.getCurrentRoom();
+                
+                if (!this.player.addInventoryItem(room.getItem())) return;
+
+                System.out.println(ConsoleColors.GREEN + "You've picked up the " + room.getItem() + ConsoleColors.RESET);
+
+                this.controller.setState(GameState.MOVING);
+                room.clear(this.player);
+
+                return;
+            }
 
             if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
                 this.game.printMap();
@@ -703,7 +717,7 @@ class BuyCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println("Invalid command. Correct Syntax: buy [item]");
+            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: buy [item]" + ConsoleColors.RESET);
             return;
         }
         
@@ -760,7 +774,7 @@ class GiveCommand extends GameCommand {
         super.execute();
         
         if (this.commands.length != 3) {
-            System.out.println("Invalid command. Correct Syntax: give [npc] [item]");
+            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: give [npc] [item]" + ConsoleColors.RESET);
             return;
         }
 
@@ -902,7 +916,7 @@ class GCInvoker {
 
     public void executeCommand() {
         if (this.command == null) {
-            System.out.println("Invalid command");
+            System.out.println(ConsoleColors.RED + "Invalid command" + ConsoleColors.RESET);
             return;
         }
         
@@ -1236,13 +1250,6 @@ public class Controller {
      * @see GameState
      */
     public void handleUserInput(String input) {
-        if (this.getState() == GameState.WIN) {
-            Controller.clearConsole();
-            System.out.println(Constants.GAME_TITLE);
-            this.setState(GameState.MAIN_MENU);
-            return;
-        }
-
         String[] commands = input.split(" ");
         if (commands.length == 0) {
             System.out.println("Please enter a command or write \"help\" for a list of commands");
@@ -1346,7 +1353,7 @@ public class Controller {
         System.out.println(Constants.GAME_TITLE);
 
         while (this.getState() != GameState.EXIT) {
-            if (this.game != null && this.getState() != GameState.WIN) {
+            if (this.game != null) {
                 Character player = this.game.getPlayer();
                 if (player != null) System.out.println("\nWhat to do?\n" + this.getAvailableCommands() + " (write \"help\" for the complete list of commands): ");
             }

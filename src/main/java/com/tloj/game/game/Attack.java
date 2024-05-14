@@ -25,6 +25,7 @@ public abstract class Attack {
     public Attack(CombatEntity attacker, CombatEntity target) {
         this.attacker = attacker;
         this.target = target;
+        this.targetDef = target.getCurrentFightDef();
         this.baseDamage = attacker.getCurrentFightAtk();
     }
 
@@ -79,9 +80,7 @@ public abstract class Attack {
     }
 
     public void perform() {
-        if (this.totalDamage >= 0) 
-            this.target.takeDamage(this.totalDamage);
-        
+        if (this.totalDamage >= 0) this.target.takeDamage(this.totalDamage);
         if (this.onHit != null) this.onHit.run();
     };
 }

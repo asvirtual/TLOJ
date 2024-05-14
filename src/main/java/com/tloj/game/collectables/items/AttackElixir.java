@@ -40,7 +40,6 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
     @Override
     public void consume(Character consumer) {
         consumer.setCurrentFightAtk(consumer.getAtk() + ATTACK_BOOST);
-
         consumer.removeInventoryItem(this);
     }
 

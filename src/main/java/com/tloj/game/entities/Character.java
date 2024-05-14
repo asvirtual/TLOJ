@@ -14,6 +14,7 @@ import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.game.CharacterObserver;
+import com.tloj.game.game.Controller;
 import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.rooms.Room;
@@ -68,7 +69,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected Weapon weapon;
     protected Level currentLevel;
     protected Room currentRoom;
-    protected PlayerAttack currentAttack;
     protected CharacterSkill skill;
     // Observers to notify when the player is defeated or a mob is defeated
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
@@ -222,6 +222,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.currentRoom;
     }
 
+    public CharacterSkill getSkill() {
+        return this.skill;
+    }
+
     public void setCurrentLevel(Level level) {
         this.currentLevel = level;
         this.currentRoom = this.currentLevel.getStartRoom();
@@ -262,7 +266,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public boolean addInventoryItem(Item item) {
-        if(item == null) return false;
+        if (item == null) return false;
 
         if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
             System.out.println(ConsoleColors.RED + "You can't carry more weight, drop something first." + ConsoleColors.RESET);
@@ -306,12 +310,10 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public void move(Coordinates to) {
         this.position = to;
         this.currentRoom = this.currentLevel.getRoom(to);
-        this.currentAttack = null;
     }
 
     public void useSkill() {
-        if (this.currentAttack == null) this.currentAttack = new PlayerAttack(this);
-        this.skill.use(this.currentAttack);
+        this.skill.activate();
     }
 
     @Override
@@ -320,22 +322,15 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
         Mob target = (Mob) t;
 
-        if (this.currentAttack == null) this.currentAttack = new PlayerAttack(this, target);
-        else {
-            this.currentAttack.setOnHit(null);
-            this.currentAttack.setBaseDamage(this.currentFightAtk);
-            this.currentAttack.setTarget(target);
-        }
+        PlayerAttack currentAttack = new PlayerAttack(this, target);
+        
+        if (this.weapon != null) this.weapon.modifyAttack(currentAttack);
+        this.skill.execute(currentAttack);
+        target.defend(currentAttack);
 
-        if (this.weapon != null) this.weapon.modifyAttack(this.currentAttack);
-        target.defend(this.currentAttack);
-
-        // If skill has an effect to be executed on use, do it
-        this.skill.executeOnUse();
-        this.currentAttack.perform();
+        currentAttack.perform();
 
         if (!target.isAlive()) {
-            this.currentAttack = null;
             if (target instanceof Boss) this.observers.forEach(observer -> observer.onBossDefeated());
             else this.observers.forEach(observer -> observer.onMobDefeated(target));
         }
@@ -352,18 +347,28 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void lootMob(Mob mob) {
-        System.out.println("You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  " and " + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET);
+        Item drop = mob.getDrop();
+        if (
+            drop == null || 
+            this.getCarriedWeight() + drop.getWeight() > this.maxWeight ||
+            !this.addInventoryItem(drop)
+        ) {
+            System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleColors.RESET);
+            System.out.println("You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  " and " + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET);      
+        } else {
+            Controller.printSideBySideText(
+                drop.getASCII(),
+                ConsoleColors.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleColors.RESET + "\n" +
+                ConsoleColors.YELLOW_BOLD_BRIGHT + mob + " dropped a " + drop + "!" + ConsoleColors.RESET + "\n" +
+                "You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  " and " + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET,
+                7
+            );
+        }
+
+        System.out.println();
 
         this.addXp(mob.dropXp());
         this.money += mob.getMoneyDrop();
-
-        Item drop = mob.getDrop();
-        if (drop == null) return;
-        if (this.getCarriedWeight() + drop.getWeight() > this.maxWeight) return;
-        if (this.addInventoryItem(drop)) {
-            System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + mob + " dropped a " + drop + ConsoleColors.RESET);
-            System.out.println(drop.getASCII());
-        }
     }
 
     public void useItem(ConsumableItem item) {
@@ -407,7 +412,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         System.out.println(ConsoleColors.GREEN_BRIGHT + "You've leveled up! You are now level " + this.lvl + "!\n" + ConsoleColors.RESET);
     
         // Print changes in stats
-        System.out.println("\n" + "HP: " + ConsoleColors.RED + initialMaxHp + ConsoleColors.RESET + " --> " + ConsoleColors.RED_BRIGHT + this.maxHp + ConsoleColors.RESET);
+        System.out.println("HP: " + ConsoleColors.RED + initialMaxHp + ConsoleColors.RESET + " --> " + ConsoleColors.RED_BRIGHT + this.maxHp + ConsoleColors.RESET);
         System.out.println("Mana: " + ConsoleColors.BLUE + initialMaxMana + ConsoleColors.RESET + " --> " + ConsoleColors.BLUE_BRIGHT + this.maxMana + ConsoleColors.RESET);
         System.out.println("Attack: " + ConsoleColors.PURPLE + initialAtk + ConsoleColors.RESET + " --> " + ConsoleColors.PURPLE_BRIGHT + this.atk + ConsoleColors.RESET);
         System.out.println("Defense: " + ConsoleColors.PURPLE + initialDef + ConsoleColors.RESET + " --> " + ConsoleColors.PURPLE_BRIGHT + this.def + ConsoleColors.RESET + "\n");

@@ -20,7 +20,9 @@ import com.tloj.game.collectables.Weapon;
  * @see Steal
  */
 
-public class CheatEngine extends CharacterSkill{
+public class CheatEngine extends CharacterSkill {
+    private static final int MANA_COST = 5;
+    
     /**
      * Constructs a CheatEngine object with the given character.
      *
@@ -28,41 +30,27 @@ public class CheatEngine extends CharacterSkill{
      */
     @JsonCreator
     public CheatEngine(@JsonProperty("character") Character character) {
-        super(character);
+        super(character, MANA_COST);
+        this.activationMessage = ConsoleColors.PURPLE + "Hacking going on! MAX ROLL INCOMING!" + ConsoleColors.RESET;
     }
+
 
     /**
      * Method for using ability.
      *
      * @param attack The attack being performed.
      */
-    @Override
-    public void use(Attack attack) {
-        if (this.character.getMana() < 5) {
-            System.out.println("Not enough mana to use Cheat Engine");
-            return;
-        }
+    @Override 
+    public void execute(Attack attack) {
+        // This skill only works on player attacks
+        if (!this.activated || !(attack instanceof PlayerAttack)) return;
 
-        this.character.useMana(5);
-        System.out.println(ConsoleColors.CYAN + "Hacking going on! MAX ROLL INCOMING!" + ConsoleColors.RESET);
-
-        super.use(attack);
-    }
-
-    @Override
-    public void useOnAttack(PlayerAttack attack) {
+        PlayerAttack playerAttack = (PlayerAttack) attack;
         Weapon weapon = this.character.getWeapon();
+        playerAttack.setWeaponRoll(weapon.getDiceMax());
 
-        this.onUse = new Runnable() {
-            @Override
-            public void run() {
-                attack.setWeaponRoll(weapon.getDiceMax());
-            }
-        };
+        super.execute(attack);
     }
-
-    @Override
-    public void useOnDefend(MobAttack attack) {}
 
     public static String describe() {
         return "Cheat Engine: Forces the max weapon roll";

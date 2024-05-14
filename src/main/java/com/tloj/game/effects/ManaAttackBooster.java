@@ -34,7 +34,7 @@ public class ManaAttackBooster extends WeaponEffect {
         attack.setWeaponRoll(this.weapon.diceRoll());
         holder.useMana(MANA_COST);
 
-        System.out.println(ConsoleColors.YELLOW_BRIGHT + "Critical mana damage!" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleColors.YELLOW_BRIGHT + "Critical mana damage!" + ConsoleColors.RESET);
         return true;
     }
 

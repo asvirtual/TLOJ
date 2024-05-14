@@ -2,17 +2,18 @@ package com.tloj.game.entities.mobs;
 
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.MovingEntity;
-import com.tloj.game.game.Attack;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Level;
-import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.GameState;
+
+import org.fusesource.jansi.Ansi;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.SpecialKey;
@@ -46,58 +47,6 @@ public class Glitched extends Mob implements MovingEntity {
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position, new SpecialKey());
     }
-
-    /* @Override
-    public void defend(Attack attack) {
-        super.defend(attack);
-        PlayerAttack playerAttack = (PlayerAttack) attack;
-
-        attack.setOnHit(new Runnable() {
-            @Override
-            public void run() {
-                Glitched target = (Glitched) playerAttack.getTarget();
-                if (!target.isAlive()) return;
-                
-                target.turnsLeft--;
-        
-                Character player = playerAttack.getAttacker();
-                Level level = player.getCurrentLevel();
-                
-                int rows = level.getRoomsRowCount();
-                int cols = level.getRoomsColCount();
-                boolean validLocation = false;
-        
-                do {
-                    int row = (int) Math.floor(Math.random() * rows); // Returns a random number between 0 (inclusive) and rows (exclusive)
-                    int col = (int) Math.floor(Math.random() * cols); // Returns a random number between 0 (inclusive) and cols (exclusive)
-                    Coordinates newCoords = new Coordinates(row, col);
-
-                    if (
-                        newCoords.equals(player.getPosition()) ||
-                        !level.areCoordinatesValid(newCoords) || 
-                        level.getRoom(newCoords).getType() != RoomType.HOSTILE_ROOM ||
-                        level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM
-                    ) continue;
-                    
-                    HostileRoom currentRoom = (HostileRoom) player.getCurrentRoom();
-                    HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
-
-                    currentRoom.removeMob(target);
-
-                    if (target.turnsLeft != 0) {
-                        target.move(newCoords);
-                        nextRoom.addMobToTop(target);
-                        nextRoom.setCleared(false);
-                        System.out.println("A bug in the system teleported the Glitched away! Will it come back?\n");
-                    } else {
-                        System.out.print("The Glitched has gone...");
-                    }
-
-                    validLocation = true;
-                } while (!validLocation);
-            }
-        });
-    }*/
 
     @Override
     public void attack(CombatEntity t) {
@@ -179,4 +128,13 @@ public class Glitched extends Mob implements MovingEntity {
     public String getCombatASCII(){
         return Constants.GLITCHED_ATTACK;
     }
+
+    @JsonIgnore
+    @Override
+    public String getPrettifiedStatus() {
+        return 
+            this + " - " + ConsoleColors.GREEN + "Lvl ???" + ConsoleColors.RESET + ":\n\n" +
+            " ⸭ HP: " + Ansi.ansi().fg(Ansi.Color.RED).a(this.getHpBar() + " " + this.hp + "/" + this.maxHp).reset() + "\n";
+    }
+
 }

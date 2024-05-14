@@ -1,5 +1,7 @@
 package com.tloj.game.game;
 
+import com.tloj.game.abilities.BossAbility;
+import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
@@ -19,6 +21,7 @@ import com.tloj.game.utilities.Dice;
 
 public class PlayerAttack extends Attack {
     private int weaponRoll;
+    private MobAbility targetAbility;
 
     /**
      * Constructs a PlayerAttack object with the given attacker and target.
@@ -28,6 +31,7 @@ public class PlayerAttack extends Attack {
      */
     public PlayerAttack(Character attacker, Mob target) {
         super(attacker, target);
+        this.targetAbility = target.getAbility();
     }
 
     /**
@@ -87,6 +91,17 @@ public class PlayerAttack extends Attack {
         return (Mob) this.target;
     }
 
+    public void setTargetAbility(MobAbility targetAbility) {
+        this.targetAbility = targetAbility;
+    }
+
+    public void resetStats() {
+        this.baseDamage = this.attacker.getCurrentFightAtk();
+        this.targetDef = this.target.getCurrentFightDef();
+        this.weaponRoll = 0;
+        this.totalDamage = 0;
+    }
+
     /**
      * Performs the attack and prints out the result.
      */
@@ -96,7 +111,9 @@ public class PlayerAttack extends Attack {
         
         Controller.printSideBySideText(
             this.attacker.getASCII(), 
-            this.getAttacker().getPrettifiedStatus() + "\n\n" + this.getTarget().getPrettifiedStatus() + "\n\n\n" +
+            this.getAttacker().getPrettifiedStatus() + "\n\n" + this.getTarget().getPrettifiedStatus() +
+            (this.targetAbility != null && this.targetAbility.wasUsed() ? "\n" + this.targetAbility.getActivationMessage() : "") + 
+            "\n\n" +
             (this.getWeaponRoll() != 0 ?
                 "Jordan rolled " + this.getWeaponRoll() + ":\n\n" + Dice.getASCII(this.getWeaponRoll()) :
                 "Oh no! Jordan's roll was disabled!\n\n" + Dice.getASCII(0))
@@ -106,5 +123,6 @@ public class PlayerAttack extends Attack {
         if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleColors.RED + this.target.getHP() + " HP" + ConsoleColors.RESET + " left!");
 
         Controller.awaitEnter();
+        this.resetStats();
     }
 }

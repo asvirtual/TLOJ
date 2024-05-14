@@ -3,8 +3,8 @@ package com.tloj.game.abilities;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.bosses.FlyingBoss;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -12,15 +12,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * It is paired with the {@link FlyingBoss}.
  */
 public class DodgeSlowAttackFlying extends BossAbility {
+    private final static String ACTIVATION_MESSAGE = ConsoleColors.PURPLE + "The boss used its mighty ability and dodged the attack!" + ConsoleColors.RESET;
+
     @JsonCreator
     public DodgeSlowAttackFlying(Boss boss) {
-        super(boss);
+        super(boss, ACTIVATION_MESSAGE);
     }
 
     @Override
-    public void use(PlayerAttack attack) {
-        if (attack.getWeaponRoll() > 4) return;
-        System.out.println(this.boss + " used its mighty ability!\n"); // TODO: Maybe add ascii of the boss here with delay (no enter confirmation)
+    public boolean use(PlayerAttack attack) {
+        if (attack.getWeaponRoll() > 4) return this.used = false;
         attack.setTotalDamage(0);
+        return this.used = true;
     }
 }

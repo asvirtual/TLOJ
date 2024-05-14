@@ -33,7 +33,7 @@ public class CyberGoblin extends Mob {
     }
     
     @Override
-    public String getASCII(){
+    public String getASCII() {
         return Constants.CYBER_GOBLIN_STATIC;
     }
 

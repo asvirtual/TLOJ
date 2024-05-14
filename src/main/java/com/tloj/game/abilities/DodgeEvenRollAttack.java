@@ -3,6 +3,7 @@ package com.tloj.game.abilities;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.bosses.EvenBoss;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.utilities.ConsoleColors;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
@@ -10,17 +11,18 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * It is paired with the {@link EvenBoss}. <br>
  */
 public class DodgeEvenRollAttack extends BossAbility {
+    private final static String ACTIVATION_MESSAGE = ConsoleColors.PURPLE + "The boss used its mighty ability and dodged the attack!" + ConsoleColors.RESET;
+
     @JsonCreator
     public DodgeEvenRollAttack(Boss boss) {
-        super(boss);
+        super(boss, ACTIVATION_MESSAGE);
     }
 
     @Override
-    public void use(PlayerAttack attack) {
-        if (attack.getWeaponRoll() % 2 == 0) {
-            System.out.println(this.boss + " used its mighty ability!\n"); // TODO: Maybe add ascii of the boss here with delay (no enter confirmation)
-            attack.setWeaponRoll(0);
-        }
+    public boolean use(PlayerAttack attack) {
+        if (attack.getWeaponRoll() % 2 == 1) return this.used = false;
+        attack.setWeaponRoll(0);
+        return this.used = true;
     }
     
 }

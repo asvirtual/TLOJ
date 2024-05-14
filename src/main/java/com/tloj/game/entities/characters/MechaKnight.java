@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.collectables.items.AttackElixir;
-import com.tloj.game.collectables.items.Emp;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.entities.Character;
 import com.tloj.game.skills.Guard;
@@ -56,7 +54,6 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
-        this.inventory.add(new Emp());
     }    
 
     /** 
@@ -79,7 +76,6 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
-        this.inventory.add(new Emp());
     }
 
     public static String getDetailedInfo() {
