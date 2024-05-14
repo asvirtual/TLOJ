@@ -24,15 +24,15 @@ public class DiceReroller extends WeaponEffect {
         int roll = this.weapon.diceRoll();
         attack.setWeaponRoll(roll);
         
-        if (Math.random() > 0.7) return false;
+        if (Math.random() > 0.7) return this.used = false;
         
         attack.setWeaponRoll(
             roll + 
             this.weapon.diceRoll()
         );
 
-        System.out.println("\n" + ConsoleColors.YELLOW_BRIGHT + "Double hit!\n" + ConsoleColors.RESET);
-        return true;
+        this.activationMessage = ConsoleColors.YELLOW_BRIGHT + this.weapon.getName() + "'s dice reroller activated! Double hit!\n" + ConsoleColors.RESET;
+        return this.used = true;
     }
 
     @Override

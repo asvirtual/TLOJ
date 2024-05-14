@@ -13,10 +13,28 @@ import com.tloj.game.collectables.Weapon;
  */
 public abstract class WeaponEffect {
     protected Weapon weapon;
+    protected String activationMessage;
+    protected boolean used = false;
 
     protected WeaponEffect(Weapon weapon) {
         this.weapon = weapon;
     }
+
+    public String getActivationMessage() {
+        return this.activationMessage;
+    }
+
+    public boolean wasUsed() {
+        return this.used;
+    }
+
+    /*
+     * Split the class name by capital letters and join the resulting array with spaces
+     */
+    @Override
+    public String toString() {  
+        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + ": "; 
+    };
 
     /**
      * Apply the effect to the attack
@@ -24,13 +42,4 @@ public abstract class WeaponEffect {
      * @return true if the effect was applied successfully, false otherwise
      */
     public abstract boolean apply(PlayerAttack attack);
-
-   /*
-    * Split the class name by capital letters and join the resulting array with spaces
-    */
-    @Override
-    public String toString() {  
-        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + ": "; 
-    };
-
 }

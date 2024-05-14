@@ -3,6 +3,7 @@ package com.tloj.game.game;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.effects.WeaponEffect;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.ConsoleColors;
@@ -22,6 +23,7 @@ import com.tloj.game.utilities.Dice;
 public class PlayerAttack extends Attack {
     private int weaponRoll;
     private MobAbility targetAbility;
+    private WeaponEffect weaponEffect;
 
     /**
      * Constructs a PlayerAttack object with the given attacker and target.
@@ -95,6 +97,10 @@ public class PlayerAttack extends Attack {
         this.targetAbility = targetAbility;
     }
 
+    public void setWeaponEffect(WeaponEffect weaponEffect) {
+        this.weaponEffect = weaponEffect;
+    }
+
     public void resetStats() {
         this.baseDamage = this.attacker.getCurrentFightAtk();
         this.targetDef = this.target.getCurrentFightDef();
@@ -112,6 +118,7 @@ public class PlayerAttack extends Attack {
         Controller.printSideBySideText(
             this.attacker.getASCII(), 
             this.getAttacker().getPrettifiedStatus() + "\n\n" + this.getTarget().getPrettifiedStatus() +
+            (this.weaponEffect != null && this.weaponEffect.wasUsed() ? "\n" + this.weaponEffect.getActivationMessage() : "") + 
             (this.targetAbility != null && this.targetAbility.wasUsed() ? "\n" + this.targetAbility.getActivationMessage() : "") + 
             "\n\n" +
             (this.getWeaponRoll() != 0 ?

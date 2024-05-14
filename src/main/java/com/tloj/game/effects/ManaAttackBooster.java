@@ -29,13 +29,13 @@ public class ManaAttackBooster extends WeaponEffect {
     @Override
     public boolean apply(PlayerAttack attack) {
         Character holder = attack.getAttacker();
-        if (holder.getMana() < MANA_COST) return false;
+        if (holder.getMana() < MANA_COST) return this.used = false;
 
         attack.setWeaponRoll(this.weapon.diceRoll());
         holder.useMana(MANA_COST);
 
-        System.out.println("\n" + ConsoleColors.YELLOW_BRIGHT + "Critical mana damage!" + ConsoleColors.RESET);
-        return true;
+        this.activationMessage = ConsoleColors.YELLOW_BRIGHT + this.weapon.getName() + "'s critical mana damage activated!" + ConsoleColors.RESET;
+        return this.used = true;
     }
 
     @Override

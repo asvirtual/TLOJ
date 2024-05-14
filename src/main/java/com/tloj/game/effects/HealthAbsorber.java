@@ -28,11 +28,11 @@ public class HealthAbsorber extends WeaponEffect {
             public void run() {
                 int totalDamage = attack.getTotalDamage();
                 if (totalDamage > 0) attack.getAttacker().heal(totalDamage / 2);
-                System.out.println(ConsoleColors.YELLOW_BRIGHT + "You healed for " + totalDamage / 2 + " hp" + ConsoleColors.RESET);
+                HealthAbsorber.this.activationMessage = ConsoleColors.YELLOW_BRIGHT + HealthAbsorber.this.weapon.getName() + "'s health Absorber activated! Jordan was healed for " + totalDamage / 2 + " hp" + ConsoleColors.RESET;
             }
         });
 
-        return true;
+        return this.used = true;
     }
 
     @Override

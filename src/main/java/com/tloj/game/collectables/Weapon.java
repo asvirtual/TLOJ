@@ -68,8 +68,16 @@ public abstract class Weapon extends Item {
      * @see WeaponEffect#apply(PlayerAttack)
      */
     public void modifyAttack(PlayerAttack attack) {
-        if (this.effect != null) this.effect.apply(attack);
-        else attack.setWeaponRoll(this.diceRoll());
+        if (this.effect == null) attack.setWeaponRoll(this.diceRoll());
+        else {
+            this.effect.apply(attack);
+            attack.setWeaponEffect(this.effect);
+        }
+    }
+
+    @JsonIgnore
+    public String getName() {
+        return super.toString();
     }
 
     @Override 
