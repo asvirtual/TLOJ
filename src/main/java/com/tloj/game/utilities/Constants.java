@@ -27,8 +27,13 @@ public class Constants {
                |  |_|  ||    ___|   ___|   ||  |_|  ||    __  || |_|   ||       ||  _    |      
                |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
                |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
-                                                                                        alpha version
-    """ + ConsoleColors.RESET +
+    """
+    + ConsoleColors.RESET + ConsoleColors.YELLOW_BOLD_BRIGHT +
+        """
+                                                                                        alpha 
+                                                                                           version
+    """ 
+    + ConsoleColors.RESET +
     """
                                         [new]  - START GAME
                                         [load] - LOAD GAME
@@ -36,9 +41,10 @@ public class Constants {
     """;
     
     public static final String GAME_TITLE_CONTINUE = 
+    
     ConsoleColors.RED_BOLD_BRIGHT + 
     """
-          _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
+              _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
          |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
          |_     _||  |_|  ||    ___|      |   |    |    ___||    ___||    ___||   |_| ||  _    |
            |   |  |       ||   |___       |   |    |   |___ |   | __ |   |___ |       || | |   |
@@ -52,13 +58,18 @@ public class Constants {
                |  |_|  ||    ___|   ___|   ||  |_|  ||    __  || |_|   ||       ||  _    |      
                |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
                |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
-                                                                                        alpha version
-    """ + ConsoleColors.RESET +
     """
-                                    [continue] -  CONTINUE LAST GAME
-                                      [new]    -  START GAME
-                                      [load]   -  LOAD GAME
-                                      [exit]   -  EXIT GAME
+    + ConsoleColors.RESET + ConsoleColors.YELLOW_BOLD_BRIGHT +
+        """
+                                                                                        alpha 
+                                                                                           version
+    """ 
+    + ConsoleColors.RESET +
+    """
+                                  [continue] - CONTINUE GAME
+                                    [new]    - START GAME
+                                    [load]   - LOAD GAME
+                                    [exit]   - EXIT GAME
     """;
     
     public static final String GAME_OVER =
@@ -111,6 +122,8 @@ public class Constants {
     // 46
     public static final String CLASS_CHOICE =
     """
+Choose your class:
+
                                              ░░░░░                                                                    ░░░░  ░▒░                         ░░      
                                              ░▓███▒░                                                                  ░░   ░░░░                        ░▒░░  
                   ░░░░░                    ░░▓▓███▓▒░░                                                         ░░░░░░░░░  ░▒▓░░      ░░░░            ░░░▓░░░
@@ -138,6 +151,11 @@ public class Constants {
             ░░██████▒██████▒░          ░▓█████▓█████████▓░        ░▓████████████████████▓▓███▓░         ░░▓█▓█▓▓▓▓▓█▓██▓█▓▓░            ░▒█▓▒▓█████████▓▓▓▓▓█▒░▓██▒░
              ░▓████▓░▓█████░░          ░▓█████▓█████████▓░       ░░█████▓███████████████▒░████░         ░░▓█▓█▓▓▓▓▓██▓▓████▒░           ░▒▓██▓▓███████████▓▓█▓░░▓░░░
               ░▒▒▒▒░░░▒▒▒▒░░░          ░░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░       ░░▒▒▒▒▒░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░▒▒▒▒░         ░░▒▒░▒░░░░░▒▒░▒▒░▒▒░░           ░░▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒░▒▒▒░░ 
+
+            [1] - BasePlayer              [2] - Hacker                  [3] - DataThief                  [4] - MechaKnight                 [5] - NeoSamurai
+
+
+Your choice: 
         """;
     public static final String CYBER_GOBLIN_ATTACK = 
     """                               

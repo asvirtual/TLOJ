@@ -5,6 +5,9 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Constants;
+
+import org.checkerframework.checker.units.qual.g;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -49,7 +52,8 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
 
     @Override
     public String describe() {
-        return "An ancient key, guarded by the lost glitched adventurer, that opens a special locked loot room somewhere in the dungeon...";
+        return this.getASCII() + "\n" +
+                "An ancient key, guarded by the lost glitched adventurer, that opens a special locked loot room somewhere in the dungeon...";
     }
 
     @Override

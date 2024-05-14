@@ -799,7 +799,6 @@ class NewGameCommand extends GameCommand {
         super.execute();
         Controller.clearConsole();
         this.controller.newGame();
-        System.out.println("Choose your starting character: [1] - BasePlayer, [2] - Hacker, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai");
         System.out.println("\n" + Constants.CLASS_CHOICE);
     }
 }
@@ -871,7 +870,7 @@ class ChooseCharacterGameCommand extends GameCommand {
         } + "\n");
 
         if (!Controller.awaitConfirmation()) {
-            System.out.println("Choose your starting character: [1] - BasePlayer, [2] - Hacker, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai");
+            Controller.clearConsole();
             System.out.println("\n" + Constants.CLASS_CHOICE);
             return;
         }
