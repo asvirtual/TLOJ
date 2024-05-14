@@ -31,7 +31,7 @@ import com.tloj.game.entities.CombatEntity;
  */
 public class Glitched extends Mob implements MovingEntity {
     private static final int HP = 70;
-    private static final int ATTACK = 3;
+    private static final int ATTACK = 5;
     private static final int DEFENSE = 1;
     private static final int DICE_FACES = 6;
     private static final int XP_DROP = 3;

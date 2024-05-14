@@ -18,7 +18,7 @@ import com.tloj.game.utilities.Coordinates;
  */
 public class MechaRat extends Mob  {
     private static final int HP = 8;
-    private static final int ATTACK = 2;
+    private static final int ATTACK = 3;
     private static final int DEFENSE = 2;
     private static final int DICE_FACES = 8;
     private static final int XP_DROP = 5;
