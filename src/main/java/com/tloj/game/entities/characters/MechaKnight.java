@@ -13,6 +13,7 @@ import com.tloj.game.skills.Guard;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
+
 public class MechaKnight extends Character {
     private static final int HP = 30;
     private static final int ATTACK = 2; 
@@ -91,7 +92,7 @@ public class MechaKnight extends Character {
     }
 
     @Override
-    public String getASCII(){
+    public String getASCII() {
         return Constants.MECHA_KNIGHT;
     }
 }
