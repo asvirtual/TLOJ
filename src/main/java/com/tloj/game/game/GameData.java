@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -15,17 +16,17 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.tloj.game.entities.Character;
 
-
-/*
- * Google Cloud Storage imports
- */
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
-import com.google.cloud.storage.Storage;
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.storage.StorageOptions;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.Bucket;
+
 
 
 
@@ -116,30 +117,54 @@ public class GameData {
     }
 
     /**
-     * Saves the given Game object to a JSON file in a Google Cloud bucket with the specified bucket name and filename.
-     *
-     * @param game The Game object to be saved.
-     * @param bucketName The name of the Google Cloud bucket.
-     * @param filename The filename for the JSON file.
+     * @param game
+     * @param bucketName
+     * @param filename
      */
-    public static void saveToCloudBucket(Game game, String bucketName, String filename) {
-        ObjectMapper mapper = new ObjectMapper();
-        String json;
+    public static void saveToFirebaseBucket(Game game, String bucketName, String filename) {
         try {
-            json = mapper.writeValueAsString(game);
-        } catch (JsonProcessingException e) {
+            FileInputStream serviceAccount = new FileInputStream("path/to/serviceAccountKey.json");
+
+            FirebaseOptions options = FirebaseOptions.builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setStorageBucket(bucketName)
+                    .build();
+
+            FirebaseApp.initializeApp(options);
+
+            Storage storage = StorageOptions.getDefaultInstance().getService();
+            Bucket bucket = storage.get(bucketName);
+
+            // String jsonData = serializeJSON(game);
+
+            // serialize Game object to JSON
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonData = mapper.writeValueAsString(game);
+
+            // Upload JSON data to Firebase Storage
+            byte[] bytes = jsonData.getBytes();
+            bucket.create(filename, bytes);
+
+            System.out.println("JSON data saved to Firebase Storage.");
+
+        }          
+        catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();
-            return;
-        }
+        } 
+        catch (JsonMappingException e) {
+            System.out.println("Error mapping JSON from GameData");
+            e.printStackTrace();
+        } 
+        catch (IOException e) {
+            System.out.println("Error opening file " + filename + " for writing");
+            e.printStackTrace();
+        } 
 
-        Storage storage = StorageOptions.getDefaultInstance().getService();
-        BlobId blobId = BlobId.of(bucketName, filename);
-        // Blob blob = storage.create(blobId, json.getBytes()); 
-
-
-        System.out.println("JSON saved to Google Cloud bucket");
     }
+
+
+
 
 
     /**
@@ -166,41 +191,6 @@ public class GameData {
 
         return null;
     }
-
-
-    /**
-     * Loads GameData from a JSON file in a Google Cloud bucket with the specified bucket name and filename.
-     *
-     * @param bucketName The name of the Google Cloud bucket.
-     * @param filename The filename of the JSON file.
-     * @return The loaded GameData object.
-     */
-    public static GameData loadFromCloudBucket(String bucketName, String filename) {
-        Storage storage = StorageOptions.getDefaultInstance().getService();
-
-        BlobId blobId = BlobId.of(bucketName, filename);
-        Blob blob = storage.get(blobId);
-        if (blob == null) {
-            System.out.println("Error: Blob not found in the specified bucket");
-            return null;
-        }
-        byte[] content = blob.getContent();
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            return mapper.readValue(content, GameData.class);
-        } catch (JsonGenerationException e) {
-            System.out.println("Error generating JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            System.out.println("Error mapping JSON from GameData");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Error opening file " + filename + " for reading");
-            e.printStackTrace();
-        }
-        return null;
-    }
-
 
 
     /**
