@@ -12,7 +12,7 @@ public class Constants {
     public static final int BAR_LENGTH = 10;
 
     public static final String GAME_TITLE =
-    ConsoleColors.RED_BOLD_BRIGHT + 
+    ConsoleHandler.RED_BOLD_BRIGHT + 
     """
                            _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
                           |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
@@ -29,12 +29,12 @@ public class Constants {
                                 |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
                                 |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
                       """
-                      + ConsoleColors.RESET + ConsoleColors.YELLOW_BOLD_BRIGHT +
+                      + ConsoleHandler.RESET + ConsoleHandler.YELLOW_BOLD_BRIGHT +
                           """
                                                                                                           alpha 
                                                                                                             version
                       """ 
-                      + ConsoleColors.RESET +
+                      + ConsoleHandler.RESET +
                       """
                                                           [new]  - START GAME
                                                           [load] - LOAD GAME
@@ -43,7 +43,7 @@ public class Constants {
     
     public static final String GAME_TITLE_CONTINUE = 
     
-    ConsoleColors.RED_BOLD_BRIGHT + 
+    ConsoleHandler.RED_BOLD_BRIGHT + 
     """
                            _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
                           |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
@@ -60,12 +60,12 @@ public class Constants {
                                 |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
                                 |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
                       """
-                      + ConsoleColors.RESET + ConsoleColors.YELLOW_BOLD_BRIGHT +
+                      + ConsoleHandler.RESET + ConsoleHandler.YELLOW_BOLD_BRIGHT +
                           """
                                                                                                           alpha 
                                                                                                             version
                       """ 
-                      + ConsoleColors.RESET +
+                      + ConsoleHandler.RESET +
                       """
                                                     [continue] - CONTINUE GAME
                                                       [new]    - START GAME
@@ -1558,7 +1558,7 @@ public static final String DATA_THIEF = """
                                                                
   """;
 
-  public static final String NANITE_LEECH_BLADE = String.join(ConsoleColors.RESET + "\n" + ConsoleColors.SILVER, """                                                                                                                  
+  public static final String NANITE_LEECH_BLADE = String.join(ConsoleHandler.RESET + "\n" + ConsoleHandler.SILVER, """                                                                                                                  
                                             
                                                  
                         █████▓▓█████       
@@ -1588,7 +1588,7 @@ public static final String DATA_THIEF = """
                                      
                                      
                                         
-      """.split("\n")) + ConsoleColors.RESET;
+      """.split("\n")) + ConsoleHandler.RESET;
 
 
       public static final String NANO_DIRK = """

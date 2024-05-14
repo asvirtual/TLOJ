@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Dice;
 
 
@@ -41,7 +41,7 @@ public class Steal extends CharacterSkill {
     @Override 
     public void activate() {
         if (this.character.getMana() < this.manaCost) {
-            System.out.println(ConsoleColors.RED + "Not enough mana to use Steal!" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Not enough mana to use Steal!" + ConsoleHandler.RESET);
             return;
         }
 
@@ -52,19 +52,19 @@ public class Steal extends CharacterSkill {
 
         Dice dice = new Dice(10);
         if (dice.roll() < 4) {
-            this.activationMessage = ConsoleColors.RED + "Couldn't insert the USB drive! Steal failed" + ConsoleColors.RESET;
+            this.activationMessage = ConsoleHandler.RED + "Couldn't insert the USB drive! Steal failed" + ConsoleHandler.RESET;
             return;
         }
         
         Item item = Item.getRandomItem();
-        if (this.character.addInventoryItem(item)) this.activationMessage = ConsoleColors.CYAN + "Data acquired! You stole a " + item + ConsoleColors.RESET;
-        else this.activationMessage = ConsoleColors.RED + "Steal failed! " + item + " fell out of your pocket because your inventory is full" + ConsoleColors.RESET;
+        if (this.character.addInventoryItem(item)) this.activationMessage = ConsoleHandler.CYAN + "Data acquired! You stole a " + item + ConsoleHandler.RESET;
+        else this.activationMessage = ConsoleHandler.RED + "Steal failed! " + item + " fell out of your pocket because your inventory is full" + ConsoleHandler.RESET;
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         Controller.printSideBySideText(
             room.getMob().getASCII(), 
             room.getMob().getPrettifiedStatus() + "\n\n\n" + this.character.getPrettifiedStatus() + "\n" + 
-            ConsoleColors.PURPLE + this.activationMessage + ConsoleColors.RESET + "\n\n"
+            ConsoleHandler.PURPLE + this.activationMessage + ConsoleHandler.RESET + "\n\n"
         );
 
         System.out.println();

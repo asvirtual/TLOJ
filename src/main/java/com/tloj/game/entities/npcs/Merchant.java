@@ -18,7 +18,7 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.game.Controller;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -63,7 +63,7 @@ public class Merchant extends FriendlyEntity {
 
         Controller.printSideBySideText(
             this.getASCII(),
-            ConsoleColors.YELLOW + "Merchant: Hello there! What do you want to buy?" + ConsoleColors.RESET + "\n" +
+            ConsoleHandler.YELLOW + "Merchant: Hello there! What do you want to buy?" + ConsoleHandler.RESET + "\n" +
             this.getCurrentStatus(),
             4
         );
@@ -78,13 +78,13 @@ public class Merchant extends FriendlyEntity {
     }
 
     public void buy(int index) {
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         PurchasableItem item = this.items.get(index);
         
         if (item == null) {
             Controller.printSideBySideText(
                 this.getASCII(),
-                ConsoleColors.RED + "Merchant: I don't have that!" + ConsoleColors.RESET + "\n" +
+                ConsoleHandler.RED + "Merchant: I don't have that!" + ConsoleHandler.RESET + "\n" +
                 this.getCurrentStatus(),
                 4
             );
@@ -94,7 +94,7 @@ public class Merchant extends FriendlyEntity {
         if (!this.player.canAfford(item)) {
             Controller.printSideBySideText(
                 this.getASCII(),
-                ConsoleColors.RED + "Merchant: You don't have enough BTC!" + ConsoleColors.RESET + "\n" +
+                ConsoleHandler.RED + "Merchant: You don't have enough BTC!" + ConsoleHandler.RESET + "\n" +
                 this.getCurrentStatus(),
                 4
             );
@@ -104,7 +104,7 @@ public class Merchant extends FriendlyEntity {
         if (!this.player.canCarry(item)) {
             Controller.printSideBySideText(
                 this.getASCII(),
-                ConsoleColors.RED + "Merchant: You don't have enough space in your inventory!" + ConsoleColors.RESET + "\n" +
+                ConsoleHandler.RED + "Merchant: You don't have enough space in your inventory!" + ConsoleHandler.RESET + "\n" +
                 this.getCurrentStatus(),
                 4
             );
@@ -116,8 +116,8 @@ public class Merchant extends FriendlyEntity {
 
         Controller.printSideBySideText(
             this.getASCII(),
-            ConsoleColors.YELLOW + "Merchant: It's always a pleasure doing business with you!" + ConsoleColors.RESET + "\n " + 
-            ConsoleColors.YELLOW + "Do you need anything else?" + ConsoleColors.RESET + "\n" +
+            ConsoleHandler.YELLOW + "Merchant: It's always a pleasure doing business with you!" + ConsoleHandler.RESET + "\n " + 
+            ConsoleHandler.YELLOW + "Do you need anything else?" + ConsoleHandler.RESET + "\n" +
             this.getCurrentStatus(),
             4
         );
@@ -125,11 +125,11 @@ public class Merchant extends FriendlyEntity {
 
     private String getCurrentStatus() {
         return 
-            "You currently have " + ConsoleColors.YELLOW + this.player.getMoney() + " BTC" +
-            ConsoleColors.RESET + " and " + ConsoleColors.YELLOW + this.player.getFreeWeight() + " MB" + 
-            ConsoleColors.RESET + " of free space.\n" +
-            ConsoleColors.RESET + this.getItems() + "\n\n\n" +
-            ConsoleColors.RESET + this.player.getInventory();
+            "You currently have " + ConsoleHandler.YELLOW + this.player.getMoney() + " BTC" +
+            ConsoleHandler.RESET + " and " + ConsoleHandler.YELLOW + this.player.getFreeWeight() + " MB" + 
+            ConsoleHandler.RESET + " of free space.\n" +
+            ConsoleHandler.RESET + this.getItems() + "\n\n\n" +
+            ConsoleHandler.RESET + this.player.getInventory();
     }
 
     @Override

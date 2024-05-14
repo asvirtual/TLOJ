@@ -19,12 +19,11 @@ import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.skills.CharacterSkill;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.GameState;
-
 
 
 /**
@@ -72,10 +71,10 @@ public class Game implements CharacterObserver {
     /**
      * Constructs a new Game object with the given parameters.
      *
-     * @param seed        The random seed used for generating random numbers in the game.
+     * @param seed         The random seed used for generating random numbers in the game.
      * @param currentLevel The current level the player is in.
-     * @param player      The player character controlled by the player.
-     * @param levels      The list of levels in the game.
+     * @param player       The player character controlled by the player.
+     * @param levels       The list of levels in the game.
      */
     public Game(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
         this.player = player;
@@ -209,9 +208,9 @@ public class Game implements CharacterObserver {
         // Get new mob if there is one
         mob = room.getMob();        
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
-        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n");
+        System.out.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n");
         Controller.printSideBySideText(
             room.getMob().getASCII(), 
             room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus() + "\n\n"
@@ -250,7 +249,7 @@ public class Game implements CharacterObserver {
 
     @Override
     public void onMobDefeated(Mob mob) {
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
 
@@ -264,14 +263,14 @@ public class Game implements CharacterObserver {
         if (room.getMobsCount() == 1) room.clear(this.player);
         else {
             room.removeMob(mob);
-            Controller.clearConsole(2000);
-            System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n" + room.getMob().getASCII() + "\n");
+            ConsoleHandler.clearConsole(2000);
+            System.out.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n" + room.getMob().getASCII() + "\n");
         }
     }
 
     @Override
     public void onBossDefeated() {
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
         BossRoom room = (BossRoom) this.getCurrentRoom();
         Boss boss = room.getBoss();
@@ -291,7 +290,7 @@ public class Game implements CharacterObserver {
         System.out.println();
 
         Controller.awaitEnter();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
         Runnable loopRunnable = new Runnable() {
             @Override
@@ -320,13 +319,13 @@ public class Game implements CharacterObserver {
             introRunnable
         );
         
-        System.out.println(ConsoleColors.RED_BOLD_BRIGHT +
-            "\n" + Constants.GAME_OVER + ConsoleColors.RESET + "\n" +
+        System.out.println(ConsoleHandler.RED_BOLD_BRIGHT +
+            "\n" + Constants.GAME_OVER + ConsoleHandler.RESET + "\n" +
             "Jordan ended his adventure with " + this.score + " points!\n\n"
         );
 
         Controller.awaitEnter();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
         System.out.println(Constants.GAME_TITLE);
         this.controller.setState(GameState.MAIN_MENU);
@@ -374,7 +373,7 @@ public class Game implements CharacterObserver {
                 }
 
                 // Highlight the current room if it is the player's current location.
-                if (this.getCurrentRoom().equals(room)) mapBuilder.append(ConsoleColors.YELLOW_BOLD_BRIGHT + "\u0398 " + ConsoleColors.RESET);
+                if (this.getCurrentRoom().equals(room)) mapBuilder.append(ConsoleHandler.YELLOW_BOLD_BRIGHT + "\u0398 " + ConsoleHandler.RESET);
                 else {
                     if (this.player.hasItem(new NorthStar())) mapBuilder.append(room.getRoomRepresentation() + "\s");
                     else mapBuilder.append(room + "\s");
@@ -414,13 +413,13 @@ public class Game implements CharacterObserver {
 
     public Item useItem(int index) {
         if (index < 1 || index > this.player.getInventorySize()) {
-            System.out.println(ConsoleColors.RED + "Couldn't find that item in your inventory" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Couldn't find that item in your inventory" + ConsoleHandler.RESET);
             return null;
         }
 
         Item item = this.player.getInventoryItem(index - 1);
         if (!(item instanceof ConsumableItem)) {
-            System.out.println(ConsoleColors.RED + item + " cannot be consumed!" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + item + " cannot be consumed!" + ConsoleHandler.RESET);
             return null;
         }
 
@@ -482,29 +481,29 @@ public class Game implements CharacterObserver {
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
             Room northRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH));
 
-            if (northRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleColors.RED + "[gn - Something's off... ]" + ConsoleColors.RESET;
-            else directions += northRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gn" + ConsoleColors.RESET + "] " : "[gn] ";    
+            if (northRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleHandler.RED + "[gn - Something's off... ]" + ConsoleHandler.RESET;
+            else directions += northRoom.isVisited() ? "[" + ConsoleHandler.CYAN_UNDERLINED + "gn" + ConsoleHandler.RESET + "] " : "[gn] ";    
         }
         
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))) {
             Room southRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH));
 
-            if (southRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleColors.RED + "[gs - Something's off... ]" + ConsoleColors.RESET;
-            else directions += southRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gs" + ConsoleColors.RESET + "] " : "[gs] ";    
+            if (southRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleHandler.RED + "[gs - Something's off... ]" + ConsoleHandler.RESET;
+            else directions += southRoom.isVisited() ? "[" + ConsoleHandler.CYAN_UNDERLINED + "gs" + ConsoleHandler.RESET + "] " : "[gs] ";    
         }
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))) {
             Room eastRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST));
 
-            if (eastRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleColors.RED + "[ge - Something's off... ]" + ConsoleColors.RESET;
-            else directions += eastRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "ge" + ConsoleColors.RESET + "] " : "[ge] ";    
+            if (eastRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleHandler.RED + "[ge - Something's off... ]" + ConsoleHandler.RESET;
+            else directions += eastRoom.isVisited() ? "[" + ConsoleHandler.CYAN_UNDERLINED + "ge" + ConsoleHandler.RESET + "] " : "[ge] ";    
         }
 
         if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))) {
             Room westRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST));
 
-            if (westRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleColors.RED + "[gw - Something's off... ]" + ConsoleColors.RESET;
-            else directions += westRoom.isVisited() ? "[" + ConsoleColors.CYAN_UNDERLINED + "gw" + ConsoleColors.RESET + "] " : "[gw] ";    
+            if (westRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleHandler.RED + "[gw - Something's off... ]" + ConsoleHandler.RESET;
+            else directions += westRoom.isVisited() ? "[" + ConsoleHandler.CYAN_UNDERLINED + "gw" + ConsoleHandler.RESET + "] " : "[gw] ";    
         }
         
         return directions;

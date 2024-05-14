@@ -6,7 +6,7 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.game.Attack;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 
 
 /**
@@ -30,7 +30,7 @@ public class Daburu extends CharacterSkill {
     @JsonCreator
     public Daburu(@JsonProperty("character") Character character) {
         super(character, MANA_COST);
-        this.activationMessage = ConsoleColors.PURPLE + "Daburu modo! Next attack will deal double damage!" + ConsoleColors.RESET;
+        this.activationMessage = ConsoleHandler.PURPLE + "Daburu modo! Next attack will deal double damage!" + ConsoleHandler.RESET;
     }
     
 

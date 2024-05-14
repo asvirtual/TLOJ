@@ -1,11 +1,59 @@
 package com.tloj.game.utilities;
 
+import java.io.IOException;
+
+import org.fusesource.jansi.AnsiConsole;
+
+
 /**
- * Class that contains ANSI escape codes for text colors in the console.
+ * Utility class to handle console operations, such as:<br>
+ *  - Set console encoding to UTF-8<br>
+ *  - Clear console<br>
+ *  - Escape codes for text colors<br>
  */
-public class ConsoleColors {
-    private ConsoleColors() {}
+public class ConsoleHandler {
+    private ConsoleHandler() {}
     
+    public static void setConsoleEncoding() {
+        try {
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                AnsiConsole.systemInstall();
+                new ProcessBuilder("cmd", "/c", "chcp", "65001").inheritIO().start();
+            } else
+                new ProcessBuilder("bash", "-c", "export LANG=en_US.UTF-8").inheritIO().start();
+        } catch (IOException e) {
+            System.out.println("Error setting UTF-8 encoding to support special characters");
+            e.printStackTrace();
+        }
+    }
+
+    public static void clearConsole(int delay) {
+        try {
+            Thread.sleep(delay);
+            if (System.getProperty("os.name").startsWith("Windows")) 
+                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+            else 
+                new ProcessBuilder("bash", "-c", "clear").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error clearing console");
+            e.printStackTrace();
+        }
+    }
+
+    public static void clearConsole() {
+        final int DEFAULT_DELAY = 100;
+        ConsoleHandler.clearConsole(DEFAULT_DELAY);
+    }
+
+    public static void resetConsoleEncoding() {
+        if (System.getProperty("os.name").startsWith("Windows")) 
+            AnsiConsole.systemUninstall();
+    }
+    
+    /**
+     * Escape codes for text colors in the console.
+    */
+
     public static final String RESET = "\033[0m";  // Text Reset
 
     // Regular Colors

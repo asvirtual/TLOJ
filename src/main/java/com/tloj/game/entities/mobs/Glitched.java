@@ -6,7 +6,7 @@ import com.tloj.game.game.Controller;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.RoomType;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
@@ -56,7 +56,7 @@ public class Glitched extends Mob implements MovingEntity {
 
         if (!this.isAlive()) return;
         Controller.awaitEnter();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
         this.turnsLeft--;
 
@@ -85,11 +85,11 @@ public class Glitched extends Mob implements MovingEntity {
 
             Controller.printSideBySideText(
                 this.getASCII(),
-                ConsoleColors.PURPLE + 
+                ConsoleHandler.PURPLE + 
                     (this.turnsLeft != 0 ? 
-                    "A bug in the system teleported the Glitched away!" + ConsoleColors.RESET + "\n" + ConsoleColors.PURPLE + "Will it come back?\n" :
+                    "A bug in the system teleported the Glitched away!" + ConsoleHandler.RESET + "\n" + ConsoleHandler.PURPLE + "Will it come back?\n" :
                     "The Glitched has gone...") +
-                ConsoleColors.RESET
+                ConsoleHandler.RESET
             );
 
             if (this.turnsLeft != 0) {
@@ -133,7 +133,7 @@ public class Glitched extends Mob implements MovingEntity {
     @Override
     public String getPrettifiedStatus() {
         return 
-            this + " - " + ConsoleColors.GREEN + "Lvl ???" + ConsoleColors.RESET + ":\n\n" +
+            this + " - " + ConsoleHandler.GREEN + "Lvl ???" + ConsoleHandler.RESET + ":\n\n" +
             " ⸭ HP: " + Ansi.ansi().fg(Ansi.Color.RED).a(this.getHpBar() + " " + this.hp + "/" + this.maxHp).reset() + "\n";
     }
 

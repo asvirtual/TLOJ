@@ -1,7 +1,7 @@
 package com.tloj.game.game;
 
 import com.tloj.game.rooms.*;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.GameState;
 import com.tloj.game.collectables.Item;
@@ -70,9 +70,9 @@ public class PlayerRoomVisitor implements Visitor {
             true
         );
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
-        System.out.println(ConsoleColors.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleColors.RESET +  "\n");
+        System.out.println(ConsoleHandler.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleHandler.RESET +  "\n");
         Controller.printSideBySideText(
             room.getBoss().getASCII(), 
             room.getBoss().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus()
@@ -121,9 +121,9 @@ public class PlayerRoomVisitor implements Visitor {
         this.player.setHp(this.player.getMaxHp());
         this.player.setMana(this.player.getMaxMana());
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
-        System.out.println(Constants.HEALING_ROOM + ConsoleColors.GREEN_BRIGHT + "\nWelcome to the healing rooom!" + ConsoleColors.RESET);
+        System.out.println(Constants.HEALING_ROOM + ConsoleHandler.GREEN_BRIGHT + "\nWelcome to the healing rooom!" + ConsoleHandler.RESET);
         this.controller.setState(GameState.HEALING_ROOM);
     }
 
@@ -141,9 +141,9 @@ public class PlayerRoomVisitor implements Visitor {
             return;
         }
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
-        System.out.println(ConsoleColors.PURPLE + "You've encountered " + room.getMob() + ConsoleColors.RESET + "\n");
+        System.out.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n");
         Controller.printSideBySideText(
             room.getMob().getASCII(), 
             room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus() + "\n\n"
@@ -167,18 +167,18 @@ public class PlayerRoomVisitor implements Visitor {
             return;
         }
         
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
         if (room.isLocked()) {
             this.player.useItem(new SpecialKey());
-            System.out.println(ConsoleColors.CYAN_BRIGHT + "You've used a special key to unlock the room!" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.CYAN_BRIGHT + "You've used a special key to unlock the room!" + ConsoleHandler.RESET);
         }
         
         Item item = room.getItem();
         if (item == null) return;
 
         this.controller.printMapAndArt(item.getASCII());
-        System.out.println("\n" + ConsoleColors.YELLOW_BRIGHT + "You've found a " + item + "!" + ConsoleColors.RESET);
+        System.out.println("\n" + ConsoleHandler.YELLOW_BRIGHT + "You've found a " + item + "!" + ConsoleHandler.RESET);
         
         if (this.player.addInventoryItem(item)) {
             this.controller.setState(GameState.MOVING);
@@ -206,17 +206,17 @@ public class PlayerRoomVisitor implements Visitor {
             System.out.println("You've encountered a trap! Do you want to use an EMP to disarm it? (Y/N)");
             if (Controller.awaitConfirmation()) {
                 this.player.useItem(emp);
-                System.out.println(ConsoleColors.CYAN_BRIGHT + "You've disarmed the trap!" + ConsoleColors.RESET);
+                System.out.println(ConsoleHandler.CYAN_BRIGHT + "You've disarmed the trap!" + ConsoleHandler.RESET);
                 room.clear(this.player);
                 return;
             }
         }
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         
         if (!room.triggerTrap(this.player)) {
             this.controller.printMapAndArt(Constants.TRAP_DEFENDER);
-            System.out.println(ConsoleColors.BLUE_BRIGHT + "You've dodged the trap! Thanks Windows Defender!" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.BLUE_BRIGHT + "You've dodged the trap! Thanks Windows Defender!" + ConsoleHandler.RESET);
         }
         
         room.clear(this.player);
@@ -235,9 +235,9 @@ public class PlayerRoomVisitor implements Visitor {
         this.controller.changeMusic(Constants.ENDING_WAV_FILE_PATH, true);
         this.controller.setState(GameState.WIN);
 
-        Controller.clearConsole();
-        System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleColors.RESET);
-        System.out.println(ConsoleColors.YELLOW_BOLD_BRIGHT + Constants.GAME_WIN + ConsoleColors.RESET);
+        ConsoleHandler.clearConsole();
+        System.out.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleHandler.RESET);
+        System.out.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.GAME_WIN + ConsoleHandler.RESET);
 
         Controller.awaitEnter();
         this.controller.setState(GameState.MAIN_MENU);

@@ -1,6 +1,6 @@
 package com.tloj.game.entities;
 
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 
@@ -48,7 +48,7 @@ public abstract class Boss extends Mob {
         Character target = (Character) t;
         MobAttack attack = new MobAttack(this, target);
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         
         attack.setDiceRoll(this.dice.roll());
         

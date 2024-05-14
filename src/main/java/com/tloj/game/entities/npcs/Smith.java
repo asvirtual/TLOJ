@@ -10,7 +10,7 @@ import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.game.Controller;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -35,8 +35,8 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
 
         Controller.printSideBySideText(
             this.getASCII(),
-            ConsoleColors.YELLOW + "Smith: Hello there! I can upgrade your weapon with a Weapon Shard." + ConsoleColors.RESET + "\n" +
-            "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET,
+            ConsoleHandler.YELLOW + "Smith: Hello there! I can upgrade your weapon with a Weapon Shard." + ConsoleHandler.RESET + "\n" +
+            "You currently have " + ConsoleHandler.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleHandler.RESET,
             7
         );
         
@@ -51,12 +51,12 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
     
     @Override
     public void giveItem(Item item) {
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         
         if (!(item instanceof WeaponShard)) {
             Controller.printSideBySideText(
                 this.getASCII(),
-                ConsoleColors.RED + "Smith: I need a Weapon Shard to forge!" + ConsoleColors.RESET + "\n",
+                ConsoleHandler.RED + "Smith: I need a Weapon Shard to forge!" + ConsoleHandler.RESET + "\n",
                 7
             );
             return;
@@ -65,7 +65,7 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
         if (this.player.getWeapon().getLevel() == Weapon.MAX_LEVEL) {
             Controller.printSideBySideText(
                 this.getASCII(),
-                ConsoleColors.RED + "Smith: Your weapon is already at its maximum level!" + ConsoleColors.RESET + "\n",
+                ConsoleHandler.RED + "Smith: Your weapon is already at its maximum level!" + ConsoleHandler.RESET + "\n",
                 7
             );
             return;
@@ -76,7 +76,7 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
 
         Controller.printSideBySideText(
             this.getASCII(),
-            ConsoleColors.YELLOW + "Smith: Here you go! Your weapon has been upgraded!" + ConsoleColors.RESET + "\n" +
+            ConsoleHandler.YELLOW + "Smith: Here you go! Your weapon has been upgraded!" + ConsoleHandler.RESET + "\n" +
             this.player.getWeapon().getASCII() + "\n" +
             this.player.getWeapon() + "\n" +
             this.getCurrentStatus(),
@@ -87,10 +87,10 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
         int shardsCount = this.player.getItemCount(new WeaponShard());
         if (shardsCount == 0) {
             Controller.awaitEnter();
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             Controller.printSideBySideText(
                 this.getASCII(),
-                ConsoleColors.RED + "Smith: You've ran out of Weapon Shards, Goodbye!" + ConsoleColors.RESET + "\n" +
+                ConsoleHandler.RED + "Smith: You've ran out of Weapon Shards, Goodbye!" + ConsoleHandler.RESET + "\n" +
                 this.getCurrentStatus(),
                 7
             );
@@ -101,7 +101,7 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
     }
 
     private String getCurrentStatus() {
-        return "You currently have " + ConsoleColors.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleColors.RESET;
+        return "You currently have " + ConsoleHandler.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleHandler.RESET;
     }
 
     @Override

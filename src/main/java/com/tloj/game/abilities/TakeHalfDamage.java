@@ -2,7 +2,7 @@ package com.tloj.game.abilities;
 
 import com.tloj.game.entities.Boss;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.entities.bosses.HalverBoss;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see Boss 
  */
 public class TakeHalfDamage extends BossAbility {
-    private final static String ACTIVATION_MESSAGE = ConsoleColors.PURPLE + "The boss used its mighty ability and deflected half of the attack!" + ConsoleColors.RESET;
+    private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and deflected half of the attack!" + ConsoleHandler.RESET;
 
     @JsonCreator
     public TakeHalfDamage(Boss boss){
