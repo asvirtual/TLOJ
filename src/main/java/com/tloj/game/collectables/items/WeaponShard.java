@@ -2,6 +2,9 @@ package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.utilities.Constants;
+
+import org.checkerframework.checker.units.qual.g;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
@@ -48,7 +51,8 @@ public class WeaponShard extends PurchasableItem {
 
     @Override
     public String describe() {
-        return "A shard that can upgrade your weapon + \n" +
+        return this.getASCII() + "\n" +
+               "A shard that can upgrade your weapon + \n" +
                "Nothing is created, nothing is destroyed, everything can be recycled!";
     }
 }
