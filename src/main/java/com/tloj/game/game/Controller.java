@@ -799,7 +799,8 @@ class NewGameCommand extends GameCommand {
         super.execute();
         Controller.clearConsole();
         this.controller.newGame();
-        System.out.println("Choose your starting character: 1.BasePlayer, 2.Hacker, 3.DataThief, 4.MechaKnight, 5.NeoSamurai");
+        System.out.println("Choose your starting character: [1] - BasePlayer, [2] - Hacker, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai");
+        System.out.println("\n" + Constants.CLASS_CHOICE);
     }
 }
 
@@ -871,6 +872,7 @@ class ChooseCharacterGameCommand extends GameCommand {
 
         if (!Controller.awaitConfirmation()) {
             System.out.println("Choose your starting character: [1] - BasePlayer, [2] - Hacker, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai");
+            System.out.println("\n" + Constants.CLASS_CHOICE);
             return;
         }
             
@@ -1271,7 +1273,7 @@ public class Controller {
     public String getAvailableCommands() {
         return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
-            case CHOOSING_CHARACTER -> "[1.BasePlayer] - [2.Hacker] - [3.DataThief] - [4.MechaKnight] - [5.NeoSamurai]";
+            case CHOOSING_CHARACTER -> "[1] - BasePlayer, [2] - Hacker, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use *number*] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();
