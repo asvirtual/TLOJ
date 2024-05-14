@@ -1,5 +1,6 @@
 package com.tloj.game.game;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.entities.CombatEntity;
 
 
@@ -17,7 +18,7 @@ public abstract class Attack {
 
     protected int baseDamage;
     protected int targetDef;
-    protected int totalDamage;
+    protected int totalAttack;
 
     /** The action to be performed when the attack hits the target. */
     protected Runnable onHit;
@@ -52,10 +53,6 @@ public abstract class Attack {
     public int getTargetDef() {
         return this.targetDef;
     }
-
-    public int getTotalDamage() {
-        return this.totalDamage;
-    }
     
     public void setOnHit(Runnable onHit) {
         this.onHit = onHit;
@@ -63,24 +60,36 @@ public abstract class Attack {
 
     public void setTargetDef(int targetDef) {
         this.targetDef = targetDef;
-        this.setTotalDamage();
     }
 
     public void setBaseDamage(int baseDamage) {
         this.baseDamage = baseDamage;
-        this.setTotalDamage();
+        this.setTotalAttack();
     }
 
-    public void setTotalDamage() {
-        this.totalDamage = this.baseDamage - this.targetDef;
+    public void setTotalAttack() {
+        this.totalAttack = this.baseDamage;
     }
 
-    public void setTotalDamage(int totalDamage) {
-        this.totalDamage = totalDamage;
+    public int getTotalAttack() {
+        return this.totalAttack;
+    }
+
+    public void setTotalAttack(int totalDamage) {
+        this.totalAttack = totalDamage;
+    }
+
+    @JsonIgnore
+    public int getTotalDamage() {
+        if (this.totalAttack > 0) 
+            return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
+            
+        int totalDamage = this.baseDamage - this.targetDef;
+        return totalDamage > 0 ? totalDamage : 0;
     }
 
     public void perform() {
-        if (this.totalDamage >= 0) this.target.takeDamage(this.totalDamage);
+        if (this.getTotalDamage() >= 0) this.target.takeDamage(this.getTotalDamage());
         if (this.onHit != null) this.onHit.run();
     };
 }

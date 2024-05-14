@@ -22,7 +22,7 @@ public class TakeHalfDamage extends BossAbility {
 
     @Override
     public boolean use(PlayerAttack attack) {
-        attack.setTotalDamage(attack.getTotalDamage() / 2);
+        attack.setTotalAttack(attack.getTotalDamage() / 2);
         return this.used = true;
     }
 }

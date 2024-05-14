@@ -25,7 +25,7 @@ public class JetBatAbility extends MobAbility {
         if (Math.random() > 0.25) return this.used = false;
         // Needed to tell the PlayerAttack to print the disabled dice roll
         attack.setWeaponRoll(0);
-        attack.setTotalDamage(0);
+        attack.setTotalAttack(0);
         return this.used = true;
     }
 }

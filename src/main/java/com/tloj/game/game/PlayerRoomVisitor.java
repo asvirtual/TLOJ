@@ -122,6 +122,7 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(HostileRoom room) {
         room.visit();
+
         if (room.isCleared()) {
             this.controller.printMapAndStatus();
             return;

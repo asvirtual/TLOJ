@@ -22,7 +22,7 @@ public class DodgeSlowAttackFlying extends BossAbility {
     @Override
     public boolean use(PlayerAttack attack) {
         if (attack.getWeaponRoll() > 4) return this.used = false;
-        attack.setTotalDamage(0);
+        attack.setTotalAttack(0);
         return this.used = true;
     }
 }

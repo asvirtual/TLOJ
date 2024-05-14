@@ -75,4 +75,8 @@ public abstract class CharacterSkill {
     public void execute(Attack attack) {
         this.activated = false;
     };
+
+    public boolean isActivated() {
+        return this.activated;
+    }
 }

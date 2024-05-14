@@ -61,16 +61,24 @@ public class PlayerAttack extends Attack {
      */
     public void setWeaponRoll(int weaponRoll) {
         this.weaponRoll = weaponRoll;
-        this.setTotalDamage();
+        this.setTotalAttack();
     }
 
     /**
-     * Calculates the total damage of the attack.
+     * Calculates the total attack of the attack.
      */
     @Override
-    public void setTotalDamage() {
-        this.totalDamage = this.baseDamage + this.weaponRoll - this.targetDef;
-        if (this.totalDamage < 0) this.totalDamage = 0;
+    public void setTotalAttack() {
+        this.totalAttack = this.baseDamage + this.weaponRoll;
+    }
+
+    @Override
+    public int getTotalDamage() {
+        if (this.totalAttack > 0) 
+            return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
+
+        int totalDamage = this.baseDamage + this.weaponRoll - this.targetDef;
+        return totalDamage > 0 ? totalDamage : 0;
     }
 
     /**
@@ -105,7 +113,8 @@ public class PlayerAttack extends Attack {
         this.baseDamage = this.attacker.getCurrentFightAtk();
         this.targetDef = this.target.getCurrentFightDef();
         this.weaponRoll = 0;
-        this.totalDamage = 0;
+        this.totalAttack = 0;
+        this.getAttacker().setUsedItem(false);
     }
 
     /**
@@ -126,7 +135,7 @@ public class PlayerAttack extends Attack {
                 "Oh no! Jordan's roll was disabled!\n\n" + Dice.getASCII(0))
         );
 
-        System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + this.totalDamage + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
+        System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
         if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleColors.RED + this.target.getHP() + " HP" + ConsoleColors.RESET + " left!");
 
         Controller.awaitEnter();

@@ -16,7 +16,6 @@ import org.fusesource.jansi.AnsiConsole;
 
 import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.LootRoom;
-import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.BasePlayer;
@@ -294,6 +293,11 @@ class UseItemCommand extends GameCommand {
 
         if (commands.length != 2) {
             System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleColors.RESET);
+            return;
+        }
+
+        if (this.player.hasUsedItem()) {
+            System.out.println(ConsoleColors.RED + "You've already used an item this turn" + ConsoleColors.RESET);
             return;
         }
 

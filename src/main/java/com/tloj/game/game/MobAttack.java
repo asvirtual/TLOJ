@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import com.tloj.game.entities.Mob;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Dice;
@@ -24,14 +25,24 @@ public class MobAttack extends Attack {
 
     public void setDiceRoll(int diceRoll) {
         this.diceRoll = diceRoll;
-        this.setTotalDamage();
+        this.setTotalAttack();
     }
 
     @Override
-    public void setTotalDamage() {
-        this.totalDamage = this.baseDamage + this.diceRoll - this.targetDef;
-        if (this.totalDamage < 0) this.totalDamage = 0;
+    public void setTotalAttack() {
+        this.totalAttack = this.baseDamage + this.diceRoll;
     }
+
+    @Override
+    @JsonIgnore
+    public int getTotalDamage() {
+        if (this.totalAttack > 0) 
+            return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
+
+        int totalDamage = this.baseDamage + this.diceRoll - this.targetDef;
+        return totalDamage > 0 ? totalDamage : 0;
+    }
+
 
     @Override
     public Mob getAttacker() {
@@ -57,6 +68,6 @@ public class MobAttack extends Attack {
         );
 
         System.out.println("\n" + this.getAttacker() + " attacks you back!");
-        System.out.println(this.attacker + " inflicted " + ConsoleColors.RED_BRIGHT + this.totalDamage + " damage" + ConsoleColors.RESET + " to you!");
+        System.out.println(this.attacker + " inflicted " + ConsoleColors.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleColors.RESET + " to you!");
     }
 }

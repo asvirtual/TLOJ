@@ -46,7 +46,7 @@ public class Guard extends CharacterSkill {
         if (!this.activated || !(attack instanceof MobAttack)) return;
 
         MobAttack mobAttack = (MobAttack) attack;
-        mobAttack.setTotalDamage(0);
+        mobAttack.setTotalAttack(0);
         
         super.execute(attack);
     }

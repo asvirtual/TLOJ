@@ -72,6 +72,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected CharacterSkill skill;
     // Observers to notify when the player is defeated or a mob is defeated
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
+    protected boolean usedItem = false;
 
     /**
      * Constructor to create a Character from loaded data<br>
@@ -226,6 +227,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.skill;
     }
 
+    public boolean hasUsedItem() {
+        return this.usedItem;
+    }
+
+    public void setUsedItem(boolean usedItem) {
+        this.usedItem = usedItem;
+    }
+
     public void setCurrentLevel(Level level) {
         this.currentLevel = level;
         this.currentRoom = this.currentLevel.getStartRoom();
@@ -313,6 +322,16 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     }
 
     public void useSkill() {
+        if (this.skill == null) {
+            System.out.println(ConsoleColors.RED + "You don't have a skill to use" + ConsoleColors.RESET);
+            return;
+        }
+
+        if (this.skill.isActivated()) {
+            System.out.println(ConsoleColors.RED + "You've already used your skill this turn" + ConsoleColors.RESET);
+            return;
+        }
+
         this.skill.activate();
     }
 
