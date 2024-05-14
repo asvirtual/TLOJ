@@ -12,6 +12,7 @@ import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
+import com.tloj.game.skills.CharacterSkill;
 
 
 // Needed to serialize/deserialize subclasses of Mob, by including the class name in the JSON
@@ -189,7 +190,10 @@ public abstract class Mob extends CombatEntity {
         Controller.clearConsole(1500);
                 
         attack.setDiceRoll(this.dice.roll());
-        target.getSkill().execute(attack);
+        
+        CharacterSkill characterSkill = target.getSkill();
+        if (characterSkill != null) characterSkill.execute(attack);
+
         attack.perform();
 
         if (!target.isAlive()) target.notifyDefeat();

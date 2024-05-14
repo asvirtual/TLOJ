@@ -3,6 +3,7 @@ package com.tloj.game.entities.npcs;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
@@ -51,7 +52,12 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
     @Override
     public void giveItem(Item item) {
         if (!(item instanceof WeaponShard)) {
-            System.out.println("Smith: I need a Weapon Shard to forge!");
+            System.out.println(ConsoleColors.RED + "Smith: I need a Weapon Shard to forge!" + ConsoleColors.RESET);
+            return;
+        }
+
+        if (this.player.getWeapon().getLevel() == Weapon.MAX_LEVEL) {
+            System.out.println(ConsoleColors.RED + "Smith: Your weapon is already at its maximum level!" + ConsoleColors.RESET);
             return;
         }
 

@@ -21,6 +21,7 @@ import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
+import com.tloj.game.skills.CharacterSkill;
 import com.tloj.game.utilities.ConsoleColors;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
@@ -194,6 +195,9 @@ public class Game implements CharacterObserver {
              */
             if (mob.getPosition().equals(this.player.getPosition())) return; 
         }
+
+        CharacterSkill playerSkill = this.player.getSkill();
+        if (playerSkill != null) playerSkill.setActivated(false);
 
         // Boss defeated
         if (room.getType() == RoomType.BOSS_ROOM) return;

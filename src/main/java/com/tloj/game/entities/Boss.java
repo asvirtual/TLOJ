@@ -14,6 +14,7 @@ import com.tloj.game.game.Attack;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.skills.CharacterSkill;
 
 
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
@@ -50,13 +51,11 @@ public abstract class Boss extends Mob {
         Controller.clearConsole();
         
         attack.setDiceRoll(this.dice.roll());
-        attack.perform();
         
-        // Controller.printSideBySideText(
-        //     this.getASCII(), 
-        //     this.getPrettifiedStatus() + "\n\n\n" + target.getPrettifiedStatus() + "\n\n\n" + 
-        //     "The boss rolled " + attack.getDiceRoll() + ":\n\n" + Dice.getASCII(attack.getDiceRoll())
-        // );
+        CharacterSkill characterSkill = target.getSkill();
+        if (characterSkill != null) characterSkill.execute(attack);
+
+        attack.perform();
         
         if (!target.isAlive()) target.notifyDefeat();
     }

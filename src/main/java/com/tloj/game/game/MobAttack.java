@@ -58,7 +58,6 @@ public class MobAttack extends Attack {
     public void perform() {
         super.perform();
 
-
         Controller.printSideBySideText(
             this.getAttacker().getCombatASCII().isBlank() ? this.getAttacker().getASCII() : this.getAttacker().getCombatASCII(), 
             this.getAttacker().getPrettifiedStatus() + "\n\n" + this.getTarget().getPrettifiedStatus() + "\n\n" +

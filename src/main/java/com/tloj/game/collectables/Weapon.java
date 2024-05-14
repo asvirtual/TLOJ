@@ -23,6 +23,7 @@ import com.tloj.game.effects.WeaponEffect;
 */
 public abstract class Weapon extends Item {
     private static final int DROP_MONEY = 0;
+    public static final int MAX_LEVEL = 5;
 
     @JsonIgnore
     protected WeaponEffect effect;
@@ -59,6 +60,10 @@ public abstract class Weapon extends Item {
     
     public int diceRoll() {
         return dice.roll() + this.lvl;
+    }
+
+    public int getLevel() {
+        return this.lvl;
     }
 
     /**

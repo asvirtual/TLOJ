@@ -77,7 +77,9 @@ public class Steal extends CharacterSkill {
      * @param attack The attack being performed.
      */
     @Override
-    public void execute(Attack attack) {}
+    public void execute(Attack attack) {
+        super.execute(attack);
+    }
 
     public static String describe() {
         return "Steal: Chance to steal a random item";
