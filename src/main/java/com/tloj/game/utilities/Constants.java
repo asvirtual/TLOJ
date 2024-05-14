@@ -119,6 +119,8 @@ public class Constants {
     public static final String ENDING_WAV_FILE_PATH = "src/main/resources/sounds/Ending.wav";
     public static final String BOSSFIGHT_WAV_FILE_PATH = "src/main/resources/sounds/BossFight.wav";
     public static final String FINAL_BOSS_WAV_FILE_PATH = "src/main/resources/sounds/FinalBoss.wav";
+    public static final String HEALING_CENTER_WAV_FILE_PATH = "src/main/resources/sounds/HealingCenter.wav";
+    public static final String GAME_OVER_WAV_FILE_PATH = "src/main/resources/sounds/GameOver.wav";
 
     // 46
     public static final String CLASS_CHOICE =

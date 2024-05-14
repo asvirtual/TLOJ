@@ -289,14 +289,46 @@ public class Game implements CharacterObserver {
     @Override
     public void onPlayerDefeated() {
         System.out.println();
+
         Controller.awaitEnter();
         Controller.clearConsole();
+
+        Runnable loopRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Controller.getInstance().changeMusic(
+                    Constants.LOOP_WAV_FILE_PATH,
+                    true
+                );
+            }
+        };
+
+        Runnable introRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Game.this.controller.changeMusic(
+                    Constants.INTRO_WAV_FILE_PATH,
+                    false,
+                    loopRunnable
+                );
+            }
+        };
+
+        this.controller.changeMusic(
+            Constants.GAME_OVER_WAV_FILE_PATH, 
+            false,
+            introRunnable
+        );
+        
         System.out.println(ConsoleColors.RED_BOLD_BRIGHT +
             "\n" + Constants.GAME_OVER + ConsoleColors.RESET + "\n" +
-            "Jordan ended his adventure with " + this.score + " points!\n\n" +
-            Constants.GAME_TITLE
+            "Jordan ended his adventure with " + this.score + " points!\n\n"
         );
 
+        Controller.awaitEnter();
+        Controller.clearConsole();
+
+        System.out.println(Constants.GAME_TITLE);
         this.controller.setState(GameState.MAIN_MENU);
     }
 

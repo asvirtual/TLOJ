@@ -15,7 +15,8 @@ import com.tloj.game.utilities.Coordinates;
 
 
 public class MechaKnight extends Character {
-    private static final int HP = 30;
+    // private static final int HP = 30;
+    private static final int HP = 1;
     private static final int ATTACK = 1; 
     private static final int DEFENSE = 5;
     private static final int MANA = 5;

@@ -90,19 +90,32 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(HealingRoom room) {
         room.visit();
-            
-        this.controller.changeMusic(
-            Constants.INTRO_WAV_FILE_PATH,
-            false,
-            new Runnable() {
-                @Override
-                public void run() {
-                    Controller.getInstance().changeMusic(
-                        Constants.LOOP_WAV_FILE_PATH,
-                        true
-                    );
-                }
+
+        Runnable loopRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Controller.getInstance().changeMusic(
+                    Constants.LOOP_WAV_FILE_PATH,
+                    true
+                );
             }
+        };
+
+        Runnable introRunnable = new Runnable() {
+            @Override
+            public void run() {
+                PlayerRoomVisitor.this.controller.changeMusic(
+                    Constants.INTRO_WAV_FILE_PATH,
+                    false,
+                    loopRunnable
+                );
+            }
+        };
+
+        this.controller.changeMusic(
+            Constants.HEALING_CENTER_WAV_FILE_PATH, 
+            false,
+            introRunnable
         );
 
         this.player.setHp(this.player.getMaxHp());
