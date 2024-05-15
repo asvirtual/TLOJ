@@ -26,7 +26,7 @@ public class DodgeSlowAttackFlying extends BossAbility {
         attack.setTotalAttack(0);
 
         this.activationMessage = 
-            ConsoleHandler.PURPLE + "Oh no! " + String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + 
+            ConsoleHandler.PURPLE + "Oh no! " + this.getName() + 
             " dodged your attack and healed itself for " + attack.getWeaponRoll() + " HP!" + ConsoleHandler.RESET;
 
         return this.used = true;

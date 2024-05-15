@@ -5,7 +5,7 @@ import com.tloj.game.game.Controller;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.entities.Character;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
@@ -51,7 +51,7 @@ public abstract class CharacterSkill {
 
     public void activate() {
         if (this.character.getMana() < this.manaCost) {
-            System.out.println(ConsoleHandler.RED + "Not enough mana to use " + this.getClass().getSimpleName().split("(?=[A-Z])") + ConsoleHandler.RESET);
+            System.out.println(ConsoleHandler.RED + "Not enough mana to use " + this.getName() + ConsoleHandler.RESET);
             return;
         }
 
@@ -80,5 +80,10 @@ public abstract class CharacterSkill {
 
     public boolean isActivated() {
         return this.activated;
+    }
+
+    @JsonIgnore
+    public String getName()  {
+        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
     }
 }

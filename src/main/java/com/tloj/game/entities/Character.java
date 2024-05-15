@@ -41,7 +41,7 @@ import org.fusesource.jansi.Ansi;
  * @see PlayerAttack
 */
 public abstract class Character extends CombatEntity implements MovingEntity {
-    public static final int REQ_XP_BASE = 15;
+    public static final int REQ_XP_BASE = 10;
     public static final int INITIAL_LVL = 1;
 
     /**
@@ -510,7 +510,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @Override
     public String toString() {
         String status = 
-            String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + "\n\n" +
+            this.getName() + "\n\n" +
             " ⸭ Lvl:  " + ConsoleHandler.GREEN + this.lvl + ConsoleHandler.RESET + "\n" +
             " ⸭ XP:   " + Ansi.ansi().fg(Ansi.Color.GREEN).a(this.getXpBar() + " " + this.xp + "/" + this.requiredXp).reset() + "\n" +
             " ⸭ HP:   " + ConsoleHandler.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleHandler.RESET + "\n" +

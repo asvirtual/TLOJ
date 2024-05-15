@@ -111,8 +111,10 @@ public abstract class Mob extends CombatEntity {
     ) {
         super(
             hp * lvl, 
-            atk * Mob.levelUpFactor(lvl), 
-            def * Mob.levelUpFactor(lvl), 
+            // atk * Mob.levelUpFactor(lvl), 
+            // def * Mob.levelUpFactor(lvl), 
+            atk * lvl, 
+            def * lvl, 
             position
         );
 
@@ -120,7 +122,7 @@ public abstract class Mob extends CombatEntity {
         this.xpDrop = xpDrop;
         this.moneyDrop = moneyDrop;
         this.dice = new Dice(diceFaces);
-        this.drop = drop;   
+        this.drop = drop;
     }
 
     public int getLvl() {
@@ -224,6 +226,6 @@ public abstract class Mob extends CombatEntity {
 
     @Override
     public String toString() {
-        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
+        return this.getName();
     }
 }

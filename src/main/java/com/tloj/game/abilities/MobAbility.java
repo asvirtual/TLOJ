@@ -1,5 +1,6 @@
 package com.tloj.game.abilities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerAttack;
 
@@ -26,7 +27,11 @@ public abstract class MobAbility {
     public boolean wasUsed() {
         return this.used;
     }
+
+    @JsonIgnore
+    public String getName()  {
+        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
+    }
     
-    public abstract boolean use(PlayerAttack attack);
-    
+    public abstract boolean use(PlayerAttack attack);    
 }

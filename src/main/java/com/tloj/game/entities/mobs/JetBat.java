@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.abilities.JetBatAbility;
 import com.tloj.game.entities.Mob;
-import com.tloj.game.game.Attack;
-import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
