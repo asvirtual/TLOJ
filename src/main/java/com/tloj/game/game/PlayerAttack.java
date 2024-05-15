@@ -135,7 +135,7 @@ public class PlayerAttack extends Attack {
         );
 
         System.out.println("\nYou inflicted " +  ConsoleHandler.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleHandler.RESET + " to " + this.target + "!");
-        if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleHandler.RED + this.target.getHP() + " HP" + ConsoleHandler.RESET + " left!");
+        if (this.target.getHp() > 0) System.out.println(this.target + " has " + ConsoleHandler.RED + this.target.getHp() + " HP" + ConsoleHandler.RESET + " left!");
 
         Controller.awaitEnter();
         this.resetStats();

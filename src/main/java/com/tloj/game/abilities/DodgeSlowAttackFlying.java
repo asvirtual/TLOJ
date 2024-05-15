@@ -12,19 +12,22 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * It is paired with the {@link FlyingBoss}.
  */
 public class DodgeSlowAttackFlying extends BossAbility {
-    private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and dodged the attack!" + ConsoleHandler.RESET;
-
     @JsonCreator
     public DodgeSlowAttackFlying(Boss boss) {
-        super(boss, ACTIVATION_MESSAGE);
+        super(boss);
     }
 
     @Override
     public boolean use(PlayerAttack attack) {
         if (Math.random() > 0.333) return this.used = false;
-        // Needed to tell the PlayerAttack to print the disabled dice roll
-        attack.setWeaponRoll(0);
+
+        this.boss.heal(attack.getWeaponRoll());
         attack.setTotalAttack(0);
+
+        this.activationMessage = 
+            ConsoleHandler.PURPLE + "Oh no! " + String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + 
+            " dodged your attack and healed itself for " + attack.getWeaponRoll() + " HP!" + ConsoleHandler.RESET;
+
         return this.used = true;
     }
 }

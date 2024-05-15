@@ -186,18 +186,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return this.lvl;
     }
 
-    public int getHp() {
-        return this.hp;
-    }
-
-    public int getMaxHp() {
-        return this.maxHp;
-    }
-
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
     public int getMana() {
         return this.mana;
     }
@@ -366,11 +354,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             if (target instanceof Boss) this.observers.forEach(observer -> observer.onBossDefeated((Boss) target));
             else this.observers.forEach(observer -> observer.onMobDefeated(target));
         }
-    }
-    
-    public void heal(int amount) {
-        if (this.hp + amount > this.maxHp) this.hp = this.maxHp;
-        else this.hp += amount;
     }
 
     public void restoreMana(int amount) {

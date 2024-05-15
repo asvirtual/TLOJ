@@ -29,6 +29,18 @@ public abstract class CombatEntity extends Entity {
         this.currentFightDef = def;
     }
 
+    public int getHp() {
+        return this.hp;
+    }
+
+    public int getMaxHp() {
+        return this.maxHp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public int getAtk() {
         return this.atk;
     }
@@ -36,13 +48,10 @@ public abstract class CombatEntity extends Entity {
     public int getDef() {
         return this.def;
     }
-
-    public int getHP() {
-        return this.hp;
-    }
-
-    public int getMaxHP() {
-        return this.maxHp;
+    
+    public void heal(int amount) {
+        if (this.hp + amount > this.maxHp) this.hp = this.maxHp;
+        else this.hp += amount;
     }
 
     public int getCurrentFightAtk() {
