@@ -163,7 +163,7 @@ public abstract class Mob extends CombatEntity {
 
     /**
      * The level up factor for the mob<br>
-     * It is calculated as 1 + log(lvl) / log(8)<br>
+     * It is calculated as 1 + log(lvl) / log(4)<br>
      * @param lvl
      * @return
      */

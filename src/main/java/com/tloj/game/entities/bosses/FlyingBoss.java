@@ -25,9 +25,9 @@ import com.tloj.game.entities.Boss;
  */
 public class FlyingBoss extends Boss {
     public static final int HP = 100;
-    public static final int ATTACK = 9;
-    public static final int DEFENSE = 6;
-    public static final int DICE_FACES = 10;
+    public static final int ATTACK = 15;
+    public static final int DEFENSE = 12;
+    public static final int DICE_FACES = 15;
     public static final int XP_DROP = 70;
     public static final int MONEY_DROP = 50;
     

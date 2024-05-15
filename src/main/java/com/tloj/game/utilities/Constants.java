@@ -2467,7 +2467,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.JetBat",
               "position": { "x": 5, "y": 1 },
-              "lvl": 2
+              "lvl": 4
             }
           ]
         }
@@ -2483,7 +2483,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 0, "y": 2 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -2528,7 +2528,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.JetBat",
               "position": { "x": 5, "y": 2 },
-              "lvl": 2
+              "lvl": 4
             }
           ]
         }
@@ -2560,7 +2560,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 3, "y": 3 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -2595,7 +2595,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 2, "y": 4 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -2723,7 +2723,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 4, "y": 1 },
-              "lvl": 3
+              "lvl": 4
             }          
           ]
         },
@@ -2737,7 +2737,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 5, "y": 1 },
-              "lvl": 4
+              "lvl": 5
             }          
           ]
         }
@@ -2763,7 +2763,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 1, "y": 2 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         },
@@ -2777,7 +2777,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.JetBat",
               "position": { "x": 2, "y": 2 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         },
@@ -2791,7 +2791,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 3, "y": 2 },
-              "lvl": 4
+              "lvl": 5
             }
           ]
         },
@@ -2835,7 +2835,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 4, "y": 3 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         },
@@ -2849,7 +2849,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 4, "y": 3 },
-              "lvl": 3
+              "lvl": 5
             }
           ]
         }          
@@ -2926,4 +2926,5 @@ public static final String DATA_THIEF = """
   }
 ]
 """;
+
 }
