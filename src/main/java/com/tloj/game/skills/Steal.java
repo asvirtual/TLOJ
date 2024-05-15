@@ -50,6 +50,14 @@ public class Steal extends CharacterSkill {
         Dice dice = new Dice(10);
         if (dice.roll() < 4) {
             this.activationMessage = ConsoleHandler.RED + "Couldn't insert the USB drive! Steal failed" + ConsoleHandler.RESET;
+            
+            ConsoleHandler.clearConsole();
+            Controller.printSideBySideText(
+                room.getMob().getASCII(), 
+                room.getMob().getPrettifiedStatus() + "\n\n\n" + this.character.getPrettifiedStatus() + "\n" + 
+                ConsoleHandler.PURPLE + this.activationMessage + ConsoleHandler.RESET + "\n\n"
+            );
+
             return;
         }
         

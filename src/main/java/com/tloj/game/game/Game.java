@@ -426,7 +426,6 @@ public class Game implements CharacterObserver {
 
         Item item = this.player.getInventoryItem(index - 1);
         System.out.println("\n" + item.describe());
-
     }
     
     public void returnToStart() {
