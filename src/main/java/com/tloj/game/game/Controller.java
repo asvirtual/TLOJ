@@ -270,7 +270,7 @@ class InventoryCommand extends GameCommand {
         ConsoleHandler.clearConsole();
         this.game.printInventory();
         System.out.println();
-        if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
+        if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.SMITH_FORGING).contains(this.controller.getState()))
             this.game.printMap();
     }
 }
@@ -353,6 +353,7 @@ class InfoItemCommand extends GameCommand {
         }
         
         try {
+            ConsoleHandler.clearConsole();
             this.game.infoItem(Integer.parseInt(commands[1]));
             System.out.println("\n" + this.game.getPlayer().getPrettifiedStatus());
         } catch (NumberFormatException e) {

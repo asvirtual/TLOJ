@@ -87,7 +87,7 @@ public class Glitched extends Mob implements MovingEntity {
                 this.getASCII(),
                 ConsoleHandler.PURPLE + 
                     (this.turnsLeft != 0 ? 
-                    "A bug in the system teleported the Glitched away!" + ConsoleHandler.RESET + "\n" + ConsoleHandler.PURPLE + "Will it come back?\n" :
+                    "A bug in the system teleported the Glitched away!" + ConsoleHandler.RESET + "\n" + ConsoleHandler.PURPLE + "Will it come back?" + ConsoleHandler.RESET + "\n" :
                     "The Glitched has gone...") +
                 ConsoleHandler.RESET
             );

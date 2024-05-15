@@ -11,6 +11,7 @@ import com.tloj.game.abilities.TakeHalfDamage;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 
+
 /**
  * Represents the FlyingBoss Boss entity in the game.<br>
  * The EvenBoss is the second boss of the game. It has a special ability that nullifies received damage is weapon roll is {@literal <} 4<br>
