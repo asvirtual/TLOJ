@@ -511,7 +511,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public String toString() {
         String status = 
             this.getName() + "\n\n" +
-            " ⸭ Lvl:  " + ConsoleHandler.GREEN + this.lvl + ConsoleHandler.RESET + "\n" +
+           " ⸭ Lvl:  " + ConsoleHandler.GREEN + this.lvl + ConsoleHandler.RESET + "\n" +
             " ⸭ XP:   " + Ansi.ansi().fg(Ansi.Color.GREEN).a(this.getXpBar() + " " + this.xp + "/" + this.requiredXp).reset() + "\n" +
             " ⸭ HP:   " + ConsoleHandler.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleHandler.RESET + "\n" +
             " ⸭ Mana: " + ConsoleHandler.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleHandler.RESET + "\n" +
