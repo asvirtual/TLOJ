@@ -4,13 +4,11 @@ import org.fusesource.jansi.Ansi;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
-import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Item;
-import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.skills.CharacterSkill;
 
@@ -165,14 +163,14 @@ public abstract class Mob extends CombatEntity {
 
     /**
      * The level up factor for the mob<br>
-     * It is calculated as 1 + log(lvl) / log(8)<br>
+     * It is calculated as 1 + log(lvl) / log(4)<br>
      * @param lvl
      * @return
      */
     private static int levelUpFactor(int lvl) {
         return
             lvl = lvl == 1 ? 1
-            : (int) Math.round(1 + Math.log(lvl) / (int) Math.log(8));
+            : (int) Math.round(1 + Math.log(lvl) / (int) Math.log(4));
     }
     
     @Override
@@ -182,12 +180,12 @@ public abstract class Mob extends CombatEntity {
         Character target = (Character) t;
         MobAttack attack = new MobAttack(this, target);
         
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         
         System.out.println(this.getASCII());
         System.out.println(this + " attacks you back!");
         
-        Controller.clearConsole(1500);
+        ConsoleHandler.clearConsole(1500);
                 
         attack.setDiceRoll(this.dice.roll());
         
@@ -208,7 +206,7 @@ public abstract class Mob extends CombatEntity {
     @JsonIgnore
     public String getPrettifiedStatus() {
         return 
-            this + " - " + ConsoleColors.GREEN + "Lvl " + this.lvl + ConsoleColors.RESET + ":\n\n" +
+            this + " - " + ConsoleHandler.GREEN + "Lvl " + this.lvl + ConsoleHandler.RESET + ":\n\n" +
             " ⸭ HP: " + Ansi.ansi().fg(Ansi.Color.RED).a(this.getHpBar() + " " + this.hp + "/" + this.maxHp).reset() + "\n";
     }
 

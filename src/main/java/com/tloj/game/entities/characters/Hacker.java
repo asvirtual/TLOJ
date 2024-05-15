@@ -18,7 +18,7 @@ public class Hacker extends Character {
     private static final int HP = 18;
     private static final int ATTACK = 3;
     private static final int DEFENSE = 3;
-    private static final int MANA = 30;
+    private static final int MANA = 20;
     private static final int MAX_WEIGHT = 5;
     private static final int MONEY = 10;
 

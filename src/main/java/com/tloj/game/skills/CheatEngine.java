@@ -3,9 +3,8 @@ package com.tloj.game.skills;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.Hacker;
 import com.tloj.game.game.Attack;
-import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Weapon;
@@ -31,7 +30,7 @@ public class CheatEngine extends CharacterSkill {
     @JsonCreator
     public CheatEngine(@JsonProperty("character") Character character) {
         super(character, MANA_COST);
-        this.activationMessage = ConsoleColors.PURPLE + "Hacking going on! MAX ROLL INCOMING!" + ConsoleColors.RESET;
+        this.activationMessage = ConsoleHandler.PURPLE + "Hacking going on! MAX ROLL INCOMING!" + ConsoleHandler.RESET;
     }
 
 

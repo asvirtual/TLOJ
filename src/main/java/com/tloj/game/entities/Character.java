@@ -19,7 +19,7 @@ import com.tloj.game.game.Level;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CharacterSkill;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 
@@ -261,7 +261,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     @JsonIgnore
     public String getInventory() {
-        String inventory = ConsoleColors.YELLOW + "Jordan's Inventory:" + ConsoleColors.RESET + "\n";
+        String inventory = ConsoleHandler.YELLOW + "Jordan's Inventory:" + ConsoleHandler.RESET + "\n";
         for (int i = 0; i < this.inventory.size(); i++)
             inventory += (i + 1) + ". " + this.inventory.get(i) + "\n";
 
@@ -291,7 +291,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if (item == null) return false;
 
         if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
-            System.out.println(ConsoleColors.RED + "You can't carry more weight, drop something first." + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "You can't carry more weight, drop something first." + ConsoleHandler.RESET);
             return false;
         }
         
@@ -336,12 +336,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public void useSkill() {
         if (this.skill == null) {
-            System.out.println(ConsoleColors.RED + "You don't have a skill to use" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "You don't have a skill to use" + ConsoleHandler.RESET);
             return;
         }
 
         if (this.skill.isActivated()) {
-            System.out.println(ConsoleColors.RED + "You've already used your skill this turn" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "You've already used your skill this turn" + ConsoleHandler.RESET);
             return;
         }
 
@@ -385,14 +385,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             this.getCarriedWeight() + drop.getWeight() > this.maxWeight ||
             !this.addInventoryItem(drop)
         ) {
-            System.out.println(ConsoleColors.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleColors.RESET);
-            System.out.println("You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  " and " + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET);      
+            System.out.println(ConsoleHandler.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleHandler.RESET);
+            System.out.println("You gain " + ConsoleHandler.GREEN + mob.dropXp() + " experience points"  + ConsoleHandler.RESET +  " and " + ConsoleHandler.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleHandler.RESET);      
         } else {
             Controller.printSideBySideText(
                 drop.getASCII(),
-                ConsoleColors.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleColors.RESET + "\n" +
-                ConsoleColors.YELLOW_BOLD_BRIGHT + mob + " dropped a " + drop + "!" + ConsoleColors.RESET + "\n" +
-                "You gain " + ConsoleColors.GREEN + mob.dropXp() + " experience points"  + ConsoleColors.RESET +  " and " + ConsoleColors.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleColors.RESET,
+                ConsoleHandler.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleHandler.RESET + "\n" +
+                ConsoleHandler.YELLOW_BOLD_BRIGHT + mob + " dropped a " + drop + "!" + ConsoleHandler.RESET + "\n" +
+                "You gain " + ConsoleHandler.GREEN + mob.dropXp() + " experience points"  + ConsoleHandler.RESET +  " and " + ConsoleHandler.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleHandler.RESET,
                 7
             );
         }
@@ -441,13 +441,13 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.currentFightAtk = (this.currentFightAtk - this.atk) + this.atk;
         this.currentFightDef = (this.currentFightDef - this.def) + this.def;
 
-        System.out.println(ConsoleColors.GREEN_BRIGHT + "You've leveled up! You are now level " + this.lvl + "!\n" + ConsoleColors.RESET);
+        System.out.println(ConsoleHandler.GREEN_BRIGHT + "You've leveled up! You are now level " + this.lvl + "!\n" + ConsoleHandler.RESET);
     
         // Print changes in stats
-        System.out.println("HP: " + ConsoleColors.RED + initialMaxHp + ConsoleColors.RESET + " --> " + ConsoleColors.RED_BRIGHT + this.maxHp + ConsoleColors.RESET);
-        System.out.println("Mana: " + ConsoleColors.BLUE + initialMaxMana + ConsoleColors.RESET + " --> " + ConsoleColors.BLUE_BRIGHT + this.maxMana + ConsoleColors.RESET);
-        System.out.println("Attack: " + ConsoleColors.PURPLE + initialAtk + ConsoleColors.RESET + " --> " + ConsoleColors.PURPLE_BRIGHT + this.atk + ConsoleColors.RESET);
-        System.out.println("Defense: " + ConsoleColors.PURPLE + initialDef + ConsoleColors.RESET + " --> " + ConsoleColors.PURPLE_BRIGHT + this.def + ConsoleColors.RESET + "\n");
+        System.out.println("HP: " + ConsoleHandler.RED + initialMaxHp + ConsoleHandler.RESET + " --> " + ConsoleHandler.RED_BRIGHT + this.maxHp + ConsoleHandler.RESET);
+        System.out.println("Mana: " + ConsoleHandler.BLUE + initialMaxMana + ConsoleHandler.RESET + " --> " + ConsoleHandler.BLUE_BRIGHT + this.maxMana + ConsoleHandler.RESET);
+        System.out.println("Attack: " + ConsoleHandler.PURPLE + initialAtk + ConsoleHandler.RESET + " --> " + ConsoleHandler.PURPLE_BRIGHT + this.atk + ConsoleHandler.RESET);
+        System.out.println("Defense: " + ConsoleHandler.PURPLE + initialDef + ConsoleHandler.RESET + " --> " + ConsoleHandler.PURPLE_BRIGHT + this.def + ConsoleHandler.RESET + "\n");
     }
 
     public void addObserver(CharacterObserver observer) {
@@ -460,7 +460,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public boolean swapWeapon(int index) {
         if (index < 1 || index > this.getInventorySize()) {
-            System.out.println(ConsoleColors.RED + "Invalid choice" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Invalid choice" + ConsoleHandler.RESET);
             return false;
         }
 
@@ -472,7 +472,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             this.inventory.remove(item);
             return true;
         } else {
-            System.out.println(ConsoleColors.RED + item + " is not a weapon" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + item + " is not a weapon" + ConsoleHandler.RESET);
             return false;
         }
     }
@@ -518,25 +518,25 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @JsonIgnore
     public String getPrettifiedStatus() {
         return 
-            "Jordan - lvl " + ConsoleColors.GREEN_BRIGHT + this.lvl + ConsoleColors.RESET + ": \n\n" + 
-            " ⸭ HP:   " + ConsoleColors.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleColors.RESET + "\n" +
-            " ⸭ Mana: " + ConsoleColors.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleColors.RESET + "\n" +
-            " ⸭ Xp:   " + ConsoleColors.GREEN + this.getXpBar() + " " + this.xp + "/" + this.requiredXp + ConsoleColors.RESET + "\n\n";
+            "Jordan - lvl " + ConsoleHandler.GREEN_BRIGHT + this.lvl + ConsoleHandler.RESET + ": \n\n" + 
+            " ⸭ HP:   " + ConsoleHandler.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleHandler.RESET + "\n" +
+            " ⸭ Mana: " + ConsoleHandler.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleHandler.RESET + "\n" +
+            " ⸭ Xp:   " + ConsoleHandler.GREEN + this.getXpBar() + " " + this.xp + "/" + this.requiredXp + ConsoleHandler.RESET + "\n\n";
     }
 
     @Override
     public String toString() {
         String status = 
             String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + "\n\n" +
-            " ⸭ Lvl:  " + ConsoleColors.GREEN + this.lvl + ConsoleColors.RESET + "\n" +
+            " ⸭ Lvl:  " + ConsoleHandler.GREEN + this.lvl + ConsoleHandler.RESET + "\n" +
             " ⸭ XP:   " + Ansi.ansi().fg(Ansi.Color.GREEN).a(this.getXpBar() + " " + this.xp + "/" + this.requiredXp).reset() + "\n" +
-            " ⸭ HP:   " + ConsoleColors.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleColors.RESET + "\n" +
-            " ⸭ Mana: " + ConsoleColors.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleColors.RESET + "\n" +
-            " ⸭ Atk:  " + ConsoleColors.PURPLE + this.currentFightAtk + ConsoleColors.RESET + "\n" +
-            " ⸭ Def:  " + ConsoleColors.PURPLE + this.currentFightDef + ConsoleColors.RESET + "\n" +
-            " ⸭ Weapon: " + ConsoleColors.CYAN + this.weapon + ConsoleColors.RESET + "\n" +
-            " ⸭ Weight: " + ConsoleColors.YELLOW + this.getWeightBar() + " " + this.getCarriedWeight() + "/" + this.maxWeight + " MB" + ConsoleColors.RESET + "\n" +
-            " ⸭ BTC: " + ConsoleColors.YELLOW + this.money + ConsoleColors.RESET + "\n";
+            " ⸭ HP:   " + ConsoleHandler.RED + this.getHpBar() + " " + this.hp + "/" + this.maxHp + ConsoleHandler.RESET + "\n" +
+            " ⸭ Mana: " + ConsoleHandler.BLUE + this.getManaBar() + " " + this.mana + "/" + this.maxMana + ConsoleHandler.RESET + "\n" +
+            " ⸭ Atk:  " + ConsoleHandler.PURPLE + this.currentFightAtk + ConsoleHandler.RESET + "\n" +
+            " ⸭ Def:  " + ConsoleHandler.PURPLE + this.currentFightDef + ConsoleHandler.RESET + "\n" +
+            " ⸭ Weapon: " + ConsoleHandler.CYAN + this.weapon + ConsoleHandler.RESET + "\n" +
+            " ⸭ Weight: " + ConsoleHandler.YELLOW + this.getWeightBar() + " " + this.getCarriedWeight() + "/" + this.maxWeight + " MB" + ConsoleHandler.RESET + "\n" +
+            " ⸭ BTC: " + ConsoleHandler.YELLOW + this.money + ConsoleHandler.RESET + "\n";
 
         return status;
     }

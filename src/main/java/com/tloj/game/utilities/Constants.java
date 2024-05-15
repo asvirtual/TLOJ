@@ -1,8 +1,6 @@
 
 package com.tloj.game.utilities;
 
-import java.io.Console;
-import java.security.PublicKey;
 
 /**
  *This class contains all the constants used in the game.<br> 
@@ -12,66 +10,66 @@ public class Constants {
     public static final int BAR_LENGTH = 10;
 
     public static final String GAME_TITLE =
-    ConsoleColors.RED_BOLD_BRIGHT + 
+    ConsoleHandler.RED_BOLD_BRIGHT + 
     """
-          _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
-         |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
-         |_     _||  |_|  ||    ___|      |   |    |    ___||    ___||    ___||   |_| ||  _    |
-           |   |  |       ||   |___       |   |    |   |___ |   | __ |   |___ |       || | |   |
-           |   |  |       ||    ___|      |   |___ |    ___||   ||  ||    ___||  _    || |_|   |
-           |   |  |   _   ||   |___       |       ||   |___ |   |_| ||   |___ | | |   ||       |
-           |___|  |__| |__||_______|      |_______||_______||_______||_______||_|  |__||______| 
-                _______  _______        ___  _______  ______    ______   _______  __    _       
-               |       ||       |      |   ||       ||    _ |  |      | |   _   ||  |  | |      
-               |   _   ||    ___|      |   ||   _   ||   | ||  |  _    ||  |_|  ||   |_| |      
-               |  | |  ||   |___       |   ||  | |  ||   |_||_ | | |   ||       ||       |      
-               |  |_|  ||    ___|   ___|   ||  |_|  ||    __  || |_|   ||       ||  _    |      
-               |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
-               |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
-    """
-    + ConsoleColors.RESET + ConsoleColors.YELLOW_BOLD_BRIGHT +
-        """
-                                                                                        alpha 
-                                                                                           version
-    """ 
-    + ConsoleColors.RESET +
-    """
-                                        [new]  - START GAME
-                                        [load] - LOAD GAME
-                                        [exit] - EXIT GAME
-    """;
+                           _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
+                          |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
+                          |_     _||  |_|  ||    ___|      |   |    |    ___||    ___||    ___||   |_| ||  _    |
+                            |   |  |       ||   |___       |   |    |   |___ |   | __ |   |___ |       || | |   |
+                            |   |  |       ||    ___|      |   |___ |    ___||   ||  ||    ___||  _    || |_|   |
+                            |   |  |   _   ||   |___       |       ||   |___ |   |_| ||   |___ | | |   ||       |
+                            |___|  |__| |__||_______|      |_______||_______||_______||_______||_|  |__||______| 
+                                 _______  _______        ___  _______  ______    ______   _______  __    _       
+                                |       ||       |      |   ||       ||    _ |  |      | |   _   ||  |  | |      
+                                |   _   ||    ___|      |   ||   _   ||   | ||  |  _    ||  |_|  ||   |_| |      
+                                |  | |  ||   |___       |   ||  | |  ||   |_||_ | | |   ||       ||       |      
+                                |  |_|  ||    ___|   ___|   ||  |_|  ||    __  || |_|   ||       ||  _    |      
+                                |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
+                                |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
+                      """
+                      + ConsoleHandler.RESET + ConsoleHandler.YELLOW_BOLD_BRIGHT +
+                          """
+                                                                                                          alpha 
+                                                                                                            version
+                      """ 
+                      + ConsoleHandler.RESET +
+                      """
+                                                          [new]  - START GAME
+                                                          [load] - LOAD GAME
+                                                          [exit] - EXIT GAME
+                      """;
     
     public static final String GAME_TITLE_CONTINUE = 
     
-    ConsoleColors.RED_BOLD_BRIGHT + 
+    ConsoleHandler.RED_BOLD_BRIGHT + 
     """
-          _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
-         |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
-         |_     _||  |_|  ||    ___|      |   |    |    ___||    ___||    ___||   |_| ||  _    |
-           |   |  |       ||   |___       |   |    |   |___ |   | __ |   |___ |       || | |   |
-           |   |  |       ||    ___|      |   |___ |    ___||   ||  ||    ___||  _    || |_|   |
-           |   |  |   _   ||   |___       |       ||   |___ |   |_| ||   |___ | | |   ||       |
-           |___|  |__| |__||_______|      |_______||_______||_______||_______||_|  |__||______| 
-                _______  _______        ___  _______  ______    ______   _______  __    _       
-               |       ||       |      |   ||       ||    _ |  |      | |   _   ||  |  | |      
-               |   _   ||    ___|      |   ||   _   ||   | ||  |  _    ||  |_|  ||   |_| |      
-               |  | |  ||   |___       |   ||  | |  ||   |_||_ | | |   ||       ||       |      
-               |  |_|  ||    ___|   ___|   ||  |_|  ||    __  || |_|   ||       ||  _    |      
-               |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
-               |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
-    """
-    + ConsoleColors.RESET + ConsoleColors.YELLOW_BOLD_BRIGHT +
-        """
-                                                                                        alpha 
-                                                                                           version
-    """ 
-    + ConsoleColors.RESET +
-    """
-                                  [continue] - CONTINUE GAME
-                                    [new]    - START GAME
-                                    [load]   - LOAD GAME
-                                    [exit]   - EXIT GAME
-    """;
+                           _______  __   __  _______        ___      _______  _______  _______  __    _  ______  
+                          |       ||  | |  ||       |      |   |    |       ||       ||       ||  |  | ||      | 
+                          |_     _||  |_|  ||    ___|      |   |    |    ___||    ___||    ___||   |_| ||  _    |
+                            |   |  |       ||   |___       |   |    |   |___ |   | __ |   |___ |       || | |   |
+                            |   |  |       ||    ___|      |   |___ |    ___||   ||  ||    ___||  _    || |_|   |
+                            |   |  |   _   ||   |___       |       ||   |___ |   |_| ||   |___ | | |   ||       |
+                            |___|  |__| |__||_______|      |_______||_______||_______||_______||_|  |__||______| 
+                                 _______  _______        ___  _______  ______    ______   _______  __    _       
+                                |       ||       |      |   ||       ||    _ |  |      | |   _   ||  |  | |      
+                                |   _   ||    ___|      |   ||   _   ||   | ||  |  _    ||  |_|  ||   |_| |      
+                                |  | |  ||   |___       |   ||  | |  ||   |_||_ | | |   ||       ||       |      
+                                |  |_|  ||    ___|   ___|   ||  |_|  ||    __  || |_|   ||       ||  _    |      
+                                |       ||   |      |       ||       ||   |  | ||       ||   _   || | |   |      
+                                |_______||___|      |_______||_______||___|  |_||______| |__| |__||_|  |__|
+                      """
+                      + ConsoleHandler.RESET + ConsoleHandler.YELLOW_BOLD_BRIGHT +
+                          """
+                                                                                                          alpha 
+                                                                                                            version
+                      """ 
+                      + ConsoleHandler.RESET +
+                      """
+                                                    [continue] - CONTINUE GAME
+                                                      [new]    - START GAME
+                                                      [load]   - LOAD GAME
+                                                      [exit]   - EXIT GAME
+                      """;
     
     public static final String GAME_OVER =
     """
@@ -119,6 +117,8 @@ public class Constants {
     public static final String ENDING_WAV_FILE_PATH = "src/main/resources/sounds/Ending.wav";
     public static final String BOSSFIGHT_WAV_FILE_PATH = "src/main/resources/sounds/BossFight.wav";
     public static final String FINAL_BOSS_WAV_FILE_PATH = "src/main/resources/sounds/FinalBoss.wav";
+    public static final String HEALING_CENTER_WAV_FILE_PATH = "src/main/resources/sounds/HealingCenter.wav";
+    public static final String GAME_OVER_WAV_FILE_PATH = "src/main/resources/sounds/GameOver.wav";
 
     // 46
     public static final String CLASS_CHOICE =
@@ -1556,7 +1556,7 @@ public static final String DATA_THIEF = """
                                                                
   """;
 
-  public static final String NANITE_LEECH_BLADE = String.join(ConsoleColors.RESET + "\n" + ConsoleColors.SILVER, """                                                                                                                  
+  public static final String NANITE_LEECH_BLADE = String.join(ConsoleHandler.RESET + "\n" + ConsoleHandler.SILVER, """                                                                                                                  
                                             
                                                  
                         █████▓▓█████       
@@ -1586,7 +1586,7 @@ public static final String DATA_THIEF = """
                                      
                                      
                                         
-      """.split("\n")) + ConsoleColors.RESET;
+      """.split("\n")) + ConsoleHandler.RESET;
 
 
       public static final String NANO_DIRK = """
@@ -2467,7 +2467,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.JetBat",
               "position": { "x": 5, "y": 1 },
-              "lvl": 2
+              "lvl": 4
             }
           ]
         }
@@ -2483,7 +2483,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 0, "y": 2 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -2528,7 +2528,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.JetBat",
               "position": { "x": 5, "y": 2 },
-              "lvl": 2
+              "lvl": 4
             }
           ]
         }
@@ -2560,7 +2560,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 3, "y": 3 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -2595,7 +2595,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 2, "y": 4 },
-              "lvl": 2
+              "lvl": 3
             }
           ]
         },
@@ -2723,7 +2723,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 4, "y": 1 },
-              "lvl": 3
+              "lvl": 4
             }          
           ]
         },
@@ -2737,7 +2737,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 5, "y": 1 },
-              "lvl": 4
+              "lvl": 5
             }          
           ]
         }
@@ -2763,7 +2763,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 1, "y": 2 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         },
@@ -2777,7 +2777,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.JetBat",
               "position": { "x": 2, "y": 2 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         },
@@ -2791,7 +2791,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.MechaRat",
               "position": { "x": 3, "y": 2 },
-              "lvl": 4
+              "lvl": 5
             }
           ]
         },
@@ -2835,7 +2835,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 4, "y": 3 },
-              "lvl": 3
+              "lvl": 4
             }
           ]
         },
@@ -2849,7 +2849,7 @@ public static final String DATA_THIEF = """
             {
               "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 4, "y": 3 },
-              "lvl": 3
+              "lvl": 5
             }
           ]
         }          
@@ -2926,4 +2926,5 @@ public static final String DATA_THIEF = """
   }
 ]
 """;
+
 }

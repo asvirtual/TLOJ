@@ -1,7 +1,7 @@
 package com.tloj.game.effects;
 
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -31,7 +31,7 @@ public class DiceReroller extends WeaponEffect {
             this.weapon.diceRoll()
         );
 
-        this.activationMessage = ConsoleColors.YELLOW_BRIGHT + this.weapon.getName() + "'s dice reroller activated! Double hit!\n" + ConsoleColors.RESET;
+        this.activationMessage = ConsoleHandler.YELLOW_BRIGHT + this.weapon.getName() + "'s dice reroller activated! Double hit!" + ConsoleHandler.RESET + "\n";
         return this.used = true;
     }
 

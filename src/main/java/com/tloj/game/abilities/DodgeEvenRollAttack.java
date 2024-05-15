@@ -3,7 +3,7 @@ package com.tloj.game.abilities;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.bosses.EvenBoss;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * It is paired with the {@link EvenBoss}. <br>
  */
 public class DodgeEvenRollAttack extends BossAbility {
-    private final static String ACTIVATION_MESSAGE = ConsoleColors.PURPLE + "The boss used its mighty ability and dodged the attack!" + ConsoleColors.RESET;
+    private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and dodged the attack!" + ConsoleHandler.RESET;
 
     @JsonCreator
     public DodgeEvenRollAttack(Boss boss) {

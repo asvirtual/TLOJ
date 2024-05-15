@@ -1,6 +1,6 @@
 package com.tloj.game.abilities;
 
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.mobs.JetBat;
@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * It is paired with the {@link JetBat}.
  */
 public class JetBatAbility extends MobAbility {
-    private final static String ACTIVATION_MESSAGE = ConsoleColors.PURPLE + "JetBat was so quick it dodged the attack!" + ConsoleColors.RESET;
+    private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "JetBat was so quick it dodged the attack!" + ConsoleHandler.RESET;
 
     @JsonCreator
     public JetBatAbility(Mob user) {

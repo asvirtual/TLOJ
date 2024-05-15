@@ -3,7 +3,7 @@ package com.tloj.game.game;
 import com.tloj.game.entities.Mob;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.entities.Character;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Dice;
 
 
@@ -67,6 +67,6 @@ public class MobAttack extends Attack {
         );
 
         System.out.println("\n" + this.getAttacker() + " attacks you back!");
-        System.out.println(this.attacker + " inflicted " + ConsoleColors.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleColors.RESET + " to you!");
+        System.out.println(this.attacker + " inflicted " + ConsoleHandler.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleHandler.RESET + " to you!");
     }
 }

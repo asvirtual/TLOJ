@@ -4,7 +4,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
@@ -34,7 +34,7 @@ public class ManaAttackBooster extends WeaponEffect {
         attack.setWeaponRoll(this.weapon.diceRoll());
         holder.useMana(MANA_COST);
 
-        this.activationMessage = ConsoleColors.YELLOW_BRIGHT + this.weapon.getName() + "'s critical mana damage activated!" + ConsoleColors.RESET;
+        this.activationMessage = ConsoleHandler.YELLOW_BRIGHT + this.weapon.getName() + "'s critical mana damage activated!" + ConsoleHandler.RESET;
         return this.used = true;
     }
 

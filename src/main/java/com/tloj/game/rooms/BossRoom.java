@@ -13,7 +13,7 @@ import com.tloj.game.game.PlayerRoomVisitor;
 
 /**
  * Class that represents a boss room in the game<br>
- * Boss Room is an extension of the Hostile Room, as Boss'es are hostile mobs{@link BossAbility}<br>
+ * Boss Room is an extension of the Hostile Room, as Boss'es are hostile mobs {@link BossAbility}<br>
  * Contains the boss of the floor and is always the last room of the floor<br>
  * @see Room
  * @see HealingRoom

@@ -26,8 +26,8 @@ import com.tloj.game.entities.Boss;
  */
 public class HalverBoss extends Boss{
     public static final int HP = 70;
-    public static final int ATTACK = 8;
-    public static final int DEFENSE = 6;
+    public static final int ATTACK = 9;
+    public static final int DEFENSE = 3;
     public static final int DICE_FACES = 10;
     public static final int XP_DROP = 50;
     public static final int MONEY_DROP = 40;
@@ -38,6 +38,7 @@ public class HalverBoss extends Boss{
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP, position);
         this.ability = new TakeHalfDamage(this);
+        this.drop = new WeaponShard();
     }
 
     @Override

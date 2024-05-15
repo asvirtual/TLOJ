@@ -6,8 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Attack;
 import com.tloj.game.game.MobAttack;
-import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 
 
 /**
@@ -31,7 +30,7 @@ public class Guard extends CharacterSkill {
     @JsonCreator
     public Guard(@JsonProperty("character") Character character) {
         super(character, MANA_COST);
-        this.activationMessage = ConsoleColors.PURPLE + "Guard activated! Jordan will completely deflect the opponent's attack!" + ConsoleColors.RESET;
+        this.activationMessage = ConsoleHandler.PURPLE + "Guard activated! Jordan will completely deflect the opponent's attack!" + ConsoleHandler.RESET;
     }
     
 

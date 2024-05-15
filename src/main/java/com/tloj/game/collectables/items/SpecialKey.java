@@ -1,4 +1,3 @@
-
 package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.ConsumableItem;
@@ -6,11 +5,7 @@ import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Constants;
 
-import org.checkerframework.checker.units.qual.g;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 
 
 /**
@@ -58,7 +53,7 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof Emp;
+        return obj instanceof SpecialKey;
     }
 }
 

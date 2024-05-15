@@ -7,7 +7,7 @@ import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.collectables.items.NorthStar;
@@ -49,9 +49,10 @@ public class TpEffect extends RoomEffect {
      */
     @Override
     public boolean applyEffect(Character character) {
-        Controller.getInstance().printMapAndArt(this.getASCII());
         
-        System.out.println("\n" + ConsoleColors.PURPLE + "Oh no! Unexpected System call teleported you to a random room!" + ConsoleColors.RESET);
+        System.out.println(ConsoleHandler.PURPLE + "You've entered a Trap Room!" + ConsoleHandler.RESET + "\n");
+        Controller.getInstance().printMapAndArt(this.getASCII());
+        System.out.println("\n" + ConsoleHandler.PURPLE + "Oh no! Unexpected System call teleported you to a random room!" + ConsoleHandler.RESET);
         System.out.println("They hacked your GPS! You can't see the rooms you visited anymore!");
 
         Level level = character.getCurrentLevel();
@@ -92,7 +93,7 @@ public class TpEffect extends RoomEffect {
         } while (!validLocation);
 
         Controller.awaitEnter();
-        Controller.clearConsole();  
+        ConsoleHandler.clearConsole();  
         return true;
     }
 

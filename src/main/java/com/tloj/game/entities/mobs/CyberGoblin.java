@@ -18,7 +18,7 @@ import com.tloj.game.utilities.Constants;
  */
 public class CyberGoblin extends Mob {
     private static final int HP = 10;
-    private static final int ATTACK = 3;
+    private static final int ATTACK = 4;
     private static final int DEFENSE = 2;
     private static final int DICE_FACES = 7;
     private static final int XP_DROP = 5;

@@ -5,9 +5,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Attack;
-import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 
 
 /**
@@ -31,7 +30,7 @@ public class Focus extends CharacterSkill {
     @JsonCreator
     public Focus(@JsonProperty("character") Character character) {
         super(character, MANA_COST);
-        this.activationMessage = ConsoleColors.PURPLE + "Focus mode on! Next attack will deal 3 more damage" + ConsoleColors.RESET;
+        this.activationMessage = ConsoleHandler.PURPLE + "Focus mode on! Next attack will deal 3 more damage" + ConsoleHandler.RESET;
     }
     
 

@@ -1,6 +1,6 @@
 package com.tloj.game.rooms;
 
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
@@ -107,6 +107,6 @@ public class TrapRoom extends Room {
 
     @Override
     public String getRoomRepresentation() {
-        return ConsoleColors.PURPLE + "\u2566" + ConsoleColors.RESET;
+        return ConsoleHandler.PURPLE + "\u2566" + ConsoleHandler.RESET;
     }
 }

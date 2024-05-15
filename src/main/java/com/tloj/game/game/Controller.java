@@ -1,6 +1,6 @@
 package com.tloj.game.game;
 
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,9 +10,6 @@ import java.util.Stack;
 import java.util.function.Supplier;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.fusesource.jansi.Ansi;
-import org.fusesource.jansi.AnsiConsole;
-
 
 import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.LootRoom;
@@ -25,7 +22,7 @@ import com.tloj.game.entities.characters.MechaKnight;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.entities.npcs.Smith;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.GameState;
@@ -51,11 +48,9 @@ import com.tloj.game.utilities.MusicPlayer;
  * - Return (return) {@link ReturnCommand} (used to go back to starting room)<br>
  * - Print status (status) {@link PrintStatusCommand}<br>
  * - Merchant (merchant) {@link MerchantCommand} (talk with merchant in healing room)<br>
- * - Show list (showlist) {@link ShowListCommand} (show merchant items list)<br>
  * - Buy (buy [number]) {@link BuyCommand} (buy item from merchant)<br>
  * - Smith (smith) {@link SmithCommand} (talk with smith in healing room)<br>
  * - Give (give [smith] [weaponshard]) {@link GiveCommand} (give item to npc)<br>
- * - Confirm (confirm) {@link ConfirmCommand} (confirm action)<br>
  * - New game (new) {@link NewGameCommand} (start a new game)<br>
  * - Load game (load) {@link LoadGameCommand} (load a saved game)<br>
  * - Exit game (exit) {@link ExitGameCommand} (exit the game)<br>
@@ -63,6 +58,7 @@ import com.tloj.game.utilities.MusicPlayer;
  * - Activate skill (skill) {@link SkillCommand} (activate character's skill)<br>
  * - Show inventory (inventory) {@link InventoryCommand} (show player's inventory)<br>
  * - Swap weapon (swap [weapon]) {@link SwapWeaponCommand} (swap player's weapon)<br>
+ * - Pick item (pick) {@link PickItemCommand} (pick item in loot room)<br>
  */
 abstract class GameCommand {
     protected Game game;
@@ -109,7 +105,7 @@ class MoveNorthCommand extends GameCommand {
         super.execute();
 
         try {
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.NORTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
@@ -139,7 +135,7 @@ class MoveSouthCommand extends GameCommand {
         super.execute();
 
         try {
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.SOUTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
@@ -169,7 +165,7 @@ class MoveWestCommand extends GameCommand {
         super.execute();
         
         try {
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.WEST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
@@ -199,7 +195,7 @@ class MoveEastCommand extends GameCommand {
         super.execute();
         
         try {
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.EAST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
@@ -224,7 +220,7 @@ class AttackCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         this.game.playerAttack();
     }
 }
@@ -265,7 +261,7 @@ class InventoryCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         this.game.printInventory();
         System.out.println();
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
@@ -291,19 +287,19 @@ class UseItemCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleHandler.RESET);
             return;
         }
 
         if (this.player.hasUsedItem()) {
-            System.out.println(ConsoleColors.RED + "You've already used an item this turn" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "You've already used an item this turn" + ConsoleHandler.RESET);
             return;
         }
 
         if (!Controller.awaitConfirmation()) return;
         
         try {
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             Item consumed = this.game.useItem(Integer.parseInt(commands[1]));
 
             if (consumed == null) {
@@ -316,7 +312,7 @@ class UseItemCommand extends GameCommand {
 
             Controller.printSideBySideText(
                 consumed.getASCII(), 
-                ConsoleColors.GREEN + "Jordan consumed " + consumed + ConsoleColors.RESET + 
+                ConsoleHandler.GREEN + "Jordan consumed " + consumed + ConsoleHandler.RESET + 
                 "\n\n\n" + this.game.getPlayer().getPrettifiedStatus(), 
                 7
             );
@@ -346,7 +342,7 @@ class InfoItemCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleHandler.RESET);
             return;
         }
         
@@ -381,12 +377,12 @@ class SwapWeaponCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: swap [weapon]" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: swap [weapon]" + ConsoleHandler.RESET);
             return;
         }
         
         try {
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             if (!this.game.getPlayer().swapWeapon(Integer.parseInt(commands[1]))) {
                 System.out.println();
                 if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
@@ -394,7 +390,7 @@ class SwapWeaponCommand extends GameCommand {
                 return;
             }
 
-            Controller.printSideBySideText(this.player.getWeapon().getASCII(), ConsoleColors.GREEN + "Jordan equipped " + this.player.getWeapon() + ConsoleColors.RESET, 7);
+            Controller.printSideBySideText(this.player.getWeapon().getASCII(), ConsoleHandler.GREEN + "Jordan equipped " + this.player.getWeapon() + ConsoleHandler.RESET, 7);
             System.out.println();
             
             if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
@@ -423,14 +419,14 @@ class DropItemCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: drop [item]" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: drop [item]" + ConsoleHandler.RESET);
             return;
         }
 
         if (!Controller.awaitConfirmation()) return;
 
         try {
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             Item dropped = this.game.dropItem(Integer.parseInt(commands[1]));
             if (dropped == null) {
                 System.out.println();
@@ -440,7 +436,7 @@ class DropItemCommand extends GameCommand {
                 return;
             }
 
-            Controller.printSideBySideText(dropped.getASCII(), ConsoleColors.RED + "Jordan dropped " + dropped + ConsoleColors.RESET, 7);
+            Controller.printSideBySideText(dropped.getASCII(), ConsoleHandler.RED + "Jordan dropped " + dropped + ConsoleHandler.RESET, 7);
             System.out.println();
 
             if (this.controller.getState() == GameState.LOOTING_ROOM) {
@@ -448,7 +444,7 @@ class DropItemCommand extends GameCommand {
                 
                 if (!this.player.addInventoryItem(room.getItem())) return;
 
-                System.out.println(ConsoleColors.GREEN + "You've picked up the " + room.getItem() + ConsoleColors.RESET);
+                System.out.println(ConsoleHandler.GREEN + "You've picked up the " + room.getItem() + ConsoleHandler.RESET);
 
                 this.controller.setState(GameState.MOVING);
                 room.clear(this.player);
@@ -461,6 +457,38 @@ class DropItemCommand extends GameCommand {
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
+    }
+}
+
+/**
+ * Concrete command class to drop an item<br>
+ * @see GameCommand <br>
+ */
+class PickItemCommand extends GameCommand {
+    public PickItemCommand(Game game, String[] commands) {
+        super(game, commands);
+        this.validListStates = List.of(
+            GameState.LOOTING_ROOM
+        );
+    }
+
+    @Override
+    public void execute() throws IllegalStateException {
+        super.execute();
+
+        ConsoleHandler.clearConsole();
+        LootRoom room = (LootRoom) this.game.getCurrentRoom();
+        Item item = room.getItem();
+
+        if (!this.player.addInventoryItem(item)) {
+            System.out.println(ConsoleHandler.RED + "You can't carry more weight" + ConsoleHandler.RESET);
+            return;
+        }
+
+        System.out.println(item.getASCII() + "\n");
+        System.out.println(ConsoleHandler.GREEN + "You've picked up the " + item + ConsoleHandler.RESET);
+        this.controller.setState(GameState.MOVING);
+        room.clear(this.player);
     }
 }
 
@@ -481,8 +509,8 @@ class PrintSeedCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
-        System.out.println(ConsoleColors.PURPLE + "The game seed is: " + this.game.getSeed() + ConsoleColors.RESET + "\n");
+        ConsoleHandler.clearConsole();
+        System.out.println(ConsoleHandler.PURPLE + "The game seed is: " + this.game.getSeed() + ConsoleHandler.RESET + "\n");
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
             this.game.printMap();
     }
@@ -511,7 +539,7 @@ class QuitCommand extends GameCommand {
         this.game.uploadToCloud();
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         System.out.println(Constants.GAME_TITLE);
     }
 }
@@ -553,8 +581,8 @@ class PrintScoreCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
-        System.out.println(ConsoleColors.GREEN + "The game current score is: " + this.game.getScore() + ConsoleColors.RESET + "\n");
+        ConsoleHandler.clearConsole();
+        System.out.println(ConsoleHandler.GREEN + "The game current score is: " + this.game.getScore() + ConsoleHandler.RESET + "\n");
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
             this.game.printMap();
     }
@@ -574,34 +602,42 @@ class HelpCommand extends GameCommand {
 
     @Override
     public void execute() {
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         switch (this.controller.getState()) {
             case MAIN_MENU:
-                System.out.println("Commands: new, load, exit");
+                System.out.println(
+                    "Commands:\n new --> to start a new game,\n load --> to load a saved game,\n exit --> to exit the game\n");
                 break;
             case CHOOSING_CHARACTER:
-                System.out.println("Choose a character: default [1], hacker [2], data thief [3], mecha knight [4], neo samurai [5]");
+                System.out.println("\n" + Constants.CLASS_CHOICE + "\n");
                 break;
             case MOVING:
-                System.out.println("Commands: gn, gs, gw, ge, return, inv, status, map, score, seed, quit, use *number*, drop *number*, swap *number*");
+                System.out.println(
+                    "Commands:\n gn --> to go north,\n gs --> to go south,\n gw --> to go west,\n ge --> to go east" + 
+                    "\nreturn --> to return to the starting room of the floor,\n inv --> to show your inventory" + 
+                    "\nstatus --> to show your detailed statistics,\n map --> to print the map" + 
+                    "\n score --> to show your current score,\n seed --> to print the game seed,\n quit --> to return to the main menu," +
+                    "\n use *number* --> to use an Item,\n drop *number* --> to drop an Item,\n swap *number* --> to swap your weapon,"
+                );
                 break;
             case MERCHANT_SHOPPING:
-                System.out.println("Commands: buy *number*, back");
+                System.out.println("Commands: buy *number* --> to buy an Item,\n back --> to return to the previous state");
                 break;
             case SMITH_FORGING:
-                System.out.println("Commands: give smith weaponshard, back");
+                System.out.println("Commands: give smith weaponshard --> to give weaponshard to smith,\n back --> to return to the previous state");
                 break;
             case FIGHTING_MOB:
-                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*, info *number*");
-                break;
             case FIGHTING_BOSS:
-                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*, info *number*");
+                System.out.println(
+                    "Commands: attack --> to attack,\n skill --> to use your ability,\n inv --> to show your inventory," +
+                    "\n use *number* --> to use an Item,\n drop *number* --> to drop an Item,\n info *number* --> to get information about an Item"
+                );
                 break;
             case LOOTING_ROOM:
-                System.out.println("Commands: confirm, inv, use *number*, drop *number*, swap *number*");
+                System.out.println("Commands: pick --> to pick the Item in the room,\n inv --> to show your inventory,\n drop *number* --> to drop an Item,\n info *number* --> to get information about an Item");
                 break;
             case HEALING_ROOM:
-                System.out.println("Commands: merchant, smith, inv, use *number*, drop *number*, swap *number*");
+                System.out.println("Commands: merchant --> to talk with the Merchant,\n smith --> to talk with the Smith,\n drop *number* --> to drop an Item,\n info *number* --> to get information about an Item");
                 break;
             default:
                 break;
@@ -637,7 +673,7 @@ class ReturnCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         this.game.returnToStart();
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
             this.game.printMap();
@@ -660,7 +696,7 @@ class PrintStatusCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         System.out.println(this.player + "\n");
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
             this.game.printMap();
@@ -703,7 +739,7 @@ class MerchantCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
         Merchant merchant = (Merchant) room.getFriendlyEntityByName(Merchant.NAME);
         if (merchant != null) merchant.interact(this.player);
@@ -727,7 +763,7 @@ class BuyCommand extends GameCommand {
         super.execute();
 
         if (commands.length != 2) {
-            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: buy [item]" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: buy [item]" + ConsoleHandler.RESET);
             return;
         }
         
@@ -760,7 +796,7 @@ class SmithCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
         Smith smith = (Smith) room.getFriendlyEntityByName(Smith.NAME);
         if (smith != null) smith.interact(this.game.getPlayer());
@@ -784,7 +820,7 @@ class GiveCommand extends GameCommand {
         super.execute();
         
         if (this.commands.length != 3) {
-            System.out.println(ConsoleColors.RED + "Invalid command. Correct Syntax: give [npc] [item]" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: give [npc] [item]" + ConsoleHandler.RESET);
             return;
         }
 
@@ -807,7 +843,7 @@ class NewGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         this.controller.newGame();
         System.out.println("\n" + Constants.CLASS_CHOICE);
     }
@@ -829,7 +865,7 @@ class LoadGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         this.controller.loadGame();
     }
 }
@@ -849,7 +885,7 @@ class ExitGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         this.controller.setState(GameState.EXIT);
     }
 }
@@ -880,7 +916,7 @@ class ChooseCharacterGameCommand extends GameCommand {
         } + "\n");
 
         if (!Controller.awaitConfirmation()) {
-            Controller.clearConsole();
+            ConsoleHandler.clearConsole();
             System.out.println("\n" + Constants.CLASS_CHOICE);
             return;
         }
@@ -899,7 +935,7 @@ class ChooseCharacterGameCommand extends GameCommand {
             }
         );
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
 
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
         this.game.setPlayer(factory.create());
@@ -927,7 +963,7 @@ class GCInvoker {
 
     public void executeCommand() {
         if (this.command == null) {
-            System.out.println(ConsoleColors.RED + "Invalid command" + ConsoleColors.RESET);
+            System.out.println(ConsoleHandler.RED + "Invalid command" + ConsoleHandler.RESET);
             return;
         }
         
@@ -1038,10 +1074,15 @@ class NeoSamuraiFactory extends CharacterFactory {
  * @see Game
  */
 public class Controller {
-    /** Singleton Controller unique instance */
+    /** 
+     * Singleton Controller unique instance 
+     */
     private static Controller instance;
     private static Scanner scanner;
     private Game game;
+    /**
+     * Music player to handle the game music
+     */
     private MusicPlayer musicPlayer;
     /**
      * Stack to keep track of the game states<br>
@@ -1085,14 +1126,28 @@ public class Controller {
         return instance;
     }
 
+    /**
+     * Get the current game state by peeking the top of the history stack
+     * @return the current game state
+     * @see GameState
+     */
     public GameState getState() {
         return this.history.peek();
     }
 
+    /**
+     * Change the current game state by pushing it to the history stack
+     * @param state the new game state
+     * @see GameState
+     */
     public void setState(GameState state) {
         this.history.push(state);
     }
 
+    /**
+     * Go back to the previous game state by popping the top of the history stack
+     * @see GameState
+     */
     public void goBackState() {
         this.history.pop();
     }
@@ -1101,14 +1156,26 @@ public class Controller {
         this.game = game;
     }
 
+    /**
+     * Facade method to get the game score
+     * @see Game#getScore()
+     * @return the game score
+     */
     public int getScore() {
         return this.game.getScore();
     }
 
+    /**
+     * Facade method to print the game map
+     * @see Game#printMap()
+     */
     public void printMap() {
         this.game.printMap();
     }
 
+    /**
+     * Prints the game map and the player status side by side
+     */
     public void printMapAndStatus() {
         String[] firstLines = this.game.generateMapLines();
         String[] secondLines = ("\n" + this.game.getPlayer().getPrettifiedStatus()).split("\n");
@@ -1130,6 +1197,12 @@ public class Controller {
 
     }
 
+    /**
+     * Prints two Strings side by side
+     * @param first the first String to be printed (to the left)
+     * @param second the second String to be printed (to the right)
+     * @param offsetRows the number of rows to offset the second String from the top of the console
+     */
     public static void printSideBySideText(String first, String second, int offsetRows) {
         String[] firstLines = first.split("\n");
         String[] secondLines = second.split("\n");
@@ -1152,9 +1225,16 @@ public class Controller {
         }
     }
 
+    /**
+     * Prints two Strings side by side
+     * @param first the first String to be printed (to the left)
+     * @param second the second String to be printed (to the right)
+     * {@link Controller#printSideBySideText(String, String, int)}
+     * @param first
+     * @param second
+     */
     public static void printSideBySideText(String first, String second) {
         // Offset of the String second from the top of the console
-        // final int DEFAULT_OFFSET_ROWS = 7; 
         final int DEFAULT_OFFSET_ROWS = 1; 
         Controller.printSideBySideText(first, second, DEFAULT_OFFSET_ROWS);
     }
@@ -1162,6 +1242,7 @@ public class Controller {
     /**
      * Prints an ASCII art and the game map side by side
      * @param asciiArt the ASCII art to be printed
+     * {@link Controller#printSideBySideText(String, String)}
      */
     public void printMapAndArt(String asciiArt) {
         Controller.printSideBySideText(asciiArt, String.join("\n", this.game.generateMapLines()));
@@ -1169,7 +1250,7 @@ public class Controller {
 
     /*
      * TODO
-     * Implement loading pre-defined configurations from JSON file (and maybe random map generation?)
+     * Implement loading pre-defined configurations from JSON file
      */
     public void newGame() {
         ArrayList<Level> map = GameData.deserializeMap(Constants.MAP);
@@ -1227,7 +1308,8 @@ public class Controller {
                 Map.entry("merchant", () -> new MerchantCommand(this.game, commands)),
                 Map.entry("buy", () -> new BuyCommand(this.game, commands)),
                 Map.entry("smith", () -> new SmithCommand(this.game, commands)),
-                Map.entry("give", () -> new GiveCommand(this.game, commands))
+                Map.entry("give", () -> new GiveCommand(this.game, commands)),
+                Map.entry("pick", () -> new PickItemCommand(this.game, commands))
             )
         );
         
@@ -1274,15 +1356,18 @@ public class Controller {
         try {
             invoker.executeCommand();
         } catch (IllegalStateException e) {
-            System.out.println("Jordan can't do that now!");
+            System.out.println("There's a time and a place for everything...");
         }
     }
 
+    /**
+     * Returns the available commands based on the current game state
+     * @return the available commands
+     */
     @JsonIgnore
     public String getAvailableCommands() {
         return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
-            case CHOOSING_CHARACTER -> "[1] - BasePlayer, [2] - Hacker, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use *number*] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();
@@ -1295,68 +1380,34 @@ public class Controller {
         };
     }
 
+    /**
+     * Changes the game music based on the filename and loop flag
+     * @param filename the music file to be played
+     * @param loop whether the music should loop or not
+     */
     public void changeMusic(String filename, boolean loop) {
         this.musicPlayer.setNewFile(filename);
         this.musicPlayer.playMusic(loop);
     }
 
+    /**
+     * Changes the game music based on the filename, loop flag and callback function
+     * @param filename the music file to be played
+     * @param loop whether the music should loop or not
+     * @param callback the function to be executed after the music is played
+     */
     public void changeMusic(String filename, boolean loop, Runnable callback) {
         this.musicPlayer.stop();
         this.musicPlayer = new MusicPlayer(filename, callback);
         this.musicPlayer.playMusic(loop);
     }
 
-    public static void setConsoleEncoding() {
-
-        try {
-            if (System.getProperty("os.name").startsWith("Windows")) {
-                AnsiConsole.systemInstall();
-                new ProcessBuilder("cmd", "/c", "chcp", "65001").inheritIO().start();
-            } else
-                new ProcessBuilder("bash", "-c", "export LANG=en_US.UTF-8").inheritIO().start();
-        } catch (IOException e) {
-            System.out.println("Error setting UTF-8 encoding to support special characters");
-            e.printStackTrace();
-        }
-    }
-
-    public static void clearConsole(int delay) {
-        try {
-            Thread.sleep(delay);
-            if (System.getProperty("os.name").startsWith("Windows")) 
-                new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            else 
-                new ProcessBuilder("bash", "-c", "clear").inheritIO().start().waitFor();
-        } catch (IOException | InterruptedException e) {
-            System.out.println("Error clearing console");
-            e.printStackTrace();
-        }
-    }
-
-    public static void clearConsole() {
-        final int DEFAULT_DELAY = 100;
-        Controller.clearConsole(DEFAULT_DELAY);
-    }
-
-    public static void wait(int delay) {
-        try {
-            Thread.sleep(delay);
-        } catch (InterruptedException e) {
-            System.out.println("Error waiting");
-            e.printStackTrace();
-        }
-    }
-
-    public static void printColored(String text, Ansi.Color color) {
-        System.out.println(Ansi.ansi().fg(color).a(text).reset());
-    }
-
     /**
      * Main game loop
      */
     public void run() {
-        Controller.setConsoleEncoding();
-        Controller.clearConsole();
+        ConsoleHandler.setConsoleEncoding();
+        ConsoleHandler.clearConsole();
 
         this.musicPlayer = new MusicPlayer(Constants.MAIN_MENU_WAV_FILE_PATH);
         this.musicPlayer.playMusic(true);
@@ -1376,6 +1427,6 @@ public class Controller {
         Controller.scanner.close();
         this.musicPlayer.stop();
 
-        if (System.getProperty("os.name").startsWith("Windows")) AnsiConsole.systemUninstall(); 
+        ConsoleHandler.resetConsoleEncoding();
     }
 }

@@ -2,30 +2,22 @@ package com.tloj.game.rooms;
 
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
 
-/**
- * Abstract class that represents a room in the game<br>
- * @see RoomType
- * @see RoomEffect
- */
-
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import java.util.ArrayList;
+
 
 /**
- * The abstract base class for all rooms in the game.
+ * Abstract class that represents a room in the game<br>
+ * @see RoomType
+ * @see RoomEffect
  */
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.CLASS, 
@@ -86,6 +78,7 @@ public abstract class Room {
      *
      * @return a string representation of the room
      */
+    @JsonIgnore
     public abstract String getRoomRepresentation();
 
     /**

@@ -1,12 +1,11 @@
 package com.tloj.game.game;
 
-import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.effects.WeaponEffect;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Dice;
 
 
@@ -74,7 +73,7 @@ public class PlayerAttack extends Attack {
 
     @Override
     public int getTotalDamage() {
-        if (this.totalAttack != -1) 
+        if (this.totalAttack > 0) 
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
 
         int totalDamage = this.baseDamage + this.weaponRoll - this.targetDef;
@@ -135,8 +134,8 @@ public class PlayerAttack extends Attack {
                 "Oh no! Jordan's roll was disabled!\n\n" + Dice.getASCII(0))
         );
 
-        System.out.println("\nYou inflicted " +  ConsoleColors.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleColors.RESET + " to " + this.target + "!");
-        if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleColors.RED + this.target.getHP() + " HP" + ConsoleColors.RESET + " left!");
+        System.out.println("\nYou inflicted " +  ConsoleHandler.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleHandler.RESET + " to " + this.target + "!");
+        if (this.target.getHP() > 0) System.out.println(this.target + " has " + ConsoleHandler.RED + this.target.getHP() + " HP" + ConsoleHandler.RESET + " left!");
 
         Controller.awaitEnter();
         this.resetStats();

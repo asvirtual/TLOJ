@@ -1,8 +1,7 @@
 package com.tloj.game.entities;
 
-import com.tloj.game.utilities.ConsoleColors;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
 
 import org.fusesource.jansi.Ansi;
 
@@ -11,7 +10,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.game.Attack;
-import com.tloj.game.game.Controller;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.skills.CharacterSkill;
@@ -48,7 +46,7 @@ public abstract class Boss extends Mob {
         Character target = (Character) t;
         MobAttack attack = new MobAttack(this, target);
 
-        Controller.clearConsole();
+        ConsoleHandler.clearConsole();
         
         attack.setDiceRoll(this.dice.roll());
         
