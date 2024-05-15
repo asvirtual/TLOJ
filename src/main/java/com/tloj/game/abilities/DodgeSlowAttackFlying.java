@@ -21,7 +21,7 @@ public class DodgeSlowAttackFlying extends BossAbility {
     public boolean use(PlayerAttack attack) {
         if (Math.random() > 0.333) return this.used = false;
 
-        this.boss.heal(attack.getWeaponRoll());
+        this.user.heal(attack.getWeaponRoll());
         attack.setTotalAttack(0);
 
         this.activationMessage = 

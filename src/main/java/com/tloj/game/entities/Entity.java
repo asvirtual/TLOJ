@@ -40,5 +40,10 @@ public abstract class Entity {
     }
 
     @JsonIgnore
+    public String getName()  {
+        return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
+    }
+
+    @JsonIgnore
     public abstract String getASCII();
 }

@@ -244,7 +244,7 @@ public class Game implements CharacterObserver {
 
         this.player.lootMob(mob);
 
-        // Controller.awaitEnter();
+        Controller.awaitEnter();
         
         this.increaseScore(Mob.SCORE_DROP);
 
@@ -252,7 +252,6 @@ public class Game implements CharacterObserver {
         if (room.getMobsCount() == 1) room.clear(this.player);
         else {
             room.removeMob(mob);
-            ConsoleHandler.clearConsole(2000);
             System.out.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n" + room.getMob().getASCII() + "\n");
         }
     }

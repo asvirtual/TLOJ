@@ -9,9 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.Item;
-import com.tloj.game.game.Attack;
 import com.tloj.game.game.MobAttack;
-import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.skills.CharacterSkill;
 
 
@@ -24,8 +22,6 @@ import com.tloj.game.skills.CharacterSkill;
 public abstract class Boss extends Mob {
     public static final int SCORE_DROP = 50;
     public static final int BOSS_LVL = 1;
-    
-    protected BossAbility ability;
 
     protected Boss(
         int hp,
@@ -34,7 +30,7 @@ public abstract class Boss extends Mob {
         int diceFaces,
         int xpDrop,
         int moneyDrop,
-        Coordinates position
+    Coordinates position
     ) {
         super(hp, atk, def, diceFaces, BOSS_LVL, xpDrop, moneyDrop, position);
     }
@@ -56,16 +52,6 @@ public abstract class Boss extends Mob {
         attack.perform();
         
         if (!target.isAlive()) target.notifyDefeat();
-    }
-
-    @Override
-    public void defend(Attack attack) {
-        super.defend(attack);
-        if (!(attack instanceof PlayerAttack)) return;
-
-        if (this.ability == null) return;
-        PlayerAttack playerAttack = (PlayerAttack) attack;
-        this.ability.use(playerAttack);
     }
 
     @Override

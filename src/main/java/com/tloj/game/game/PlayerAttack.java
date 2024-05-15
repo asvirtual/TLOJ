@@ -128,10 +128,10 @@ public class PlayerAttack extends Attack {
             this.getAttacker().getPrettifiedStatus() + "\n\n" + this.getTarget().getPrettifiedStatus() +
             (this.weaponEffect != null && this.weaponEffect.wasUsed() ? "\n" + this.weaponEffect.getActivationMessage() : "") + 
             (this.targetAbility != null && this.targetAbility.wasUsed() ? "\n" + this.targetAbility.getActivationMessage() : "") + 
-            "\n\n" +
-            (this.getWeaponRoll() != 0 ?
-                "Jordan rolled " + this.getWeaponRoll() + ":\n\n" + Dice.getASCII(this.getWeaponRoll()) :
-                "Oh no! Jordan's roll was disabled!\n\n" + Dice.getASCII(0))
+            "\n\n" + 
+            (this.getWeaponRoll() != 0 ? 
+                "Jordan rolled " + this.getWeaponRoll() + ":\n\n" + Dice.getASCII(this.getWeaponRoll()) : 
+                "Oh no! Jordan's roll was disabled!\n\n" + Dice.getASCII(0)) 
         );
 
         System.out.println("\nYou inflicted " +  ConsoleHandler.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleHandler.RESET + " to " + this.target + "!");

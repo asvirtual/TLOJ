@@ -11,7 +11,6 @@ import com.tloj.game.entities.Boss;
  * @see Boss
  */
 public abstract class BossAbility extends MobAbility {
-    protected Boss boss;
     protected String activationMessage;
 
     protected BossAbility(Boss boss) {

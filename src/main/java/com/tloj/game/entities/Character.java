@@ -345,7 +345,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         PlayerAttack currentAttack = new PlayerAttack(this, target);
         
         if (this.weapon != null) this.weapon.modifyAttack(currentAttack);
-        this.skill.execute(currentAttack);
+        if (this.skill != null) this.skill.execute(currentAttack);
         target.defend(currentAttack);
 
         currentAttack.perform();

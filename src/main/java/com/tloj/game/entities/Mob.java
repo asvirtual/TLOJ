@@ -43,7 +43,7 @@ public abstract class Mob extends CombatEntity {
     protected Dice dice;
     /** Mob has a chance to drop a random item to the player upon defeating */
     protected Item drop;
-    /** Mob might have an ability assinged */
+    /** Mob might have an ability assigned */
     protected MobAbility ability;
     
     /**
