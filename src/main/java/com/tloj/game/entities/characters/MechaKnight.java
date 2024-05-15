@@ -77,8 +77,6 @@ public class MechaKnight extends Character {
         );
 
         this.skill = new Guard(this);
-        this.inventory.add(new Ragu());
-        this.inventory.add(new Ragu());
     }
 
     public static String getDetailedInfo() {
