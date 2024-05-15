@@ -8,7 +8,6 @@ import com.tloj.game.utilities.Constants;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**

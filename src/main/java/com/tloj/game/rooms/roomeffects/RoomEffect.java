@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import com.tloj.game.entities.Character;
-import com.tloj.game.utilities.Dice;
 
 
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON

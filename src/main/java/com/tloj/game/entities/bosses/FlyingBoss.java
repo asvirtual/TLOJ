@@ -37,7 +37,6 @@ public class FlyingBoss extends Boss {
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP,position);
         this.ability = new DodgeSlowAttackFlying(this);
-        this.drop = new WeaponShard();
     }
 
     @Override

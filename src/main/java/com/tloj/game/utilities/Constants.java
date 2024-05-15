@@ -1,8 +1,6 @@
 
 package com.tloj.game.utilities;
 
-import java.io.Console;
-import java.security.PublicKey;
 
 /**
  *This class contains all the constants used in the game.<br> 

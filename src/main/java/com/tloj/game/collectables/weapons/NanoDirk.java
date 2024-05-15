@@ -9,7 +9,6 @@ import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.DiceReroller;
 import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**

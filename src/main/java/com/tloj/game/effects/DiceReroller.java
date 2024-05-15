@@ -31,7 +31,7 @@ public class DiceReroller extends WeaponEffect {
             this.weapon.diceRoll()
         );
 
-        this.activationMessage = ConsoleHandler.YELLOW_BRIGHT + this.weapon.getName() + "'s dice reroller activated! Double hit!\n" + ConsoleHandler.RESET;
+        this.activationMessage = ConsoleHandler.YELLOW_BRIGHT + this.weapon.getName() + "'s dice reroller activated! Double hit!" + ConsoleHandler.RESET + "\n";
         return this.used = true;
     }
 

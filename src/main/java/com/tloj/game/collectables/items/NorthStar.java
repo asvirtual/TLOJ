@@ -3,9 +3,8 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.utilities.Constants;
 
-import org.checkerframework.checker.units.qual.g;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
+
 
 /**
  * Represents the Consumable Item NorthStar in the game.<br>

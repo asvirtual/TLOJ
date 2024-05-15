@@ -5,7 +5,6 @@ import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Represents the Consumable Item Attack Elixir in the game.<br>

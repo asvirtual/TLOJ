@@ -235,12 +235,19 @@ public class PlayerRoomVisitor implements Visitor {
         this.controller.changeMusic(Constants.ENDING_WAV_FILE_PATH, true);
         this.controller.setState(GameState.WIN);
 
+        /** Start */
+        
         ConsoleHandler.clearConsole();
         System.out.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleHandler.RESET);
         System.out.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.GAME_WIN + ConsoleHandler.RESET);
 
+        /** End */
+
         Controller.awaitEnter();
+        ConsoleHandler.clearConsole();
+        
         this.controller.setState(GameState.MAIN_MENU);
+        System.out.println(Constants.GAME_TITLE);
             
         this.controller.changeMusic(
             Constants.INTRO_WAV_FILE_PATH,

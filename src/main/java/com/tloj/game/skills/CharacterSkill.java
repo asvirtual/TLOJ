@@ -2,8 +2,6 @@ package com.tloj.game.skills;
 
 import com.tloj.game.game.Attack;
 import com.tloj.game.game.Controller;
-import com.tloj.game.game.MobAttack;
-import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.entities.Character;

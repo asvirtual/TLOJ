@@ -1,7 +1,6 @@
 package com.tloj.game.game;
 
-import java.io.Console;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,8 +10,6 @@ import java.util.Stack;
 import java.util.function.Supplier;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.fusesource.jansi.AnsiConsole;
-
 
 import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.LootRoom;
@@ -61,6 +58,7 @@ import com.tloj.game.utilities.MusicPlayer;
  * - Activate skill (skill) {@link SkillCommand} (activate character's skill)<br>
  * - Show inventory (inventory) {@link InventoryCommand} (show player's inventory)<br>
  * - Swap weapon (swap [weapon]) {@link SwapWeaponCommand} (swap player's weapon)<br>
+ * - Pick item (pick) {@link PickItemCommand} (pick item in loot room)<br>
  */
 abstract class GameCommand {
     protected Game game;
@@ -463,6 +461,38 @@ class DropItemCommand extends GameCommand {
 }
 
 /**
+ * Concrete command class to drop an item<br>
+ * @see GameCommand <br>
+ */
+class PickItemCommand extends GameCommand {
+    public PickItemCommand(Game game, String[] commands) {
+        super(game, commands);
+        this.validListStates = List.of(
+            GameState.LOOTING_ROOM
+        );
+    }
+
+    @Override
+    public void execute() throws IllegalStateException {
+        super.execute();
+
+        ConsoleHandler.clearConsole();
+        LootRoom room = (LootRoom) this.game.getCurrentRoom();
+        Item item = room.getItem();
+
+        if (!this.player.addInventoryItem(item)) {
+            System.out.println(ConsoleHandler.RED + "You can't carry more weight" + ConsoleHandler.RESET);
+            return;
+        }
+
+        System.out.println(item.getASCII() + "\n");
+        System.out.println(ConsoleHandler.GREEN + "You've picked up the " + item + ConsoleHandler.RESET);
+        this.controller.setState(GameState.MOVING);
+        room.clear(this.player);
+    }
+}
+
+/**
  * Concrete command class to print the game seed<br>
  * @see GameCommand <br>
  */
@@ -575,31 +605,39 @@ class HelpCommand extends GameCommand {
         ConsoleHandler.clearConsole();
         switch (this.controller.getState()) {
             case MAIN_MENU:
-                System.out.println("Commands: new, load, exit");
+                System.out.println(
+                    "Commands:\n new --> to start a new game,\n load --> to load a saved game,\n exit --> to exit the game\n");
                 break;
             case CHOOSING_CHARACTER:
-                System.out.println("Choose a character: default [1], hacker [2], data thief [3], mecha knight [4], neo samurai [5]");
+                System.out.println("\n" + Constants.CLASS_CHOICE + "\n");
                 break;
             case MOVING:
-                System.out.println("Commands: gn, gs, gw, ge, return, inv, status, map, score, seed, quit, use *number*, drop *number*, swap *number*");
+                System.out.println(
+                    "Commands:\n gn --> to go north,\n gs --> to go south,\n gw --> to go west,\n ge --> to go east" + 
+                    "\nreturn --> to return to the starting room of the floor,\n inv --> to show your inventory" + 
+                    "\nstatus --> to show your detailed statistics,\n map --> to print the map" + 
+                    "\n score --> to show your current score,\n seed --> to print the game seed,\n quit --> to return to the main menu," +
+                    "\n use *number* --> to use an Item,\n drop *number* --> to drop an Item,\n swap *number* --> to swap your weapon,"
+                );
                 break;
             case MERCHANT_SHOPPING:
-                System.out.println("Commands: buy *number*, back");
+                System.out.println("Commands: buy *number* --> to buy an Item,\n back --> to return to the previous state");
                 break;
             case SMITH_FORGING:
-                System.out.println("Commands: give smith weaponshard, back");
+                System.out.println("Commands: give smith weaponshard --> to give weaponshard to smith,\n back --> to return to the previous state");
                 break;
             case FIGHTING_MOB:
-                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*, info *number*");
-                break;
             case FIGHTING_BOSS:
-                System.out.println("Commands: attack, skill, inv, use *number*, drop *number*, info *number*");
+                System.out.println(
+                    "Commands: attack --> to attack,\n skill --> to use your ability,\n inv --> to show your inventory," +
+                    "\n use *number* --> to use an Item,\n drop *number* --> to drop an Item,\n info *number* --> to get information about an Item"
+                );
                 break;
             case LOOTING_ROOM:
-                System.out.println("Commands: confirm, inv, use *number*, drop *number*, swap *number*");
+                System.out.println("Commands: pick --> to pick the Item in the room,\n inv --> to show your inventory,\n drop *number* --> to drop an Item,\n info *number* --> to get information about an Item");
                 break;
             case HEALING_ROOM:
-                System.out.println("Commands: merchant, smith, inv, use *number*, drop *number*, swap *number*");
+                System.out.println("Commands: merchant --> to talk with the Merchant,\n smith --> to talk with the Smith,\n drop *number* --> to drop an Item,\n info *number* --> to get information about an Item");
                 break;
             default:
                 break;
@@ -1270,7 +1308,8 @@ public class Controller {
                 Map.entry("merchant", () -> new MerchantCommand(this.game, commands)),
                 Map.entry("buy", () -> new BuyCommand(this.game, commands)),
                 Map.entry("smith", () -> new SmithCommand(this.game, commands)),
-                Map.entry("give", () -> new GiveCommand(this.game, commands))
+                Map.entry("give", () -> new GiveCommand(this.game, commands)),
+                Map.entry("pick", () -> new PickItemCommand(this.game, commands))
             )
         );
         
@@ -1317,7 +1356,7 @@ public class Controller {
         try {
             invoker.executeCommand();
         } catch (IllegalStateException e) {
-            System.out.println("Jordan can't do that now!");
+            System.out.println("There's a time and a place for everything...");
         }
     }
 
@@ -1329,7 +1368,6 @@ public class Controller {
     public String getAvailableCommands() {
         return switch (this.getState()) {
             case MAIN_MENU -> "[new] - [load] - [exit]";
-            case CHOOSING_CHARACTER -> "[1] - BasePlayer, [2] - Hacker, [3] - DataThief, [4] - MechaKnight, [5] - NeoSamurai";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use *number*] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();

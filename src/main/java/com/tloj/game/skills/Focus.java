@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Attack;
-import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;
 

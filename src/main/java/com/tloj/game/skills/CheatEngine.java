@@ -3,7 +3,6 @@ package com.tloj.game.skills;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.Hacker;
 import com.tloj.game.game.Attack;
-import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.fasterxml.jackson.annotation.JsonCreator;

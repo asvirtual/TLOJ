@@ -38,6 +38,7 @@ public class HalverBoss extends Boss{
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP, position);
         this.ability = new TakeHalfDamage(this);
+        this.drop = new WeaponShard();
     }
 
     @Override
