@@ -51,7 +51,7 @@ public class Guard extends CharacterSkill {
     }
 
     public static String describe() {
-        return "Guard: Adds 3 defense points during fight";
+        return "Guard: Deflects any damage from the next opponent's attack. Costs 5 mana.";
     }
 }
 
