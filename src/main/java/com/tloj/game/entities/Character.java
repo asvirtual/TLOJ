@@ -41,7 +41,7 @@ import org.fusesource.jansi.Ansi;
  * @see PlayerAttack
 */
 public abstract class Character extends CombatEntity implements MovingEntity {
-    public static final int REQ_XP_BASE = 10;
+    public static final int REQ_XP_BASE = 15;
     public static final int INITIAL_LVL = 1;
 
     /**
