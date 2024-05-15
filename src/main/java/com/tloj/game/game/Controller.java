@@ -1080,6 +1080,7 @@ public class Controller {
     private static Controller instance;
     private static Scanner scanner;
     private Game game;
+    private GameSaveHandler saveHandler;
     /**
      * Music player to handle the game music
      */
@@ -1091,6 +1092,7 @@ public class Controller {
 
     private Controller() {
         Controller.scanner = new Scanner(System.in);
+        this.saveHandler = GameSaveHandler.getInstance();
         this.history = new Stack<GameState>();
         this.history.push(GameState.MAIN_MENU);
     }
@@ -1253,7 +1255,7 @@ public class Controller {
      * Implement loading pre-defined configurations from JSON file
      */
     public void newGame() {
-        ArrayList<Level> map = GameData.deserializeMap(Constants.MAP);
+        ArrayList<Level> map = this.saveHandler.deserializeMap(Constants.MAP);
         // ArrayList<Level> map = GameData.deserializeMapFromFile("map.json");
         Game game = new Game(map);
         // game.setSeed(1);
@@ -1265,11 +1267,11 @@ public class Controller {
     /**
      * TODO
      * Loads the game from the cloud, then deserializes the JSON data to create a new Game object
-     * @see GameData
+     * @see GameSaveHandler
      */
     public void loadGame() {
-        GameData gameData = GameData.deserializeJSON("{}");
-        this.setGame(gameData.getGame());
+        Game gameData = this.saveHandler.deserializeJSON("{}");
+        this.setGame(gameData);
         this.setState(GameState.MOVING);
     }
 

@@ -9,7 +9,7 @@ import com.google.cloud.storage.Bucket;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Controller;
-import com.tloj.game.game.GameData;
+import com.tloj.game.game.GameSaveHandler;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.HealingRoom;
@@ -62,8 +62,8 @@ public class Main {
         }
 
 
-        System.out.println(GameData.deserializeMapFromFile("test.json"));
-        System.out.println(GameData.loadFromFile("test.json"));
+        // System.out.println(GameSaveHandler.deserializeMapFromFile("test.json"));
+        // System.out.println(GameSaveHandler.loadFromFile("test.json"));
     }
 
     public static void testWrite() {
@@ -91,14 +91,14 @@ public class Main {
         ArrayList<Level> levels = new ArrayList<Level>();
         levels.add(level);
 
-        GameData gameData = new GameData(
-            Long.parseLong("1234567890"), 
-            level,
-            new NeoSamurai(new Coordinates(0, 0)),
-            levels,
-            0,
-            0
-        );
+        // GameData gameData = new GameData(
+        //     Long.parseLong("1234567890"), 
+        //     level,
+        //     new NeoSamurai(new Coordinates(0, 0)),
+        //     levels,
+        //     0,
+        //     0
+        // );
 
         // gameData.saveToFile("test.json");
     }

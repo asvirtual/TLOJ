@@ -51,7 +51,6 @@ public class Game implements CharacterObserver {
     /** The start time of the game session. */
     private long sessionStartTime;
 
-
     /**
      * Constructs a new Game object with the given list of levels.
      * @param levels The list of levels in the game.
@@ -86,18 +85,6 @@ public class Game implements CharacterObserver {
         
         this.player.addObserver(this);
         Dice.setSeed(this.seed);
-    }
-
-    @JsonIgnore
-    public GameData getGameData() {
-        return new GameData(
-            this.seed,
-            this.currentLevel,
-            this.player,
-            this.levels,
-            this.score,
-            this.elapsedTime
-        );
     }
 
     public int getScore() {
@@ -225,7 +212,8 @@ public class Game implements CharacterObserver {
 
     public void saveLocally() {
         this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        GameData.saveToFile(this, "test.json");
+        
+        // GameSaveHandler.saveToFile(this, "test.json");
         // TODO: Save in JSON file (and/or in cloud)
     }
 
