@@ -73,7 +73,7 @@ public class PlayerAttack extends Attack {
 
     @Override
     public int getTotalDamage() {
-        if (this.totalAttack > 0) 
+        if (this.totalAttack != -1) 
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
 
         int totalDamage = this.baseDamage + this.weaponRoll - this.targetDef;

@@ -98,7 +98,8 @@ class MoveNorthCommand extends GameCommand {
             GameState.MOVING,
             GameState.HEALING_ROOM,
             GameState.BOSS_DEFEATED,
-            GameState.LOOTING_ROOM
+            GameState.LOOTING_ROOM,
+            GameState.WIN
         );
     }
 
@@ -128,7 +129,8 @@ class MoveSouthCommand extends GameCommand {
             GameState.MOVING,
             GameState.HEALING_ROOM,
             GameState.BOSS_DEFEATED,
-            GameState.LOOTING_ROOM
+            GameState.LOOTING_ROOM,
+            GameState.WIN
         );
     }
 
@@ -158,7 +160,8 @@ class MoveWestCommand extends GameCommand {
             GameState.MOVING,
             GameState.HEALING_ROOM,
             GameState.BOSS_DEFEATED,
-            GameState.LOOTING_ROOM
+            GameState.LOOTING_ROOM,
+            GameState.WIN
         );
     }
 
@@ -188,7 +191,8 @@ class MoveEastCommand extends GameCommand {
             GameState.MOVING,
             GameState.HEALING_ROOM,
             GameState.BOSS_DEFEATED,
-            GameState.LOOTING_ROOM
+            GameState.LOOTING_ROOM,
+            GameState.WIN
         );
     }
 
@@ -1379,7 +1383,7 @@ public class Controller {
             case SMITH_FORGING -> "[give smith weaponshard] - [back]";
             case BOSS_DEFEATED -> "[inv] - [gn, gs, gw ge to change floor]";
             case HEALING_ROOM -> "[merchant] - [smith] - [inv] - [use *number*] - [drop *number*] - [gn, gs, gw ge to change floor]";
-            case WIN -> "[gn, gs, gw ge to escape the dungeon and become a LEGEND!]";
+            case WIN -> "[gn, gs, gw, ge to escape the dungeon and become a LEGEND!]";
             default -> "";
         };
     }

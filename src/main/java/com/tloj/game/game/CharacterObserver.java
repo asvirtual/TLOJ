@@ -1,6 +1,8 @@
 package com.tloj.game.game;
 
+import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Mob;
+
 
 /*
  * An interface that represents an observer of the game's characters.<br>
@@ -9,6 +11,6 @@ import com.tloj.game.entities.Mob;
 
 public interface CharacterObserver {
     public void onMobDefeated(Mob mob);
-    public void onBossDefeated();
+    public void onBossDefeated(Boss boss);
     public void onPlayerDefeated();
 }

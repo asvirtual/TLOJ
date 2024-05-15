@@ -14,6 +14,7 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.ItemReceiverEntity;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.entities.bosses.FlyingBoss;
 import com.tloj.game.rooms.BossRoom;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
@@ -257,11 +258,10 @@ public class Game implements CharacterObserver {
     }
 
     @Override
-    public void onBossDefeated() {
+    public void onBossDefeated(Boss boss) {
         ConsoleHandler.clearConsole();
 
         BossRoom room = (BossRoom) this.getCurrentRoom();
-        Boss boss = room.getBoss();
 
         room.clear(this.player);
 
@@ -270,7 +270,9 @@ public class Game implements CharacterObserver {
         this.player.lootMob(boss);
 
         this.increaseScore(Boss.SCORE_DROP);
-        this.controller.setState(GameState.BOSS_DEFEATED);
+        
+        // If the boss is the final boss, the game is won
+        this.controller.setState(boss instanceof FlyingBoss ? GameState.WIN : GameState.BOSS_DEFEATED);
     }
 
     @Override

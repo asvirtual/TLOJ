@@ -233,7 +233,6 @@ public class PlayerRoomVisitor implements Visitor {
         room.visit();
         
         this.controller.changeMusic(Constants.ENDING_WAV_FILE_PATH, true);
-        this.controller.setState(GameState.WIN);
 
         /** Start */
         

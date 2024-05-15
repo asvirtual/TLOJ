@@ -2,6 +2,7 @@ package com.tloj.game.entities.mobs;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tloj.game.abilities.CyberPoisonAbility;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
@@ -30,6 +31,7 @@ public class JunkSlime extends Mob {
         @JsonProperty("lvl") int lvl
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
+        this.ability = new CyberPoisonAbility(this);
     }
     
     @Override
