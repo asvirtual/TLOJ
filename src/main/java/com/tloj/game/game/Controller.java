@@ -25,7 +25,9 @@ import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.FirebaseHandler;
 import com.tloj.game.utilities.GameState;
+import com.tloj.game.utilities.JsonParser;
 import com.tloj.game.utilities.MusicPlayer;
 
 
@@ -1080,7 +1082,7 @@ public class Controller {
     private static Controller instance;
     private static Scanner scanner;
     private Game game;
-    private GameSaveHandler saveHandler;
+    private FirebaseHandler saveHandler;
     /**
      * Music player to handle the game music
      */
@@ -1092,7 +1094,7 @@ public class Controller {
 
     private Controller() {
         Controller.scanner = new Scanner(System.in);
-        this.saveHandler = GameSaveHandler.getInstance();
+        this.saveHandler = FirebaseHandler.getInstance();
         this.history = new Stack<GameState>();
         this.history.push(GameState.MAIN_MENU);
     }
@@ -1255,7 +1257,7 @@ public class Controller {
      * Implement loading pre-defined configurations from JSON file
      */
     public void newGame() {
-        ArrayList<Level> map = this.saveHandler.deserializeMap(Constants.MAP);
+        ArrayList<Level> map = JsonParser.deserializeMap(Constants.MAP);
         // ArrayList<Level> map = GameData.deserializeMapFromFile("map.json");
         Game game = new Game(map);
         // game.setSeed(1);
@@ -1267,10 +1269,10 @@ public class Controller {
     /**
      * TODO
      * Loads the game from the cloud, then deserializes the JSON data to create a new Game object
-     * @see GameSaveHandler
+     * @see FirebaseHandler
      */
     public void loadGame() {
-        Game gameData = this.saveHandler.deserializeJSON("{}");
+        Game gameData = JsonParser.deserializeJSON("{}");
         this.setGame(gameData);
         this.setState(GameState.MOVING);
     }

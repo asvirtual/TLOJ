@@ -9,7 +9,6 @@ import com.google.cloud.storage.Bucket;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Controller;
-import com.tloj.game.game.GameSaveHandler;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.HealingRoom;
@@ -17,6 +16,7 @@ import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.FirebaseHandler;
 
 import java.io.FileInputStream;
 import java.io.FileWriter;
