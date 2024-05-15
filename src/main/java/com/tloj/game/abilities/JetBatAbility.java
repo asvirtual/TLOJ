@@ -9,9 +9,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 
 /**
- * An ability that allows a boss to dodge an attack if the attacker's weapon dice roll is greater than 4. <br>
+ * An ability that allows the mob to dodge an attack with a 25% probability. <br>
  * It is paired with the {@link JetBat}.
  */
+
 public class JetBatAbility extends MobAbility {
     private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "JetBat was so quick it dodged the attack!" + ConsoleHandler.RESET;
 
