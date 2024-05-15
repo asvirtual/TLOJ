@@ -8,9 +8,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 
 /**
- * An ability that allows a boss to dodge an attack if the attacker's weapon dice roll is greater than 4. <br>
+ * An ability that allows a boss to dodge player's attack and heal itself of player's weapon roll with a 33% probability. <br>
  * It is paired with the {@link FlyingBoss}.
  */
+
 public class DodgeSlowAttackFlying extends BossAbility {
     @JsonCreator
     public DodgeSlowAttackFlying(Boss boss) {

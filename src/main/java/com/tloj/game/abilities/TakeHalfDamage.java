@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 
 /**
- * An ability that allows a boss to take half damage (base dmg + weapon dice roll). <br>
+ * An ability that allows a boss to halven the player's weapon roll. <br>
  * It is paired with the {@link HalverBoss}.<br>
  * @see Boss 
  */

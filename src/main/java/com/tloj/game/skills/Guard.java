@@ -10,7 +10,7 @@ import com.tloj.game.utilities.ConsoleHandler;
 
 
 /**
- * Class that represents the Guard skill, which adds +3 defense during fight. <br>
+ * Class that represents the Guard skill, which halfs the opponent next attack. <br>
  * It is paired with the {@link MechaKnight} class. <br>
  * @see Character
  * @see CharacterSkill
@@ -30,7 +30,7 @@ public class Guard extends CharacterSkill {
     @JsonCreator
     public Guard(@JsonProperty("character") Character character) {
         super(character, MANA_COST);
-        this.activationMessage = ConsoleHandler.PURPLE + "Guard activated! Jordan will completely deflect the opponent's attack!" + ConsoleHandler.RESET;
+        this.activationMessage = ConsoleHandler.PURPLE + "Guard activated! Jordan will take half damage from the next opponent's attack!" + ConsoleHandler.RESET;
     }
     
 
@@ -45,13 +45,13 @@ public class Guard extends CharacterSkill {
         if (!this.activated || !(attack instanceof MobAttack)) return;
 
         MobAttack mobAttack = (MobAttack) attack;
-        mobAttack.setTotalAttack(0);
+        mobAttack.setTotalAttack(mobAttack.getTotalAttack() / 2);
         
         super.execute(attack);
     }
 
     public static String describe() {
-        return "Guard: Deflects any damage from the next opponent's attack. Costs 5 mana.";
+        return "Guard: Takes half damage from the next opponent's attack. Costs 5 mana.";
     }
 }
 
