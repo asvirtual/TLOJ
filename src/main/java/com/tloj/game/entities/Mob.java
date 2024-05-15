@@ -9,7 +9,9 @@ import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
 import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.game.Attack;
 import com.tloj.game.game.MobAttack;
+import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.skills.CharacterSkill;
 
 
@@ -195,6 +197,16 @@ public abstract class Mob extends CombatEntity {
         attack.perform();
 
         if (!target.isAlive()) target.notifyDefeat();
+    }
+
+    @Override
+    public void defend(Attack attack) {
+        super.defend(attack);
+        if (!(attack instanceof PlayerAttack)) return;
+
+        if (this.ability == null) return;
+        PlayerAttack playerAttack = (PlayerAttack) attack;
+        this.ability.use(playerAttack);
     }
        
     public Item getDrop() {

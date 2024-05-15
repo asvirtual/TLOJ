@@ -37,16 +37,6 @@ public class JetBat extends Mob {
     }
 
     @Override
-    public void defend(Attack attack) {
-        super.defend(attack);
-        if (!(attack instanceof PlayerAttack)) return;
-
-        if (this.ability == null) return;
-        PlayerAttack playerAttack = (PlayerAttack) attack;
-        this.ability.use(playerAttack);
-    }
-    
-    @Override
     public String getASCII(){
         return Constants.JET_BAT_STATIC;
     }
