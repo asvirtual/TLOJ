@@ -17,7 +17,7 @@ public class FirebaseHandler {
 
     private FirebaseHandler() {
         try {
-            FileInputStream serviceAccount = new FileInputStream("./src/main/resources/tlojFirebaseServiceAccount.json");
+            FileInputStream serviceAccount = new FileInputStream(Constants.FIREBASE_SERVICE_ACCOUNT_FILE);
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))

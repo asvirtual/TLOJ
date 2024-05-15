@@ -120,6 +120,8 @@ public class Constants {
     public static final String HEALING_CENTER_WAV_FILE_PATH = "src/main/resources/sounds/HealingCenter.wav";
     public static final String GAME_OVER_WAV_FILE_PATH = "src/main/resources/sounds/GameOver.wav";
 
+    public static final String FIREBASE_SERVICE_ACCOUNT_FILE = "./src/secrets/tlojFirebaseServiceAccount.json";
+
     // 46
     public static final String CLASS_CHOICE =
     """
@@ -1556,7 +1558,7 @@ public static final String DATA_THIEF = """
                                                                
   """;
 
-  public static final String NANITE_LEECH_BLADE = String.join(ConsoleHandler.RESET + "\n" + ConsoleHandler.SILVER, """                                                                                                                  
+  public static final String NANITE_LEECH_BLADE = """                                                                                                                  
                                             
                                                  
                         █████▓▓█████       
@@ -1586,7 +1588,7 @@ public static final String DATA_THIEF = """
                                      
                                      
                                         
-      """.split("\n")) + ConsoleHandler.RESET;
+      """;
 
 
       public static final String NANO_DIRK = """
