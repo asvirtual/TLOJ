@@ -130,7 +130,11 @@ public class Game implements CharacterObserver {
         // Create a visitor for the player to interact with the room.
         PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player);
 
-        if (this.controller.getState() == GameState.BOSS_DEFEATED || this.getCurrentRoom().getType() == RoomType.HEALING_ROOM) {
+        if (
+            this.controller.getState() == GameState.BOSS_DEFEATED ||
+            this.controller.getState() == GameState.WIN || 
+            this.getCurrentRoom().getType() == RoomType.HEALING_ROOM
+        ) {
             /**
              * Move to the next level (level numbers are 1-based, so this.currentLevel.getLevelNumber() 
              * is the index of the next level in the levels (0-based) list)
