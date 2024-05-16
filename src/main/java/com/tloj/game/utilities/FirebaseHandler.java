@@ -1,14 +1,25 @@
 package com.tloj.game.utilities;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import java.util.Iterator;
+import java.util.List;
+
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.storage.Blob;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
+
+import com.google.api.gax.paging.Page;
+
+
 
 
 
@@ -65,8 +76,44 @@ public class FirebaseHandler {
     /**
      * Loads all saves from Firebase Storage and saves them to a list of json files.
      */
-    public void loadFromCloudBucket(String filename) {
-        Bucket bucket = StorageClient.getInstance().bucket();
+    public byte[] loadFromCloudBucket(String filename) {
+        StorageClient storageClient = StorageClient.getInstance();
+        Bucket bucket = storageClient.bucket();
 
+        listFilesInFirebaseBucket();
+
+        Blob blob = bucket.get(filename);
+        if (blob == null) {
+            System.out.println("File not found: " + filename);
+            return null;
+        }
+
+        byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
+        return data;
     }
+
+    public void listFilesInFirebaseBucket() {
+        Bucket bucket = StorageClient.getInstance().bucket();
+        System.out.println("Files in Firebase Storage bucket:");
+        Page<Blob> blobs = bucket.list();
+        for (Blob blob : blobs.iterateAll()) {
+            System.out.println(blob.getName());
+        }
+    }
+
 }
+
+
+    //download version 1: error on bucket.getBlob(filename), not existing method
+
+/*         Blob blob = bucket.getBlob(filename);
+        if (blob == null) {
+            System.out.println("File not found: " + filename);
+            return null;
+        }
+
+
+        // Download the file content into the byte array
+        byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
+        return data;
+ */
