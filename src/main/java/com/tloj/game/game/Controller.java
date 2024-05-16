@@ -866,8 +866,11 @@ class LoadGameCommand extends GameCommand {
         this.validListStates = List.of(
             GameState.MAIN_MENU
         );
+        FirebaseHandler firebaseHandler = new FirebaseHandler();
+        firebaseHandler.listFilesInFirebaseBucket();
+        byte []data=firebaseHandler.loadFromCloudBucket(commands);
+ 
     }
-
     // TODO: actually load game/give choice to user
     @Override
     public void execute() throws IllegalStateException {
