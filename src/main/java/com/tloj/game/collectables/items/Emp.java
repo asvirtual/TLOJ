@@ -46,7 +46,8 @@ public class Emp extends PurchasableItem implements ConsumableItem {
 
     @Override
     public String describe() {
-        return this.getASCII() + "\nA tool that allows you to skip trap rooms without dice rolls";
+        return this.getASCII() + "\nA tool that allows you to skip trap rooms without dice rolls"
+                + "\n It weights: " + WEIGHT + " Mb";
     }
 
     @Override

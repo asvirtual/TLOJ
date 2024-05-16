@@ -275,6 +275,15 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         return item;
     }
 
+    public Item removeRandomInventoryItem() {
+        if (this.inventory.size() == 0) return null;
+
+        int index = (int) (Math.random() * this.inventory.size());
+        this.inventory.remove(index);
+        this.sortInventory();
+        return this.inventory.get(index);
+    }
+
     public boolean addInventoryItem(Item item) {
         if (item == null) return false;
 

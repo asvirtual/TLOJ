@@ -58,7 +58,8 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     @Override
     public String describe() {
         return this.getASCII() + "\n" +
-                "A delicious ragu' that restores all HP and Mana, boosts def stat and the atk inflicted by " + STAT_BOOST + " for the duration of a fight + \n + It's Jordan's favorite dish!";
+                "A delicious ragu' that restores all HP and Mana, boosts def stat and the atk inflicted by " + STAT_BOOST + " for the duration of a fight + \n + It's Jordan's favorite dish!"
+                + "\n It weights: " + WEIGHT + " Mb";
     }
 }
 

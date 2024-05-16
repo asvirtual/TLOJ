@@ -49,7 +49,8 @@ public class AttackElixir extends PurchasableItem implements ConsumableItem {
 
     @Override
     public String describe() {
-        return "An elixir that boosts your attack by " + ATTACK_BOOST + " for the duration of a fight";
+        return "An elixir that boosts your attack by " + ATTACK_BOOST + " for the duration of a fight."
+                + "\n It weights: " + WEIGHT + " Mb";
     }
 }
 

@@ -52,7 +52,8 @@ public class WeaponShard extends PurchasableItem {
     public String describe() {
         return this.getASCII() + "\n" +
                "A shard that can upgrade your weapon + \n" +
-               "Nothing is created, nothing is destroyed, everything can be recycled!";
+               "Nothing is created, nothing is destroyed, everything can be recycled!"
+               + "\n It weights: " + WEIGHT + " Mb";
     }
 }
 

@@ -39,7 +39,8 @@ public class NaniteLeechBlade extends Weapon {
     @Override
     public String describe() {
         return "Nanite Leech Blade, built with a D12 dice, it's a legendary scythe sealed away for its cursed power" + "\n" +
-               "Its effect is stealing health from the enemies, turning half of the damage dealt into health for the wielder";
+               "Its effect is stealing health from the enemies, turning half of the damage dealt into health for the wielder"
+               + "\n It weights: " + WEIGHT + " Mb";
     }
 
     @Override
