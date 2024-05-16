@@ -35,8 +35,9 @@ public class FlyingBoss extends Boss {
     public FlyingBoss(
         @JsonProperty("position") Coordinates position
     ) {
-        super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP,position);
+        super(HP, ATTACK, DEFENSE, DICE_FACES, XP_DROP, MONEY_DROP, position);
         this.ability = new DodgeSlowAttackFlying(this);
+        this.drop = null;
     }
 
     @Override

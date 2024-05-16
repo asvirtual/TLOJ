@@ -238,15 +238,15 @@ public class PlayerRoomVisitor implements Visitor {
         
         ConsoleHandler.clearConsole();
         ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FIRST_PRINT_WIN + ConsoleHandler.RESET);
-        ConsoleHandler.clearConsole(750);
+        ConsoleHandler.clearConsole(1250);
         ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.SECOND_PRINT_WIN + ConsoleHandler.RESET);
-        ConsoleHandler.clearConsole(750);
+        ConsoleHandler.clearConsole(1250);
         ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.THIRD_PRINT_WIN + ConsoleHandler.RESET);
-        ConsoleHandler.clearConsole(2500);
+        ConsoleHandler.clearConsole(1250);
         ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FOURTH_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.clearConsole(5000);
         ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FIFTH_PRINT_WIN + ConsoleHandler.RESET);
-        ConsoleHandler.clearConsole(10000);
+        ConsoleHandler.clearConsole(5000);
         ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.SIXTH_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleHandler.RESET);
 

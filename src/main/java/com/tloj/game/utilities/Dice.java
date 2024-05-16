@@ -74,7 +74,7 @@ public class Dice {
             case 18 -> Constants.DICE_EIGHTEEN;
             case 19 -> Constants.DICE_NINETEEN;
             case 20 -> Constants.DICE_TWENTY;
-            default -> Constants.DICE_NEGATED;
+            default -> Constants.DICE_OVER_TWENTY;
         };
     }
 

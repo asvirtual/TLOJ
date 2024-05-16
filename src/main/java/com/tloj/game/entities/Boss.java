@@ -29,7 +29,7 @@ public abstract class Boss extends Mob {
         int diceFaces,
         int xpDrop,
         int moneyDrop,
-    Coordinates position
+        Coordinates position
     ) {
         super(hp, atk, def, diceFaces, BOSS_LVL, xpDrop, moneyDrop, position);
     }
