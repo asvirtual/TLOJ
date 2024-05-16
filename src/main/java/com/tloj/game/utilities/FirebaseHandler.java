@@ -105,14 +105,12 @@ public class FirebaseHandler {
             System.out.println(blob.getName());
             File downloadFile = new File("filePath", blob.getName());
 
-            
             // TODO: check if files locally are up to date --> if not, download them
 
             // Write data to file
             try (FileOutputStream outputStream = new FileOutputStream(downloadFile)) {
-            outputStream.write(data);
-            }
-            catch (IOException e) {
+                outputStream.write(data);
+            } catch (IOException e) {
                 System.out.println("Error writing file: " + e.getMessage());
             }
         }

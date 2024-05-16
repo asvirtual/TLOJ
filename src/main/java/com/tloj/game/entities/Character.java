@@ -70,7 +70,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected Level currentLevel;
     protected Room currentRoom;
     protected CharacterSkill skill;
-    // Observers to notify when the player is defeated or a mob is defeated
+    /** Observers to notify when the player is defeated or a mob is defeated */
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
     protected boolean usedItem = false;
 

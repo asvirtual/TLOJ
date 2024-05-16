@@ -281,8 +281,14 @@ class InventoryCommand extends GameCommand {
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.SMITH_FORGING).contains(this.controller.getState()))
             this.game.printMap();
 
-        Controller.awaitEnter();
-        ConsoleHandler.clearAndReprint();
+        System.out.print("\nPress Enter to continue, type [use *item*] to consume an item, or [drop *item*] to drop it: ");
+        String input = Controller.getScanner().nextLine();
+        if (input.isBlank()) {
+            ConsoleHandler.clearAndReprint();
+            return;
+        }
+
+        this.controller.handleUserInput(input);
     }
 }
 
@@ -929,8 +935,6 @@ class ExitGameCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         ConsoleHandler.clearConsole();
-        //added saving upon exiting the game
-        this.game.saveLocally();
         this.controller.setState(GameState.EXIT);
     }
 }
@@ -1140,6 +1144,10 @@ public class Controller {
         this.saveHandler = FirebaseHandler.getInstance();
         this.history = new Stack<GameState>();
         this.history.push(GameState.MAIN_MENU);
+    }
+
+    public static Scanner getScanner() {
+        return Controller.scanner;
     }
 
     /**
