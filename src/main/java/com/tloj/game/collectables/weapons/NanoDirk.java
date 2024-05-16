@@ -40,7 +40,8 @@ public class NanoDirk extends Weapon {
     @Override
     public String describe() {
         return "Nano Dirk, built with a D6 dice, it's a small dagger that can cut through anything" + "\n" +
-               "Its effect is the possibility (70%) to roll twice the dice per attack";
+               "Its effect is the possibility (70%) to roll twice the dice per attack"
+               + "\n It weights: " + WEIGHT + " Mb";
     }
 
     @Override

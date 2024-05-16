@@ -37,7 +37,8 @@ public class PlasmaGreatsword extends Weapon {
     @Override
     public String describe() {
         return "Plasma Great Sword, built with a D15 dice, it's strong, cool and MechaKnight's companion" + "\n" +
-               "No effect, muscle power only!";
+               "No effect, muscle power only!"
+               + "\n It weights: " + WEIGHT + " Mb";
     }
 
     @Override

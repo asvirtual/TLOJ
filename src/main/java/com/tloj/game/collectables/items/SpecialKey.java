@@ -47,7 +47,8 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     @Override
     public String describe() {
         return this.getASCII() + "\n" +
-                "An ancient key, guarded by the lost glitched adventurer, that opens a special locked loot room somewhere in the dungeon...";
+                "An ancient key, guarded by the lost glitched adventurer, that opens a special locked loot room somewhere in the dungeon..."
+                + "\n This item has no weight.";
     }
 
     @Override

@@ -38,7 +38,8 @@ public class LaserBlade extends Weapon {
     @Override
     public String describe() {
         return "Laser Blade, built with a D8 dice, the most famous in all universe" + "\n" +
-               "No effect, just swing it and cut everything in your way!";
+               "No effect, just swing it and cut everything in your way!"
+               + "\n It weights: " + WEIGHT + " Mb";
     }
 
     @Override

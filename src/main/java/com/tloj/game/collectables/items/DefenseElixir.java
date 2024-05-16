@@ -48,7 +48,8 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
 
     @Override
     public String describe() {
-        return "An elixir that boosts your defense by " + DEFENSE_BOOST + " for the duration of a fight";
+        return "An elixir that boosts your defense by " + DEFENSE_BOOST + " for the duration of a fight"
+                + "\n It weights: " + WEIGHT + " Mb";
     }
 }
 

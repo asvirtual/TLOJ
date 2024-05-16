@@ -40,7 +40,8 @@ public class NorthStar extends Item {
     @Override
     public String describe() {
         return this.getASCII() + "\n" +
-                "A magical star that guides heroes to their destination, revealing the entire map";
+                "A magical star that guides heroes to their destination, revealing the entire map"
+                + "\n This item has no weight, it's a special reward.";
     }
 }
 

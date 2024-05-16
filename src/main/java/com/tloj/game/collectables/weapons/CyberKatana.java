@@ -38,7 +38,8 @@ public class CyberKatana extends Weapon {
     @Override
     public String describe() {
         return "Cyber Katana, built with a D10 dice, it's the Samurai best and only friend" + "\n" +
-               "Its effect is his master's skill and precision";
+               "Its effect is his master's skill and precision"
+               + "\n It weights: " + WEIGHT + " Mb";
     }
 
     @Override

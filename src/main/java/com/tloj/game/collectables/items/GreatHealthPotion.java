@@ -50,6 +50,7 @@ public class GreatHealthPotion extends PurchasableItem implements ConsumableItem
 
     @Override
     public String describe() {
-        return this.getASCII() + "\nA potion that restores " + HEAL_AMOUNT + " Health Points";
+        return this.getASCII() + "\nA potion that restores " + HEAL_AMOUNT + " Health Points"
+                + "\n It weights: " + WEIGHT + " Mb";
     }
 }
