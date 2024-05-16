@@ -72,7 +72,7 @@ public class PlayerRoomVisitor implements Visitor {
 
         ConsoleHandler.clearConsole();
 
-        System.out.println(ConsoleHandler.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleHandler.RESET +  "\n");
+        ConsoleHandler.println(ConsoleHandler.RED_BRIGHT + "You have to face " + room.getBoss() + ConsoleHandler.RESET +  "\n");
         Controller.printSideBySideText(
             room.getBoss().getASCII(), 
             room.getBoss().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus()
@@ -123,7 +123,7 @@ public class PlayerRoomVisitor implements Visitor {
 
         ConsoleHandler.clearConsole();
 
-        System.out.println(Constants.HEALING_ROOM + ConsoleHandler.GREEN_BRIGHT + "\nWelcome to the healing rooom!" + ConsoleHandler.RESET);
+        ConsoleHandler.println(Constants.HEALING_ROOM + ConsoleHandler.GREEN_BRIGHT + "\nWelcome to the healing rooom!" + ConsoleHandler.RESET);
         this.controller.setState(GameState.HEALING_ROOM);
     }
 
@@ -143,7 +143,7 @@ public class PlayerRoomVisitor implements Visitor {
 
         ConsoleHandler.clearConsole();
 
-        System.out.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n");
+        ConsoleHandler.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n");
         Controller.printSideBySideText(
             room.getMob().getASCII(), 
             room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus() + "\n\n"
@@ -171,14 +171,14 @@ public class PlayerRoomVisitor implements Visitor {
 
         if (room.isLocked()) {
             this.player.useItem(new SpecialKey());
-            System.out.println(ConsoleHandler.CYAN_BRIGHT + "You've used a special key to unlock the room!" + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.CYAN_BRIGHT + "You've used a special key to unlock the room!" + ConsoleHandler.RESET);
         }
         
         Item item = room.getItem();
         if (item == null) return;
 
         this.controller.printMapAndArt(item.getASCII());
-        System.out.println("\n" + ConsoleHandler.YELLOW_BRIGHT + "You've found a " + item + "!" + ConsoleHandler.RESET);
+        ConsoleHandler.println("\n" + ConsoleHandler.YELLOW_BRIGHT + "You've found a " + item + "!" + ConsoleHandler.RESET);
         
         if (this.player.addInventoryItem(item)) {
             this.controller.setState(GameState.MOVING);
@@ -203,10 +203,10 @@ public class PlayerRoomVisitor implements Visitor {
 
         Emp emp = new Emp();
         if (this.player.hasItem(emp)) {
-            System.out.println("You've encountered a trap! Do you want to use an EMP to disarm it? (Y/N)");
+            ConsoleHandler.println("You've encountered a trap! Do you want to use an EMP to disarm it? (Y/N)");
             if (Controller.awaitConfirmation()) {
                 this.player.useItem(emp);
-                System.out.println(ConsoleHandler.CYAN_BRIGHT + "You've disarmed the trap!" + ConsoleHandler.RESET);
+                ConsoleHandler.println(ConsoleHandler.CYAN_BRIGHT + "You've disarmed the trap!" + ConsoleHandler.RESET);
                 room.clear(this.player);
                 return;
             }
@@ -216,7 +216,7 @@ public class PlayerRoomVisitor implements Visitor {
         
         if (!room.triggerTrap(this.player)) {
             this.controller.printMapAndArt(Constants.TRAP_DEFENDER);
-            System.out.println(ConsoleHandler.BLUE_BRIGHT + "You've dodged the trap! Thanks Windows Defender!" + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.BLUE_BRIGHT + "You've dodged the trap! Thanks Windows Defender!" + ConsoleHandler.RESET);
         }
         
         room.clear(this.player);
@@ -237,8 +237,8 @@ public class PlayerRoomVisitor implements Visitor {
         /** Start */
         
         ConsoleHandler.clearConsole();
-        System.out.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleHandler.RESET);
-        System.out.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.GAME_WIN + ConsoleHandler.RESET);
+        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleHandler.RESET);
+        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.GAME_WIN + ConsoleHandler.RESET);
 
         /** End */
 
@@ -246,7 +246,7 @@ public class PlayerRoomVisitor implements Visitor {
         ConsoleHandler.clearConsole();
         
         this.controller.setState(GameState.MAIN_MENU);
-        System.out.println(Constants.GAME_TITLE);
+        ConsoleHandler.println(Constants.GAME_TITLE);
             
         this.controller.changeMusic(
             Constants.INTRO_WAV_FILE_PATH,

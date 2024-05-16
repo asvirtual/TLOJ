@@ -272,6 +272,9 @@ class InventoryCommand extends GameCommand {
         System.out.println();
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.SMITH_FORGING).contains(this.controller.getState()))
             this.game.printMap();
+
+        Controller.awaitEnter();
+        ConsoleHandler.clearAndReprint();
     }
 }
 
@@ -313,6 +316,8 @@ class UseItemCommand extends GameCommand {
                 if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                     this.game.printMap();
 
+                Controller.awaitEnter();
+                ConsoleHandler.clearAndReprint();
                 return;
             }
 
@@ -320,13 +325,16 @@ class UseItemCommand extends GameCommand {
                 consumed.getASCII(), 
                 ConsoleHandler.GREEN + "Jordan consumed " + consumed + ConsoleHandler.RESET + 
                 "\n\n\n" + this.game.getPlayer().getPrettifiedStatus(), 
-                7
+                7,
+                false
             );
 
             System.out.println();
             if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                 this.game.printMap();
 
+            Controller.awaitEnter();
+            ConsoleHandler.clearAndReprint();
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
@@ -417,7 +425,9 @@ class DropItemCommand extends GameCommand {
         super(game, commands);
         this.invalidStates = List.of(
             GameState.SMITH_FORGING,
-            GameState.MAIN_MENU
+            GameState.MAIN_MENU,
+            GameState.FIGHTING_MOB,
+            GameState.FIGHTING_BOSS
         );
     }
 
@@ -438,8 +448,11 @@ class DropItemCommand extends GameCommand {
             if (dropped == null) {
                 System.out.println();
                    
-                if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
+                if (!List.of(GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                     this.game.printMap();
+
+                Controller.awaitEnter();
+                ConsoleHandler.clearAndReprint();
                 return;
             }
 
@@ -456,11 +469,16 @@ class DropItemCommand extends GameCommand {
                 this.controller.setState(GameState.MOVING);
                 room.clear(this.player);
 
+                Controller.awaitEnter();
+                ConsoleHandler.clearAndReprint();
                 return;
             }
 
-            if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
+            if (!List.of(GameState.HEALING_ROOM, GameState.MERCHANT_SHOPPING).contains(this.controller.getState()))
                 this.game.printMap();
+
+            Controller.awaitEnter();
+            ConsoleHandler.clearAndReprint();
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
@@ -707,6 +725,9 @@ class PrintStatusCommand extends GameCommand {
         System.out.println(this.player + "\n");
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM).contains(this.controller.getState()))
             this.game.printMap();
+        
+        Controller.awaitEnter();
+        ConsoleHandler.clearAndReprint();
     }
 }
 
@@ -1188,6 +1209,7 @@ public class Controller {
     public void printMapAndStatus() {
         String[] firstLines = this.game.generateMapLines();
         String[] secondLines = ("\n" + this.game.getPlayer().getPrettifiedStatus()).split("\n");
+        String toPrint = "";
         
         // Find the maximum number of rows between the ASCII art and the map
         int maxLines = Math.max(firstLines.length, secondLines.length);
@@ -1201,9 +1223,12 @@ public class Controller {
             String firstLine = i < firstLines.length ? firstLines[i] : "";
 
             String secondLine = i < secondLines.length ? secondLines[i] : "";
-            System.out.println(firstLine + "\t\t\t\t" + secondLine);
+            toPrint += firstLine + "\t\t\t\t" + secondLine + "\n";
         }
 
+        ConsoleHandler.clearLog();
+        ConsoleHandler.println(toPrint);
+        ConsoleHandler.saveToLog(toPrint);
     }
 
     /**
@@ -1212,9 +1237,10 @@ public class Controller {
      * @param second the second String to be printed (to the right)
      * @param offsetRows the number of rows to offset the second String from the top of the console
      */
-    public static void printSideBySideText(String first, String second, int offsetRows) {
+    public static void printSideBySideText(String first, String second, int offsetRows, boolean saveToLog) {
         String[] firstLines = first.split("\n");
         String[] secondLines = second.split("\n");
+        String toPrint = "";
         
         // Find the maximum number of rows between the ASCII art and the map
         int maxLines = Math.max(firstLines.length, secondLines.length);
@@ -1230,8 +1256,17 @@ public class Controller {
 
             // Offset the map by 5 rows
             String secondLine = (i >= offsetRows && (i - offsetRows) < secondLines.length) ? secondLines[i - offsetRows] : "";
-            System.out.println(firstLine + pad + "\t\t\t" + secondLine);
+            toPrint += firstLine + pad + "\t\t\t" + secondLine + "\n";
         }
+
+        if (saveToLog) {
+            ConsoleHandler.clearLog();
+            ConsoleHandler.println(toPrint);
+        } else System.out.println(toPrint);
+    }
+
+    public static void printSideBySideText(String first, String second, int offsetRows) {
+        Controller.printSideBySideText(first, second, offsetRows, true);
     }
 
     /**

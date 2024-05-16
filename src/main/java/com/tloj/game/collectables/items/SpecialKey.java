@@ -36,7 +36,6 @@ public class SpecialKey extends PurchasableItem implements ConsumableItem {
     
     @Override
     public void consume(Character consumer) {
-        System.out.println("You've used the Special Key to unlock a special loot room!");
         consumer.removeInventoryItem(this);
     }
 

@@ -11,6 +11,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
 
 
+
 public class FirebaseHandler {
     private static FirebaseHandler instance;
     private FirebaseApp app;
@@ -67,26 +68,5 @@ public class FirebaseHandler {
     public void loadFromCloudBucket(String filename) {
         Bucket bucket = StorageClient.getInstance().bucket();
 
-        // BlobId blobId = Blob.of(bucketName, filename);
-        // Blob blob = storage.get(blobId);
-        // if (blob == null) {
-        //     System.out.println("Error: Blob not found in the specified bucket");
-        //     return null;
-        // }
-        // byte[] content = blob.getContent();
-        // ObjectMapper mapper = new ObjectMapper();
-        // try {
-        //     return mapper.readValue(content, GameData.class);
-        // } catch (JsonGenerationException e) {
-        //     System.out.println("Error generating JSON from GameData");
-        //     e.printStackTrace();
-        // } catch (JsonMappingException e) {
-        //     System.out.println("Error mapping JSON from GameData");
-        //     e.printStackTrace();
-        // } catch (IOException e) {
-        //     System.out.println("Error opening file " + filename + " for reading");
-        //     e.printStackTrace();
-        // }
-        // return null;
     }
 }

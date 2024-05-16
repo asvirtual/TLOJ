@@ -45,8 +45,6 @@ public class Main {
     }
 
     public static void testRead() {
-        System.out.println(Constants.NANITE_LEECH_BLADE);
-
         Random random = new Random(1);
 
         try {
@@ -62,8 +60,8 @@ public class Main {
         }
 
 
-        // System.out.println(GameSaveHandler.deserializeMapFromFile("test.json"));
-        // System.out.println(GameSaveHandler.loadFromFile("test.json"));
+        // ConsoleHandler.println(GameSaveHandler.deserializeMapFromFile("test.json"));
+        // ConsoleHandler.println(GameSaveHandler.loadFromFile("test.json"));
     }
 
     public static void testWrite() {

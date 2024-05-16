@@ -66,7 +66,7 @@ public class MobAttack extends Attack {
                 this.getAttacker() + "'s roll was disabled!\n\n" + Dice.getASCII(0))
         );
 
-        System.out.println("\n" + this.getAttacker() + " attacks you back!");
-        System.out.println(this.attacker + " inflicted " + ConsoleHandler.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleHandler.RESET + " to you!");
+        ConsoleHandler.println("\n" + this.getAttacker() + " attacks you back!");
+        ConsoleHandler.println(this.attacker + " inflicted " + ConsoleHandler.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleHandler.RESET + " to you!");
     }
 }

@@ -134,8 +134,8 @@ public class PlayerAttack extends Attack {
                 "Oh no! Jordan's roll was disabled!\n\n" + Dice.getASCII(0)) 
         );
 
-        System.out.println("\nYou inflicted " +  ConsoleHandler.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleHandler.RESET + " to " + this.target + "!");
-        if (this.target.getHp() > 0) System.out.println(this.target + " has " + ConsoleHandler.RED + this.target.getHp() + " HP" + ConsoleHandler.RESET + " left!");
+        ConsoleHandler.println("\nYou inflicted " +  ConsoleHandler.RED_BRIGHT + this.getTotalDamage() + " damage" + ConsoleHandler.RESET + " to " + this.target + "!");
+        if (this.target.getHp() > 0) ConsoleHandler.println(this.target + " has " + ConsoleHandler.RED + this.target.getHp() + " HP" + ConsoleHandler.RESET + " left!");
 
         Controller.awaitEnter();
         this.resetStats();

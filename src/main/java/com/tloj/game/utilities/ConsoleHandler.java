@@ -1,6 +1,8 @@
 package com.tloj.game.utilities;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.fusesource.jansi.AnsiConsole;
 
@@ -12,6 +14,26 @@ import org.fusesource.jansi.AnsiConsole;
  *  - Escape codes for text colors<br>
  */
 public class ConsoleHandler {
+    private static List<String> log = new ArrayList<>();
+
+    public static void clearLog() {
+        log.clear();
+    }
+
+    public static void saveToLog(String str) {
+        // for (String s : str.split("\n")) log.add(s);
+    }
+
+    public static void clearAndReprint() {
+        ConsoleHandler.clearConsole();
+        for (String s : log) System.out.println(s);        
+    }
+
+    public static void println(String s) {
+        System.out.println(s);
+        log.add(s);
+    }
+ 
     private ConsoleHandler() {}
     
     public static void setConsoleEncoding() {

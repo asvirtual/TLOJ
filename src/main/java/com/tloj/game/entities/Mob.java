@@ -188,8 +188,8 @@ public abstract class Mob extends CombatEntity {
         
         ConsoleHandler.clearConsole();
         
-        System.out.println(this.getASCII());
-        System.out.println(this + " attacks you back!");
+        ConsoleHandler.println(this.getASCII());
+        ConsoleHandler.println(this + " attacks you back!");
         
         ConsoleHandler.clearConsole(1500);
                 

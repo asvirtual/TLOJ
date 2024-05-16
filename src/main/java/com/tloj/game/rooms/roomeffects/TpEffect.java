@@ -50,10 +50,10 @@ public class TpEffect extends RoomEffect {
     @Override
     public boolean applyEffect(Character character) {
         
-        System.out.println(ConsoleHandler.PURPLE + "You've entered a Trap Room!" + ConsoleHandler.RESET + "\n");
+        ConsoleHandler.println(ConsoleHandler.PURPLE + "You've entered a Trap Room!" + ConsoleHandler.RESET + "\n");
         Controller.getInstance().printMapAndArt(this.getASCII());
-        System.out.println("\n" + ConsoleHandler.PURPLE + "Oh no! Unexpected System call teleported you to a random room!" + ConsoleHandler.RESET);
-        System.out.println("They hacked your GPS! You can't see the rooms you visited anymore!");
+        ConsoleHandler.println("\n" + ConsoleHandler.PURPLE + "Oh no! Unexpected System call teleported you to a random room!" + ConsoleHandler.RESET);
+        ConsoleHandler.println("They hacked your GPS! You can't see the rooms you visited anymore!");
 
         Level level = character.getCurrentLevel();
         boolean validLocation = false;

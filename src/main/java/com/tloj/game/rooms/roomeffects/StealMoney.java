@@ -34,9 +34,9 @@ public class StealMoney extends RoomEffect {
         int roll = dice.roll();
         if (roll < 3) return false;
 
-        System.out.println(ConsoleHandler.PURPLE + "You've entered a Trap Room!" + ConsoleHandler.RESET + "\n");
+        ConsoleHandler.println(ConsoleHandler.PURPLE + "You've entered a Trap Room!" + ConsoleHandler.RESET + "\n");
         Controller.getInstance().printMapAndArt(this.getASCII());
-        System.out.println("\n" + ConsoleHandler.RED +"You have been scammed by a Crypto Guru and you lost " + COST + " BTC!" + ConsoleHandler.RESET);
+        ConsoleHandler.println("\n" + ConsoleHandler.RED +"You have been scammed by a Crypto Guru and you lost " + COST + " BTC!" + ConsoleHandler.RESET);
         character.pay(COST);
 
         return true;

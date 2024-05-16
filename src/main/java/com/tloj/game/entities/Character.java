@@ -279,7 +279,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         if (item == null) return false;
 
         if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
-            System.out.println(ConsoleHandler.RED + "You can't carry more weight, drop something first." + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.RED + "You can't carry more weight, drop something first." + ConsoleHandler.RESET);
             return false;
         }
         
@@ -324,12 +324,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public void useSkill() {
         if (this.skill == null) {
-            System.out.println(ConsoleHandler.RED + "You don't have a skill to use" + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.RED + "You don't have a skill to use" + ConsoleHandler.RESET);
             return;
         }
 
         if (this.skill.isActivated()) {
-            System.out.println(ConsoleHandler.RED + "You've already used your skill this turn" + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.RED + "You've already used your skill this turn" + ConsoleHandler.RESET);
             return;
         }
 
@@ -368,8 +368,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             this.getCarriedWeight() + drop.getWeight() > this.maxWeight ||
             !this.addInventoryItem(drop)
         ) {
-            System.out.println(ConsoleHandler.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleHandler.RESET);
-            System.out.println("You gain " + ConsoleHandler.GREEN + mob.dropXp() + " experience points"  + ConsoleHandler.RESET +  " and " + ConsoleHandler.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleHandler.RESET);      
+            ConsoleHandler.println(ConsoleHandler.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleHandler.RESET);
+            ConsoleHandler.println("You gain " + ConsoleHandler.GREEN + mob.dropXp() + " experience points"  + ConsoleHandler.RESET +  " and " + ConsoleHandler.YELLOW + mob.getMoneyDrop() + " BTC" + ConsoleHandler.RESET);      
         } else {
             Controller.printSideBySideText(
                 drop.getASCII(),
@@ -424,13 +424,14 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.currentFightAtk = (this.currentFightAtk - this.atk) + this.atk;
         this.currentFightDef = (this.currentFightDef - this.def) + this.def;
 
-        System.out.println(ConsoleHandler.GREEN_BRIGHT + "You've leveled up! You are now level " + this.lvl + "!\n" + ConsoleHandler.RESET);
+        ConsoleHandler.clearLog();
+        ConsoleHandler.println(ConsoleHandler.GREEN_BRIGHT + "You've leveled up! You are now level " + this.lvl + "!\n" + ConsoleHandler.RESET);
     
         // Print changes in stats
-        System.out.println("HP: " + ConsoleHandler.RED + initialMaxHp + ConsoleHandler.RESET + " --> " + ConsoleHandler.RED_BRIGHT + this.maxHp + ConsoleHandler.RESET);
-        System.out.println("Mana: " + ConsoleHandler.BLUE + initialMaxMana + ConsoleHandler.RESET + " --> " + ConsoleHandler.BLUE_BRIGHT + this.maxMana + ConsoleHandler.RESET);
-        System.out.println("Attack: " + ConsoleHandler.PURPLE + initialAtk + ConsoleHandler.RESET + " --> " + ConsoleHandler.PURPLE_BRIGHT + this.atk + ConsoleHandler.RESET);
-        System.out.println("Defense: " + ConsoleHandler.PURPLE + initialDef + ConsoleHandler.RESET + " --> " + ConsoleHandler.PURPLE_BRIGHT + this.def + ConsoleHandler.RESET + "\n");
+        ConsoleHandler.println("HP: " + ConsoleHandler.RED + initialMaxHp + ConsoleHandler.RESET + " --> " + ConsoleHandler.RED_BRIGHT + this.maxHp + ConsoleHandler.RESET);
+        ConsoleHandler.println("Mana: " + ConsoleHandler.BLUE + initialMaxMana + ConsoleHandler.RESET + " --> " + ConsoleHandler.BLUE_BRIGHT + this.maxMana + ConsoleHandler.RESET);
+        ConsoleHandler.println("Attack: " + ConsoleHandler.PURPLE + initialAtk + ConsoleHandler.RESET + " --> " + ConsoleHandler.PURPLE_BRIGHT + this.atk + ConsoleHandler.RESET);
+        ConsoleHandler.println("Defense: " + ConsoleHandler.PURPLE + initialDef + ConsoleHandler.RESET + " --> " + ConsoleHandler.PURPLE_BRIGHT + this.def + ConsoleHandler.RESET + "\n");
     }
 
     public void addObserver(CharacterObserver observer) {
@@ -443,7 +444,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public boolean swapWeapon(int index) {
         if (index < 1 || index > this.getInventorySize()) {
-            System.out.println(ConsoleHandler.RED + "Invalid choice" + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.RED + "Invalid choice" + ConsoleHandler.RESET);
             return false;
         }
 
@@ -455,7 +456,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
             this.inventory.remove(item);
             return true;
         } else {
-            System.out.println(ConsoleHandler.RED + item + " is not a weapon" + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.RED + item + " is not a weapon" + ConsoleHandler.RESET);
             return false;
         }
     }

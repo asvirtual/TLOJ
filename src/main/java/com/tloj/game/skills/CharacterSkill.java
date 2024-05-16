@@ -51,7 +51,7 @@ public abstract class CharacterSkill {
 
     public void activate() {
         if (this.character.getMana() < this.manaCost) {
-            System.out.println(ConsoleHandler.RED + "Not enough mana to use " + this.getName() + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.RED + "Not enough mana to use " + this.getName() + ConsoleHandler.RESET);
             return;
         }
 

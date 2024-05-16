@@ -34,9 +34,9 @@ public class InflictDamage extends RoomEffect {
         int roll = dice.roll();
         if (roll < 3) return false;
 
-        System.out.println(ConsoleHandler.PURPLE + "You've entered a Trap Room!" + ConsoleHandler.RESET + "\n");
+        ConsoleHandler.println(ConsoleHandler.PURPLE + "You've entered a Trap Room!" + ConsoleHandler.RESET + "\n");
         Controller.getInstance().printMapAndArt(this.getASCII());
-        System.out.println("\n" + ConsoleHandler.RED + "You've been hit by a virus and lost " + DAMAGE + " HP!" + ConsoleHandler.RESET);
+        ConsoleHandler.println("\n" + ConsoleHandler.RED + "You've been hit by a virus and lost " + DAMAGE + " HP!" + ConsoleHandler.RESET);
         
         // Inflict damage to the character
         character.takeDamage(DAMAGE);

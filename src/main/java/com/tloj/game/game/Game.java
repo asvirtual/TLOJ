@@ -202,7 +202,7 @@ public class Game implements CharacterObserver {
 
         ConsoleHandler.clearConsole();
 
-        System.out.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n");
+        ConsoleHandler.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n");
         Controller.printSideBySideText(
             room.getMob().getASCII(), 
             room.getMob().getPrettifiedStatus() + "\n\n\n" + this.player.getPrettifiedStatus() + "\n\n"
@@ -256,7 +256,7 @@ public class Game implements CharacterObserver {
         if (room.getMobsCount() == 1) room.clear(this.player);
         else {
             room.removeMob(mob);
-            System.out.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n" + room.getMob().getASCII() + "\n");
+            ConsoleHandler.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n" + room.getMob().getASCII() + "\n");
         }
     }
 

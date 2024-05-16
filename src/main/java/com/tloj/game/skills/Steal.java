@@ -38,7 +38,7 @@ public class Steal extends CharacterSkill {
     @Override 
     public void activate() {
         if (this.character.getMana() < this.manaCost) {
-            System.out.println(ConsoleHandler.RED + "Not enough mana to use Steal!" + ConsoleHandler.RESET);
+            ConsoleHandler.println(ConsoleHandler.RED + "Not enough mana to use Steal!" + ConsoleHandler.RESET);
             return;
         }
 
