@@ -114,7 +114,8 @@ class MoveNorthCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.NORTH);
-            this.game.saveLocally();
+            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
+            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -146,7 +147,8 @@ class MoveSouthCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.SOUTH);
-            this.game.saveLocally();
+            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
+            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -178,7 +180,8 @@ class MoveWestCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.WEST);
-            this.game.saveLocally();
+            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
+            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -210,7 +213,8 @@ class MoveEastCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.EAST);
-            this.game.saveLocally();
+            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
+            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -893,7 +897,14 @@ class NewGameCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         ConsoleHandler.clearConsole();
-        this.controller.newGame();
+
+        System.out.print(ConsoleHandler.YELLOW + "Enter a custom name for this save: " + ConsoleHandler.RESET);
+        String saveName = Controller.getScanner().nextLine();
+
+        System.out.print(ConsoleHandler.YELLOW + "Enter a custom seed for the game or press Enter to generate it automatically: " + ConsoleHandler.RESET);
+        String seed = Controller.getScanner().nextLine();
+
+        this.controller.newGame(saveName, seed);
         System.out.println("\n" + Constants.CLASS_CHOICE);
     }
 }
@@ -988,6 +999,7 @@ class ChooseCharacterGameCommand extends GameCommand {
 
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
         this.game.setPlayer(factory.create());
+        this.controller.saveCurrentGameLocally();
         this.controller.setState(GameState.MOVING);
 
         Controller.printSideBySideText(
@@ -1129,6 +1141,7 @@ public class Controller {
     private static Controller instance;
     private static Scanner scanner;
     private Game game;
+    private int currentGameId;
     private FirebaseHandler saveHandler;
     /**
      * Music player to handle the game music
@@ -1182,6 +1195,10 @@ public class Controller {
     public static Controller getInstance() {
         if (instance == null) instance = new Controller();
         return instance;
+    }
+
+    public int getCurrentGameId() {
+        return this.currentGameId;
     }
 
     /**
@@ -1320,18 +1337,33 @@ public class Controller {
         Controller.printSideBySideText(asciiArt, String.join("\n", this.game.generateMapLines()));
     }
 
-    /*
-     * TODO
-     * Implement loading pre-defined configurations from JSON file
-     */
-    public void newGame() {
-        ArrayList<Level> map = JsonParser.deserializeMap(Constants.MAP);
-        // ArrayList<Level> map = GameData.deserializeMapFromFile("map.json");
-        Game game = new Game(map);
-        // game.setSeed(1);
+    // TODO: maybe only save the game when the player chooses a character, since without a character the game is not really started
+    public void newGame(String name, String seed) {
+        try {
+            // ArrayList<Level> map = JsonParser.deserializeMap(Constants.MAP);
+            ArrayList<Level> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
 
-        this.setState(GameState.CHOOSING_CHARACTER);
-        this.setGame(game);
+            Game game;
+            if (seed.isBlank()) game = new Game(map);
+            else game = new Game(map, Long.parseLong(seed));
+
+            // TODO: Sanitize the save name
+            String saveName = name + Constants.SAVE_GAME_FILENAME_SEPARATOR + game.getCreationTime() + ".json";
+            JsonParser.saveToFile(game, Constants.BASE_SAVES_DIRECTORY + saveName);
+            this.currentGameId = GameIndex.addEntry(saveName);
+
+            this.setState(GameState.CHOOSING_CHARACTER);
+            this.setGame(game);
+            
+            this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
+        } catch (NumberFormatException e) {
+            System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
+        }
+    }
+
+    public void saveCurrentGameLocally() {
+        String saveName = GameIndex.getFile(String.valueOf(this.currentGameId));
+        this.game.saveLocally(saveName);
     }
 
     /**
@@ -1340,7 +1372,7 @@ public class Controller {
      * @see FirebaseHandler
      */
     public void loadGame() {
-        FirebaseHandler.loadFilesInFirebaseBucket();
+        this.saveHandler.loadAllCloud();
 
         System.out.println("Please enter the name of the file you want to load: [n]");
         String input = Controller.scanner.nextLine();
@@ -1501,6 +1533,7 @@ public class Controller {
         this.musicPlayer = new MusicPlayer(Constants.MAIN_MENU_WAV_FILE_PATH);
         this.musicPlayer.playMusic(true);
 
+        GameIndex.loadGames();
         System.out.println(Constants.GAME_TITLE);
 
         while (this.getState() != GameState.EXIT) {

@@ -9,6 +9,7 @@ package com.tloj.game;
 import com.tloj.game.entities.characters.NeoSamurai;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.GameIndex;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.HealingRoom;

@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.ConsumableItem;
@@ -49,6 +50,7 @@ public class Game implements CharacterObserver {
     private ArrayList<Level> levels;
     /** The controller responsible for managing game state. */
     private Controller controller;
+    private long creationTime;
      /** The elapsed time since the start of the game session. */
     @JsonProperty
     private long elapsedTime;
@@ -64,9 +66,25 @@ public class Game implements CharacterObserver {
 
         this.currentLevel = this.levels.get(0);
         this.controller = Controller.getInstance();
-        this.seed = new Date().getTime();
+        this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
         this.elapsedTime = 0;
-        this.sessionStartTime = new Date().getTime();
+
+        Dice.setSeed(this.seed);
+    }
+
+    /**
+     * Constructs a new Game object with the given list of levels and a custom seed.
+     * @param levels The list of levels in the game.
+     * @param seed The custom seed used for generating random numbers in the game.
+     */
+    public Game(ArrayList<Level> levels, long seed) {
+        this.levels = levels;
+
+        this.currentLevel = this.levels.get(0);
+        this.controller = Controller.getInstance();
+        this.seed = seed;
+        this.sessionStartTime = this.creationTime = new Date().getTime();
+        this.elapsedTime = 0;
 
         Dice.setSeed(this.seed);
     }
@@ -79,7 +97,13 @@ public class Game implements CharacterObserver {
      * @param player       The player character controlled by the player.
      * @param levels       The list of levels in the game.
      */
-    public Game(long seed, Level currentLevel, Character player, ArrayList<Level> levels) {
+    @JsonCreator
+    public Game(
+        @JsonProperty("seed") long seed, 
+        @JsonProperty("level") Level currentLevel, 
+        @JsonProperty("player") Character player, 
+        @JsonProperty("levels") ArrayList<Level> levels
+    ) {
         this.player = player;
         this.levels = levels;
         this.currentLevel = currentLevel;
@@ -87,8 +111,12 @@ public class Game implements CharacterObserver {
         this.seed = seed;
         this.sessionStartTime = new Date().getTime();
         
-        this.player.addObserver(this);
+        if (this.player != null) this.player.addObserver(this);
         Dice.setSeed(this.seed);
+    }
+
+    public long getCreationTime() {
+        return this.creationTime;
     }
 
     public int getScore() {
@@ -218,14 +246,15 @@ public class Game implements CharacterObserver {
         this.player.useSkill();
     }
 
-    public void saveLocally() {
+    public void saveLocally(String filename) {
         this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        // String path = "/path" + this.currentId + ".json";
-        // JsonParser.saveToFile(this, path);
+        String path = Constants.BASE_SAVES_DIRECTORY + filename;
+        JsonParser.saveToFile(this, path);
     }
 
     public void uploadToCloud(String filepath) {
-        FirebaseHandler.saveToFirebaseBucket(filepath);
+        // TODO: Implement this method
+        // FirebaseHandler.saveToFirebaseBucket(filepath);
     }
     
     @JsonIgnore

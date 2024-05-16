@@ -202,7 +202,10 @@ _______  __   __  _______  __    _  ___   _      __   __  _______  __   __
 
   """;
 
-
+    public static final String BASE_SAVES_DIRECTORY = "saves/";
+    public static final String GAMES_INDEX_FILE_PATH = BASE_SAVES_DIRECTORY + "index.json";
+    public static final String MAP_FILE_PATH = "src/main/resources/map.json";
+    public static final String SAVE_GAME_FILENAME_SEPARATOR = "___";
 
     public static final String INTRO_WAV_FILE_PATH = "src/main/resources/sounds/intro.wav";
     public static final String LOOP_WAV_FILE_PATH = "src/main/resources/sounds/loop.wav";
@@ -213,7 +216,7 @@ _______  __   __  _______  __    _  ___   _      __   __  _______  __   __
     public static final String HEALING_CENTER_WAV_FILE_PATH = "src/main/resources/sounds/HealingCenter.wav";
     public static final String GAME_OVER_WAV_FILE_PATH = "src/main/resources/sounds/GameOver.wav";
 
-    public static final String FIREBASE_SERVICE_ACCOUNT_FILE = "./src/secrets/tlojFirebaseServiceAccount.json";
+    public static final String FIREBASE_SERVICE_ACCOUNT_FILE = "secrets/firebaseServiceAccount.json";
 
     // 46
     public static final String CLASS_CHOICE =
@@ -2249,7 +2252,6 @@ public static final String DATA_THIEF = """
             ▒▓▓▒▓▓▓▓░░             
                                                          
  """;
-
 
   public static final String MAP = """
     [

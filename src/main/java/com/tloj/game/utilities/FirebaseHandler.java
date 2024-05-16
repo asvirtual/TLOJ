@@ -14,6 +14,7 @@ import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.BlobId;
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
+import com.google.cloud.storage.Bucket.BlobTargetOption;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
@@ -53,7 +54,7 @@ public class FirebaseHandler {
     /**
      * Uploads a JSON file with the specified filename to Firebase Storage.
      */
-    public static void saveToFirebaseBucket(String filename) {
+    public void saveToCloud(String filename) {
         Bucket bucket = StorageClient.getInstance().bucket();
 
         try {
@@ -65,8 +66,7 @@ public class FirebaseHandler {
             fis.read(data);
             fis.close();
 
-            bucket.create(filename, data);
-    
+            bucket.create(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""), data, "application/json");
             System.out.println("JSON data saved to Firebase Storage.");
         } catch (IOException e) {
             System.out.println("Error opening file " + filename + " for reading");
@@ -94,13 +94,12 @@ public class FirebaseHandler {
         return data;
     } */
 
-    public static void loadFilesInFirebaseBucket() {
+    public void loadAllCloud() {
         Bucket bucket = StorageClient.getInstance().bucket();
         System.out.println("Files in Firebase Storage bucket:");
         Page<Blob> blobs = bucket.list();
 
         for (Blob blob : blobs.iterateAll()) {
-
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             System.out.println(blob.getName());
             File downloadFile = new File("filePath", blob.getName());
