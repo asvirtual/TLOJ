@@ -123,6 +123,9 @@ public abstract class Mob extends CombatEntity {
             position
         );
 
+        for (int i = 2; i <= lvl; i++) 
+            this.levelUp(i);
+
         this.lvl = lvl;
         this.xpDrop = xpDrop;
         this.moneyDrop = moneyDrop;
@@ -174,7 +177,10 @@ public abstract class Mob extends CombatEntity {
      * The level up factor for the mobs.<br>
      * To ensure game balancement it must differ for each mob<br>
      */
-    protected  void levelUp(int lvl){};
+    protected void levelUp(int lvl) {
+        this.currentFightAtk = this.atk;
+        this.currentFightDef = this.def;
+    };
     
     
     @Override

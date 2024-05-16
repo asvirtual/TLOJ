@@ -50,6 +50,8 @@ public class JunkSlime extends Mob {
                 this.def += 3 * (lvl - 3);  // Increase defense by 3 for each level beyond 3
                 break;
         }
+
+        super.levelUp(lvl);
     }
 
     @Override

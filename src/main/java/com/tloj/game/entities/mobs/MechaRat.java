@@ -42,14 +42,16 @@ public class MechaRat extends Mob  {
                 this.def += 2;  // Total defense = 4
                 break;
             case 3:
-                this.atk += 5;  // Total attack = 11
-                this.def += 1;  // Total defense = 5
+                this.atk += 6;  // Total attack = 12
+                this.def += 2;  // Total defense = 5
                 break;
             default:
                 this.atk += 3 * (lvl - 3);  // Increase attack by 3 for each level beyond 3
                 this.def += lvl - 3;  // Increase defense by 1 for each level beyond 3
                 break;
         }
+
+        super.levelUp(lvl);
     }
     
     @Override

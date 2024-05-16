@@ -50,6 +50,8 @@ public class CyberGoblin extends Mob {
                 this.def += 2 * (lvl - 3);  // Increase defense by 2 for each level beyond 3
                 break;
         }
+
+        super.levelUp(lvl);
     }
 
     @Override
