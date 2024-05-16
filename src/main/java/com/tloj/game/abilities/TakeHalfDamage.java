@@ -13,10 +13,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see Boss 
  */
 public class TakeHalfDamage extends BossAbility {
-    private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and deflected half of the attack!" + ConsoleHandler.RESET;
+    private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and halved you roll!" + ConsoleHandler.RESET;
 
     @JsonCreator
-    public TakeHalfDamage(Boss boss){
+    public TakeHalfDamage(Boss boss) {
         super(boss, ACTIVATION_MESSAGE);
     }
 

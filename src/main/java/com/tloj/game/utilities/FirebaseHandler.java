@@ -106,7 +106,7 @@ public class FirebaseHandler {
             File downloadFile = new File("filePath", blob.getName());
 
             
-            //TODO: check if files locally are up to date --> if not, download them
+            // TODO: check if files locally are up to date --> if not, download them
 
             // Write data to file
             try (FileOutputStream outputStream = new FileOutputStream(downloadFile)) {

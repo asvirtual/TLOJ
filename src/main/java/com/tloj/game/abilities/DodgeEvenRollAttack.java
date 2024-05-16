@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * It is paired with the {@link EvenBoss}. <br>
  */
 public class DodgeEvenRollAttack extends BossAbility {
-    private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and dodged the attack!" + ConsoleHandler.RESET;
+    private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and disabled your dice roll!" + ConsoleHandler.RESET;
 
     @JsonCreator
     public DodgeEvenRollAttack(Boss boss) {

@@ -55,12 +55,6 @@ public class Game implements CharacterObserver {
     /** The start time of the game session. */
     private long sessionStartTime;
 
-    private int currentId;
-
-    /** ID of the game istances. */
-    //@Json
-    private static int id=0;
-
     /**
      * Constructs a new Game object with the given list of levels.
      * @param levels The list of levels in the game.
@@ -73,7 +67,6 @@ public class Game implements CharacterObserver {
         this.seed = new Date().getTime();
         this.elapsedTime = 0;
         this.sessionStartTime = new Date().getTime();
-        this.currentId=id++;
 
         Dice.setSeed(this.seed);
     }
@@ -96,10 +89,6 @@ public class Game implements CharacterObserver {
         
         this.player.addObserver(this);
         Dice.setSeed(this.seed);
-    }
-
-    public int getId() {
-        return this.currentId;
     }
 
     public int getScore() {
@@ -231,9 +220,8 @@ public class Game implements CharacterObserver {
 
     public void saveLocally() {
         this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        String path = "/path"+this.currentId + ".json";
-        JsonParser.saveToFile(this, path);
-        uploadToCloud(path);
+        // String path = "/path" + this.currentId + ".json";
+        // JsonParser.saveToFile(this, path);
     }
 
     public void uploadToCloud(String filepath) {

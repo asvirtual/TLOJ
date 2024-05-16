@@ -575,7 +575,8 @@ class QuitCommand extends GameCommand {
 
         this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
 
-        this.game.uploadToCloud(""+this.game.getId()+ ".json");
+        // this.game.uploadToCloud("" + this.game.getId() + ".json");
+
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
         ConsoleHandler.clearConsole();
