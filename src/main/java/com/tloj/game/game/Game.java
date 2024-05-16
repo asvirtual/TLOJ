@@ -289,31 +289,18 @@ public class Game implements CharacterObserver {
         Controller.awaitEnter();
         ConsoleHandler.clearConsole();
 
-        Runnable loopRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Controller.getInstance().changeMusic(
-                    Constants.LOOP_WAV_FILE_PATH,
-                    true
-                );
-            }
-        };
-
-        Runnable introRunnable = new Runnable() {
-            @Override
-            public void run() {
-                Game.this.controller.changeMusic(
-                    Constants.INTRO_WAV_FILE_PATH,
-                    false,
-                    loopRunnable
-                );
-            }
-        };
-
         this.controller.changeMusic(
             Constants.GAME_OVER_WAV_FILE_PATH, 
             false,
-            introRunnable
+            new Runnable() {
+                @Override
+                public void run() {
+                    Game.this.controller.changeMusic(
+                        Constants.MAIN_MENU_WAV_FILE_PATH,
+                        true
+                    );
+                }
+            }
         );
         
         System.out.println(ConsoleHandler.RED_BOLD_BRIGHT +
