@@ -29,9 +29,9 @@ import com.tloj.game.utilities.Constants;
 
 public class EvenBoss extends Boss {
     public static final int HP = 50;
-    public static final int ATTACK = 5;
+    public static final int ATTACK = 6;
     public static final int DEFENSE = 2;
-    public static final int DICE_FACES = 8;
+    public static final int DICE_FACES = 10;
     public static final int XP_DROP = 30;
     public static final int MONEY_DROP = 20;
     

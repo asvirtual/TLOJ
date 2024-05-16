@@ -27,7 +27,7 @@ import com.tloj.game.entities.Boss;
  */
 public class HalverBoss extends Boss {
     public static final int HP = 70;
-    public static final int ATTACK = 9;
+    public static final int ATTACK = 12;
     public static final int DEFENSE = 8;
     public static final int DICE_FACES = 10;
     public static final int XP_DROP = 50;
