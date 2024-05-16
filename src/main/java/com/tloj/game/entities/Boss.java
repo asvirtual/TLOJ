@@ -7,7 +7,6 @@ import org.fusesource.jansi.Ansi;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.skills.CharacterSkill;

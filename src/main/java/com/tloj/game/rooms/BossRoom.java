@@ -6,14 +6,12 @@ import com.tloj.game.utilities.Coordinates;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.abilities.BossAbility;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 /**
  * Class that represents a boss room in the game<br>
- * Boss Room is an extension of the Hostile Room, as Boss'es are hostile mobs {@link BossAbility}<br>
  * Contains the boss of the floor and is always the last room of the floor<br>
  * @see Room
  * @see HealingRoom
