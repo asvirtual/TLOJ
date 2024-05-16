@@ -123,7 +123,7 @@ public class PlayerRoomVisitor implements Visitor {
 
         ConsoleHandler.clearConsole();
 
-        ConsoleHandler.println(Constants.HEALING_ROOM + ConsoleHandler.GREEN_BRIGHT + "\nWelcome to the healing rooom!" + ConsoleHandler.RESET);
+        ConsoleHandler.println(Constants.HEALING_ROOM + ConsoleHandler.GREEN_BRIGHT + "\nWelcome to the healing rooom!\n Your hp and mana have been fully restored!" + ConsoleHandler.RESET);
         this.controller.setState(GameState.HEALING_ROOM);
     }
 

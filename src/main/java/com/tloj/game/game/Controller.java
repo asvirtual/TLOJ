@@ -689,10 +689,7 @@ class HelpCommand extends GameCommand {
 class ReturnCommand extends GameCommand {
     public ReturnCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
-            GameState.MOVING,
-            GameState.MAIN_MENU
-        );
+        this.validListStates = List.of(GameState.MOVING);
     }
 
     @Override
