@@ -866,9 +866,9 @@ class LoadGameCommand extends GameCommand {
         this.validListStates = List.of(
             GameState.MAIN_MENU
         );
-        FirebaseHandler firebaseHandler = new FirebaseHandler();
+        FirebaseHandler firebaseHandler = FirebaseHandler.getInstance();
         firebaseHandler.listFilesInFirebaseBucket();
-        byte []data=firebaseHandler.loadFromCloudBucket(commands);
+        byte[] data=firebaseHandler.loadFromCloudBucket(commands[1]);
  
     }
     // TODO: actually load game/give choice to user

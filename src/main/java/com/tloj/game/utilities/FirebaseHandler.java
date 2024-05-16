@@ -26,7 +26,7 @@ public class FirebaseHandler {
     private static FirebaseHandler instance;
     private FirebaseApp app;
 
-    public FirebaseHandler() {
+    private FirebaseHandler() {
         try {
             FileInputStream serviceAccount = new FileInputStream(Constants.FIREBASE_SERVICE_ACCOUNT_FILE);
 
