@@ -30,7 +30,7 @@ public class RatBiteAbility extends MobAbility {
         this.abilityUsed = true;
         Item destroyedItem = attack.getAttacker().removeRandomInventoryItem();
         if (destroyedItem != null) {
-            this.activationMessage = ConsoleHandler.PURPLE + "Jordan was distracted and the rat ate" + destroyedItem + ConsoleHandler.RESET;
+            this.activationMessage = ConsoleHandler.PURPLE + "Jordan was distracted and the rat ate " + destroyedItem + ConsoleHandler.RESET;
         }
         
         return this.used = true;

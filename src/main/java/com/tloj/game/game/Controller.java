@@ -112,7 +112,8 @@ class MoveNorthCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.NORTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
+            this.game.printMap();
         }
     }
 }
@@ -143,7 +144,8 @@ class MoveSouthCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.SOUTH);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
+            this.game.printMap();
         }
     }
 }
@@ -174,7 +176,8 @@ class MoveWestCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.WEST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
+            this.game.printMap();
         }
     }
 }
@@ -205,7 +208,8 @@ class MoveEastCommand extends GameCommand {
             this.game.movePlayer(Coordinates.Direction.EAST);
             this.game.saveLocally();
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
+            this.game.printMap();
         } 
     }
 }

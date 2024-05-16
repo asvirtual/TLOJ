@@ -71,12 +71,15 @@ public abstract class Mob extends CombatEntity {
     ) {
         super(
             hp * lvl, 
-            // atk * Mob.levelUpFactor(lvl), 
-            // def * Mob.levelUpFactor(lvl), 
-            atk * lvl,
-            def * lvl,
+            atk, 
+            def, 
+            // atk * lvl,
+            // def * lvl,
             position
         );
+
+        for (int i = 2; i <= lvl; i++) 
+            this.levelUp(i);
 
         this.lvl = lvl;
         this.xpDrop = xpDrop;
@@ -173,10 +176,13 @@ public abstract class Mob extends CombatEntity {
      * @param lvl
      * @return
      */
-    private static int levelUpFactor(int lvl) {
-        return
-            lvl = lvl == 1 ? 1
-            : (int) Math.round(1 + Math.log(lvl) / (int) Math.log(4));
+    private void levelUp(int lvl) {
+        this.atk += lvl; // Write mathematical function to increase attack based on "temporary" mob level
+        this.def += lvl; // Write mathematical function to increase attack based on "temporary" mob level
+
+        // return
+        //     lvl = lvl == 1 ? 1
+        //     : (int) Math.round(1 + Math.log(lvl) / (int) Math.log(4));
     }
     
     @Override

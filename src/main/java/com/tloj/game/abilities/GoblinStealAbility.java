@@ -33,7 +33,7 @@ public class GoblinStealAbility extends MobAbility {
         int stolenMoney = stealingDice.roll() + 3;
         attack.getAttacker().pay(stolenMoney);
         
-        this.activationMessage = ConsoleHandler.PURPLE + "Jordan was distracted and the goblin stole" + stolenMoney + "BTC!" + ConsoleHandler.RESET;
+        this.activationMessage = ConsoleHandler.PURPLE + "Jordan was distracted and the goblin stole " + stolenMoney + " BTC!" + ConsoleHandler.RESET;
         
         return this.used = true;
     }
