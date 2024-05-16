@@ -118,8 +118,8 @@ public abstract class Mob extends CombatEntity {
             hp * lvl, 
             // atk * Mob.levelUpFactor(lvl), 
             // def * Mob.levelUpFactor(lvl), 
-            atk * lvl, 
-            def * lvl, 
+            atk, 
+            def, 
             position
         );
 
@@ -171,19 +171,11 @@ public abstract class Mob extends CombatEntity {
     }
 
     /**
-     * The level up factor for the mob<br>
-     * It is calculated as 1 + log(lvl) / log(4)<br>
-     * @param lvl
-     * @return
+     * The level up factor for the mobs.<br>
+     * To ensure game balancement it must differ for each mob<br>
      */
-    private void levelUp(int lvl) {
-        this.atk += lvl; // Write mathematical function to increase attack based on "temporary" mob level
-        this.def += lvl; // Write mathematical function to increase attack based on "temporary" mob level
-
-        // return
-        //     lvl = lvl == 1 ? 1
-        //     : (int) Math.round(1 + Math.log(lvl) / (int) Math.log(4));
-    }
+    protected  void levelUp(int lvl){};
+    
     
     @Override
     public void attack(CombatEntity t) throws IllegalArgumentException {
