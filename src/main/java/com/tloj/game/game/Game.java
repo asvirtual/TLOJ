@@ -243,6 +243,7 @@ public class Game implements CharacterObserver {
     @Override
     public void onMobDefeated(Mob mob) {
         ConsoleHandler.clearConsole();
+        ConsoleHandler.clearLog();
 
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
 
@@ -263,6 +264,7 @@ public class Game implements CharacterObserver {
     @Override
     public void onBossDefeated(Boss boss) {
         ConsoleHandler.clearConsole();
+        ConsoleHandler.clearLog();
 
         BossRoom room = (BossRoom) this.getCurrentRoom();
 

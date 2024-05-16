@@ -334,7 +334,12 @@ class UseItemCommand extends GameCommand {
                 this.game.printMap();
 
             Controller.awaitEnter();
-            ConsoleHandler.clearAndReprint();
+            Controller.printSideBySideText(
+                this.game.getPlayer().getASCII(),
+                this.game.getPlayer().getPrettifiedStatus(), 
+                7,
+                false
+            );
         } catch (NumberFormatException e) {
             System.out.println("Please insert a valid number");
         }
@@ -679,6 +684,9 @@ class HelpCommand extends GameCommand {
             ).contains(this.controller.getState())
         )
             this.game.printMap();
+
+        Controller.awaitEnter();
+        ConsoleHandler.clearAndReprint();
     }
 }
 
@@ -1143,8 +1151,11 @@ public class Controller {
      * Await user input before proceeding with an action
      */
     public static void awaitEnter() {
-        System.out.println("Press Enter to continue...");
-        Controller.scanner.nextLine();
+        String input = "";
+        do {
+            System.out.println("Press Enter to continue...");
+            input = Controller.scanner.nextLine();
+        } while (!input.isBlank());
     }
 
     /** 
