@@ -1,6 +1,10 @@
 package com.tloj.game.game;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +14,7 @@ import java.util.Stack;
 import java.util.function.Supplier;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.google.api.Control;
 import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.collectables.Item;
@@ -571,7 +575,7 @@ class QuitCommand extends GameCommand {
 
         this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
 
-        this.game.uploadToCloud();
+        this.game.uploadToCloud(""+this.game.getId()+ ".json");
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
         ConsoleHandler.clearConsole();
@@ -897,11 +901,8 @@ class LoadGameCommand extends GameCommand {
         this.validListStates = List.of(
             GameState.MAIN_MENU
         );
-        FirebaseHandler firebaseHandler = FirebaseHandler.getInstance();
-        firebaseHandler.listFilesInFirebaseBucket();
-        byte[] data=firebaseHandler.loadFromCloudBucket(commands[1]);
- 
     }
+
     // TODO: actually load game/give choice to user
     @Override
     public void execute() throws IllegalStateException {
@@ -927,6 +928,8 @@ class ExitGameCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         ConsoleHandler.clearConsole();
+        //added saving upon exiting the game
+        this.game.saveLocally();
         this.controller.setState(GameState.EXIT);
     }
 }
@@ -1328,7 +1331,24 @@ public class Controller {
      * @see FirebaseHandler
      */
     public void loadGame() {
-        Game gameData = JsonParser.deserializeJSON("{}");
+        FirebaseHandler.loadFilesInFirebaseBucket();
+
+        System.out.println("Please enter the name of the file you want to load: [n]");
+        String input = Controller.scanner.nextLine();
+        
+        //TODO: path to be decided
+        File file = new File("path"+input+".json");
+        byte[] fileContent = new byte[(int) file.length()];
+
+        try (FileInputStream stream = new FileInputStream(file)) {
+            stream.read(fileContent);
+        } catch (IOException e) {
+            System.out.println("An error occurred while reading the file.");
+            e.printStackTrace();
+        }
+
+        String jsonContent = new String(fileContent, StandardCharsets.UTF_8);
+        Game gameData = JsonParser.deserializeJSON(jsonContent);
         this.setGame(gameData);
         this.setState(GameState.MOVING);
     }

@@ -1,5 +1,6 @@
 package com.tloj.game.game;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,7 +25,9 @@ import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
+import com.tloj.game.utilities.FirebaseHandler;
 import com.tloj.game.utilities.GameState;
+import com.tloj.game.utilities.JsonParser;
 
 
 /**
@@ -52,6 +55,12 @@ public class Game implements CharacterObserver {
     /** The start time of the game session. */
     private long sessionStartTime;
 
+    private int currentId;
+
+    /** ID of the game istances. */
+    //@Json
+    private static int id=0;
+
     /**
      * Constructs a new Game object with the given list of levels.
      * @param levels The list of levels in the game.
@@ -64,6 +73,7 @@ public class Game implements CharacterObserver {
         this.seed = new Date().getTime();
         this.elapsedTime = 0;
         this.sessionStartTime = new Date().getTime();
+        this.currentId=id++;
 
         Dice.setSeed(this.seed);
     }
@@ -86,6 +96,10 @@ public class Game implements CharacterObserver {
         
         this.player.addObserver(this);
         Dice.setSeed(this.seed);
+    }
+
+    public int getId() {
+        return this.currentId;
     }
 
     public int getScore() {
@@ -217,13 +231,13 @@ public class Game implements CharacterObserver {
 
     public void saveLocally() {
         this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        
-        // GameSaveHandler.saveToFile(this, "test.json");
-        // TODO: Save in JSON file (and/or in cloud)
+        String path = "/path"+this.currentId + ".json";
+        JsonParser.saveToFile(this, path);
+        uploadToCloud(path);
     }
 
-    public void uploadToCloud() {
-        // TODO: Upload to cloud
+    public void uploadToCloud(String filepath) {
+        FirebaseHandler.saveToFirebaseBucket(filepath);
     }
     
     @JsonIgnore

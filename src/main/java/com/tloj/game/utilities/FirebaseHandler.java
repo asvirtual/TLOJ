@@ -3,6 +3,7 @@ package com.tloj.game.utilities;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import java.util.Iterator;
@@ -52,7 +53,7 @@ public class FirebaseHandler {
     /**
      * Uploads a JSON file with the specified filename to Firebase Storage.
      */
-    public void saveToFirebaseBucket(String filename) {
+    public static void saveToFirebaseBucket(String filename) {
         Bucket bucket = StorageClient.getInstance().bucket();
 
         try {
@@ -76,7 +77,8 @@ public class FirebaseHandler {
     /**
      * Loads all saves from Firebase Storage and saves them to a list of json files.
      */
-    public byte[] loadFromCloudBucket(String filename) {
+
+/*     public byte[] loadFromCloudBucket(String filename) {
         StorageClient storageClient = StorageClient.getInstance();
         Bucket bucket = storageClient.bucket();
 
@@ -87,33 +89,35 @@ public class FirebaseHandler {
             System.out.println("File not found: " + filename);
             return null;
         }
-
+        
         byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
         return data;
-    }
+    } */
 
-    public void listFilesInFirebaseBucket() {
+    public static void loadFilesInFirebaseBucket() {
         Bucket bucket = StorageClient.getInstance().bucket();
         System.out.println("Files in Firebase Storage bucket:");
         Page<Blob> blobs = bucket.list();
+
         for (Blob blob : blobs.iterateAll()) {
+
+            byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             System.out.println(blob.getName());
+            File downloadFile = new File("filePath", blob.getName());
+
+            
+            //TODO: check if files locally are up to date --> if not, download them
+
+            // Write data to file
+            try (FileOutputStream outputStream = new FileOutputStream(downloadFile)) {
+            outputStream.write(data);
+            }
+            catch (IOException e) {
+                System.out.println("Error writing file: " + e.getMessage());
+            }
         }
     }
 
 }
 
 
-    //download version 1: error on bucket.getBlob(filename), not existing method
-
-/*         Blob blob = bucket.getBlob(filename);
-        if (blob == null) {
-            System.out.println("File not found: " + filename);
-            return null;
-        }
-
-
-        // Download the file content into the byte array
-        byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
-        return data;
- */
