@@ -35,6 +35,24 @@ public class CyberGoblin extends Mob {
     }
     
     @Override
+    protected void levelUp(int lvl) {
+        switch (lvl) {
+            case 2:
+                this.atk += 4; // Total attack = 8
+                this.def += 2;  // Total defense = 4
+                break;
+            case 3:
+                this.atk += 6;  // Total attack = 14
+                this.def += 3;  // Total defense = 7
+                break;
+            default:
+                this.atk += 4 * (lvl - 3);  // Increase attack by 4 for each level beyond 3
+                this.def += 2 * (lvl - 3);  // Increase defense by 2 for each level beyond 3
+                break;
+        }
+    }
+
+    @Override
     public String getASCII() {
         return Constants.CYBER_GOBLIN_STATIC;
     }

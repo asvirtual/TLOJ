@@ -35,6 +35,24 @@ public class JetBat extends Mob {
     }
 
     @Override
+    protected void levelUp(int lvl) {
+        switch (lvl) {
+            case 2:
+                this.atk += 3; // Total attack = 6
+                this.def += 1;  // Total defense = 2
+                break;
+            case 3:
+                this.atk += 8;  // Total attack = 12
+                this.def += 3;  // Total defense = 5
+                break;
+            default:
+                this.atk += 3 * (lvl - 3);  // Increase attack by 3 for each level beyond 3
+                this.def += lvl - 3;  // Increase defense by 1 for each level beyond 3
+                break;
+        }
+    }
+
+    @Override
     public String getASCII(){
         return Constants.JET_BAT_STATIC;
     }
