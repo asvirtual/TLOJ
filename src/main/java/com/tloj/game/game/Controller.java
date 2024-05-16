@@ -334,6 +334,7 @@ class UseItemCommand extends GameCommand {
                 this.game.printMap();
 
             Controller.awaitEnter();
+            ConsoleHandler.clearConsole();
             Controller.printSideBySideText(
                 this.game.getPlayer().getASCII(),
                 this.game.getPlayer().getPrettifiedStatus(), 

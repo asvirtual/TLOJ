@@ -59,7 +59,6 @@ public class Main {
             e.printStackTrace();
         }
 
-
         // ConsoleHandler.println(GameSaveHandler.deserializeMapFromFile("test.json"));
         // ConsoleHandler.println(GameSaveHandler.loadFromFile("test.json"));
     }

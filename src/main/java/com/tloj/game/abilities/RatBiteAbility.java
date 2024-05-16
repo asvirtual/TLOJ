@@ -14,8 +14,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * It is paired with the {@link MechaRat}.
  */
 public class RatBiteAbility extends MobAbility {
-
     private boolean abilityUsed;
+    
     @JsonCreator
     public RatBiteAbility(Mob user) {
         super(user);
