@@ -51,7 +51,7 @@ public class JsonParser {
      * @param filename The filename of the JSON file.
      * @return The loaded Game object.
      */
-    public static Game loadFromFile(String filename) {
+    public static Game loadFromFile(String filename) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -61,9 +61,6 @@ public class JsonParser {
             e.printStackTrace();
         } catch (JsonMappingException e) {
             System.out.println("Error mapping JSON from GameData");
-            e.printStackTrace();
-        } catch (IOException e) {
-            System.out.println("Error opening file " + filename + " for reading");
             e.printStackTrace();
         }
 

@@ -98,11 +98,11 @@ public class FirebaseHandler {
         Bucket bucket = StorageClient.getInstance().bucket();
         System.out.println("Files in Firebase Storage bucket:");
         Page<Blob> blobs = bucket.list();
-
-        for (Blob blob : blobs.iterateAll()) {
+        
+        blobs.iterateAll().forEach(blob -> {
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             System.out.println(blob.getName());
-            File downloadFile = new File("filePath", blob.getName());
+            File downloadFile = new File(Constants.BASE_SAVES_DIRECTORY + blob.getName());
 
             // TODO: check if files locally are up to date --> if not, download them
 
@@ -112,7 +112,7 @@ public class FirebaseHandler {
             } catch (IOException e) {
                 System.out.println("Error writing file: " + e.getMessage());
             }
-        }
+        });
     }
 
 }

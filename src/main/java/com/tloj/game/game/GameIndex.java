@@ -102,17 +102,12 @@ public class GameIndex {
         File file = new File(Constants.GAMES_INDEX_FILE_PATH);
         
         if (!file.exists()) {
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write("[]");
-            } catch (IOException e) {
-                System.out.println("Error opening file " + Constants.GAMES_INDEX_FILE_PATH + " for writing");
-                e.printStackTrace();
-            }
+            games = new ArrayList<>();
+            return;
         }
 
         try {
             games = mapper.readValue(file, new TypeReference<ArrayList<String>>(){});
-            games.size();
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();

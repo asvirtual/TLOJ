@@ -5,7 +5,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -585,7 +587,7 @@ class QuitCommand extends GameCommand {
 
         this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
 
-        // this.game.uploadToCloud("" + this.game.getId() + ".json");
+        this.controller.saveCurrentGameToCloud();
 
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
@@ -931,8 +933,30 @@ class LoadGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        
         ConsoleHandler.clearConsole();
-        this.controller.loadGame();
+        int idx = 1;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+
+        GameIndex.getEntries().forEach(filename -> {
+            try {
+                Game game = JsonParser.loadFromFile(filename);
+                System.out.println(
+                    idx + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " " + game.getPlayer().getName() + 
+                    formatter.format(game.getCreationTime())
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        try {
+            ConsoleHandler.clearConsole();
+            this.controller.loadGame(Integer.parseInt(commands[1]));
+        } catch (NumberFormatException e) {
+            System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
+            return;
+        }
     }
 }
 
@@ -1372,32 +1396,20 @@ public class Controller {
         this.game.saveLocally(saveName);
     }
 
-    /**
-     * TODO
-     * Loads the game from the cloud, then deserializes the JSON data to create a new Game object
-     * @see FirebaseHandler
-     */
-    public void loadGame() {
-        this.saveHandler.loadAllCloud();
+    public void saveCurrentGameToCloud() {
+        this.saveHandler.saveToCloud(GameIndex.getFile(String.valueOf(this.currentGameId)));
+        this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
+    }
 
-        System.out.println("Please enter the name of the file you want to load: [n]");
-        String input = Controller.scanner.nextLine();
-        
-        //TODO: path to be decided
-        File file = new File("path"+input+".json");
-        byte[] fileContent = new byte[(int) file.length()];
-
-        try (FileInputStream stream = new FileInputStream(file)) {
-            stream.read(fileContent);
+    public void loadGame(int index) {
+        try {
+            String saveName = GameIndex.getFile(String.valueOf(index));
+            this.currentGameId = index;
+            this.game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + saveName);
+            this.setState(GameState.MOVING);
         } catch (IOException e) {
-            System.out.println("An error occurred while reading the file.");
-            e.printStackTrace();
+            System.out.println(ConsoleHandler.RED + "Please insert a number from the list above" + ConsoleHandler.RESET);
         }
-
-        String jsonContent = new String(fileContent, StandardCharsets.UTF_8);
-        Game gameData = JsonParser.deserializeJSON(jsonContent);
-        this.setGame(gameData);
-        this.setState(GameState.MOVING);
     }
 
     /**
