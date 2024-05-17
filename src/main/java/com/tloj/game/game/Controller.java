@@ -938,6 +938,7 @@ class LoadGameCommand extends GameCommand {
         int idx = 1;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
 
+        System.out.println(ConsoleHandler.GREEN + "Saved games:" + ConsoleHandler.RESET + "\n\n");
         GameIndex.getEntries().forEach(filename -> {
             try {
                 Game game = JsonParser.loadFromFile(filename);
@@ -950,23 +951,28 @@ class LoadGameCommand extends GameCommand {
             }
         });
 
-        System.out.print(ConsoleHandler.YELLOW + "Choose a save to load or press Enter to go back to main menu: " + ConsoleHandler.RESET);
-        String choice = Controller.getScanner().nextLine();
+        String choice;
+        int index = -1;
 
-        if (choice.isBlank()) {
-            ConsoleHandler.clearConsole();
-            System.out.println(Constants.GAME_TITLE);
-            this.controller.setState(GameState.MAIN_MENU);
-            return;
-        }
-
-        try {
-            ConsoleHandler.clearConsole();
-            this.controller.loadGame(Integer.parseInt(choice));
-        } catch (NumberFormatException e) {
-            System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
-            return;
-        }
+        do {
+            System.out.print(ConsoleHandler.YELLOW + "Choose a save to load or press Enter to go back to main menu: " + ConsoleHandler.RESET);
+            choice = Controller.getScanner().nextLine();
+    
+            if (choice.isBlank()) {
+                ConsoleHandler.clearConsole();
+                System.out.println(Constants.GAME_TITLE);
+                this.controller.setState(GameState.MAIN_MENU);
+                return;
+            }
+    
+            try {
+                index = Integer.parseInt(choice);
+                ConsoleHandler.clearConsole();
+                this.controller.loadGame(index);
+            } catch (NumberFormatException e) {
+                System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
+            }
+        } while (!choice.isBlank() && (index < 1 || index > GameIndex.getEntries().size()));
     }
 }
 
