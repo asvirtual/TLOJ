@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class Ragu extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 1;
     private static final int PRICE = 0;
-    private static final int STAT_BOOST = 3;
+    private static final int STAT_BOOST = 2;
     private static final double DROP_CHANCE = 0.075;
     private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 7;
@@ -58,7 +58,8 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     @Override
     public String describe() {
         return this.getASCII() + "\n" +
-                "A delicious ragu' that restores all HP and Mana, boosts def stat and the atk inflicted by " + STAT_BOOST + " for the duration of a fight + \n + It's Jordan's favorite dish!"
+                "A delicious ragu' that restores all HP and Mana, boosts def stat and the atk inflicted by " + STAT_BOOST + " for the duration of a fight. \n" +
+                 "It's Jordan's favorite dish!"
                 + "\n It weights: " + WEIGHT + " Mb";
     }
 }

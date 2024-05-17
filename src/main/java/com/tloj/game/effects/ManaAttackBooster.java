@@ -34,7 +34,7 @@ public class ManaAttackBooster extends WeaponEffect {
         attack.setWeaponRoll(this.weapon.diceRoll());
         holder.useMana(MANA_COST);
 
-        this.activationMessage = ConsoleHandler.YELLOW_BRIGHT + this.weapon.getName() + "'s critical mana damage activated!" + ConsoleHandler.RESET;
+        this.activationMessage = ConsoleHandler.YELLOW_BRIGHT + this.weapon.getName() + "'s critical mana damage activated!" + ConsoleHandler.RESET + "\n";
         return this.used = true;
     }
 

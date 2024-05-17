@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  * An effect that absorbs health from the target and heals the character holding the weapon<br>
- * This effect is always applied and does not require any mana to use<br>
+ * This effect is has a 66,6% chance to apply but it doesnt require mana to use<br>
  * It is paired with the Nanite Leech Blade<br>
  * @see NaniteLeechBlade
  */
@@ -21,6 +21,8 @@ public class HealthAbsorber extends WeaponEffect {
 
     @Override
     public boolean apply(PlayerAttack attack) {
+        if (Math.random() > 0.666) return this.used = false;
+
         int damage = this.weapon.diceRoll();
         attack.setWeaponRoll(damage);
         attack.setOnHit(new Runnable() {
@@ -28,7 +30,7 @@ public class HealthAbsorber extends WeaponEffect {
             public void run() {
                 int totalDamage = attack.getTotalDamage();
                 if (totalDamage > 0) attack.getAttacker().heal(totalDamage / 2);
-                HealthAbsorber.this.activationMessage = ConsoleHandler.YELLOW_BRIGHT + HealthAbsorber.this.weapon.getName() + "'s health Absorber activated! Jordan was healed for " + totalDamage / 2 + " hp" + ConsoleHandler.RESET;
+                HealthAbsorber.this.activationMessage = ConsoleHandler.YELLOW_BRIGHT + HealthAbsorber.this.weapon.getName() + "'s health Absorber activated! Jordan was healed for " + totalDamage / 2 + " hp" + ConsoleHandler.RESET + "\n";
             }
         });
 
