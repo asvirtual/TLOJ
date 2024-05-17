@@ -51,5 +51,15 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
         return "An elixir that boosts your defense by " + DEFENSE_BOOST + " for the duration of a fight"
                 + "\n It weights: " + WEIGHT + " Mb";
     }
+
+    @Override
+    public String shortInfo() {
+        return " (+" + DEFENSE_BOOST + " Def)";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + shortInfo() ;
+    }
 }
 

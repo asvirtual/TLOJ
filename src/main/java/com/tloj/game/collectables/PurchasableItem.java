@@ -29,4 +29,11 @@ public abstract class PurchasableItem extends Item {
     public int getPrice() {
         return this.price;
     }
+
+    public abstract String shortInfo();
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

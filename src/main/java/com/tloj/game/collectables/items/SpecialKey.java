@@ -1,7 +1,7 @@
 package com.tloj.game.collectables.items;
 
 import com.tloj.game.collectables.ConsumableItem;
-import com.tloj.game.collectables.PurchasableItem;
+import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Constants;
 
@@ -23,15 +23,14 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see Ragu
  * @see NorthStar
  */
-public class SpecialKey extends PurchasableItem implements ConsumableItem {
+public class SpecialKey extends Item implements ConsumableItem {
     private static final double WEIGHT = 0;
-    private static final int PRICE = 0;
-    private static final int DROP_MONEY = PRICE / 2;
+    private static final int DROP_MONEY = 0;
     private static final int ID = 11;    
 
     @JsonCreator
     public SpecialKey() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID); 
+        super(WEIGHT, DROP_MONEY, ID); 
     }
     
     @Override
