@@ -923,7 +923,7 @@ class NewGameCommand extends GameCommand {
  */
 class LoadGameCommand extends GameCommand {
     public LoadGameCommand(Game game, String[] commands) {
-        super(game, null);
+        super(game, commands);
         this.validListStates = List.of(
             GameState.MAIN_MENU
         );
@@ -950,9 +950,12 @@ class LoadGameCommand extends GameCommand {
             }
         });
 
+        System.out.print(ConsoleHandler.YELLOW + "Choose a save to load: " + ConsoleHandler.RESET);
+        String choice = Controller.getScanner().nextLine();
+
         try {
             ConsoleHandler.clearConsole();
-            this.controller.loadGame(Integer.parseInt(commands[1]));
+            this.controller.loadGame(Integer.parseInt(choice));
         } catch (NumberFormatException e) {
             System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
             return;
@@ -1551,6 +1554,7 @@ public class Controller {
         this.musicPlayer = new MusicPlayer(Constants.MAIN_MENU_WAV_FILE_PATH);
         this.musicPlayer.playMusic(true);
 
+        // this.saveHandler.loadAllCloud();
         GameIndex.loadGames();
         System.out.println(Constants.GAME_TITLE);
 
