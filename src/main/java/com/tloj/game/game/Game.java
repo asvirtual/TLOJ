@@ -274,11 +274,6 @@ public class Game implements CharacterObserver {
         String path = Constants.BASE_SAVES_DIRECTORY + saveName;
         JsonParser.saveToFile(this, path);
     }
-
-    public void uploadToCloud(String filepath) {
-        // TODO: Implement this method
-        // FirebaseHandler.saveToFirebaseBucket(filepath);
-    }
     
     @JsonIgnore
     public Room getCurrentRoom() {
@@ -372,6 +367,7 @@ public class Game implements CharacterObserver {
 
         String filename = GameIndex.removeEntry(String.valueOf(this.gameId));
         this.controller.getSaveHandler().deleteFromCloud(filename);
+        this.controller.getSaveHandler().saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
     }
 
     public void printMap() {

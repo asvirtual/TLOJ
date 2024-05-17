@@ -270,5 +270,6 @@ public class PlayerRoomVisitor implements Visitor {
 
         String filename = GameIndex.removeEntry(String.valueOf(this.controller.getCurrentGameId()));
         this.controller.getSaveHandler().deleteFromCloud(filename);
+        this.controller.getSaveHandler().saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
     }
 } 

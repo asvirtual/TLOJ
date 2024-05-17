@@ -1,7 +1,6 @@
 package com.tloj.game.game;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,52 +12,71 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tloj.game.utilities.Constants;
 
 
+/**
+ * A utility class for managing the index of saved games.
+ * This class is used to keep track of the saved games and their filenames.
+ * The index is saved to a JSON file in the saves directory.
+ * The index is loaded when the game starts and saved when the game ends.
+ */
 public class GameIndex {
     private static ArrayList<String> games;
 
+    private GameIndex() {}
+
+    /**
+     * Adds a new entry to the index with the given filename.
+     */
     public static int addEntry(String filename) {
         games.add(filename);
         saveGames();
         return games.size();
     }
 
+    /**
+     * Returns the filename of the game with the given id.
+     * @param id The id of the game.
+     * @return The filename of the game.
+     */
     public static String getFile(String id) {
         try {
             int index = Integer.parseInt(id) - 1;
-            if (index < 0 || index >= games.size()) {
-                System.out.println("Invalid choice: " + index);
-                return null;
-            }
+            if (index < 0 || index >= games.size()) return null;
 
             return games.get(index);
         } catch (NumberFormatException e) {
-            System.out.println("Error parsing id " + id);
             e.printStackTrace();
         }
 
         return null;
     }
 
+    /**
+     * Removes the entry with the given id from the index.
+     * @param id The id of the entry to be removed.
+     * @return The filename of the removed entry.
+     */
     public static String removeEntry(String id) {
         try {
-            int index = Integer.parseInt(id);
-            if (index < 0 || index >= games.size()) {
-                System.out.println("Invalid choice: " + index);
-                return null;
-            }
+            int index = Integer.parseInt(id) - 1;
+            if (index < 0 || index >= games.size()) return null;
 
             String removed = games.remove(index);
+
+            File file = new File(Constants.BASE_SAVES_DIRECTORY + removed);
+            file.delete();
+
             saveGames();
-            
             return removed;
         } catch (NumberFormatException e) {
-            System.out.println("Error parsing id " + id);
             e.printStackTrace();
         }
 
         return null;
     }
 
+    /**
+     * Clears the index of all entries.
+     */
     public static void clearGames() {
         games.clear();
         saveGames();
@@ -68,17 +86,18 @@ public class GameIndex {
         return games;
     }
 
+    /**
+     * Returns the Game object with the given id.
+     * @param id The id of the game.
+     * @return The Game object.
+     */
     public static Game getGame(String id) {
         int index;
 
         try {
             index = Integer.parseInt(id);
-            if (index < 0 || index >= games.size()) {
-                System.out.println("Invalid choice: " + index);
-                return null;
-            }
+            if (index < 0 || index >= games.size()) return null;
         } catch (NumberFormatException e) {
-            System.out.println("Error parsing id " + id);
             e.printStackTrace();
             return null;
         }
@@ -101,6 +120,9 @@ public class GameIndex {
         return null;
     }
 
+    /**
+     * Loads the index of saved games from the JSON file.
+     */
     public static void loadGames() {
         ObjectMapper mapper = new ObjectMapper();
         File file = new File(Constants.BASE_SAVES_DIRECTORY + Constants.GAMES_INDEX_FILE_PATH);
@@ -124,6 +146,9 @@ public class GameIndex {
         }
     }
 
+    /**
+     * Saves the index of saved games to the JSON file.
+     */
     public static void saveGames() {
         ObjectMapper mapper = new ObjectMapper();
 

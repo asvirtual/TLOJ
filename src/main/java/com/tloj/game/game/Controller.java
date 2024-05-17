@@ -1180,9 +1180,6 @@ public class Controller {
     private Game game;
     private int currentGameId;
     private FirebaseHandler saveHandler;
-    /**
-     * Music player to handle the game music
-     */
     private MusicPlayer musicPlayer;
     /**
      * Stack to keep track of the game states<br>
@@ -1360,8 +1357,6 @@ public class Controller {
      * @param first the first String to be printed (to the left)
      * @param second the second String to be printed (to the right)
      * {@link Controller#printSideBySideText(String, String, int)}
-     * @param first
-     * @param second
      */
     public static void printSideBySideText(String first, String second) {
         // Offset of the String second from the top of the console
@@ -1382,10 +1377,15 @@ public class Controller {
         this.game.setPlayer(player);
     }
 
-    // TODO: maybe only save the game when the player chooses a character, since without a character the game is not really started
+    /**
+     * Facade method to create a new game<br>
+     * It creates a new game object and saves it locally<br>
+     * @param name the name of the save file
+     * @param seed the seed of the game
+     * @return the new game object
+     */
     public Game newGame(String name, String seed) {
         try {
-            // ArrayList<Level> map = JsonParser.deserializeMap(Constants.MAP);
             ArrayList<Level> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
 
             if (seed.isBlank()) this.game = new Game(map);
@@ -1407,6 +1407,11 @@ public class Controller {
         return null;
     }
 
+    /**
+     * Facade method to load a game<br>
+     * It loads a game object from a save file<br>
+     * @param index the index of the save file to load in the game index
+     */
     public void loadGame(int index) {
         try {
             String saveName = GameIndex.getFile(String.valueOf(index));
@@ -1419,6 +1424,11 @@ public class Controller {
         }
     }
 
+    /**
+     * Facade method to save the current game to the cloud
+     * @see FirebaseHandler#saveToCloud(String)
+     * @see GameIndex#getFile(String)
+     */
     public void saveCurrentGameToCloud() {
         this.saveHandler.saveToCloud(GameIndex.getFile(String.valueOf(this.currentGameId)));
         this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
