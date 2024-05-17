@@ -42,12 +42,12 @@ public class JunkSlime extends Mob {
                 this.def += 3;  // Total defense = 6
                 break;
             case 3:
-                this.atk += 2;  // Total attack = 8
+                this.atk += 3;  // Total attack = 9
                 this.def += 3;  // Total defense = 9
                 break;
             default:
-                this.atk += 1 * (lvl - 3);  // Increase attack by 1 for each level beyond 3
-                this.def += 3 * (lvl - 3);  // Increase defense by 3 for each level beyond 3
+                this.atk += 2 * (lvl - 3);  // Increase attack by 1 for each level beyond 3
+                this.def += 4 * (lvl - 3);  // Increase defense by 3 for each level beyond 3
                 break;
         }
 
