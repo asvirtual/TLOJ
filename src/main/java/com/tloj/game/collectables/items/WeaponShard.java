@@ -55,5 +55,10 @@ public class WeaponShard extends PurchasableItem {
                "Nothing is created, nothing is destroyed, everything can be recycled!"
                + "\n It weights: " + WEIGHT + " Mb";
     }
+
+    @Override
+    public String shortInfo() {
+        return "";
+    }
 }
 

@@ -46,11 +46,6 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
     }
 
     @Override
-    public String toString() {
-        return "Ragu'";
-    }
-
-    @Override
     public String getASCII() {
         return Constants.RAGU;
     }
@@ -61,6 +56,16 @@ public class Ragu extends PurchasableItem implements ConsumableItem {
                 "A delicious ragu' that restores all HP and Mana, boosts def stat and the atk inflicted by " + STAT_BOOST + " for the duration of a fight. \n" +
                  "It's Jordan's favorite dish!"
                 + "\n It weights: " + WEIGHT + " Mb";
+    }
+
+    @Override
+    public String shortInfo() {
+        return " (full heal, +" + STAT_BOOST + " Atk and Def) ";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + shortInfo() ;
     }
 }
 

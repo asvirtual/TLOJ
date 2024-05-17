@@ -54,5 +54,10 @@ public class Emp extends PurchasableItem implements ConsumableItem {
     public boolean equals(Object obj) {
         return obj instanceof Emp;
     }
+    
+    @Override
+    public String shortInfo() {
+        return "";
+    }
 }
 
