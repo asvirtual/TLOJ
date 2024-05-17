@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,9 +99,19 @@ public class GameIndex {
 
     public static void loadGames() {
         ObjectMapper mapper = new ObjectMapper();
+        File file = new File(Constants.GAMES_INDEX_FILE_PATH);
+        
+        if (!file.exists()) {
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write("[]");
+            } catch (IOException e) {
+                System.out.println("Error opening file " + Constants.GAMES_INDEX_FILE_PATH + " for writing");
+                e.printStackTrace();
+            }
+        }
 
         try {
-            games = mapper.readValue(new File(Constants.GAMES_INDEX_FILE_PATH), new TypeReference<ArrayList<String>>(){});
+            games = mapper.readValue(file, new TypeReference<ArrayList<String>>(){});
             games.size();
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");

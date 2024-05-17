@@ -900,9 +900,15 @@ class NewGameCommand extends GameCommand {
 
         System.out.print(ConsoleHandler.YELLOW + "Enter a custom name for this save: " + ConsoleHandler.RESET);
         String saveName = Controller.getScanner().nextLine();
+        String seed;
 
-        System.out.print(ConsoleHandler.YELLOW + "Enter a custom seed for the game or press Enter to generate it automatically: " + ConsoleHandler.RESET);
-        String seed = Controller.getScanner().nextLine();
+        do {
+            System.out.print(ConsoleHandler.YELLOW + "Enter a custom seed for the game or press Enter to generate it automatically: " + ConsoleHandler.RESET);
+            seed = Controller.getScanner().nextLine();
+
+            if (!seed.isBlank() && !seed.matches("\\d+")) 
+                System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
+        } while (!seed.isBlank() && !seed.matches("\\d+"));
 
         this.controller.newGame(saveName, seed);
         System.out.println("\n" + Constants.CLASS_CHOICE);
