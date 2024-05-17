@@ -54,4 +54,14 @@ public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
                 "A potion that restores " + MANA_RESTORE + " Mana Points"
                 + "\n It weights: " + WEIGHT + " Mb";
     }
+
+    @Override  
+    public String shortInfo() {
+        return " (+" + MANA_RESTORE + " Mana)";
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + shortInfo() ;
+    }
 }
