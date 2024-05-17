@@ -950,8 +950,15 @@ class LoadGameCommand extends GameCommand {
             }
         });
 
-        System.out.print(ConsoleHandler.YELLOW + "Choose a save to load: " + ConsoleHandler.RESET);
+        System.out.print(ConsoleHandler.YELLOW + "Choose a save to load or press Enter to go back to main menu: " + ConsoleHandler.RESET);
         String choice = Controller.getScanner().nextLine();
+
+        if (choice.isBlank()) {
+            ConsoleHandler.clearConsole();
+            System.out.println(Constants.GAME_TITLE);
+            this.controller.setState(GameState.MAIN_MENU);
+            return;
+        }
 
         try {
             ConsoleHandler.clearConsole();
