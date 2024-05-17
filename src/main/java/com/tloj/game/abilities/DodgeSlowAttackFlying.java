@@ -5,6 +5,7 @@ import com.tloj.game.entities.bosses.FlyingBoss;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -14,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class DodgeSlowAttackFlying extends BossAbility {
     @JsonCreator
-    public DodgeSlowAttackFlying(Boss boss) {
+    public DodgeSlowAttackFlying(@JsonProperty("user") Boss boss) {
         super(boss);
     }
 

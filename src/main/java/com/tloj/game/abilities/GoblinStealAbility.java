@@ -7,6 +7,7 @@ import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.utilities.Dice;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -18,7 +19,7 @@ public class GoblinStealAbility extends MobAbility {
     private boolean abilityUsed;
 
     @JsonCreator
-    public GoblinStealAbility(Mob user) {
+    public GoblinStealAbility(@JsonProperty("user") Mob user) {
         super(user);
         this.abilityUsed = false;
     }

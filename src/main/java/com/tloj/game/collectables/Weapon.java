@@ -2,7 +2,9 @@ package com.tloj.game.collectables;
 
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Dice;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.effects.WeaponEffect;
 
@@ -27,17 +29,19 @@ public abstract class Weapon extends Item {
 
     @JsonIgnore
     protected WeaponEffect effect;
+    @JsonProperty("dice")
     protected Dice dice;
+    @JsonProperty("level")
     protected int lvl;
 
-    public Weapon(double weight, int diceFaces, int ID) {
-        super(weight, DROP_MONEY, ID);
+    public Weapon(double weight, int diceFaces, int id) {
+        super(weight, DROP_MONEY, id);
         this.dice = new Dice(diceFaces);
         this.lvl = 0;
     }
 
-    public Weapon(double weight, int diceMin, int diceMax, int ID) {
-        super(weight, DROP_MONEY, ID);
+    public Weapon(double weight, int diceMin, int diceMax, int id) {
+        super(weight, DROP_MONEY, id);
         this.dice = new Dice(diceMin, diceMax);
         this.lvl = 0;
     }
@@ -45,11 +49,17 @@ public abstract class Weapon extends Item {
     public WeaponEffect getEffect() {
         return effect;
     }
+    
+    public void setLevel(int lvl) {
+        this.lvl = lvl;
+    }
 
+    @JsonIgnore
     public int getDiceMax() {
         return dice.getMax();
     }
 
+    @JsonIgnore
     public int getDiceFaces() {
         return dice.getFaces();
     }

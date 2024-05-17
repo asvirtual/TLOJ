@@ -22,9 +22,6 @@ import com.google.firebase.cloud.StorageClient;
 import com.google.api.gax.paging.Page;
 
 
-
-
-
 public class FirebaseHandler {
     private static FirebaseHandler instance;
     private FirebaseApp app;
@@ -58,7 +55,7 @@ public class FirebaseHandler {
         Bucket bucket = StorageClient.getInstance().bucket();
 
         try {
-            File file = new File(filename);
+            File file = new File(Constants.BASE_SAVES_DIRECTORY + filename);
             FileInputStream fis = new FileInputStream(file);
 
             byte[] data = new byte[(int) file.length()];
@@ -67,41 +64,18 @@ public class FirebaseHandler {
             fis.close();
 
             bucket.create(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""), data, "application/json");
-            System.out.println("JSON data saved to Firebase Storage.");
         } catch (IOException e) {
             System.out.println("Error opening file " + filename + " for reading");
             e.printStackTrace();
         }
     }
 
-    /**
-     * Loads all saves from Firebase Storage and saves them to a list of json files.
-     */
-
-/*     public byte[] loadFromCloudBucket(String filename) {
-        StorageClient storageClient = StorageClient.getInstance();
-        Bucket bucket = storageClient.bucket();
-
-        listFilesInFirebaseBucket();
-
-        Blob blob = bucket.get(filename);
-        if (blob == null) {
-            System.out.println("File not found: " + filename);
-            return null;
-        }
-        
-        byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
-        return data;
-    } */
-
     public void loadAllCloud() {
         Bucket bucket = StorageClient.getInstance().bucket();
-        System.out.println("Files in Firebase Storage bucket:");
         Page<Blob> blobs = bucket.list();
         
         blobs.iterateAll().forEach(blob -> {
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
-            System.out.println(blob.getName());
             File downloadFile = new File(Constants.BASE_SAVES_DIRECTORY + blob.getName());
 
             // TODO: check if files locally are up to date --> if not, download them
@@ -115,6 +89,11 @@ public class FirebaseHandler {
         });
     }
 
+    public void deleteFromCloud(String filename) {
+        Bucket bucket = StorageClient.getInstance().bucket();
+        Blob blob = bucket.get(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""));
+        blob.delete();
+    }
 }
 
 

@@ -7,6 +7,7 @@ import com.tloj.game.entities.mobs.MechaRat;
 import com.tloj.game.collectables.Item;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -17,7 +18,7 @@ public class RatBiteAbility extends MobAbility {
     private boolean abilityUsed;
     
     @JsonCreator
-    public RatBiteAbility(Mob user) {
+    public RatBiteAbility(@JsonProperty("user") Mob user) {
         super(user);
         this.abilityUsed = false;
     }

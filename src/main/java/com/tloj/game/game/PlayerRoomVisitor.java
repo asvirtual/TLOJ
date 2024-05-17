@@ -233,25 +233,20 @@ public class PlayerRoomVisitor implements Visitor {
         room.visit();
         
         this.controller.changeMusic(Constants.ENDING_WAV_FILE_PATH, true);
-
-        /** Start */
         
         ConsoleHandler.clearConsole();
-        ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FIRST_PRINT_WIN + ConsoleHandler.RESET);
+        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FIRST_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.clearConsole(1250);
-        ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.SECOND_PRINT_WIN + ConsoleHandler.RESET);
+        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.SECOND_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.clearConsole(1250);
-        ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.THIRD_PRINT_WIN + ConsoleHandler.RESET);
+        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.THIRD_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.clearConsole(1250);
-        ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FOURTH_PRINT_WIN + ConsoleHandler.RESET);
+        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FOURTH_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.clearConsole(5000);
-        ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FIFTH_PRINT_WIN + ConsoleHandler.RESET);
+        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FIFTH_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.clearConsole(5000);
-        ConsoleHandler.println( ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.SIXTH_PRINT_WIN + ConsoleHandler.RESET);
+        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.SIXTH_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleHandler.RESET);
-
-        
-        /** End */
 
         Controller.awaitEnter();
         ConsoleHandler.clearConsole();
@@ -272,5 +267,8 @@ public class PlayerRoomVisitor implements Visitor {
                 }
             }
         );
+
+        String filename = GameIndex.removeEntry(String.valueOf(this.controller.getCurrentGameId()));
+        this.controller.getSaveHandler().deleteFromCloud(filename);
     }
 } 

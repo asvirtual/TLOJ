@@ -5,6 +5,7 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.entities.bosses.HalverBoss;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -16,7 +17,7 @@ public class TakeHalfDamage extends BossAbility {
     private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and halved you roll!" + ConsoleHandler.RESET;
 
     @JsonCreator
-    public TakeHalfDamage(Boss boss) {
+    public TakeHalfDamage(@JsonProperty("user") Boss boss) {
         super(boss, ACTIVATION_MESSAGE);
     }
 

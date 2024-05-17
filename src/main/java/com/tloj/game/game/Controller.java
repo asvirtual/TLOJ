@@ -116,8 +116,6 @@ class MoveNorthCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.NORTH);
-            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
-            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -149,8 +147,6 @@ class MoveSouthCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.SOUTH);
-            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
-            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -182,8 +178,6 @@ class MoveWestCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.WEST);
-            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
-            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -215,8 +209,6 @@ class MoveEastCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.EAST);
-            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
-            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -586,7 +578,7 @@ class QuitCommand extends GameCommand {
         if (!Controller.awaitConfirmation()) return;
 
         this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
-
+        
         this.controller.saveCurrentGameToCloud();
 
         this.controller.setGame(null);
@@ -899,21 +891,8 @@ class NewGameCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         ConsoleHandler.clearConsole();
-
-        System.out.print(ConsoleHandler.YELLOW + "Enter a custom name for this save: " + ConsoleHandler.RESET);
-        String saveName = Controller.getScanner().nextLine();
-        String seed;
-
-        do {
-            System.out.print(ConsoleHandler.YELLOW + "Enter a custom seed for the game or press Enter to generate it automatically: " + ConsoleHandler.RESET);
-            seed = Controller.getScanner().nextLine();
-
-            if (!seed.isBlank() && !seed.matches("\\d+")) 
-                System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
-        } while (!seed.isBlank() && !seed.matches("\\d+"));
-
-        this.controller.newGame(saveName, seed);
         System.out.println("\n" + Constants.CLASS_CHOICE);
+        this.controller.setState(GameState.CHOOSING_CHARACTER);
     }
 }
 
@@ -938,18 +917,18 @@ class LoadGameCommand extends GameCommand {
         int idx = 1;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
 
-        System.out.println(ConsoleHandler.GREEN + "Saved games:" + ConsoleHandler.RESET + "\n\n");
-        GameIndex.getEntries().forEach(filename -> {
+        System.out.println(ConsoleHandler.GREEN + "Saved games:" + ConsoleHandler.RESET + "\n");
+        for (String filename : GameIndex.getEntries()) {
             try {
-                Game game = JsonParser.loadFromFile(filename);
+                Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + filename);
                 System.out.println(
-                    idx + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " " + game.getPlayer().getName() + 
-                    formatter.format(game.getCreationTime())
+                    idx++ + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " - " + game.getPlayer().getName() + 
+                    " - Created: " + formatter.format(game.getCreationTime())
                 );
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
+        }
 
         String choice;
         int index = -1;
@@ -1041,11 +1020,23 @@ class ChooseCharacterGameCommand extends GameCommand {
             }
         );
 
-        ConsoleHandler.clearConsole();
+        ConsoleHandler.clearConsole();        
 
+        System.out.print(ConsoleHandler.YELLOW + "Enter a custom name for this save: " + ConsoleHandler.RESET);
+        String saveName = Controller.getScanner().nextLine();
+        String seed;
+
+        do {
+            System.out.print(ConsoleHandler.YELLOW + "Enter a custom seed for the game or press Enter to generate it automatically: " + ConsoleHandler.RESET);
+            seed = Controller.getScanner().nextLine();
+
+            if (!seed.isBlank() && !seed.matches("\\d+")) 
+                System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
+        } while (!seed.isBlank() && !seed.matches("\\d+"));
+
+        this.game = this.controller.newGame(saveName, seed);
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
-        this.game.setPlayer(factory.create());
-        this.controller.saveCurrentGameLocally();
+        this.controller.setPlayer(factory.create());
         this.controller.setState(GameState.MOVING);
 
         Controller.printSideBySideText(
@@ -1247,6 +1238,10 @@ public class Controller {
         return this.currentGameId;
     }
 
+    public FirebaseHandler getSaveHandler() {
+        return this.saveHandler;
+    }
+
     /**
      * Get the current game state by peeking the top of the history stack
      * @return the current game state
@@ -1383,38 +1378,33 @@ public class Controller {
         Controller.printSideBySideText(asciiArt, String.join("\n", this.game.generateMapLines()));
     }
 
+    public void setPlayer(Character player) {
+        this.game.setPlayer(player);
+    }
+
     // TODO: maybe only save the game when the player chooses a character, since without a character the game is not really started
-    public void newGame(String name, String seed) {
+    public Game newGame(String name, String seed) {
         try {
             // ArrayList<Level> map = JsonParser.deserializeMap(Constants.MAP);
             ArrayList<Level> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
 
-            Game game;
-            if (seed.isBlank()) game = new Game(map);
-            else game = new Game(map, Long.parseLong(seed));
-
+            if (seed.isBlank()) this.game = new Game(map);
+            else this.game = new Game(map, Long.parseLong(seed));
+    
             // TODO: Sanitize the save name
             String saveName = name + Constants.SAVE_GAME_FILENAME_SEPARATOR + game.getCreationTime() + ".json";
-            JsonParser.saveToFile(game, Constants.BASE_SAVES_DIRECTORY + saveName);
             this.currentGameId = GameIndex.addEntry(saveName);
+            this.game.setId(this.currentGameId);
+            this.game.saveLocally();
 
             this.setState(GameState.CHOOSING_CHARACTER);
-            this.setGame(game);
-            
-            this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
+
+            return this.game;
         } catch (NumberFormatException e) {
             System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
         }
-    }
 
-    public void saveCurrentGameLocally() {
-        String saveName = GameIndex.getFile(String.valueOf(this.currentGameId));
-        this.game.saveLocally(saveName);
-    }
-
-    public void saveCurrentGameToCloud() {
-        this.saveHandler.saveToCloud(GameIndex.getFile(String.valueOf(this.currentGameId)));
-        this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
+        return null;
     }
 
     public void loadGame(int index) {
@@ -1422,10 +1412,16 @@ public class Controller {
             String saveName = GameIndex.getFile(String.valueOf(index));
             this.currentGameId = index;
             this.game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + saveName);
+            this.game.setId(index);
             this.setState(GameState.MOVING);
         } catch (IOException e) {
             System.out.println(ConsoleHandler.RED + "Please insert a number from the list above" + ConsoleHandler.RESET);
         }
+    }
+
+    public void saveCurrentGameToCloud() {
+        this.saveHandler.saveToCloud(GameIndex.getFile(String.valueOf(this.currentGameId)));
+        this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
     }
 
     /**
@@ -1567,7 +1563,7 @@ public class Controller {
         this.musicPlayer = new MusicPlayer(Constants.MAIN_MENU_WAV_FILE_PATH);
         this.musicPlayer.playMusic(true);
 
-        // this.saveHandler.loadAllCloud();
+        this.saveHandler.loadAllCloud();
         GameIndex.loadGames();
         System.out.println(Constants.GAME_TITLE);
 

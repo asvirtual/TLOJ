@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.DefenseElixir;
@@ -32,6 +33,7 @@ import com.tloj.game.utilities.GameState;
  */
 public class Merchant extends FriendlyEntity {
     public static final String NAME = "MERCHANT";
+    @JsonIgnore
     private Map<Integer, PurchasableItem> items = new LinkedHashMap<>();
 
     @JsonCreator
@@ -49,6 +51,7 @@ public class Merchant extends FriendlyEntity {
     /**
      * @return a string representation of the merchant's items
      */
+    @JsonIgnore
     public String getItems() {
         String items = "";
         for (Map.Entry<Integer, PurchasableItem> entry : this.items.entrySet()) 

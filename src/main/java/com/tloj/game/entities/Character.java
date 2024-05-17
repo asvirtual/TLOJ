@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -69,6 +70,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected Weapon weapon;
     protected Level currentLevel;
     protected Room currentRoom;
+    @JsonBackReference
     protected CharacterSkill skill;
     /** Observers to notify when the player is defeated or a mob is defeated */
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
@@ -98,6 +100,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         int lvl,
         int maxWeight,
         int money,
+        Level currentLevel,
+        Room currentRoom,
         Weapon weapon,
         ArrayList<Item> inventory,
         Coordinates position
@@ -111,6 +115,8 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.money = money;
         this.inventory = inventory;
         this.weapon = weapon;
+        this.currentLevel = currentLevel;
+        this.currentRoom = currentRoom;
 
         this.updateRequiredXp();
     }

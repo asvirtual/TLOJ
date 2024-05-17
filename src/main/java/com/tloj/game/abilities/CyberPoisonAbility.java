@@ -1,7 +1,9 @@
 package com.tloj.game.abilities;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.entities.mobs.JunkSlime;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;
 
@@ -12,7 +14,7 @@ import com.tloj.game.utilities.ConsoleHandler;
  */
 public class CyberPoisonAbility extends MobAbility {
     @JsonCreator
-    public CyberPoisonAbility(Mob user) {
+    public CyberPoisonAbility(@JsonProperty("user") Mob user) {
         super(user);
         this.activationMessage = ConsoleHandler.PURPLE + "Oh no! Jordan was poisoned and took " + user.getLvl() + " damage!" + ConsoleHandler.RESET;
     }

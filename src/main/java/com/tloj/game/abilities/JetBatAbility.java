@@ -6,6 +6,7 @@ import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.mobs.JetBat;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -16,7 +17,7 @@ public class JetBatAbility extends MobAbility {
     private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "JetBat was so quick it dodged the attack!" + ConsoleHandler.RESET;
 
     @JsonCreator
-    public JetBatAbility(Mob user) {
+    public JetBatAbility(@JsonProperty("user") Mob user) {
         super(user, ACTIVATION_MESSAGE);
     }
 

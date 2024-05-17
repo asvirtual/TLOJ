@@ -19,12 +19,12 @@ public class GameIndex {
     public static int addEntry(String filename) {
         games.add(filename);
         saveGames();
-        return games.size() - 1;
+        return games.size();
     }
 
     public static String getFile(String id) {
         try {
-            int index = Integer.parseInt(id);
+            int index = Integer.parseInt(id) - 1;
             if (index < 0 || index >= games.size()) {
                 System.out.println("Invalid choice: " + index);
                 return null;
@@ -39,20 +39,24 @@ public class GameIndex {
         return null;
     }
 
-    public static void removeEntry(String id) {
+    public static String removeEntry(String id) {
         try {
             int index = Integer.parseInt(id);
             if (index < 0 || index >= games.size()) {
                 System.out.println("Invalid choice: " + index);
-                return;
+                return null;
             }
 
-            games.remove(index);
+            String removed = games.remove(index);
             saveGames();
+            
+            return removed;
         } catch (NumberFormatException e) {
             System.out.println("Error parsing id " + id);
             e.printStackTrace();
         }
+
+        return null;
     }
 
     public static void clearGames() {
@@ -82,7 +86,7 @@ public class GameIndex {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            return mapper.readValue(new File(games.get(index)), Game.class);
+            return mapper.readValue(new File(Constants.BASE_SAVES_DIRECTORY + games.get(index)), Game.class);
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();
@@ -99,7 +103,7 @@ public class GameIndex {
 
     public static void loadGames() {
         ObjectMapper mapper = new ObjectMapper();
-        File file = new File(Constants.GAMES_INDEX_FILE_PATH);
+        File file = new File(Constants.BASE_SAVES_DIRECTORY + Constants.GAMES_INDEX_FILE_PATH);
         
         if (!file.exists()) {
             games = new ArrayList<>();
@@ -124,7 +128,7 @@ public class GameIndex {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            mapper.writeValue(new File(Constants.GAMES_INDEX_FILE_PATH), games);
+            mapper.writeValue(new File(Constants.BASE_SAVES_DIRECTORY + Constants.GAMES_INDEX_FILE_PATH), games);
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();

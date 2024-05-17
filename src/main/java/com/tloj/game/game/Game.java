@@ -44,6 +44,7 @@ public class Game implements CharacterObserver {
     /** The current level the player is in. */
     private Level currentLevel;
      /** The player character controlled by the player. */
+    @JsonProperty
     private Character player;
     /** The list of levels in the game. */
     @JsonProperty
@@ -56,6 +57,8 @@ public class Game implements CharacterObserver {
     private long elapsedTime;
     /** The start time of the game session. */
     private long sessionStartTime;
+    @JsonProperty
+    private int gameId;
 
     /**
      * Constructs a new Game object with the given list of levels.
@@ -102,17 +105,31 @@ public class Game implements CharacterObserver {
         @JsonProperty("seed") long seed, 
         @JsonProperty("level") Level currentLevel, 
         @JsonProperty("player") Character player, 
-        @JsonProperty("levels") ArrayList<Level> levels
+        @JsonProperty("levels") ArrayList<Level> levels,
+        @JsonProperty("gameId") int gameId,
+        @JsonProperty("creationTime") long creationTime,
+        @JsonProperty("elapsedTime") long elapsedTime
     ) {
         this.player = player;
         this.levels = levels;
         this.currentLevel = currentLevel;
         this.controller = Controller.getInstance();
         this.seed = seed;
+        this.creationTime = creationTime;
         this.sessionStartTime = new Date().getTime();
         
         if (this.player != null) this.player.addObserver(this);
         Dice.setSeed(this.seed);
+    }
+
+    @JsonIgnore
+    public int getId() {
+        return this.gameId;
+    }
+
+    @JsonIgnore
+    public void setId(int gameId) {
+        this.gameId = gameId;
     }
 
     public long getCreationTime() {
@@ -140,6 +157,8 @@ public class Game implements CharacterObserver {
         this.player = player;
         this.player.setCurrentLevel(this.currentLevel);
         this.player.addObserver(this);
+
+        this.saveLocally();
     }
 
     public Character getPlayer() {
@@ -192,6 +211,9 @@ public class Game implements CharacterObserver {
         this.player.resetFightStats();
 
         this.player.move(newCoordinates);
+        
+        /** Save the game status locally */
+        this.saveLocally();
 
         Room room = this.currentLevel.getRoom(newCoordinates);
         room.accept(playerRoomVisitor);
@@ -246,9 +268,10 @@ public class Game implements CharacterObserver {
         this.player.useSkill();
     }
 
-    public void saveLocally(String filename) {
+    public void saveLocally() {
         this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        String path = Constants.BASE_SAVES_DIRECTORY + filename;
+        String saveName = GameIndex.getFile(String.valueOf(this.gameId));
+        String path = Constants.BASE_SAVES_DIRECTORY + saveName;
         JsonParser.saveToFile(this, path);
     }
 
@@ -290,6 +313,8 @@ public class Game implements CharacterObserver {
             room.removeMob(mob);
             ConsoleHandler.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n" + room.getMob().getASCII() + "\n");
         }
+        
+        this.saveLocally();
     }
 
     @Override
@@ -309,6 +334,8 @@ public class Game implements CharacterObserver {
         
         // If the boss is the final boss, the game is won
         this.controller.setState(boss instanceof FlyingBoss ? GameState.WIN : GameState.BOSS_DEFEATED);
+        
+        this.saveLocally();
     }
 
     @Override
@@ -342,6 +369,9 @@ public class Game implements CharacterObserver {
 
         System.out.println(Constants.GAME_TITLE);
         this.controller.setState(GameState.MAIN_MENU);
+
+        String filename = GameIndex.removeEntry(String.valueOf(this.gameId));
+        this.controller.getSaveHandler().deleteFromCloud(filename);
     }
 
     public void printMap() {

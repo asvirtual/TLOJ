@@ -6,6 +6,8 @@ import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.entities.Character;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
@@ -28,6 +30,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 public abstract class CharacterSkill {
     // The character that uses the skill
+    @JsonProperty("character")
+    @JsonManagedReference
     protected Character character;
     protected Runnable onUse;
     protected boolean activated = false;

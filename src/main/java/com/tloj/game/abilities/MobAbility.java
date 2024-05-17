@@ -1,11 +1,21 @@
 package com.tloj.game.abilities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerAttack;
 
 
+// Needed to serialize/deserialize subclasses of MobAbility, by including the class name in the JSON
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.CLASS, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "@class")
 public abstract class MobAbility {
+    @JsonProperty("user")
+    @JsonManagedReference
     protected Mob user;
     protected String activationMessage;
     protected boolean used = false;
@@ -20,6 +30,7 @@ public abstract class MobAbility {
         this.activationMessage = activationMessage;
     }
 
+    @JsonIgnore
     public String getActivationMessage() {
         return this.activationMessage;
     }

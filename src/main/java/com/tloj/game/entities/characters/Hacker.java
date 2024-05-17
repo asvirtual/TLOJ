@@ -9,6 +9,8 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.ManaAttackBooster;
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.Level;
+import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CheatEngine;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
@@ -36,6 +38,8 @@ public class Hacker extends Character {
         @JsonProperty("lvl") int lvl,
         @JsonProperty("maxWeight") int maxWeight,
         @JsonProperty("money") int money,
+        @JsonProperty("currentLevel") Level currentLevel,
+        @JsonProperty("currentRoom") Room currentRoom,
         @JsonProperty("weapon") Weapon weapon,
         @JsonProperty("inventory") ArrayList<Item> inventory,
         @JsonProperty("position") Coordinates position
@@ -49,6 +53,8 @@ public class Hacker extends Character {
             lvl,
             maxWeight,
             money,
+            currentLevel,
+            currentRoom,
             weapon,
             inventory,
             position

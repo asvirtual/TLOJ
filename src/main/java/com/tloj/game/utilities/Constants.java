@@ -203,7 +203,7 @@ _______  __   __  _______  __    _  ___   _      __   __  _______  __   __
   """;
 
     public static final String BASE_SAVES_DIRECTORY = "saves/";
-    public static final String GAMES_INDEX_FILE_PATH = BASE_SAVES_DIRECTORY + "index.json";
+    public static final String GAMES_INDEX_FILE_PATH = "index.json";
     public static final String MAP_FILE_PATH = "src/main/resources/map.json";
     public static final String SAVE_GAME_FILENAME_SEPARATOR = "___";
 

@@ -1,5 +1,6 @@
 package com.tloj.game.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.utilities.Coordinates;
@@ -19,7 +20,7 @@ import com.tloj.game.utilities.Coordinates;
 */  
 
 public abstract class FriendlyEntity extends Entity {
-    @JsonProperty
+    @JsonIgnore
     protected Character player;
     @JsonProperty
     protected String name;
