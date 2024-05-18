@@ -206,17 +206,20 @@ public class Game implements CharacterObserver {
             this.currentLevel.getRoom(newCoordinates).isLocked() && 
             !this.player.hasItem(new SpecialKey())
         ) throw new IllegalArgumentException("That room is locked");
+
+        if (this.controller.getState() == GameState.LOOTING_ROOM) 
+            this.controller.setState(GameState.MOVING);
         
         /** Reset fight stats, so that elixirs' effects are canceled */
         this.player.resetFightStats();
 
         this.player.move(newCoordinates);
-        
-        /** Save the game status locally */
-        this.saveLocally();
 
         Room room = this.currentLevel.getRoom(newCoordinates);
         room.accept(playerRoomVisitor);
+        
+        /** Save the game status locally */
+        this.saveLocally();
     }
 
     public void playerAttack() {

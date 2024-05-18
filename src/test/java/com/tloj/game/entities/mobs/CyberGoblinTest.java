@@ -10,6 +10,7 @@ public class CyberGoblinTest {
     @Test
     void testConstructor() {
         CyberGoblin cyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
+        
         assertEquals(10, cyberGoblin.getHp());
         assertEquals(4, cyberGoblin.getAtk());
         assertEquals(2, cyberGoblin.getDef());
