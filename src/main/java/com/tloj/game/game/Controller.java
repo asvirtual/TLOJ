@@ -891,6 +891,9 @@ class NewGameCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         ConsoleHandler.clearConsole();
+        System.out.println("\n" + Constants.INTRO);
+        Controller.awaitEnter();
+        ConsoleHandler.clearConsole();
         System.out.println("\n" + Constants.CLASS_CHOICE);
         this.controller.setState(GameState.CHOOSING_CHARACTER);
     }

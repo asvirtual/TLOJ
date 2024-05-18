@@ -29,8 +29,8 @@ public class Constants {
                       """
                       + ConsoleHandler.RESET + ConsoleHandler.YELLOW_BOLD_BRIGHT +
                           """
-                                                                                                          alpha 
-                                                                                                            version
+                                                                                                          closed 
+                                                                                                            beta version
                       """ 
                       + ConsoleHandler.RESET +
                       """
@@ -60,8 +60,8 @@ public class Constants {
                       """
                       + ConsoleHandler.RESET + ConsoleHandler.YELLOW_BOLD_BRIGHT +
                           """
-                                                                                                          alpha 
-                                                                                                            version
+                                                                                                          closed 
+                                                                                                            beta version
                       """ 
                       + ConsoleHandler.RESET +
                       """
@@ -71,6 +71,15 @@ public class Constants {
                                                       [exit]   - EXIT GAME
                       """;
     
+    public static final String INTRO =
+    """
+    Once upon a time, our hero, a normal student named Jordan, was spending his night programming as usual.
+    Suddenly, Jordan felt drowsy and feel asleep, almost falling off his chair.
+    When he woke up, he wasn't surrounded by his comfy blankets, but only darkness was by his side.
+    He was in a strange place, a place that he had never seen before with no sounds, only a metallic ticking to be heard.
+    But Jordan didn't give up, he knew that he had to find a way out of this place, and so he decided to move on and with a renewed strenght he started his journey.   
+    
+        """;
     public static final String GAME_OVER =
     """
     
@@ -86,7 +95,7 @@ public class Constants {
 
     
     public static final String FIRST_PRINT_WIN="""
- __   __  _______  __   __    _______  ______    _______    _______  ___   __    _  _______  ___      ___      __   __                           
+  __   __  _______  __   __    _______  ______    _______    _______  ___   __    _  _______  ___      ___      __   __                           
  |  | |  ||       ||  | |  |  |   _   ||    _ |  |       |  |       ||   | |  |  | ||   _   ||   |    |   |    |  | |  |                          
  |  |_|  ||   _   ||  | |  |  |  |_|  ||   | ||  |    ___|  |    ___||   | |   |_| ||  |_|  ||   |    |   |    |  |_|  |                          
  |       ||  | |  ||  |_|  |  |       ||   |_||_ |   |___   |   |___ |   | |       ||       ||   |    |   |    |       |                          
