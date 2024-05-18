@@ -135,6 +135,11 @@ public abstract class Mob extends CombatEntity {
         this.drop = drop;
     }
 
+    @JsonIgnore
+    public int getDiceFaces() {
+        return this.dice.getFaces();
+    }
+
     public int getLvl() {
         return this.lvl;
     }
