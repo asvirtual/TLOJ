@@ -32,15 +32,20 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 
 ---
 ### How to Download and Install
+***Windows***
+- Download and extract the .zip file then simply run the .exe file <br>
+
+***MacOs***
+- Download and extract the .tar file then simply run the .dmg file <br>
 ---
 ### How to Play
-***Fullscreen recommended to have a better experience***<br>
+***Fullscreen and black console bg recommended to have a better experience***<br>
 The game saves automatically after clearing every room, exiting the game using [exit] command also saves the game.<br>
-A detailed list of commands can be found ...
+A detailed list of commands can be found by typing [help] command at any given time. <br>
 
 ---
 ### System Documentation
-
+A complete system documentation, shipped in 6 documents can be found ...
 ---
 ### Rights and Licenses
 ***Ascii***
@@ -49,7 +54,8 @@ A detailed list of commands can be found ...
 
 ***Music***
 - generated using [suno.ai](https://suno.com) and [Soundraw](https://soundraw.io)
-- Flying boss has music from The Binding Of Isaac Cathedral theme <br>
+- "Healing room" sound effect is from Pokémon Center, The Pokémon Company® - Nintendo®. <br>
+- "Game Over" sound effect is from Mario death, Super Mario® - Nintendo®
 
 All Rights Reserved ®
 
