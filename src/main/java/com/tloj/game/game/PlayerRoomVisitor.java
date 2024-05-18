@@ -25,9 +25,7 @@ interface Visitor {
 }
 
 public class PlayerRoomVisitor implements Visitor {
-    // The player character
     private Character player;
-    // The game controller
     private Controller controller;
 
     /**
@@ -90,7 +88,6 @@ public class PlayerRoomVisitor implements Visitor {
     @Override
     public void visit(HealingRoom room) {
         room.visit();
-
         Runnable loopRunnable = new Runnable() {
             @Override
             public void run() {

@@ -54,7 +54,7 @@ public class ConsoleHandler {
             Thread.sleep(delay);
             if (System.getProperty("os.name").startsWith("Windows")) 
                 new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
-            else 
+            else
                 new ProcessBuilder("bash", "-c", "clear").inheritIO().start().waitFor();
         } catch (IOException | InterruptedException e) {
             System.out.println("Error clearing console");

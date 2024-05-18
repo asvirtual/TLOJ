@@ -125,6 +125,9 @@ public class GameIndex {
      */
     public static void loadGames() {
         ObjectMapper mapper = new ObjectMapper();
+        File savesDir = new File(Constants.BASE_SAVES_DIRECTORY);
+        
+        if (!savesDir.exists()) savesDir.mkdirs();
         File file = new File(Constants.BASE_SAVES_DIRECTORY + Constants.GAMES_INDEX_FILE_PATH);
         
         if (!file.exists()) {
@@ -134,6 +137,11 @@ public class GameIndex {
 
         try {
             games = mapper.readValue(file, new TypeReference<ArrayList<String>>(){});
+            File[] files = savesDir.listFiles();
+            for (File f : files)
+                if (!f.getName().equals(Constants.GAMES_INDEX_FILE_PATH) && !games.contains(f.getName()))
+                    f.delete();
+
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();

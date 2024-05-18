@@ -915,6 +915,9 @@ class LoadGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+
+        this.controller.getSaveHandler().loadAllCloud();
+        GameIndex.loadGames();
         
         ConsoleHandler.clearConsole();
         int idx = 1;
@@ -1576,9 +1579,10 @@ public class Controller {
         this.musicPlayer = new MusicPlayer(Constants.MAIN_MENU_WAV_FILE_PATH);
         this.musicPlayer.playMusic(true);
 
+        System.out.println(Constants.GAME_TITLE);
+
         this.saveHandler.loadAllCloud();
         GameIndex.loadGames();
-        System.out.println(Constants.GAME_TITLE);
 
         while (this.getState() != GameState.EXIT) {
             if (this.game != null) {
