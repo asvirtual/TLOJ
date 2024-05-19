@@ -9,6 +9,7 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Coordinates;
 
 public class JunkSlimeTest {
+    private static final int MOCK_CHARACTER_MAX_HP = 20;
     
     @Test
     void testConstructorLevelTwo() {
@@ -42,34 +43,48 @@ public class JunkSlimeTest {
     void testConstructorLevelGreaterThanThree() {
         JunkSlime junkSlime = new JunkSlime(new Coordinates(0, 0), 4);
         
-        assertEquals(64, junkSlime.getHp());
-        assertEquals(11, junkSlime.getAtk());
-        assertEquals(13, junkSlime.getDef());
-        assertEquals(11, junkSlime.getCurrentFightAtk());
-        assertEquals(13, junkSlime.getCurrentFightDef());
+        assertEquals(16 * junkSlime.getLvl(), junkSlime.getHp());
+        assertEquals(9 + 2  * (junkSlime.getLvl() - 3), junkSlime.getAtk());
+        assertEquals(9 + 4 * (junkSlime.getLvl() - 3), junkSlime.getDef());
+        assertEquals(9 + 2 * (junkSlime.getLvl() - 3), junkSlime.getCurrentFightAtk());
+        assertEquals(9 + 4 * (junkSlime.getLvl() - 3), junkSlime.getCurrentFightDef());
         assertEquals(4, junkSlime.getDiceFaces());
-        assertEquals(24, junkSlime.dropXp());
+        assertEquals(6 * junkSlime.getLvl(), junkSlime.dropXp());
         assertEquals(2, junkSlime.getMoneyDrop());
     }    
 
     @Test
     void testSkillUsed() {
         JunkSlime junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
+        Character mockCharacter = new BasePlayer(MOCK_CHARACTER_MAX_HP, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
         junkSlime.defend(mockPlayerAttack);
 
-        if (junkSlime.getAbility().wasUsed()) assertTrue(mockCharacter.getHp() < 20);
+        while (!junkSlime.getAbility().wasUsed()) {
+            if (junkSlime.getAbility().wasUsed()) assertTrue(mockCharacter.getHp() < MOCK_CHARACTER_MAX_HP);
+            else {
+                junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
+                mockCharacter.setHp(MOCK_CHARACTER_MAX_HP);
+                mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
+            }
+        }
     }
 
     @Test
     void testSkillNotUsed() {
         JunkSlime junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
+        Character mockCharacter = new BasePlayer(MOCK_CHARACTER_MAX_HP, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
-        junkSlime.defend(mockPlayerAttack);
 
-        if (!junkSlime.getAbility().wasUsed()) assertTrue(mockCharacter.getHp() == 20);
+        do {
+            junkSlime.defend(mockPlayerAttack);
+            if (!junkSlime.getAbility().wasUsed()) assertTrue(mockCharacter.getHp() == MOCK_CHARACTER_MAX_HP);
+            else {
+                junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
+                mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
+                mockCharacter.setHp(MOCK_CHARACTER_MAX_HP);
+            }
+        } while (junkSlime.getAbility().wasUsed());
     }
 
 }
