@@ -86,5 +86,4 @@ public class JunkSlimeTest {
             }
         } while (junkSlime.getAbility().wasUsed());
     }
-
 }

@@ -20,15 +20,9 @@ import static org.junit.jupiter.api.Assertions.*;
 public class NanoDirkTest {
 
     @Test
-    public void usedEffectTest() {
-
-        String input = "\n\n\n\n\n\n\n\n\n\n\n\n";
-        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
-        System.setIn(testIn);
-        Controller mockController= Controller.getInstance();
-     
-    
+    public void usedEffectTest() {    
         Dice.setSeed(1);
+
         NanoDirk nanoDirk = new NanoDirk();
         Character mockCharacter = new DataThief(20, 4, 4, 10, 0, 1, 5, 10, null, null, nanoDirk, null, null);
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
@@ -53,10 +47,9 @@ public class NanoDirkTest {
     
         do{
             mockCharacter.attack(mockCyberGoblin);
-            if(!nanoDirk.getEffect().wasUsed()) assertTrue(mockPlayerAttack.getWeaponRoll() <= 6);
+            if (!nanoDirk.getEffect().wasUsed()) assertTrue(mockPlayerAttack.getWeaponRoll() <= 6);
             else mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
-        
-        }while(nanoDirk.getEffect().wasUsed());
+        } while(nanoDirk.getEffect().wasUsed());
     }
 }
 
