@@ -3,6 +3,7 @@ package com.tloj.game.game;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
@@ -10,6 +11,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tloj.game.utilities.Constants;
+import com.tloj.game.utilities.JsonParser;
 
 
 /**
@@ -141,6 +143,28 @@ public class GameIndex {
             for (File f : files)
                 if (!f.getName().equals(Constants.GAMES_INDEX_FILE_PATH) && !games.contains(f.getName()))
                     f.delete();
+
+            // Sort the games by creation time
+            games.sort((first, second) -> {
+                try {
+                    return 
+                        new Date(
+                            JsonParser.loadFromFile(
+                                Constants.BASE_SAVES_DIRECTORY + second
+                            ).getCreationTime()
+                        ).compareTo(
+                            new Date(
+                                JsonParser.loadFromFile(
+                                    Constants.BASE_SAVES_DIRECTORY + first
+                                ).getCreationTime()
+                            )
+                        );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return 0;
+            });
 
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");

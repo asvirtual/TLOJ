@@ -118,8 +118,6 @@ public abstract class Mob extends CombatEntity {
     ) {
         super(
             hp * lvl, 
-            // atk * Mob.levelUpFactor(lvl), 
-            // def * Mob.levelUpFactor(lvl), 
             atk, 
             def, 
             position

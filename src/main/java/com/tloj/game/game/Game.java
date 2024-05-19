@@ -44,20 +44,22 @@ public class Game implements CharacterObserver {
     /** The current level the player is in. */
     private Level currentLevel;
      /** The player character controlled by the player. */
-    @JsonProperty
+    @JsonProperty("player")
     private Character player;
     /** The list of levels in the game. */
-    @JsonProperty
+    @JsonProperty("levels")
     private ArrayList<Level> levels;
     /** The controller responsible for managing game state. */
     private Controller controller;
     private long creationTime;
      /** The elapsed time since the start of the game session. */
-    @JsonProperty
+    @JsonProperty("elapsedTime")
     private long elapsedTime;
     /** The start time of the game session. */
     private long sessionStartTime;
-    @JsonProperty
+    @JsonProperty("lastPlayed")
+    private long lastPlayed;
+    @JsonProperty("gameId")
     private int gameId;
 
     /**
@@ -69,7 +71,7 @@ public class Game implements CharacterObserver {
 
         this.currentLevel = this.levels.get(0);
         this.controller = Controller.getInstance();
-        this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
+        this.lastPlayed = this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
         this.elapsedTime = 0;
 
         Dice.setSeed(this.seed);
@@ -86,7 +88,7 @@ public class Game implements CharacterObserver {
         this.currentLevel = this.levels.get(0);
         this.controller = Controller.getInstance();
         this.seed = seed;
-        this.sessionStartTime = this.creationTime = new Date().getTime();
+        this.lastPlayed = this.sessionStartTime = this.creationTime = new Date().getTime();
         this.elapsedTime = 0;
 
         Dice.setSeed(this.seed);
@@ -116,7 +118,7 @@ public class Game implements CharacterObserver {
         this.controller = Controller.getInstance();
         this.seed = seed;
         this.creationTime = creationTime;
-        this.sessionStartTime = new Date().getTime();
+        this.lastPlayed = this.sessionStartTime = new Date().getTime();
         
         if (this.player != null) this.player.addObserver(this);
         Dice.setSeed(this.seed);
@@ -130,6 +132,10 @@ public class Game implements CharacterObserver {
     @JsonIgnore
     public void setId(int gameId) {
         this.gameId = gameId;
+    }
+
+    public long getLastPlayed() {
+        return this.lastPlayed;
     }
 
     public long getCreationTime() {

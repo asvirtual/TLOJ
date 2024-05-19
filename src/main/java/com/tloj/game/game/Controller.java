@@ -911,7 +911,6 @@ class LoadGameCommand extends GameCommand {
         );
     }
 
-    // TODO: actually load game/give choice to user
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
@@ -960,6 +959,37 @@ class LoadGameCommand extends GameCommand {
         } while (!choice.isBlank() && (index < 1 || index > GameIndex.getEntries().size()));
     }
 }
+
+/**
+ * Concrete command class to load last played game
+ * @see GameCommand
+ */
+class ContinueGameCommand extends GameCommand {
+    public ContinueGameCommand(Game game, String[] commands) {
+        super(game, null);
+        this.validListStates = List.of(
+            GameState.MAIN_MENU
+        );
+    }
+
+    @Override
+    public void execute() throws IllegalStateException {
+        super.execute();
+
+        this.controller.getSaveHandler().loadAllCloud();
+        GameIndex.loadGames();
+        
+        if (GameIndex.getEntries().isEmpty()) {
+            System.out.println(ConsoleHandler.RED + "No saved games found" + ConsoleHandler.RESET);
+            return;
+        }
+
+        // The first game is the last played game
+        this.controller.loadGame(1);
+        ConsoleHandler.clearConsole();
+    }
+}
+
 
 /**
  * Concrete command class to exit the game
@@ -1451,6 +1481,7 @@ public class Controller {
         Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
             Map.ofEntries(
                 Map.entry("new", () -> new NewGameCommand(this.game, commands)),
+                Map.entry("continue", () -> new ContinueGameCommand(this.game, commands)),
                 Map.entry("load", () -> new LoadGameCommand(this.game, commands)),
                 Map.entry("exit", () -> new ExitGameCommand(this.game, commands)),
                 Map.entry("gn", () -> new MoveNorthCommand(this.game, commands)),
@@ -1534,7 +1565,7 @@ public class Controller {
     @JsonIgnore
     public String getAvailableCommands() {
         return switch (this.getState()) {
-            case MAIN_MENU -> "[new] - [load] - [exit]";
+            case MAIN_MENU -> "[new] - [continue] - [load] - [exit]";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use *number*] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();
