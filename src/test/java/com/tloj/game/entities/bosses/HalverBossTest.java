@@ -2,7 +2,6 @@ package com.tloj.game.entities.bosses;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.checkerframework.checker.units.qual.g;
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
@@ -14,7 +13,6 @@ import com.tloj.game.utilities.Coordinates;
 
 
 public class HalverBossTest {
-
     @Test
     void testAbilityUsed() {
         HalverBoss halverBoss = new HalverBoss(new Coordinates(0, 0));
