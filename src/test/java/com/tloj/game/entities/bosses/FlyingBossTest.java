@@ -2,13 +2,17 @@ package com.tloj.game.entities.bosses;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.checkerframework.checker.units.qual.g;
+import java.io.ByteArrayInputStream;
+
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.Controller;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.collectables.weapons.LaserBlade;
+import com.tloj.game.utilities.Dice;
 
 
 
@@ -17,6 +21,8 @@ public class FlyingBossTest {
 
     @Test
     void testAbilityUsed() {
+        Dice.setSeed(1);
+        
         FlyingBoss flyingBoss = new FlyingBoss(new Coordinates(0, 0));
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
 
@@ -28,7 +34,6 @@ public class FlyingBossTest {
             flyingBoss.defend(mockPlayerAttack);
 
             if (flyingBoss.getAbility().wasUsed()) {
-                
                 assertEquals(startHp + mockPlayerAttack.getWeaponRoll(), flyingBoss.getHp());
                 assertTrue(mockPlayerAttack.getTotalDamage() == 0);
             }
@@ -41,22 +46,32 @@ public class FlyingBossTest {
     }
     
     @Test
-    void testAbilityNotUsed() {
+    void testAbilityNotUsed() {  
+        String input = "\n\n";
+        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+        System.setIn(testIn);
+        Controller.getInstance();      
+        Dice.setSeed(1);
+
         FlyingBoss flyingBoss = new FlyingBoss(new Coordinates(0, 0));
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
+        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
 
         do {
+            mockCharacter.getWeapon().modifyAttack(mockPlayerAttack);
             flyingBoss.defend(mockPlayerAttack);
+            int totalDamage = mockPlayerAttack.getTotalDamage();
             mockPlayerAttack.perform();
 
-            if (!flyingBoss.getAbility().wasUsed()) assertEquals(flyingBoss.getMaxHp() - flyingBoss.getHp() , mockPlayerAttack.getTotalDamage() - flyingBoss.getCurrentFightDef());
-            else {
+            if (!flyingBoss.getAbility().wasUsed()) {
+                assertEquals(flyingBoss.getMaxHp() - flyingBoss.getHp(), totalDamage);
+                return;
+            } else {
                 flyingBoss = new FlyingBoss(new Coordinates(0, 0));
                 mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
                 mockCharacter.setHp(mockCharacter.getMaxHp());
             }
-        } while (flyingBoss.getAbility().wasUsed());
+        } while (!flyingBoss.getAbility().wasUsed());
     }
     
 }

@@ -81,12 +81,15 @@ public class CyberGoblinTest {
         do {
             cyberGoblin.defend(mockPlayerAttack);
 
-            if (!cyberGoblin.getAbility().wasUsed()) assertEquals(10, mockCharacter.getMoney());
+            if (!cyberGoblin.getAbility().wasUsed()) {
+                assertEquals(10, mockCharacter.getMoney());
+                return;
+            }
             else {
                 cyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
                 mockPlayerAttack = new PlayerAttack(mockCharacter, cyberGoblin);
                 mockCharacter.setMoney(10);
             }
-        } while (cyberGoblin.getAbility().wasUsed());
+        } while (!cyberGoblin.getAbility().wasUsed());
     }
 }
