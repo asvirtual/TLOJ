@@ -136,8 +136,4 @@ public class Glitched extends Mob implements MovingEntity {
             this + " - " + ConsoleHandler.GREEN + "Lvl ???" + ConsoleHandler.RESET + ":\n\n" +
             " ⸭ HP: " + Ansi.ansi().fg(Ansi.Color.RED).a(this.getHpBar() + " " + this.hp + "/" + this.maxHp).reset() + "\n";
     }
-
-    public Coordinates getCoordinates() {
-        return this.position;
-    }
 }

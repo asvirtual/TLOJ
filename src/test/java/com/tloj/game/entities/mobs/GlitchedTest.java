@@ -33,9 +33,9 @@ public class GlitchedTest {
     void testTeleport(){
         Glitched glitched = new Glitched(new Coordinates(0, 0), 1);
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);
-        Coordinates startCoordinates = glitched.getCoordinates();
+        Coordinates startCoordinates = glitched.getPosition();
         glitched.attack(mockCharacter);
-        Coordinates endCoordinates = glitched.getCoordinates();
+        Coordinates endCoordinates = glitched.getPosition();
 
         assertTrue(() -> startCoordinates.equals(endCoordinates) == false);
     }
