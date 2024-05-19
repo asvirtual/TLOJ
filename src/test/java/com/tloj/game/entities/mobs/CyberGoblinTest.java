@@ -42,13 +42,13 @@ public class CyberGoblinTest {
     void testConstructorLevelGreaterThanThree() {
         CyberGoblin cyberGoblin = new CyberGoblin(new Coordinates(0, 0), 4);
         
-        assertEquals(40, cyberGoblin.getHp());
-        assertEquals(18, cyberGoblin.getAtk());
-        assertEquals(9, cyberGoblin.getDef());
-        assertEquals(18, cyberGoblin.getCurrentFightAtk());
-        assertEquals(9, cyberGoblin.getCurrentFightDef());
+        assertEquals(10 * cyberGoblin.getLvl(), cyberGoblin.getHp());
+        assertEquals(14 + 4 * (cyberGoblin.getLvl() - 3), cyberGoblin.getAtk());
+        assertEquals(7 + 2 * (cyberGoblin.getLvl() - 3), cyberGoblin.getDef());
+        assertEquals(14 + 4 * (cyberGoblin.getLvl() - 3), cyberGoblin.getCurrentFightAtk());
+        assertEquals(7 + 2 * (cyberGoblin.getLvl() - 3), cyberGoblin.getCurrentFightDef());
         assertEquals(7, cyberGoblin.getDiceFaces());
-        assertEquals(20, cyberGoblin.dropXp());
+        assertEquals(5 * cyberGoblin.getLvl(), cyberGoblin.dropXp());
         assertEquals(3, cyberGoblin.getMoneyDrop());
     }
 
@@ -59,20 +59,21 @@ public class CyberGoblinTest {
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, cyberGoblin);
 
-        while (cyberGoblin.getAbility().wasUsed()) {
+        while (!cyberGoblin.getAbility().wasUsed()) {
             cyberGoblin.defend(mockPlayerAttack);
+
             if (cyberGoblin.getAbility().wasUsed()) 
                 assertTrue(mockCharacter.getMoney() >= 4 && mockCharacter.getMoney() <= 7);
-            
-            
-            if (!cyberGoblin.getAbility().wasUsed()) 
-                assertEquals(10, mockCharacter.getMoney());
-            
+            else {
+                cyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
+                mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
+                mockPlayerAttack = new PlayerAttack(mockCharacter, cyberGoblin);
+            }
         }
     }
 
     @Test
-    void testSkillNotUdes() {
+    void testSkillNotUsed() {
         CyberGoblin cyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, cyberGoblin);

@@ -48,13 +48,13 @@ public class JetBatTest {
     void testConstructorLevelGreaterThanThree() {
         JetBat jetBat = new JetBat(new Coordinates(0, 0), 4);
         
-        assertEquals(28, jetBat.getHp());
-        assertEquals(17, jetBat.getAtk());
-        assertEquals(6, jetBat.getDef());
-        assertEquals(17, jetBat.getCurrentFightAtk());
-        assertEquals(6, jetBat.getCurrentFightDef());
+        assertEquals(7 * jetBat.getLvl(), jetBat.getHp());
+        assertEquals(14 + 3 * (jetBat.getLvl() - 3), jetBat.getAtk());
+        assertEquals(5 + jetBat.getLvl() - 3, jetBat.getDef());
+        assertEquals(14 + 3 * (jetBat.getLvl() - 3), jetBat.getCurrentFightAtk());
+        assertEquals(5 + jetBat.getLvl() - 3, jetBat.getCurrentFightDef());
         assertEquals(5, jetBat.getDiceFaces());
-        assertEquals(16, jetBat.dropXp());
+        assertEquals(4 * jetBat.getLvl(), jetBat.dropXp());
         assertEquals(2, jetBat.getMoneyDrop());
     }    
 
@@ -65,7 +65,17 @@ public class JetBatTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, jetBat);
         jetBat.defend(mockPlayerAttack);
 
-        if (jetBat.getAbility().wasUsed()) assertTrue(mockPlayerAttack.getTotalAttack() == 0 );
+        while (!jetBat.getAbility().wasUsed()) {
+            jetBat.defend(mockPlayerAttack);
+            if (jetBat.getAbility().wasUsed()) {
+                assertTrue(mockPlayerAttack.getTotalAttack() == 0);
+                assertEquals(7, jetBat.getHp());
+            } else {
+                jetBat = new JetBat(new Coordinates(0, 0), 1);
+                mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
+                mockPlayerAttack = new PlayerAttack(mockCharacter, jetBat);
+            }            
+        }
     }
 
     @Test
@@ -73,8 +83,16 @@ public class JetBatTest {
         JetBat jetBat = new JetBat(new Coordinates(0, 0), 1);
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, jetBat);
-        jetBat.defend(mockPlayerAttack);
 
-        if (!jetBat.getAbility().wasUsed()) assertTrue(mockPlayerAttack.getTotalAttack() != 0);
+        do {
+            jetBat.defend(mockPlayerAttack);
+            if (!jetBat.getAbility().wasUsed()){
+                assertTrue(mockPlayerAttack.getTotalAttack() != 0);
+                assertTrue(jetBat.getHp() < 7);
+            } else {
+                jetBat = new JetBat(new Coordinates(0, 0), 1);
+                mockPlayerAttack = new PlayerAttack(mockCharacter, jetBat);
+            }
+        } while (jetBat.getAbility().wasUsed());
     }
 }
