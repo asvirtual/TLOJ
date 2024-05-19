@@ -61,7 +61,10 @@ public class JunkSlimeTest {
         junkSlime.defend(mockPlayerAttack);
 
         while (!junkSlime.getAbility().wasUsed()) {
-            if (junkSlime.getAbility().wasUsed()) assertTrue(mockCharacter.getHp() < MOCK_CHARACTER_MAX_HP);
+            if (junkSlime.getAbility().wasUsed()){
+                assertTrue(mockCharacter.getHp() < MOCK_CHARACTER_MAX_HP);
+                return;
+            }
             else {
                 junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
                 mockCharacter.setHp(MOCK_CHARACTER_MAX_HP);
@@ -78,13 +81,16 @@ public class JunkSlimeTest {
 
         do {
             junkSlime.defend(mockPlayerAttack);
-            if (!junkSlime.getAbility().wasUsed()) assertTrue(mockCharacter.getHp() == MOCK_CHARACTER_MAX_HP);
+            if (!junkSlime.getAbility().wasUsed()) {
+                assertTrue(mockCharacter.getHp() == MOCK_CHARACTER_MAX_HP);
+                return;
+            }
             else {
                 junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
                 mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
                 mockCharacter.setHp(MOCK_CHARACTER_MAX_HP);
             }
-        } while (junkSlime.getAbility().wasUsed());
+        } while (!junkSlime.getAbility().wasUsed());
     }
 
 }

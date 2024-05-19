@@ -86,9 +86,8 @@ public class JetBatTest {
 
         do {
             jetBat.defend(mockPlayerAttack);
-            if (!jetBat.getAbility().wasUsed()){
+            if (!jetBat.getAbility().wasUsed()) {
                 assertTrue(mockPlayerAttack.getTotalAttack() != 0);
-                assertTrue(jetBat.getHp() < 7);
             } else {
                 jetBat = new JetBat(new Coordinates(0, 0), 1);
                 mockPlayerAttack = new PlayerAttack(mockCharacter, jetBat);

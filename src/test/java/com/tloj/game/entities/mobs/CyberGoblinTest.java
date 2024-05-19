@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.Dice;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
@@ -54,6 +55,7 @@ public class CyberGoblinTest {
 
     @Test
     void testSkillUsed() {
+        Dice.setSeed(1);
         CyberGoblin cyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
 
