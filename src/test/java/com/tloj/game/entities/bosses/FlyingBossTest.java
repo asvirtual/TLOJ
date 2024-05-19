@@ -24,23 +24,17 @@ public class FlyingBossTest {
         Dice.setSeed(1);
         
         FlyingBoss flyingBoss = new FlyingBoss(new Coordinates(0, 0));
+        int startHp = flyingBoss.getMaxHp() / 2;
+        flyingBoss.setHp(startHp);
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
-
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
         
         while (!flyingBoss.getAbility().wasUsed()) {
-            flyingBoss.setHp(flyingBoss.getMaxHp() / 2);
-            int startHp = flyingBoss.getHp();
             flyingBoss.defend(mockPlayerAttack);
 
             if (flyingBoss.getAbility().wasUsed()) {
                 assertEquals(startHp + mockPlayerAttack.getWeaponRoll(), flyingBoss.getHp());
                 assertTrue(mockPlayerAttack.getTotalDamage() == 0);
-            }
-            else {
-                flyingBoss = new FlyingBoss(new Coordinates(0, 0));
-                mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
-                mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
             }
         }
     }
@@ -57,7 +51,7 @@ public class FlyingBossTest {
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
 
-        do {
+        while (true) {
             mockCharacter.getWeapon().modifyAttack(mockPlayerAttack);
             flyingBoss.defend(mockPlayerAttack);
             int totalDamage = mockPlayerAttack.getTotalDamage();
@@ -68,10 +62,9 @@ public class FlyingBossTest {
                 return;
             } else {
                 flyingBoss = new FlyingBoss(new Coordinates(0, 0));
-                mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
-                mockCharacter.setHp(mockCharacter.getMaxHp());
+                mockPlayerAttack.setTarget(flyingBoss);
             }
-        } while (!flyingBoss.getAbility().wasUsed());
+        }
     }
     
 }

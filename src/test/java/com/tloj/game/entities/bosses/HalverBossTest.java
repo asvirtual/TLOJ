@@ -18,19 +18,12 @@ public class HalverBossTest {
     void testAbility() {
         HalverBoss halverBoss = new HalverBoss(new Coordinates(0, 0));
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
-
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, halverBoss);
         
         while (!halverBoss.getAbility().wasUsed()) {
             halverBoss.defend(mockPlayerAttack);
 
-            if (halverBoss.getAbility().wasUsed()) 
-                assertTrue((mockPlayerAttack.getWeaponRoll()) / 2 == 0 );
-            else {
-                halverBoss = new HalverBoss(new Coordinates(0, 0));
-                mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
-                mockPlayerAttack = new PlayerAttack(mockCharacter, halverBoss);
-            }
+            if (halverBoss.getAbility().wasUsed()) assertTrue((mockPlayerAttack.getWeaponRoll()) / 2 == 0 );
         }
     }
 }

@@ -19,7 +19,6 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 
 
 public class EvenBossTest {
-
     @Test
     void testAbilityUsed() {
         EvenBoss evenBoss = new EvenBoss(new Coordinates(0, 0));
@@ -32,11 +31,6 @@ public class EvenBossTest {
 
             if (evenBoss.getAbility().wasUsed()) 
                 assertTrue((mockPlayerAttack.getWeaponRoll()) % 2 == 0);
-            else {
-                evenBoss = new EvenBoss(new Coordinates(0, 0));
-                mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
-                mockPlayerAttack = new PlayerAttack(mockCharacter, evenBoss);
-            }
         }
     }
     
@@ -52,7 +46,7 @@ public class EvenBossTest {
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, evenBoss);
 
-        do {
+        while (true) {
             mockCharacter.getWeapon().modifyAttack(mockPlayerAttack);
             evenBoss.defend(mockPlayerAttack);
             int totalDamage = mockPlayerAttack.getTotalDamage();
@@ -61,12 +55,10 @@ public class EvenBossTest {
             if (!evenBoss.getAbility().wasUsed()) {
                 assertEquals(evenBoss.getMaxHp() - evenBoss.getHp(), totalDamage);
                 return;
-            }
-            else {
+            } else {
                 evenBoss = new EvenBoss(new Coordinates(0, 0));
-                mockPlayerAttack = new PlayerAttack(mockCharacter, evenBoss);
-                mockCharacter.setHp(mockCharacter.getMaxHp());
+                mockPlayerAttack.setTarget(evenBoss);
             }
-        } while (!evenBoss.getAbility().wasUsed());
+        }
     }
 }
