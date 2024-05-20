@@ -675,7 +675,20 @@
         null
       ],
       [
-        null,
+        {
+          "@class": "com.tloj.game.rooms.HostileRoom",
+          "coordinates": { "x": 2, "y": 3 },
+          "visited": false,
+          "cleared": false,
+          "locked": false,
+          "mobs": [
+            {
+              "@class": "com.tloj.game.entities.mobs.CyerGoblin",
+              "position": { "x": 0, "y": 3 },
+              "lvl": 4
+            }
+          ]
+        },
         null,
         {
           "@class": "com.tloj.game.rooms.HostileRoom",

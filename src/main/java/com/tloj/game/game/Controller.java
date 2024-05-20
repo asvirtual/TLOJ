@@ -279,7 +279,11 @@ class InventoryCommand extends GameCommand {
         if (!List.of(GameState.FIGHTING_BOSS, GameState.FIGHTING_MOB, GameState.HEALING_ROOM, GameState.SMITH_FORGING).contains(this.controller.getState()))
             this.game.printMap();
 
-        System.out.print("\nPress Enter to continue, type [use *item*] to consume an item, or [drop *item*] to drop it: ");
+        System.out.print("\nType [use *item number*] to consume an item" +
+                        "\nType [drop *item number*] to drop an item" +
+                        "\nType [swap *weapon number*] to swap your weapon" +
+                        "\nType [info *item number*] to get information about an item" +
+                        "\n\nPress Enter to continue...\n" );
         String input = Controller.getScanner().nextLine();
         if (input.isBlank()) {
             ConsoleHandler.clearAndReprint();
@@ -658,8 +662,8 @@ class HelpCommand extends GameCommand {
             case MOVING:
                 System.out.println(
                     "Commands:\n gn --> to go north,\n gs --> to go south,\n gw --> to go west,\n ge --> to go east" + 
-                    "\nreturn --> to return to the starting room of the floor,\n inv --> to show your inventory" + 
-                    "\nstatus --> to show your detailed statistics,\n map --> to print the map" + 
+                    "\n return --> to return to the starting room of the floor,\n inv --> to show your inventory" + 
+                    "\n status --> to show your detailed statistics,\n map --> to print the map" + 
                     "\n score --> to show your current score,\n seed --> to print the game seed,\n quit --> to return to the main menu," +
                     "\n use *number* --> to use an Item,\n drop *number* --> to drop an Item,\n swap *number* --> to swap your weapon,"
                 );
