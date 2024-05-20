@@ -66,11 +66,11 @@ public class TpEffect extends RoomEffect {
             int row = (int) Math.floor(Math.random() * rows);
             int col = (int) Math.floor(Math.random() * cols);
 
-            Coordinates newCoords = new Coordinates(row, col);
+            Coordinates newCoords = new Coordinates(col, row);
             this.newRoom = character.getCurrentLevel().getRoom(newCoords);
 
             // Skip if new location is the same as current location
-            if (newCoords == character.getPosition()) continue;
+            if (newCoords.equals(character.getPosition())) continue;
             // Skip if new location is not valid on the level grid
             if (!level.areCoordinatesValid(newCoords)) continue;
             // Skip if new location is a boss room

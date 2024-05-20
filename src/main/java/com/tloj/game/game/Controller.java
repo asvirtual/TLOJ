@@ -1528,6 +1528,7 @@ public class Controller {
      * @param callback the function to be executed after the music is played
      */
     public void changeMusic(String filename, boolean loop, Runnable callback) {
+        if (this.musicPlayer == null) return;
         this.musicPlayer.stop();
         this.musicPlayer = new MusicPlayer(filename, callback);
         this.musicPlayer.playMusic(loop);
