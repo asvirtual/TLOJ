@@ -42,7 +42,7 @@ public class JetBat extends Mob {
                 this.def += 1;  // Total defense = 2
                 break;
             case 3:
-                this.atk += 8;  // Total attack = 12
+                this.atk += 8;  // Total attack = 14
                 this.def += 3;  // Total defense = 5
                 break;
             default:

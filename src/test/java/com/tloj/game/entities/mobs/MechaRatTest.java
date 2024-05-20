@@ -47,13 +47,13 @@ public class MechaRatTest {
     void testConstructorLevelGreaterThanThree() {
         MechaRat mechaRat = new MechaRat(new Coordinates(0, 0), 4);
         
-        assertEquals(32, mechaRat.getHp());
-        assertEquals(15, mechaRat.getAtk());
-        assertEquals(6, mechaRat.getDef());
-        assertEquals(15, mechaRat.getCurrentFightAtk());
-        assertEquals(6, mechaRat.getCurrentFightDef());
+        assertEquals(4 * mechaRat.getLvl(), mechaRat.getHp());
+        assertEquals(12 + 3 * (mechaRat.getLvl() - 3), mechaRat.getAtk());
+        assertEquals(5 + mechaRat.getLvl() - 3, mechaRat.getDef());
+        assertEquals(12 + 3 * (mechaRat.getLvl() - 3), mechaRat.getCurrentFightAtk());
+        assertEquals(5 + mechaRat.getLvl() - 3, mechaRat.getCurrentFightDef());
         assertEquals(8, mechaRat.getDiceFaces());
-        assertEquals(20, mechaRat.dropXp());
+        assertEquals(5 * mechaRat.getLvl(), mechaRat.dropXp());
         assertEquals(2, mechaRat.getMoneyDrop());
     }    
 
@@ -65,9 +65,14 @@ public class MechaRatTest {
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, inventory, null);
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
-        mechaRat.defend(mockPlayerAttack);
-        if (mechaRat.getAbility().wasUsed()) {
-            assertEquals("", mockCharacter.getInventory());
+        while (!mechaRat.getAbility().wasUsed()) {
+            mechaRat.defend(mockPlayerAttack);
+            if (mechaRat.getAbility().wasUsed()) {
+                assertEquals("", mockCharacter.getInventory());
+            } else {
+                mechaRat = new MechaRat(new Coordinates(0, 0), 1);
+                mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
+            }    
         }
     }
 
@@ -80,14 +85,13 @@ public class MechaRatTest {
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         mechaRat.defend(mockPlayerAttack);
-        do{
-            
+        do {
             if (!mechaRat.getAbility().wasUsed()) assertEquals(new HealthPotion(), mockCharacter.searchInventoryItem(new HealthPotion()));
-            else{
+            else {
                 mechaRat = new MechaRat(new Coordinates(0, 0), 1);
                 mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
                 mechaRat.defend(mockPlayerAttack);
             }
-        }while(!mechaRat.getAbility().wasUsed());
+        } while (mechaRat.getAbility().wasUsed());
     }
 }
