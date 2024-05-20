@@ -26,19 +26,17 @@ public class StealTest {
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
         Room mockRoom = new HostileRoom(new Coordinates(0, 0), mockCyberGoblin);
-        ArrayList<Item> inventory = new ArrayList<Item>();
-        Character mockCharacter = new DataThief(20, 4, 4, 10, 0, 1, 5, 10, null, mockRoom, new NanoDirk(), inventory, null);
+        Character mockCharacter = new DataThief(null);
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mockCyberGoblin);
 
         boolean used = false;
     
-        do{
-            
+        do {
             mockCharacter.getSkill().activate();
             mockCharacter.getSkill().execute(mockPlayerAttack);
             
-            if(mockCharacter.getInventorySize() == 0){
+            if (mockCharacter.getInventorySize() == 0){
                 mockCharacter.setMana(10);
                 mockCyberGoblin.setHp(15);
             }
@@ -47,9 +45,6 @@ public class StealTest {
                 assertEquals(1, mockCharacter.getInventorySize());
                 assertEquals(mockCharacter.getMaxMana() - 10, mockCharacter.getMana());
             }
-        }while(!used);    
-    }
-
-    @Test
-    
+        } while (!used);    
+    }    
 }

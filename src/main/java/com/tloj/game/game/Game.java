@@ -1,6 +1,5 @@
 package com.tloj.game.game;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,7 +25,6 @@ import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
-import com.tloj.game.utilities.FirebaseHandler;
 import com.tloj.game.utilities.GameState;
 import com.tloj.game.utilities.JsonParser;
 

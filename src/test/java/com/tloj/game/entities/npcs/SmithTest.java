@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
-import java.util.ArrayList;
 
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.characters.BasePlayer;
@@ -12,7 +11,6 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.WeaponShard;
-import com.tloj.game.collectables.weapons.LaserBlade;
 
 public class SmithTest {
     @Test
@@ -24,10 +22,9 @@ public class SmithTest {
        
         Controller.getInstance();
         Smith mockSmith = new Smith(new Coordinates(0, 0));
-        ArrayList<Item> inventory = new ArrayList<Item>();
-        inventory.add(new WeaponShard());
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 100, null, null, new LaserBlade(), inventory, null);
-        Item itemToGive = mockCharacter.searchInventoryItem(new WeaponShard());
+        Character mockCharacter = new BasePlayer(null);
+        mockCharacter.addInventoryItem(new WeaponShard());
+        Item itemToGive = mockCharacter.getInventoryItem(new WeaponShard());
 
 
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();
@@ -43,9 +40,9 @@ public class SmithTest {
     void noWeaponShardToUpgradeTest() {
         Controller.getInstance();
         Smith mockSmith = new Smith(new Coordinates(0, 0));
-        ArrayList<Item> inventory = new ArrayList<Item>();
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 100, null, null, new LaserBlade(), inventory, null);
-        Item itemToGive = mockCharacter.searchInventoryItem(new WeaponShard());
+        Character mockCharacter = new BasePlayer(null);
+        mockCharacter.addInventoryItem(new WeaponShard());
+        Item itemToGive = mockCharacter.getInventoryItem(new WeaponShard());
 
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();
         mockSmith.interact(mockCharacter);
@@ -59,10 +56,9 @@ public class SmithTest {
     void maxLevelWeaponUpgradeTest() {
         Controller.getInstance();
         Smith mockSmith = new Smith(new Coordinates(0, 0));
-        ArrayList<Item> inventory = new ArrayList<Item>();
-        inventory.add(new WeaponShard());
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 100, null, null, new LaserBlade(), inventory, null);
-        Item itemToGive = mockCharacter.searchInventoryItem(new WeaponShard());
+        Character mockCharacter = new BasePlayer(null);
+        mockCharacter.addInventoryItem(new WeaponShard());
+        Item itemToGive = mockCharacter.getInventoryItem(new WeaponShard());
         
         mockCharacter.getWeapon().setLevel(5);
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();

@@ -3,14 +3,10 @@ package com.tloj.game.entities.mobs;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.entities.Character;
-import com.tloj.game.collectables.Item;
-
 import com.tloj.game.utilities.Coordinates;
 
 
@@ -60,10 +56,9 @@ public class MechaRatTest {
     @Test
     void testSkillUsed() {
         MechaRat mechaRat = new MechaRat(new Coordinates(0, 0), 1);
-        ArrayList <Item> inventory = new ArrayList<Item>();
+        Character mockCharacter = new BasePlayer(null);
         HealthPotion healthPotion = new HealthPotion();
-        inventory.add(healthPotion);
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, inventory, null);
+        mockCharacter.addInventoryItem(healthPotion);
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         while (!mechaRat.getAbility().wasUsed()) {
@@ -80,10 +75,9 @@ public class MechaRatTest {
     @Test
     void testSkillNotUsed() {
         MechaRat mechaRat = new MechaRat(new Coordinates(0, 0), 1);
-        ArrayList <Item> inventory = new ArrayList<Item>();
+        Character mockCharacter = new BasePlayer(null);
         HealthPotion healthPotion = new HealthPotion();
-        inventory.add(healthPotion);
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, inventory, null);
+        mockCharacter.addInventoryItem(healthPotion);
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         mechaRat.defend(mockPlayerAttack);

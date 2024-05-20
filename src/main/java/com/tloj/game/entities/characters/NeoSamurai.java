@@ -1,10 +1,7 @@
 package com.tloj.game.entities.characters;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.entities.Character;
@@ -25,7 +22,7 @@ public class NeoSamurai extends Character {
 
     /** 
      * Constructor to create a NeoSamurai from loaded data  
-     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon, Inventory, Coordinates)}
     */
     @JsonCreator
     public NeoSamurai(

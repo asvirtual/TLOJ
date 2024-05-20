@@ -2,40 +2,36 @@ package com.tloj.game.collectables.items;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.BasePlayer;
-import com.tloj.game.collectables.Item;
-import com.tloj.game.collectables.weapons.LaserBlade;
+import com.tloj.game.utilities.Dice;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.ArrayList;
 
 public class GreatHealthPotionTest {
 
     @Test
     void testConsume() {
-        //max hp for BasePlayer is 100, set to 20 for testing
-        Character mockCharacter = new BasePlayer(
-            100, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), new ArrayList<Item>(), null
-        );
-        mockCharacter.setHp(20);
-        mockCharacter.addInventoryItem(new GreatHealthPotion());
-        GreatHealthPotion item = (GreatHealthPotion) mockCharacter.getInventoryItem(0);
+        Dice.setSeed(1);
+
+        // Create BasePlayer, level up to 30 to have at least 55 max health
+        Character mockCharacter = new BasePlayer(null);
+        for (int i = 0; i < 30; i++) mockCharacter.levelUp();
+        mockCharacter.setHp(5);
+
+        GreatHealthPotion item = new GreatHealthPotion();
+        mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
-        assertEquals(70, mockCharacter.getHp());
-        assertNull(mockCharacter.searchInventoryItem(item));
+        assertEquals(55, mockCharacter.getHp());
+        assertNull(mockCharacter.getInventoryItem(item));
     }
 
     @Test
     void testConsumeMaxHealth() {
-        Character mockCharacter = new BasePlayer(
-            100, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), new ArrayList<Item>(), null
-        );
-        mockCharacter.setHp(100);
-        mockCharacter.addInventoryItem(new GreatHealthPotion());
-        GreatHealthPotion item = (GreatHealthPotion) mockCharacter.getInventoryItem(0);
+        Character mockCharacter = new BasePlayer(null);
+        GreatHealthPotion item = new GreatHealthPotion();
+        mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
-        assertEquals(100, mockCharacter.getHp());
-        assertNull(mockCharacter.searchInventoryItem(item));
+        assertEquals(mockCharacter.getMaxHp(), mockCharacter.getHp());
+        assertNull(mockCharacter.getInventoryItem(item));
     }
 }

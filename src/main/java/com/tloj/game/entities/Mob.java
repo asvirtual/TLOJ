@@ -2,7 +2,6 @@ package com.tloj.game.entities;
 
 import org.fusesource.jansi.Ansi;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.utilities.ConsoleHandler;
@@ -45,7 +44,7 @@ public abstract class Mob extends CombatEntity {
     /** Mob has a chance to drop a random item to the player upon defeating */
     protected Item drop;
     /** Mob might have an ability assigned */
-    @JsonBackReference
+    @JsonIgnore
     protected MobAbility ability;
     
     /**

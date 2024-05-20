@@ -1,10 +1,7 @@
 package com.tloj.game.entities.characters;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.ManaAttackBooster;
@@ -27,7 +24,7 @@ public class Hacker extends Character {
 
     /** 
      * Constructor to create a Cheater from loaded data 
-     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon, Inventory, Coordinates)}
     */
     @JsonCreator
     public Hacker(

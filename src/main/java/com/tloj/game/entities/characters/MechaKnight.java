@@ -1,10 +1,7 @@
 package com.tloj.game.entities.characters;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.entities.Character;
@@ -26,7 +23,7 @@ public class MechaKnight extends Character {
 
     /** 
      * Constructor to create a MechaKnight from loaded data  
-     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon, Inventory, Coordinates)}
     */
     @JsonCreator
     public MechaKnight(
