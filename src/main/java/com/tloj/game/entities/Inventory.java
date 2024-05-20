@@ -46,6 +46,10 @@ public class Inventory {
         this.items = new ArrayList<Item>(items);
     }
 
+    public void setHolder(ItemsHolderEntity holder) {
+        this.holder = holder;
+    }
+
     public double getTotalWeight() {
         return this.totalWeight;
     }

@@ -25,8 +25,8 @@ public class FocusTest {
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
         Room mockRoom = new HostileRoom(new Coordinates(0, 0), mockCyberGoblin);
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, mockRoom, new LaserBlade(), null, null);
-
+        Character mockCharacter = new BasePlayer(20, 4, 4, 5, 0, 1, 5, 10, null, mockRoom, new LaserBlade(), null, null);
+   
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mockCyberGoblin);
         
         mockPlayerAttack.setWeaponRoll(5);
