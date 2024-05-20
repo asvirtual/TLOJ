@@ -69,7 +69,7 @@ public class MechaRatTest {
         while (!mechaRat.getAbility().wasUsed()) {
             mechaRat.defend(mockPlayerAttack);
             if (mechaRat.getAbility().wasUsed()) {
-                assertNull(mockCharacter.searchInventoryItem(healthPotion));
+                assertNull(mockCharacter.getInventoryItem(healthPotion));
             } else {
                 mechaRat = new MechaRat(new Coordinates(0, 0), 1);
                 mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
@@ -88,7 +88,7 @@ public class MechaRatTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         mechaRat.defend(mockPlayerAttack);
         do {
-            if (!mechaRat.getAbility().wasUsed()) assertEquals(healthPotion, mockCharacter.searchInventoryItem(healthPotion));
+            if (!mechaRat.getAbility().wasUsed()) assertEquals(healthPotion, mockCharacter.getInventoryItem(healthPotion));
             else {
                 mechaRat = new MechaRat(new Coordinates(0, 0), 1);
                 mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
