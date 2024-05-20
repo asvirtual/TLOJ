@@ -34,9 +34,9 @@ public class DaburuTest {
         mockCharacter.getSkill().activate();
         mockCharacter.getSkill().execute(mockPlayerAttack);
 
-        int finalDamage = mockPlayerAttack.getTotalAttack();
+        int finalAttack = mockPlayerAttack.getTotalAttack();
     
-        assertEquals((initalDamage * 2), finalDamage );
+        assertEquals((initalDamage * 2), finalAttack );
         assertEquals(mockCharacter.getMaxMana() - 10, mockCharacter.getMana());
     }
     
@@ -52,15 +52,15 @@ public class DaburuTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mockCyberGoblin);
         
         mockPlayerAttack.setWeaponRoll(5);
-        int initalDamage = mockPlayerAttack.getTotalAttack();
+        int initialAttack = mockPlayerAttack.getTotalAttack();
 
         
         mockCharacter.getSkill().activate();
         mockCharacter.getSkill().execute(mockPlayerAttack);
 
-        int finalDamage = mockPlayerAttack.getTotalAttack();
+        int finalAttack = mockPlayerAttack.getTotalAttack();
     
-        assertEquals(initalDamage, finalDamage);
+        assertEquals(initialAttack, finalAttack);
         assertEquals(mockCharacter.getMaxMana(), mockCharacter.getMana());
     }
 }

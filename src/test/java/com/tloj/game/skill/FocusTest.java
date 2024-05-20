@@ -30,15 +30,15 @@ public class FocusTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mockCyberGoblin);
         
         mockPlayerAttack.setWeaponRoll(5);
-        int initalDamage = mockPlayerAttack.getTotalDamage();
+        int initialAttack = mockPlayerAttack.getTotalDamage();
 
         
         mockCharacter.getSkill().activate();
         mockCharacter.getSkill().execute(mockPlayerAttack);
 
-        int finalDamage = mockPlayerAttack.getTotalDamage();
+        int finalAttack = mockPlayerAttack.getTotalDamage();
     
-        assertEquals(initalDamage + 3, finalDamage);
+        assertEquals(initialAttack + 3, finalAttack);
         assertEquals(mockCharacter.getMaxMana() - 5, mockCharacter.getMana());
     }
 
@@ -54,15 +54,15 @@ public class FocusTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mockCyberGoblin);
         
         mockPlayerAttack.setWeaponRoll(5);
-        int initalDamage = mockPlayerAttack.getTotalDamage();
+        int initialAttack = mockPlayerAttack.getTotalDamage();
 
         
         mockCharacter.getSkill().activate();
         mockCharacter.getSkill().execute(mockPlayerAttack);
 
-        int finalDamage = mockPlayerAttack.getTotalDamage();
+        int finalAttack = mockPlayerAttack.getTotalDamage();
     
-        assertEquals(initalDamage, finalDamage);
+        assertEquals(initialAttack, finalAttack);
         assertEquals(mockCharacter.getMaxMana(), mockCharacter.getMana());
     }
 }
