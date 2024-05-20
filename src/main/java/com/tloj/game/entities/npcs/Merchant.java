@@ -36,7 +36,6 @@ import com.tloj.game.utilities.GameState;
 public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
     public static final String NAME = "MERCHANT";
     @JsonIgnore
-    // private Map<Integer, PurchasableItem> items = new LinkedHashMap<>();
     private Inventory inventory;
 
     @JsonCreator
@@ -102,6 +101,7 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
                 this.getCurrentStatus(),
                 4
             );
+
             return;
         }
 
@@ -112,6 +112,7 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
                 this.getCurrentStatus(),
                 4
             );
+
             return;
         }
 
@@ -122,6 +123,7 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
                 this.getCurrentStatus(),
                 4
             );
+            
             return;
         }
 
@@ -137,6 +139,7 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
         );
     }
 
+    @JsonIgnore
     private String getCurrentStatus() {
         return 
             "You currently have " + ConsoleHandler.YELLOW + this.player.getMoney() + " BTC" +
@@ -147,6 +150,7 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
     }
 
     @Override
+    @JsonIgnore
     public String getASCII() {
         return Constants.MERCHANT;
     }
@@ -157,6 +161,7 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
     }
 
     @Override
+    @JsonIgnore
     public double getMaxWeight() {
         return 0.0;
     }
@@ -168,6 +173,7 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
     }
 
     @Override
+    @JsonIgnore
     public double getCarriedWeight() {
         return Math.floor(this.inventory.getTotalWeight() * 10) / 10;
     }

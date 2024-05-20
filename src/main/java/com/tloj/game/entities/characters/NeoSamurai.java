@@ -1,6 +1,6 @@
 package com.tloj.game.entities.characters;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,6 +8,7 @@ import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.Inventory;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.utilities.Constants;
@@ -39,7 +40,7 @@ public class NeoSamurai extends Character {
         @JsonProperty("currentLevel") Level currentLevel,
         @JsonProperty("currentRoom") Room currentRoom,
         @JsonProperty("weapon") Weapon weapon,
-        @JsonProperty("inventory") ArrayList<Item> inventory,
+        @JsonProperty("inventory") Inventory inventory,
         @JsonProperty("position") Coordinates position
     ) {
         super(

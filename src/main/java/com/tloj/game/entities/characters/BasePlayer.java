@@ -8,6 +8,7 @@ import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.Inventory;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.Focus;
@@ -51,7 +52,7 @@ public class BasePlayer extends Character {
         @JsonProperty("currentLevel") Level currentLevel,
         @JsonProperty("currentRoom") Room currentRoom,
         @JsonProperty("weapon") Weapon weapon,
-        @JsonProperty("inventory") ArrayList<Item> inventory,
+        @JsonProperty("inventory") Inventory inventory,
         @JsonProperty("position") Coordinates position
     ) {
         super(

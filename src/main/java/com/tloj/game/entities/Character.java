@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -67,11 +68,12 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     protected int money;
     /** A collection of {@link Item}s the Character carries during the game */
     @JsonProperty("inventory")
+    @JsonManagedReference
     protected Inventory inventory;
     protected Weapon weapon;
     protected Level currentLevel;
     protected Room currentRoom;
-    @JsonBackReference
+    @JsonIgnore
     protected CharacterSkill skill;
     /** Observers to notify when the player is defeated or a mob is defeated */
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
@@ -104,7 +106,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         Level currentLevel,
         Room currentRoom,
         Weapon weapon,
-        List<Item> items,
+        Inventory inventory,
         Coordinates position
     ) {
         super(hp, atk, def, position);
@@ -114,7 +116,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.lvl = lvl;
         this.maxWeight = maxWeight;
         this.money = money;
-        this.inventory = new Inventory(this, items);
+        this.inventory = inventory;
         this.weapon = weapon;
         this.currentLevel = currentLevel;
         this.currentRoom = currentRoom;
@@ -240,8 +242,9 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     }
 
     @Override
+    @JsonIgnore
     public double getCarriedWeight() {
-        return Math.floor(this.inventory.getTotalWeight() * 10) / 10;
+        return Math.floor(this.inventory.getTotalWeight() + this.weapon.getWeight() * 10) / 10;
     }
 
     @Override
@@ -305,7 +308,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     public boolean addInventoryItem(Item item) {
         if (item == null) return false;
 
-        if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
+        if (!this.canCarry(item)) {
             ConsoleHandler.println(ConsoleHandler.RED + "You can't carry more weight, drop something first." + ConsoleHandler.RESET);
             return false;
         }
@@ -368,7 +371,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         Item drop = mob.getDrop();
         if (
             drop == null || 
-            this.getCarriedWeight() + drop.getWeight() > this.maxWeight ||
+            !this.canCarry(drop) ||
             !this.addInventoryItem(drop)
         ) {
             ConsoleHandler.println(ConsoleHandler.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleHandler.RESET);

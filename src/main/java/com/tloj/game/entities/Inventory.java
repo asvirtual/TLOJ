@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -16,7 +17,7 @@ import com.tloj.game.utilities.ConsoleHandler;
 public class Inventory {
     @JsonProperty("items")
     private ArrayList<Item> items;
-    @JsonManagedReference
+    @JsonBackReference
     @JsonProperty("holder")
     private ItemsHolderEntity holder;
     @JsonProperty
@@ -27,12 +28,22 @@ public class Inventory {
         this.items = new ArrayList<Item>();
     }
 
+    public Inventory(
+        ItemsHolderEntity holder,
+        List<Item> items
+    ) {
+        this.holder = holder;
+        this.items = new ArrayList<Item>(items);
+    }
+
     @JsonCreator
     public Inventory(
         @JsonProperty("holder") ItemsHolderEntity holder,
-        @JsonProperty("items") List<Item> items
+        @JsonProperty("items") List<Item> items,
+        @JsonProperty("totalWeight") double totalWeight
     ) {
         this.holder = holder;
+        this.totalWeight = totalWeight;
         this.items = new ArrayList<Item>(items);
     }
 
@@ -84,7 +95,7 @@ public class Inventory {
     public boolean add(Item item) {
         if (item == null) return false;
 
-        if (this.holder.getCarriedWeight() + item.getWeight() > this.holder.getMaxWeight()) {
+        if (!this.holder.canCarry(item)) {
             ConsoleHandler.println(ConsoleHandler.RED + "You can't carry more weight, drop something first." + ConsoleHandler.RESET);
             return false;
         }
