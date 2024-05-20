@@ -2,12 +2,8 @@ package com.tloj.game.entities.mobs;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.Test;
 
-import com.tloj.game.collectables.Item;
-import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.PlayerAttack;
