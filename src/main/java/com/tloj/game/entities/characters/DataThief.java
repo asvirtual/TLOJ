@@ -9,6 +9,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.effects.DiceReroller;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.Inventory;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.Steal;
@@ -41,7 +42,7 @@ public class DataThief extends Character {
         @JsonProperty("currentLevel") Level currentLevel,
         @JsonProperty("currentRoom") Room currentRoom,
         @JsonProperty("weapon") Weapon weapon,
-        @JsonProperty("inventory") ArrayList<Item> inventory,
+        @JsonProperty("inventory") Inventory inventory,
         @JsonProperty("position") Coordinates position
     ) {
         super(
