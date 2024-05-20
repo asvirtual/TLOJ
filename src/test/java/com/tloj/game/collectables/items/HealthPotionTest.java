@@ -13,7 +13,6 @@ public class HealthPotionTest {
         Character mockCharacter = new BasePlayer(null);
         mockCharacter.setHp(20);
 
-        mockCharacter.addInventoryItem(new HealthPotion());
         HealthPotion item = (HealthPotion) mockCharacter.getInventoryItem(0);
         item.consume(mockCharacter);
         assertEquals(25, mockCharacter.getHp());
@@ -24,7 +23,6 @@ public class HealthPotionTest {
     void testConsumeMaxHealth() {
         Character mockCharacter = new BasePlayer(null);
 
-        mockCharacter.addInventoryItem(new HealthPotion());
         HealthPotion item = (HealthPotion) mockCharacter.getInventoryItem(0);
         item.consume(mockCharacter);
         assertEquals(25, mockCharacter.getHp());

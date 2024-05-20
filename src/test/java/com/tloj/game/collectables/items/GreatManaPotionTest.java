@@ -2,32 +2,40 @@ package com.tloj.game.collectables.items;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.BasePlayer;
+import com.tloj.game.utilities.Dice;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
 
 public class GreatManaPotionTest {
 
     @Test
     void testConsume() {
-        // Max mana for BasePlayer is 15
+        Dice.setSeed(1);
+
+        // Create BasePlayer, level up to 15 to have at least 30 max mana
         Character mockCharacter = new BasePlayer(null);
-        mockCharacter.setMana(9);
-        mockCharacter.addInventoryItem(new GreatManaPotion());
-        GreatManaPotion item = (GreatManaPotion) mockCharacter.getInventoryItem(0);
+        for (int i = 0; i < 15; i++) mockCharacter.levelUp();
+        mockCharacter.setMana(0);
+
+        GreatManaPotion item = new GreatManaPotion();
+        mockCharacter.addInventoryItem(item);
+
         item.consume(mockCharacter);
-        assertEquals(39, mockCharacter.getMana());
+        assertEquals(30, mockCharacter.getMana());
         assertNull(mockCharacter.getInventoryItem(item));
     }
 
     @Test
     void testConsumeMaxMana() {
         Character mockCharacter = new BasePlayer(null);
-        mockCharacter.setMana(40);
-        mockCharacter.addInventoryItem(new GreatManaPotion());
-        GreatManaPotion item = (GreatManaPotion) mockCharacter.getInventoryItem(0);
+
+        GreatManaPotion item = new GreatManaPotion();
+        mockCharacter.addInventoryItem(item);
+
         item.consume(mockCharacter);
-        assertEquals(40, mockCharacter.getMana());
+        assertEquals(mockCharacter.getMaxMana(), mockCharacter.getMana());
         assertNull(mockCharacter.getInventoryItem(item));
     }
     

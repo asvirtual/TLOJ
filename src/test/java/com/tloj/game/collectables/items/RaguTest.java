@@ -10,24 +10,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RaguTest {
     @Test
     void testConsume() {
-        // Max hp for BasePlayer is 20, set to 3 for testing
+        // Max hp for BasePlayer is 25, set to 3 for testing
         Character mockCharacter = new BasePlayer(null);
         mockCharacter.setHp(3);
-        mockCharacter.addInventoryItem(new Ragu());
-        Ragu item = (Ragu) mockCharacter.getInventoryItem(0);
+        Ragu item = new Ragu();
+        mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
-        assertEquals(20, mockCharacter.getHp());
+        assertEquals(25, mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(item));
     }
 
     @Test
     void testConsumeMaxHealth() {
         Character mockCharacter = new BasePlayer(null);
-        mockCharacter.setHp(20);
-        mockCharacter.addInventoryItem(new Ragu());
-        Ragu item = (Ragu) mockCharacter.getInventoryItem(0);
+        Ragu item = new Ragu();
+        mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
-        assertEquals(20, mockCharacter.getHp());
+        assertEquals(25, mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(item));
     }
 }
