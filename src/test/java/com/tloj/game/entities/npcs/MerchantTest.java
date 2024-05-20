@@ -12,7 +12,6 @@ import com.tloj.game.collectables.items.ManaPotion;
 import com.tloj.game.collectables.items.HealthPotion;
 
 
-
 class MerchantTest {
     /**
      * 
