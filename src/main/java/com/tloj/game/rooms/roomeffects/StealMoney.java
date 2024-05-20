@@ -16,12 +16,7 @@ import com.tloj.game.utilities.Dice;
 
 public class StealMoney extends RoomEffect {
     public static final int COST = 10;
-
-    /*
-     * Default constructor for Jackson JSON deserialization
-     */
-    public StealMoney() {}
-
+    
     /**
      * Applies the effect of stealing money from the character.
      *
