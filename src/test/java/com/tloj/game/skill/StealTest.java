@@ -40,7 +40,6 @@ public class StealTest {
             
             if (mockCharacter.getInventorySize() == 0){
                 mockCharacter.setMana(10);
-                mockCyberGoblin.setHp(15);
             }
             else{
                 used = true;
@@ -70,7 +69,6 @@ public class StealTest {
             
             if (mockCharacter.getInventorySize() != 0){
                 mockCharacter.setMana(10);
-                mockCyberGoblin.setHp(15);
                 mockCharacter.removeInventoryItem(0);
             }
             else{
