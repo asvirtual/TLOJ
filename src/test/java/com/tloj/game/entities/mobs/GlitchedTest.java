@@ -1,9 +1,6 @@
 package com.tloj.game.entities.mobs;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Random;
-
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
