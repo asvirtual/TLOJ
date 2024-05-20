@@ -19,11 +19,7 @@ public class ConsoleHandler {
     public static void clearLog() {
         log.clear();
     }
-
-    public static void saveToLog(String str) {
-        // for (String s : str.split("\n")) log.add(s);
-    }
-
+    
     public static void clearAndReprint() {
         ConsoleHandler.clearConsole();
         for (String s : log) System.out.println(s);        

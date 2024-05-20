@@ -117,32 +117,6 @@ public class JsonParser {
     }
 
     /**
-     * Deserializes a list of levels from a JSON string.
-     * TODO: This method will be deleted once we only get the maps from a file.
-     *
-     * @param json The JSON string representing the levels.
-     * @return The deserialized list of levels.
-     */
-    public static ArrayList<Level> deserializeMap(String json) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            return mapper.readValue(json, new TypeReference<ArrayList<Level>>(){});
-        } catch (JsonGenerationException e) {
-            System.out.println("Error generating JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            System.out.println("Error mapping JSON from GameData");
-            e.printStackTrace();
-        } catch (JsonProcessingException e) {
-            System.out.println("Error processing JSON from GameData");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
-
-    /**
      * Deserializes a list of levels from a JSON file with the specified filename.
      *
      * @param filename The filename of the JSON file.

@@ -1346,7 +1346,6 @@ public class Controller {
 
         ConsoleHandler.clearLog();
         ConsoleHandler.println(toPrint);
-        ConsoleHandler.saveToLog(toPrint);
     }
 
     /**

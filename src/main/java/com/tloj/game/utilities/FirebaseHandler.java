@@ -71,8 +71,6 @@ public class FirebaseHandler {
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             File downloadFile = new File(Constants.BASE_SAVES_DIRECTORY + blob.getName());
 
-            // TODO: check if files locally are up to date --> if not, download them
-
             // Write data to file
             try (FileOutputStream outputStream = new FileOutputStream(downloadFile)) {
                 outputStream.write(data);
