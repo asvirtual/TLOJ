@@ -1,4 +1,4 @@
-package com.tloj.game.skill;
+package com.tloj.game.skills;
 
 import static org.junit.jupiter.api.Assertions.*;
 
