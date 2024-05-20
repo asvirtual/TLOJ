@@ -17,7 +17,6 @@ import com.google.api.gax.paging.Page;
 
 public class FirebaseHandler {
     private static FirebaseHandler instance;
-    private FirebaseApp app;
 
     private FirebaseHandler() {
         try {
@@ -29,7 +28,6 @@ public class FirebaseHandler {
                     .build();
     
             FirebaseApp.initializeApp(options);          
-            this.app = FirebaseApp.getInstance();
         } catch (IOException e) {
             System.out.println("Error opening Firebase service account file");
             e.printStackTrace();
@@ -70,8 +68,6 @@ public class FirebaseHandler {
         blobs.iterateAll().forEach(blob -> {
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             File downloadFile = new File(Constants.BASE_SAVES_DIRECTORY + blob.getName());
-
-            // TODO: check if files locally are up to date --> if not, download them
 
             // Write data to file
             try (FileOutputStream outputStream = new FileOutputStream(downloadFile)) {

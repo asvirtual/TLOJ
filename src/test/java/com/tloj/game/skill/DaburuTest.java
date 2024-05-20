@@ -1,7 +1,6 @@
 package com.tloj.game.skill;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.NeoSamurai;
@@ -16,10 +15,8 @@ import com.tloj.game.rooms.*;
 
 
 public class DaburuTest {
-    
     @Test
-    void daburuTest(){
-
+    void daburuTest() {
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
@@ -41,8 +38,7 @@ public class DaburuTest {
     }
     
     @Test
-    void daburuNoManaTest(){
-
+    void daburuNoManaTest() {
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);

@@ -12,8 +12,10 @@ public class DefenseElixirTest {
     void testConsume() {
         Character mockCharacter = new BasePlayer(null);
         DefenseElixir item = new DefenseElixir();
+
         mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
+        
         assertEquals(7, mockCharacter.getCurrentFightDef());
         assertNull(mockCharacter.getInventoryItem(item));
     }

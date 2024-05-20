@@ -13,9 +13,11 @@ public class RaguTest {
         // Max hp for BasePlayer is 25, set to 3 for testing
         Character mockCharacter = new BasePlayer(null);
         mockCharacter.setHp(3);
+
         Ragu item = new Ragu();
         mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
+
         assertEquals(25, mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(item));
     }
@@ -23,9 +25,11 @@ public class RaguTest {
     @Test
     void testConsumeMaxHealth() {
         Character mockCharacter = new BasePlayer(null);
+        
         Ragu item = new Ragu();
         mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
+
         assertEquals(25, mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(item));
     }

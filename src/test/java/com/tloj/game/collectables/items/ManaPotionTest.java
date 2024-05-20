@@ -13,9 +13,11 @@ public class ManaPotionTest {
         // Max mana for BasePlayer is 15, set to 10 for testing
         Character mockCharacter = new BasePlayer(null);
         mockCharacter.setMana(10);
+        
         ManaPotion item = new ManaPotion();
         mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
+
         assertEquals(15, mockCharacter.getMana());
         assertNull(mockCharacter.getInventoryItem(item));
     }
@@ -24,9 +26,11 @@ public class ManaPotionTest {
     void testConsumeMaxMana() {
         Character mockCharacter = new BasePlayer(null);
         mockCharacter.setMana(15);
+
         ManaPotion item = new ManaPotion();
         mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
+
         assertEquals(15, mockCharacter.getMana());
         assertNull(mockCharacter.getInventoryItem(item));
     }

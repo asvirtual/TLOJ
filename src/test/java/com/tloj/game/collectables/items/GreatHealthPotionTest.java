@@ -22,6 +22,7 @@ public class GreatHealthPotionTest {
         GreatHealthPotion item = new GreatHealthPotion();
         mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
+
         assertEquals(55, mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(item));
     }
@@ -32,6 +33,7 @@ public class GreatHealthPotionTest {
         GreatHealthPotion item = new GreatHealthPotion();
         mockCharacter.addInventoryItem(item);
         item.consume(mockCharacter);
+        
         assertEquals(mockCharacter.getMaxHp(), mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(item));
     }

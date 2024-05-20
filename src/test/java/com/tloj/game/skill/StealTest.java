@@ -19,15 +19,13 @@ import com.tloj.game.rooms.*;
 
 
 public class StealTest {
-    
     @Test
-    void stealSuccessTest(){
-       
+    void stealSuccessTest() {
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
         Room mockRoom = new HostileRoom(new Coordinates(0, 0), mockCyberGoblin);
-        Inventory mockInventory = new Inventory(null);
+        Inventory mockInventory = new Inventory();
         Character mockCharacter = new DataThief(20, 4, 2, 10, 0, 1, 5, 0, null, mockRoom, new NanoDirk(), mockInventory, null);
         mockInventory.setHolder(mockCharacter);
 
@@ -50,8 +48,7 @@ public class StealTest {
     }
     
     @Test
-    void stealFailedTest(){
-        
+    void stealFailedTest() {
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
@@ -67,11 +64,10 @@ public class StealTest {
             mockCharacter.getSkill().activate();
             mockCharacter.getSkill().execute(mockPlayerAttack);
             
-            if (mockCharacter.getInventorySize() != 0){
+            if (mockCharacter.getInventorySize() != 0) {
                 mockCharacter.setMana(10);
                 mockCharacter.removeInventoryItem(0);
-            }
-            else{
+            } else{
                 used = true;
                 assertEquals(0, mockCharacter.getInventorySize());
                 assertEquals(mockCharacter.getMaxMana() - 10, mockCharacter.getMana());
@@ -80,8 +76,7 @@ public class StealTest {
     }
 
     @Test
-    public void noManaStealTest(){
-        
+    public void noManaStealTest() {
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);

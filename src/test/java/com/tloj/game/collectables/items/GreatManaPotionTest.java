@@ -21,8 +21,8 @@ public class GreatManaPotionTest {
 
         GreatManaPotion item = new GreatManaPotion();
         mockCharacter.addInventoryItem(item);
-
         item.consume(mockCharacter);
+
         assertEquals(30, mockCharacter.getMana());
         assertNull(mockCharacter.getInventoryItem(item));
     }
@@ -33,8 +33,8 @@ public class GreatManaPotionTest {
 
         GreatManaPotion item = new GreatManaPotion();
         mockCharacter.addInventoryItem(item);
-
         item.consume(mockCharacter);
+        
         assertEquals(mockCharacter.getMaxMana(), mockCharacter.getMana());
         assertNull(mockCharacter.getInventoryItem(item));
     }

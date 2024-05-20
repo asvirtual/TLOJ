@@ -3,11 +3,8 @@ package com.tloj.game.rooms;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Coordinates;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 /**

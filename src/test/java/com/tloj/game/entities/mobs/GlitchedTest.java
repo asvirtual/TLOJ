@@ -3,13 +3,7 @@ package com.tloj.game.entities.mobs;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
-import com.tloj.game.entities.characters.BasePlayer;
-import com.tloj.game.collectables.weapons.LaserBlade;
-import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.entities.mobs.Glitched;
-import com.tloj.game.game.PlayerAttack;
-
 
 public class GlitchedTest {
     @Test

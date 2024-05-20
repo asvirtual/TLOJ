@@ -22,6 +22,10 @@ public class Inventory {
     @JsonProperty
     private double totalWeight;
 
+    public Inventory() {
+        this.items = new ArrayList<Item>();
+    }
+
     public Inventory(ItemsHolderEntity holder) {
         this.holder = holder;
         this.items = new ArrayList<Item>();

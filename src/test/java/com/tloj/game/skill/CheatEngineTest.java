@@ -1,7 +1,6 @@
 package com.tloj.game.skill;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.Hacker;
@@ -15,10 +14,8 @@ import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.rooms.*;
 
 public class CheatEngineTest {
-
     @Test
     public void cheatEngineTest() {
-       
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
@@ -37,7 +34,6 @@ public class CheatEngineTest {
 
     @Test
     public void noManaCheatEngineTest() {
-       
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);

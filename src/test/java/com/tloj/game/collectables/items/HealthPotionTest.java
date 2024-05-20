@@ -15,6 +15,7 @@ public class HealthPotionTest {
 
         HealthPotion item = (HealthPotion) mockCharacter.getInventoryItem(0);
         item.consume(mockCharacter);
+
         assertEquals(25, mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(item));
     }
@@ -25,6 +26,7 @@ public class HealthPotionTest {
 
         HealthPotion item = (HealthPotion) mockCharacter.getInventoryItem(0);
         item.consume(mockCharacter);
+        
         assertEquals(25, mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(item));
     }

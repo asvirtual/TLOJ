@@ -1,21 +1,19 @@
 package com.tloj.game.entities;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.utilities.Dice;
 
-public class CharacterTest {
 
+public class CharacterTest {
     @Test
-    public void levelUpTest(){
-        
+    public void levelUpTest() {
         Dice.setSeed(1);
         Character mockCharacter = new BasePlayer(null);
       
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             int startLvl = mockCharacter.getLvl();
             int startHp = mockCharacter.getHp();
             int startMana = mockCharacter.getMana();
@@ -42,23 +40,22 @@ public class CharacterTest {
     }
 
     @Test
-    public void restoreOnLevelUpTest(){
-
+    public void restoreOnLevelUpTest() {
         Dice.setSeed(1);
         Character mockCharacter = new BasePlayer(null);
-
-        mockCharacter.setHp(1);
-        mockCharacter.setMana(1);
       
-        int startHp = mockCharacter.getHp();
-        int startMana = mockCharacter.getMana();
+        int startHp = 1;
+        int startMana = 1;
+
+        mockCharacter.setHp(startHp);
+        mockCharacter.setMana(startMana);
         
         mockCharacter.addXp(Character.REQ_XP_BASE * mockCharacter.getLvl());
 
         int endHp = mockCharacter.getHp();
         int endMana = mockCharacter.getMana();
 
-        assertTrue(startHp != endHp && endHp == mockCharacter.getMaxHp());
-        assertTrue(startMana != endMana && endMana == mockCharacter.getMaxMana());
+        assertEquals(endHp, mockCharacter.getMaxHp());
+        assertEquals(endMana, mockCharacter.getMaxMana());
     }
 }

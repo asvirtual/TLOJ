@@ -32,6 +32,7 @@ public class EmpTest {
         ArrayList<Level> mockLevels = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
         Game mockGame = new Game(mockLevels);
         mockController.setGame(mockGame);
+        
         Character mockCharacter = new BasePlayer(null);
         Emp emp = new Emp();
         mockCharacter.addInventoryItem(emp);

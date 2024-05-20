@@ -16,10 +16,8 @@ import com.tloj.game.rooms.*;
 
 
 public class GuardTest {
-
     @Test
     public void guardTest(){
-
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
@@ -41,8 +39,7 @@ public class GuardTest {
     }
 
     @Test
-    public void noManaGuardTest(){
-
+    public void noManaGuardTest() {
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);

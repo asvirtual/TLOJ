@@ -1,7 +1,6 @@
 package com.tloj.game.skill;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
@@ -17,10 +16,8 @@ import com.tloj.game.rooms.*;
 
 
 public class FocusTest {
-    
     @Test
     void focusTest() {
-        
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
@@ -43,8 +40,7 @@ public class FocusTest {
     }
 
     @Test
-    void focusNoManaTest(){
-
+    void focusNoManaTest() {
         Dice.setSeed(1);
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
