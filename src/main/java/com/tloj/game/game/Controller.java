@@ -116,8 +116,6 @@ class MoveNorthCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.NORTH);
-            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
-            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -149,8 +147,6 @@ class MoveSouthCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.SOUTH);
-            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
-            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -182,8 +178,6 @@ class MoveWestCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.WEST);
-            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
-            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -215,8 +209,6 @@ class MoveEastCommand extends GameCommand {
         try {
             ConsoleHandler.clearConsole();
             this.game.movePlayer(Coordinates.Direction.EAST);
-            String saveName = GameIndex.getFile(String.valueOf(this.controller.getCurrentGameId()));
-            this.game.saveLocally(saveName);
         } catch (IllegalArgumentException e) {
             System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET + "\n");
             this.game.printMap();
@@ -1035,7 +1027,7 @@ class ChooseCharacterGameCommand extends GameCommand {
 
         CharacterFactory factory = this.controller.characterFactory(commands[0]);
         this.game.setPlayer(factory.create());
-        this.controller.saveCurrentGameLocally();
+        this.game.saveLocally();
         this.controller.setState(GameState.MOVING);
 
         Controller.printSideBySideText(
@@ -1233,6 +1225,10 @@ public class Controller {
         return instance;
     }
 
+    public FirebaseHandler getSaveHandler() {
+        return this.saveHandler;
+    }
+
     public int getCurrentGameId() {
         return this.currentGameId;
     }
@@ -1395,11 +1391,6 @@ public class Controller {
         } catch (NumberFormatException e) {
             System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
         }
-    }
-
-    public void saveCurrentGameLocally() {
-        String saveName = GameIndex.getFile(String.valueOf(this.currentGameId));
-        this.game.saveLocally(saveName);
     }
 
     public void saveCurrentGameToCloud() {
