@@ -1,9 +1,8 @@
-package com.tloj.game.collectables.weapon;
+package com.tloj.game.collectables.weapons;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.entities.characters.DataThief;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.PlayerAttack;
