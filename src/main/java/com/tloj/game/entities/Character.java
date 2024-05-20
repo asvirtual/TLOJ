@@ -3,9 +3,11 @@ package com.tloj.game.entities;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -41,7 +43,7 @@ import org.fusesource.jansi.Ansi;
  * @see Mob
  * @see PlayerAttack
 */
-public abstract class Character extends CombatEntity implements MovingEntity {
+public abstract class Character extends CombatEntity implements MovingEntity, ItemsHolderEntity {
     public static final int REQ_XP_BASE = 15;
     public static final int INITIAL_LVL = 1;
 
@@ -66,11 +68,12 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     protected int money;
     /** A collection of {@link Item}s the Character carries during the game */
     @JsonProperty("inventory")
-    protected ArrayList<Item> inventory;
+    @JsonManagedReference
+    protected Inventory inventory;
     protected Weapon weapon;
     protected Level currentLevel;
     protected Room currentRoom;
-    @JsonBackReference
+    @JsonIgnore
     protected CharacterSkill skill;
     /** Observers to notify when the player is defeated or a mob is defeated */
     protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
@@ -103,7 +106,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         Level currentLevel,
         Room currentRoom,
         Weapon weapon,
-        ArrayList<Item> inventory,
+        Inventory inventory,
         Coordinates position
     ) {
         super(hp, atk, def, position);
@@ -149,7 +152,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.lvl = INITIAL_LVL;
         this.maxWeight = maxWeight;
         this.money = money;
-        this.inventory = new ArrayList<Item>();
+        this.inventory = new Inventory(this);
         this.weapon = weapon;
 
         this.inventory.add(new HealthPotion());
@@ -158,17 +161,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
 
     public Weapon getWeapon() {
         return this.weapon;
-    }
-    
-    @JsonIgnore
-    public double getCarriedWeight() {
-        double weight = this.weapon.getWeight();
-        for (Item item : this.inventory) weight += item.getWeight();
-        return Math.floor(weight * 10) / 10;
-    }
-
-    public boolean canCarry(Item item) {
-        return this.getCarriedWeight() + item.getWeight() <= this.maxWeight;
     }
 
     public int getMoney() {
@@ -207,11 +199,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     public double getMaxWeight() {
         return this.maxWeight;
     }
-    
-    @JsonIgnore
-    public double getFreeWeight() {
-        return Math.floor((this.maxWeight - this.getCarriedWeight()) * 10) / 10;
-    }
 
     public Level getCurrentLevel() {
         return this.currentLevel;
@@ -243,92 +230,96 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         this.mana -= amount;
     }
 
+    @Override
+    public boolean canCarry(Item item) {
+        return this.getCarriedWeight() + item.getWeight() <= this.maxWeight;
+    }
+    
+    @Override
+    @JsonIgnore
+    public double getFreeWeight() {
+        return Math.floor((this.maxWeight - this.getCarriedWeight()) * 10) / 10;
+    }
+
+    @Override
+    @JsonIgnore
+    public double getCarriedWeight() {
+        return Math.floor(this.inventory.getTotalWeight() + this.weapon.getWeight() * 10) / 10;
+    }
+
+    @Override
+    @JsonIgnore
+    public int getItemCount(Item item) {
+        return this.inventory.getCount(item);
+    }   
+
+    @Override
     @JsonIgnore
     public int getInventorySize() {
-        return this.inventory.size();
+        return this.inventory.getSize();
     }
 
+    @Override
+    @JsonIgnore
+    public Item getInventoryItem(Item item) {
+        return this.inventory.get(item);
+    }
+
+    @Override
     @JsonIgnore
     public Item getInventoryItem(int index) {
-        return this.inventory.get(index);
+        return this.inventory.getByIndex(index);
     }
 
+    @Override
     @JsonIgnore
-    public String getInventory() {
-        String inventory = ConsoleHandler.YELLOW + "Jordan's Inventory:" + ConsoleHandler.RESET + "\n";
-        for (int i = 0; i < this.inventory.size(); i++)
-            inventory += (i + 1) + ". " + this.inventory.get(i) + "\n";
-
-        return inventory;
+    public String getInventoryString() {
+        return this.inventory.toString();
     }
 
-    public Item searchInventoryItem(Item item){
-        for (Item i : this.inventory) 
-            if (i.equals(item)) return i;
-        
-        return null;
+    @Override
+    @JsonIgnore
+    public Item getItemByName(String itemName) {
+        return this.inventory.getByName(itemName);
     }
 
+    @Override
+    @JsonIgnore
     public void removeInventoryItem(Item item) {
         this.inventory.remove(item);
-        this.sortInventory();
     }
 
+    @Override
+    @JsonIgnore
     public Item removeInventoryItem(int index) {
-        Item item = this.inventory.remove(index);
-        this.sortInventory();
-
+        Item item = this.inventory.removeByIndex(index);
         return item;
     }
 
     public Item removeRandomInventoryItem() {
-        if (this.inventory.size() == 0) return null;
+        if (this.inventory.getSize() == 0) return null;
 
-        int index = (int) (Math.random() * this.inventory.size());
-        Item removed = this.inventory.remove(index);
-        this.sortInventory();
+        int index = (int) (Math.random() * this.inventory.getSize());
+        Item removed = this.inventory.removeByIndex(index);
         return removed;
     }
 
+    @Override
     public boolean addInventoryItem(Item item) {
         if (item == null) return false;
 
-        if (this.getCarriedWeight() + item.getWeight() > this.maxWeight) {
+        if (!this.canCarry(item)) {
             ConsoleHandler.println(ConsoleHandler.RED + "You can't carry more weight, drop something first." + ConsoleHandler.RESET);
             return false;
         }
         
         this.inventory.add(item);
-        this.sortInventory();
         return true;
     }
 
+    @Override
     public boolean hasItem(Item item) {
-        for (Item i : this.inventory)
-            if (i.getId() == item.getId()) return true;
-
-        return false;
-    }
-
-    @JsonIgnore
-    public Item getItemByName(String itemName) {
-        for (Item item : this.inventory) 
-            if (itemName.equalsIgnoreCase(item.toString())) return item;
-
-        return null;
-    }
-
-    /*
-     * Sorts the inventory by item id, lower id first
-     */
-    public void sortInventory() {
-        Collections.sort(inventory, new Comparator<Item>() {
-            @Override
-            public int compare(Item item1, Item item2) {
-                if (item1.getId() < item2.getId()) return -1;
-                else return 1;
-            }
-        });
+        return this.inventory.get(item) != null;
     }
 
     @Override
@@ -380,7 +371,7 @@ public abstract class Character extends CombatEntity implements MovingEntity {
         Item drop = mob.getDrop();
         if (
             drop == null || 
-            this.getCarriedWeight() + drop.getWeight() > this.maxWeight ||
+            !this.canCarry(drop) ||
             !this.addInventoryItem(drop)
         ) {
             ConsoleHandler.println(ConsoleHandler.GREEN_BOLD_BRIGHT + "You've defeated " + mob + "!" + ConsoleHandler.RESET);
@@ -483,15 +474,6 @@ public abstract class Character extends CombatEntity implements MovingEntity {
     @Override
     public void takeDamage(int damage) {
         super.takeDamage(damage);
-    }
-
-    @JsonIgnore
-    public int getItemCount(Item item) {
-        int count = 0;
-        for (Item i : this.inventory) 
-            if (i.getId() == item.getId()) count++;
-
-        return count;
     }
 
     @Override 

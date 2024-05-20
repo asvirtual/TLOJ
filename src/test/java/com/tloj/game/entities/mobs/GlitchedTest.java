@@ -1,9 +1,6 @@
 package com.tloj.game.entities.mobs;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Random;
-
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
@@ -29,7 +26,6 @@ public class GlitchedTest {
         assertEquals(6, glitched.getMoneyDrop());
     }
 
-    @Test
     void testTeleport(){
         //Glitched glitched = new Glitched(new Coordinates(0, 0), 1);
         //Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);

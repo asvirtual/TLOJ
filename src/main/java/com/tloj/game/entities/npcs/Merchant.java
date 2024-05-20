@@ -1,11 +1,11 @@
 package com.tloj.game.entities.npcs;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.DefenseElixir;
 import com.tloj.game.collectables.items.AttackElixir;
@@ -17,6 +17,8 @@ import com.tloj.game.collectables.items.Emp;
 import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
+import com.tloj.game.entities.Inventory;
+import com.tloj.game.entities.ItemsHolderEntity;
 import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.game.Controller;
 import com.tloj.game.utilities.ConsoleHandler;
@@ -31,32 +33,40 @@ import com.tloj.game.utilities.GameState;
  * Merchants can be interacted with by the player to access their shop <br>
  * @see Smith
  */
-public class Merchant extends FriendlyEntity {
+public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
     public static final String NAME = "MERCHANT";
     @JsonIgnore
-    private Map<Integer, PurchasableItem> items = new LinkedHashMap<>();
+    private Inventory inventory;
 
     @JsonCreator
     public Merchant(@JsonProperty("position") Coordinates position) {
         super(position, NAME);
-        this.items.put(1, new HealthPotion());
-        this.items.put(2, new ManaPotion());
-        this.items.put(3, new GreatHealthPotion());
-        this.items.put(4, new GreatManaPotion());
-        this.items.put(5, new AttackElixir());
-        this.items.put(6, new DefenseElixir());
-        this.items.put(7, new Emp());
-        this.items.put(8, new WeaponShard());
+        this.inventory = new Inventory(
+            this, 
+            List.of(
+                new HealthPotion(),
+                new ManaPotion(),
+                new GreatHealthPotion(),
+                new GreatManaPotion(),
+                new AttackElixir(),
+                new DefenseElixir(),
+                new Emp(),
+                new WeaponShard()
+            )
+        );
     }
+
     /**
      * @return a string representation of the merchant's items
      */
     @JsonIgnore
     public String getItems() {
         String items = "";
-        for (Map.Entry<Integer, PurchasableItem> entry : this.items.entrySet()) 
-            items += entry.getKey() + ". " + entry.getValue() + " - " + entry.getValue().getPrice() + " BTC" + " - " + entry.getValue().getWeight() + " MB\n";
-
+        for (int i = 0; i < this.inventory.getSize(); i++) {
+            PurchasableItem item = (PurchasableItem) this.inventory.getByIndex(i);
+            items += (i + 1) + ". " + item + " - " + item.getPrice() + " BTC" + " - " + item.getWeight() + " MB\n";
+        }
+        
         return items;
     }
 
@@ -82,7 +92,7 @@ public class Merchant extends FriendlyEntity {
 
     public void buy(int index) {
         ConsoleHandler.clearConsole();
-        PurchasableItem item = this.items.get(index);
+        PurchasableItem item = (PurchasableItem) this.inventory.getByIndex(index);
         
         if (item == null) {
             Controller.printSideBySideText(
@@ -91,6 +101,7 @@ public class Merchant extends FriendlyEntity {
                 this.getCurrentStatus(),
                 4
             );
+
             return;
         }
 
@@ -101,6 +112,7 @@ public class Merchant extends FriendlyEntity {
                 this.getCurrentStatus(),
                 4
             );
+
             return;
         }
 
@@ -111,11 +123,12 @@ public class Merchant extends FriendlyEntity {
                 this.getCurrentStatus(),
                 4
             );
+            
             return;
         }
 
         item.purchase(this.player);
-        items.remove(index);
+        this.inventory.removeByIndex(index);
 
         Controller.printSideBySideText(
             this.getASCII(),
@@ -126,17 +139,109 @@ public class Merchant extends FriendlyEntity {
         );
     }
 
+    @JsonIgnore
     private String getCurrentStatus() {
         return 
             "You currently have " + ConsoleHandler.YELLOW + this.player.getMoney() + " BTC" +
             ConsoleHandler.RESET + " and " + ConsoleHandler.YELLOW + this.player.getFreeWeight() + " MB" + 
             ConsoleHandler.RESET + " of free space.\n" +
             ConsoleHandler.RESET + this.getItems() + "\n\n\n" +
-            ConsoleHandler.RESET + this.player.getInventory();
+            ConsoleHandler.RESET + this.player.getInventoryString();
     }
 
     @Override
+    @JsonIgnore
     public String getASCII() {
         return Constants.MERCHANT;
+    }
+
+    @Override
+    public boolean canCarry(Item item) {
+        return false;
+    }
+
+    @Override
+    @JsonIgnore
+    public double getMaxWeight() {
+        return 0.0;
+    }
+    
+    @Override
+    @JsonIgnore
+    public double getFreeWeight() {
+        return 0.0;
+    }
+
+    @Override
+    @JsonIgnore
+    public double getCarriedWeight() {
+        return Math.floor(this.inventory.getTotalWeight() * 10) / 10;
+    }
+
+    @Override
+    @JsonIgnore
+    public int getItemCount(Item item) {
+        return this.inventory.getCount(item);
+    }   
+
+    @Override
+    @JsonIgnore
+    public int getInventorySize() {
+        return this.inventory.getSize();
+    }
+
+    @Override
+    @JsonIgnore
+    public Item getInventoryItem(Item item) {
+        return this.inventory.get(item);
+    }
+
+    @Override
+    @JsonIgnore
+    public Item getInventoryItem(int index) {
+        return this.inventory.getByIndex(index);
+    }
+
+    @Override
+    @JsonIgnore
+    public String getInventoryString() {
+        return this.inventory.toString();
+    }
+
+    @Override
+    @JsonIgnore
+    public Item getItemByName(String itemName) {
+        return this.inventory.getByName(itemName);
+    }
+
+    @Override
+    @JsonIgnore
+    public void removeInventoryItem(Item item) {
+        this.inventory.remove(item);
+    }
+
+    @Override
+    @JsonIgnore
+    public Item removeInventoryItem(int index) {
+        Item item = this.inventory.removeByIndex(index);
+        return item;
+    }
+
+    public Item removeRandomInventoryItem() {
+        if (this.inventory.getSize() == 0) return null;
+
+        int index = (int) (Math.random() * this.inventory.getSize());
+        Item removed = this.inventory.removeByIndex(index);
+        return removed;
+    }
+
+    @Override
+    public boolean addInventoryItem(Item item) {
+        return false;
+    }
+
+    @Override
+    public boolean hasItem(Item item) {
+        return this.inventory.get(item) != null;
     }
 }

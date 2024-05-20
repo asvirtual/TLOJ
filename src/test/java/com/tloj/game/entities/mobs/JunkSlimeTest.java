@@ -58,14 +58,17 @@ public class JunkSlimeTest {
         JunkSlime junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
         Character mockCharacter = new BasePlayer(MOCK_CHARACTER_MAX_HP, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
-        junkSlime.defend(mockPlayerAttack);
-
+        
         while (!junkSlime.getAbility().wasUsed()) {
-            if (junkSlime.getAbility().wasUsed()) assertTrue(mockCharacter.getHp() < MOCK_CHARACTER_MAX_HP);
+            junkSlime.defend(mockPlayerAttack);
+            if (junkSlime.getAbility().wasUsed()){
+                assertTrue(mockCharacter.getHp() < MOCK_CHARACTER_MAX_HP);
+                return;
+            }
             else {
                 junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
                 mockCharacter.setHp(MOCK_CHARACTER_MAX_HP);
-                mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
+                mockPlayerAttack.setTarget(junkSlime);
             }
         }
     }
@@ -78,13 +81,15 @@ public class JunkSlimeTest {
 
         do {
             junkSlime.defend(mockPlayerAttack);
-            if (!junkSlime.getAbility().wasUsed()) assertTrue(mockCharacter.getHp() == MOCK_CHARACTER_MAX_HP);
+            if (!junkSlime.getAbility().wasUsed()) {
+                assertTrue(mockCharacter.getHp() == MOCK_CHARACTER_MAX_HP);
+                return;
+            }
             else {
                 junkSlime = new JunkSlime(new Coordinates(0, 0), 1);
-                mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
                 mockCharacter.setHp(MOCK_CHARACTER_MAX_HP);
+                mockPlayerAttack.setTarget(junkSlime);
             }
-        } while (junkSlime.getAbility().wasUsed());
+        } while (!junkSlime.getAbility().wasUsed());
     }
-
 }
