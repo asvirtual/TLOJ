@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.ManaAttackBooster;
 import com.tloj.game.entities.Character;
@@ -13,6 +14,8 @@ import com.tloj.game.entities.Inventory;
 import com.tloj.game.game.Level;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CheatEngine;
+import com.tloj.game.skills.Steal;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 
@@ -87,13 +90,13 @@ public class Hacker extends Character {
     }
 
     public static String getDetailedInfo() {
-        return "HP: " + HP + "\n" +
-               "Attack: " + ATTACK + "\n" +
-               "Defense: " + DEFENSE + "\n" +
-               "Mana: " + MANA + "\n" +
-               "Weapon: " + PulseStaff.weaponInfo() + " - " + ManaAttackBooster.describe() + "\n" +
-               "Ability: " + CheatEngine.describe() + "\n" +
-               "BTC: " + MONEY;
+       return  "⸭ HP: " + ConsoleHandler.RED + HP + ConsoleHandler.RESET + "\n" +
+               "⸭ Mana: " + ConsoleHandler.BLUE + MANA + ConsoleHandler.RESET + "\n" +
+               "⸭ Attack: " + ConsoleHandler.PURPLE + ATTACK + ConsoleHandler.RESET  +"\n" +
+               "⸭ Defense: " + ConsoleHandler.PURPLE + DEFENSE + ConsoleHandler.RESET + "\n" +
+               "⸭ Weapon: " + ConsoleHandler.CYAN + PulseStaff.weaponInfo() + ConsoleHandler.RESET + "\n" +
+               "⸭ Ability: " +ConsoleHandler.SILVER + CheatEngine.describe() + ConsoleHandler.RESET + "\n" +
+               "⸭ BTC: " + ConsoleHandler.YELLOW + MONEY + ConsoleHandler.RESET;
     }
 
     @Override

@@ -32,11 +32,11 @@ import com.tloj.game.entities.CombatEntity;
 public class Glitched extends Mob implements MovingEntity {
     private static final int HP = 70;
     private static final int ATTACK = 10;
-    private static final int DEFENSE = 5;
+    private static final int DEFENSE = 6;
     private static final int DICE_FACES = 6;
-    private static final int XP_DROP = 6;
+    private static final int XP_DROP = 16;
     private static final int MONEY_DROP = 6;
-    private static final int TURNS_BEFORE_DISAPPEARANCE = 5;
+    private static final int TURNS_BEFORE_DISAPPEARANCE = 4;
 
     private int turnsLeft = TURNS_BEFORE_DISAPPEARANCE;
     
