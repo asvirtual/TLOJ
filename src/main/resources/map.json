@@ -683,7 +683,7 @@
           "locked": false,
           "mobs": [
             {
-              "@class": "com.tloj.game.entities.mobs.CyerGoblin",
+              "@class": "com.tloj.game.entities.mobs.CyberGoblin",
               "position": { "x": 0, "y": 3 },
               "lvl": 4
             }

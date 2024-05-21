@@ -39,12 +39,12 @@ public class Game implements CharacterObserver {
     private long seed;
     /** The current score of the player. */
     private int score;
-    /** The current level the player is in. */
+    /** The current floor the player is in. */
     private Floor currentFloor;
      /** The player character controlled by the player. */
     @JsonProperty("player")
     private Character player;
-    /** The list of levels in the game. */
+    /** The list of floors in the game. */
     @JsonProperty("floors")
     private ArrayList<Floor> floors;
     /** The controller responsible for managing game state. */
@@ -61,8 +61,8 @@ public class Game implements CharacterObserver {
     private int gameId;
 
     /**
-     * Constructs a new Game object with the given list of levels.
-     * @param floors The list of levels in the game.
+     * Constructs a new Game object with the given list of floors.
+     * @param floors The list of floors in the game.
      */
     public Game(ArrayList<Floor> floors) {
         this.floors = floors;
