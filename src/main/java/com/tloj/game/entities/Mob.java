@@ -186,6 +186,9 @@ public abstract class Mob extends CombatEntity {
         this.currentFightDef = this.def;
     };
     
+    public int rollDice() {
+        return this.dice.roll();
+    }
     
     @Override
     public void attack(CombatEntity t) throws IllegalArgumentException {

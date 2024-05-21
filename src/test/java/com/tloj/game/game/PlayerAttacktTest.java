@@ -23,7 +23,7 @@ import com.tloj.game.utilities.Dice;
  */
 
 public class PlayerAttacktTest {
-private final InputStream originalSystemIn = System.in;
+    private final InputStream originalSystemIn = System.in;
     private ByteArrayInputStream testIn = new ByteArrayInputStream("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n".getBytes());
     
     @BeforeEach
