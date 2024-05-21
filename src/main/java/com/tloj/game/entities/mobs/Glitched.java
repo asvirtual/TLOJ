@@ -69,7 +69,7 @@ public class Glitched extends Mob implements MovingEntity {
         do {
             int row = (int) Math.floor(Math.random() * rows); // Returns a random number between 0 (inclusive) and rows (exclusive)
             int col = (int) Math.floor(Math.random() * cols); // Returns a random number between 0 (inclusive) and cols (exclusive)
-            Coordinates newCoords = new Coordinates(row, col);
+            Coordinates newCoords = new Coordinates(col, row);
 
             if (
                 newCoords.equals(player.getPosition()) ||
