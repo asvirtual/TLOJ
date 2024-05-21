@@ -119,6 +119,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.observers = new ArrayList<CharacterObserver>();
 
         this.updateRequiredXp();
+        this.inventory.setHolder(this);
     }
 
     /** 

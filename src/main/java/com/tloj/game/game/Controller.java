@@ -1422,7 +1422,11 @@ public class Controller {
             String saveName = name + Constants.SAVE_GAME_FILENAME_SEPARATOR + game.getCreationTime() + ".json";
             JsonParser.saveToFile(game, Constants.BASE_SAVES_DIRECTORY + saveName);
             this.currentGameId = GameIndex.addEntry(saveName);
+<<<<<<< Updated upstream
             game.setId(currentGameId);
+=======
+            this.game.setId(currentGameId);
+>>>>>>> Stashed changes
 
             this.setState(GameState.CHOOSING_CHARACTER);
             this.setGame(game);
