@@ -7,6 +7,11 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.utilities.Dice;
 
 
+/**
+ * {@code CharacterTest} is a test class for the generic {@link Character} entity.<br>
+ * It tests the level up mechanism and the restoration of health and mana on level up.<br>
+ */
+
 public class CharacterTest {
     @Test
     public void levelUpTest() {
