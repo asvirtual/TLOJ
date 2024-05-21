@@ -72,7 +72,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     @JsonIgnore
     protected CharacterSkill skill;
     /** Observers to notify when the player is defeated or a mob is defeated */
-    protected ArrayList<CharacterObserver> observers = new ArrayList<CharacterObserver>();
+    protected ArrayList<CharacterObserver> observers;
     protected boolean usedItem = false;
 
     /**
@@ -88,7 +88,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
      * @param weapon The character's weapon<br>
      * @param inventory The character's inventory<br>
      * @param position The character's position<br>
-     * @see com.tloj.game.entities.Entity
+     * @see Entity
      */
     protected Character(
         int hp,
@@ -116,6 +116,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.weapon = weapon;
         this.currentFloor = currentFloor;
         this.currentRoom = currentRoom;
+        this.observers = new ArrayList<CharacterObserver>();
 
         this.updateRequiredXp();
     }
@@ -150,7 +151,8 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.money = money;
         this.inventory = new Inventory(this);
         this.weapon = weapon;
-
+        this.observers = new ArrayList<CharacterObserver>();
+        
         this.inventory.add(new HealthPotion());
         this.updateRequiredXp();
     }
@@ -240,7 +242,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     @Override
     @JsonIgnore
     public double getCarriedWeight() {
-        return Math.floor(this.inventory.getTotalWeight() + this.weapon.getWeight() * 10) / 10;
+        return Math.floor((this.inventory.getTotalWeight() + this.weapon.getWeight())  * 10) / 10;
     }
 
     @Override

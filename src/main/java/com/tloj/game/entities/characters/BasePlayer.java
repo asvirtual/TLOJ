@@ -1,7 +1,5 @@
 package com.tloj.game.entities.characters;
 
-import java.util.ArrayList;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Weapon;
@@ -37,7 +35,7 @@ public class BasePlayer extends Character {
 
     /** 
      * Constructor to create a BasePlayer from loaded data 
-     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon,  ArrayList, Coordinates)}
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon, Inventory, Coordinates)}
     */
     @JsonCreator
     public BasePlayer(

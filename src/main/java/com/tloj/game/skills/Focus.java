@@ -32,7 +32,6 @@ public class Focus extends CharacterSkill {
         super(character, MANA_COST);
         this.activationMessage = ConsoleHandler.PURPLE + "Focus mode on! Next attack will deal 3 more damage" + ConsoleHandler.RESET;
     }
-    
 
     /**
      * Method for using ability.

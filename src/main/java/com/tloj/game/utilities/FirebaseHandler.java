@@ -79,6 +79,7 @@ public class FirebaseHandler {
     }
 
     public void deleteFromCloud(String filename) {
+        if (filename == null) return;
         Bucket bucket = StorageClient.getInstance().bucket();
         Blob blob = bucket.get(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""));
         blob.delete();
