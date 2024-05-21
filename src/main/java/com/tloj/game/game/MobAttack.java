@@ -30,7 +30,7 @@ public class MobAttack extends Attack {
 
     @Override
     public void setTotalAttack() {
-        this.totalAttack = this.baseDamage + this.diceRoll;
+        this.totalAttack = this.baseAttack + this.diceRoll;
     }
 
     @Override
@@ -39,7 +39,7 @@ public class MobAttack extends Attack {
         if (this.totalAttack != -1) 
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
 
-        int totalDamage = this.baseDamage + this.diceRoll - this.targetDef;
+        int totalDamage = this.baseAttack + this.diceRoll - this.targetDef;
         return totalDamage > 0 ? totalDamage : 0;
     }
 

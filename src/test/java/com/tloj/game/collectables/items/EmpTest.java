@@ -3,7 +3,6 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.entities.Character;
 import com.tloj.game.rooms.roomeffects.InflictDamage;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Dice;
 import com.tloj.game.utilities.JsonParser;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
@@ -26,11 +25,10 @@ public class EmpTest {
         String input = "y\n";
         ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
         System.setIn(testIn);
-        Controller mockController= Controller.getInstance();
-        Dice.setSeed(1);
+        Controller mockController = Controller.getInstance();
 
         ArrayList<Level> mockLevels = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
-        Game mockGame = new Game(mockLevels);
+        Game mockGame = new Game(mockLevels, 1);
         mockController.setGame(mockGame);
         
         Character mockCharacter = new BasePlayer(null);

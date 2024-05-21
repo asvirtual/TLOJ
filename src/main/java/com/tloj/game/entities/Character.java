@@ -239,12 +239,9 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         return Math.floor((this.maxWeight - this.getCarriedWeight()) * 10) / 10;
     }
 
-    
-
     @Override
     @JsonIgnore
     public double getCarriedWeight() {
-        
         return Math.floor((this.inventory.getTotalWeight() + this.weapon.getWeight())  * 10) / 10;
     }
 
