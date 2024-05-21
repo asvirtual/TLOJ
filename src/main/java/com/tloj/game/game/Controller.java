@@ -1409,7 +1409,6 @@ public class Controller {
         Controller.printSideBySideText(asciiArt, String.join("\n", this.game.generateMapLines()));
     }
 
-    // TODO: maybe only save the game when the player chooses a character, since without a character the game is not really started
     public void newGame(String name, String seed) {
         try {
             ArrayList<Floor> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
@@ -1422,11 +1421,7 @@ public class Controller {
             String saveName = name + Constants.SAVE_GAME_FILENAME_SEPARATOR + game.getCreationTime() + ".json";
             JsonParser.saveToFile(game, Constants.BASE_SAVES_DIRECTORY + saveName);
             this.currentGameId = GameIndex.addEntry(saveName);
-<<<<<<< Updated upstream
-            game.setId(currentGameId);
-=======
             this.game.setId(currentGameId);
->>>>>>> Stashed changes
 
             this.setState(GameState.CHOOSING_CHARACTER);
             this.setGame(game);
