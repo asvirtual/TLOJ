@@ -3,7 +3,10 @@ package com.tloj.game.entities.bosses;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
@@ -15,9 +18,28 @@ import com.tloj.game.utilities.Dice;
 import com.tloj.game.collectables.weapons.LaserBlade;
 
 
-
+/**
+ * {@code EvenBossTest} is a test class for the {@link EvenBoss} entity.
+ * It tests the ability of the boss to only take damage from even-numbered rolls.
+ * It also tests wether the ability triggers or not.
+ */
 
 public class EvenBossTest {
+    private final InputStream originalSystemIn = System.in;
+    private ByteArrayInputStream testIn = new ByteArrayInputStream("\n\n".getBytes());
+    
+    @BeforeEach
+    public void setUpInput() {
+        Dice.setSeed(1);
+        System.setIn(testIn);
+        Controller.getInstance();
+    }
+
+    @AfterEach
+    public void restoreSystemIn() {
+        System.setIn(originalSystemIn);
+    }
+
     @Test
     void testAbilityUsed() {
         EvenBoss evenBoss = new EvenBoss(new Coordinates(0, 0));
@@ -35,12 +57,6 @@ public class EvenBossTest {
     
     @Test
     void testAbilityNotUsed() {
-        String input = "\n\n";
-        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
-        System.setIn(testIn);
-        Controller.getInstance();
-        Dice.setSeed(1);
-        
         EvenBoss evenBoss = new EvenBoss(new Coordinates(0, 0));
         Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, evenBoss);
