@@ -11,7 +11,7 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
-import com.tloj.game.game.Level;
+import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.TrapRoom;
 import com.tloj.game.utilities.Coordinates;
 
@@ -22,7 +22,7 @@ public class InflictDamageTest {
     public void applyEffectTest() {
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
-        ArrayList<Level> levels = new ArrayList<>();
+        ArrayList<Floor> levels = new ArrayList<>();
 
         Coordinates coordinates = new Coordinates(0, 0);
         TrapRoom mockRoom = new TrapRoom(coordinates, new InflictDamage());
@@ -30,7 +30,7 @@ public class InflictDamageTest {
         rooms.add(mockRoom);
         floor.add(rooms);
         
-        Level level = new Level(1, floor);
+        Floor level = new Floor(1, floor);
         levels.add(level);
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockRoom, new LaserBlade(), null, coordinates);
@@ -62,7 +62,7 @@ public class InflictDamageTest {
       
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
-        ArrayList<Level> levels = new ArrayList<>();
+        ArrayList<Floor> levels = new ArrayList<>();
 
         Coordinates coordinates = new Coordinates(0, 0);
         TrapRoom mockRoom = new TrapRoom(coordinates, new InflictDamage());
@@ -70,7 +70,7 @@ public class InflictDamageTest {
         rooms.add(mockRoom);
         floor.add(rooms);
         
-        Level level = new Level(1, floor);
+        Floor level = new Floor(1, floor);
         levels.add(level);
         
         BasePlayer mockCharacter = new BasePlayer(5, 3, 3, 10, 0, 1, 5, 10, level, mockRoom, new LaserBlade(), null, coordinates);
