@@ -97,6 +97,8 @@ public class HostileRoom extends Room {
      */
     @JsonIgnore
     public Mob getMob() {
+        if (this.mobs.isEmpty()) return null;            
+        
         return this.mobs.get(0);
     }
 
