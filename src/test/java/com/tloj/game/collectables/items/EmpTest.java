@@ -6,8 +6,8 @@ import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.JsonParser;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
-import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
+import com.tloj.game.game.Game;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.TrapRoom;
 import java.io.ByteArrayInputStream;
@@ -27,8 +27,8 @@ public class EmpTest {
         System.setIn(testIn);
         Controller mockController = Controller.getInstance();
 
-        ArrayList<Floor> mockFloors = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
-        Game mockGame = new Game(mockFloors, 1);
+        ArrayList<Floor> mockLevels = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
+        Game mockGame = new Game(mockLevels, 1);
         mockController.setGame(mockGame);
         
         Character mockCharacter = new BasePlayer(null);
