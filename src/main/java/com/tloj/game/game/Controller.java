@@ -914,40 +914,58 @@ class NewGameCommand extends GameCommand {
  */
 class LoadGameCommand extends GameCommand {
     public LoadGameCommand(Game game, String[] commands) {
-        super(game, null);
+        super(game, commands);
         this.validListStates = List.of(
             GameState.MAIN_MENU
         );
     }
 
-    // TODO: actually load game/give choice to user
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+
+        this.controller.getSaveHandler().loadAllCloud();
+        GameIndex.loadGames();
         
         ConsoleHandler.clearConsole();
         int idx = 1;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
 
-        GameIndex.getEntries().forEach(filename -> {
+        System.out.println(ConsoleHandler.GREEN + "Saved games:" + ConsoleHandler.RESET + "\n");
+        for (String filename : GameIndex.getEntries()) {
             try {
-                Game game = JsonParser.loadFromFile(filename);
+                Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + filename);
                 System.out.println(
-                    idx + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " " + game.getPlayer().getName() + 
-                    formatter.format(game.getCreationTime())
+                    idx++ + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " - " + game.getPlayer().getName() + 
+                    " - Created: " + formatter.format(game.getCreationTime())
                 );
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
-
-        try {
-            ConsoleHandler.clearConsole();
-            this.controller.loadGame(Integer.parseInt(commands[1]));
-        } catch (NumberFormatException e) {
-            System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
-            return;
         }
+
+        String choice;
+        int index = -1;
+
+        do {
+            System.out.print(ConsoleHandler.YELLOW + "Choose a save to load or press Enter to go back to main menu: " + ConsoleHandler.RESET);
+            choice = Controller.getScanner().nextLine();
+    
+            if (choice.isBlank()) {
+                ConsoleHandler.clearConsole();
+                System.out.println(Constants.GAME_TITLE);
+                this.controller.setState(GameState.MAIN_MENU);
+                return;
+            }
+    
+            try {
+                index = Integer.parseInt(choice);
+                ConsoleHandler.clearConsole();
+                this.controller.loadGame(index);
+            } catch (NumberFormatException e) {
+                System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
+            }
+        } while (!choice.isBlank() && (index < 1 || index > GameIndex.getEntries().size()));
     }
 }
 
