@@ -1,11 +1,7 @@
 package com.tloj.game.entities;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,7 +14,7 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.Controller;
-import com.tloj.game.game.Level;
+import com.tloj.game.game.Floor;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CharacterSkill;
@@ -71,7 +67,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     @JsonManagedReference
     protected Inventory inventory;
     protected Weapon weapon;
-    protected Level currentLevel;
+    protected Floor currentFloor;
     protected Room currentRoom;
     @JsonIgnore
     protected CharacterSkill skill;
@@ -103,7 +99,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         int lvl,
         int maxWeight,
         int money,
-        Level currentLevel,
+        Floor currentFloor,
         Room currentRoom,
         Weapon weapon,
         Inventory inventory,
@@ -118,7 +114,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.money = money;
         this.inventory = inventory;
         this.weapon = weapon;
-        this.currentLevel = currentLevel;
+        this.currentFloor = currentFloor;
         this.currentRoom = currentRoom;
 
         this.updateRequiredXp();
@@ -200,8 +196,8 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         return this.maxWeight;
     }
 
-    public Level getCurrentLevel() {
-        return this.currentLevel;
+    public Floor getCurrentFloor() {
+        return this.currentFloor;
     }
 
     public Room getCurrentRoom() {
@@ -220,9 +216,9 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.usedItem = usedItem;
     }
 
-    public void setCurrentLevel(Level level) {
-        this.currentLevel = level;
-        this.currentRoom = this.currentLevel.getStartRoom();
+    public void setCurrentFloor(Floor Floor) {
+        this.currentFloor = Floor;
+        this.currentRoom = this.currentFloor.getStartRoom();
         this.position = this.currentRoom.getCoordinates();
     }
 
@@ -325,7 +321,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     @Override
     public void move(Coordinates to) {
         this.position = to;
-        this.currentRoom = this.currentLevel.getRoom(to);
+        this.currentRoom = this.currentFloor.getRoom(to);
     }
 
     public void useSkill() {

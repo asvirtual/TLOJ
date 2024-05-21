@@ -17,7 +17,6 @@ import com.google.api.gax.paging.Page;
 
 public class FirebaseHandler {
     private static FirebaseHandler instance;
-    private FirebaseApp app;
 
     private FirebaseHandler() {
         try {
@@ -29,7 +28,6 @@ public class FirebaseHandler {
                     .build();
     
             FirebaseApp.initializeApp(options);          
-            this.app = FirebaseApp.getInstance();
         } catch (IOException e) {
             System.out.println("Error opening Firebase service account file");
             e.printStackTrace();

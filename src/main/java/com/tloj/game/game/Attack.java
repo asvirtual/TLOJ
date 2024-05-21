@@ -1,6 +1,5 @@
 package com.tloj.game.game;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.entities.CombatEntity;
 
 
@@ -16,7 +15,7 @@ public abstract class Attack {
     protected CombatEntity attacker;
     protected CombatEntity target;
 
-    protected int baseDamage;
+    protected int baseAttack;
     protected int targetDef;
     protected int totalAttack;
 
@@ -27,7 +26,7 @@ public abstract class Attack {
         this.attacker = attacker;
         this.target = target;
         this.targetDef = target.getCurrentFightDef();
-        this.baseDamage = attacker.getCurrentFightAtk();
+        this.baseAttack = attacker.getCurrentFightAtk();
         this.totalAttack = -1;
     }
 
@@ -47,8 +46,8 @@ public abstract class Attack {
         this.target = target;
     }
 
-    public int getBaseDamage() {
-        return this.baseDamage;
+    public int getBaseAttack() {
+        return this.baseAttack;
     }
 
     public int getTargetDef() {
@@ -63,13 +62,13 @@ public abstract class Attack {
         this.targetDef = targetDef;
     }
 
-    public void setBaseDamage(int baseDamage) {
-        this.baseDamage = baseDamage;
+    public void setBaseAttack(int baseDamage) {
+        this.baseAttack = baseDamage;
         this.setTotalAttack();
     }
 
     public void setTotalAttack() {
-        this.totalAttack = this.baseDamage;
+        this.totalAttack = this.baseAttack;
     }
 
     public int getTotalAttack() {
@@ -80,12 +79,11 @@ public abstract class Attack {
         this.totalAttack = totalDamage;
     }
 
-    @JsonIgnore
     public int getTotalDamage() {
         if (this.totalAttack != -1) 
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
             
-        int totalDamage = this.baseDamage - this.targetDef;
+        int totalDamage = this.baseAttack - this.targetDef;
         return totalDamage > 0 ? totalDamage : 0;
     }
 

@@ -19,7 +19,6 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.Inventory;
 import com.tloj.game.entities.ItemsHolderEntity;
-import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.game.Controller;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;

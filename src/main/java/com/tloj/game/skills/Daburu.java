@@ -46,7 +46,7 @@ public class Daburu extends CharacterSkill {
 
         PlayerAttack playerAttack = (PlayerAttack) attack;
         
-        playerAttack.setBaseDamage(playerAttack.getBaseDamage() * 2);
+        playerAttack.setBaseAttack(playerAttack.getBaseAttack() * 2);
         playerAttack.setWeaponRoll(playerAttack.getWeaponRoll() * 2);
 
         super.execute(attack);

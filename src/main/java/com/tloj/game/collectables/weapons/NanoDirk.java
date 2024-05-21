@@ -1,11 +1,6 @@
 package com.tloj.game.collectables.weapons;
 
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.collectables.weapons.LaserBlade;
-import com.tloj.game.collectables.weapons.NaniteLeechBlade;
-import com.tloj.game.collectables.weapons.CyberKatana;
-import com.tloj.game.collectables.weapons.PlasmaGreatsword;
-import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.effects.DiceReroller;
 import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;

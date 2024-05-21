@@ -8,7 +8,6 @@ import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.ItemReceiverEntity;
-import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.game.Controller;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;

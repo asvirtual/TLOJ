@@ -2,7 +2,7 @@ package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
-import com.tloj.game.game.Level;
+import com.tloj.game.game.Floor;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.LootRoom;
@@ -42,7 +42,7 @@ public class TpEffect extends RoomEffect {
 
     /**
      * Applies the teleportation effect to the specified character.
-     * Teleports the character to a random room in the current level, while printing relevant messages and updating the game state.
+     * Teleports the character to a random room in the current floor, while printing relevant messages and updating the game state.
      *
      * @param character the character to apply the teleportation effect to
      * @return true if the effect was successfully applied, false otherwise
@@ -55,11 +55,11 @@ public class TpEffect extends RoomEffect {
         ConsoleHandler.println("\n" + ConsoleHandler.PURPLE + "Oh no! Unexpected System call teleported you to a random room!" + ConsoleHandler.RESET);
         ConsoleHandler.println("They hacked your GPS! You can't see the rooms you visited anymore!");
 
-        Level level = character.getCurrentLevel();
+        Floor floor = character.getCurrentFloor();
         boolean validLocation = false;
 
-        int rows = level.getRoomsRowCount();
-        int cols = level.getRoomsColCount();
+        int rows = floor.getRoomsRowCount();
+        int cols = floor.getRoomsColCount();
 
         // Loop until a valid location is found
         do {
@@ -67,19 +67,19 @@ public class TpEffect extends RoomEffect {
             int col = (int) Math.floor(Math.random() * cols);
 
             Coordinates newCoords = new Coordinates(row, col);
-            this.newRoom = character.getCurrentLevel().getRoom(newCoords);
+            this.newRoom = character.getCurrentFloor().getRoom(newCoords);
 
             // Skip if new location is the same as current location
             if (newCoords == character.getPosition()) continue;
-            // Skip if new location is not valid on the level grid
-            if (!level.areCoordinatesValid(newCoords)) continue;
+            // Skip if new location is not valid on the floor grid
+            if (!floor.areCoordinatesValid(newCoords)) continue;
             // Skip if new location is a boss room
             if (this.newRoom.getType() == RoomType.BOSS_ROOM) continue;
             // Skip if new location is a locked loot room
             if (this.newRoom.getType() == RoomType.LOOT_ROOM && ((LootRoom) this.newRoom).isLocked()) continue;
 
             // Forget all visited rooms
-            level.getRoomStream().forEach(rowRooms -> {
+            floor.getRoomStream().forEach(rowRooms -> {
                 rowRooms.forEach(room -> {
                     if (room != null) room.forget();
                 });

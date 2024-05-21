@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * An ability that allows the mob to steal some money once per fight with a 25% probability <br>
- * It is paired with the {@link CyerbGoblin}.
+ * It is paired with the {@link CyberGoblin}.
  */
 public class GoblinStealAbility extends MobAbility {
     private static final int DICE_FACES = 3;

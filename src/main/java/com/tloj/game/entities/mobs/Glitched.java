@@ -3,7 +3,7 @@ package com.tloj.game.entities.mobs;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.MovingEntity;
 import com.tloj.game.game.Controller;
-import com.tloj.game.game.Level;
+import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.utilities.ConsoleHandler;
@@ -60,10 +60,10 @@ public class Glitched extends Mob implements MovingEntity {
 
         this.turnsLeft--;
 
-        Level level = player.getCurrentLevel();
+        Floor floor = player.getCurrentFloor();
         
-        int rows = level.getRoomsRowCount();
-        int cols = level.getRoomsColCount();
+        int rows = floor.getRoomsRowCount();
+        int cols = floor.getRoomsColCount();
         boolean validLocation = false;
 
         do {
@@ -73,13 +73,13 @@ public class Glitched extends Mob implements MovingEntity {
 
             if (
                 newCoords.equals(player.getPosition()) ||
-                !level.areCoordinatesValid(newCoords) || 
-                level.getRoom(newCoords).getType() != RoomType.HOSTILE_ROOM ||
-                level.getRoom(newCoords).getType() == RoomType.BOSS_ROOM
+                !floor.areCoordinatesValid(newCoords) || 
+                floor.getRoom(newCoords).getType() != RoomType.HOSTILE_ROOM ||
+                floor.getRoom(newCoords).getType() == RoomType.BOSS_ROOM
             ) continue;
             
             HostileRoom currentRoom = (HostileRoom) player.getCurrentRoom();
-            HostileRoom nextRoom = (HostileRoom) level.getRoom(newCoords);
+            HostileRoom nextRoom = (HostileRoom) floor.getRoom(newCoords);
 
             currentRoom.removeMob(this);
 

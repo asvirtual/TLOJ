@@ -2,13 +2,10 @@ package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Coordinates;
-
-import java.util.ArrayList;
+import com.tloj.game.game.PlayerRoomVisitor;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.entities.Mob;
-import com.tloj.game.game.PlayerRoomVisitor;
 
 /**
  * Class that represents the start room in the game<br>

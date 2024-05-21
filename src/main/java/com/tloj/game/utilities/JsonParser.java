@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tloj.game.game.Game;
-import com.tloj.game.game.Level;
+import com.tloj.game.game.Floor;
 
 /**
  * This class is a utility class for parsing JSON files.
@@ -117,16 +117,16 @@ public class JsonParser {
     }
 
     /**
-     * Deserializes a list of levels from a JSON file with the specified filename.
+     * Deserializes a list of floors from a JSON file with the specified filename.
      *
      * @param filename The filename of the JSON file.
-     * @return The deserialized list of levels.
+     * @return The deserialized list of floors.
      */
-    public static ArrayList<Level> deserializeMapFromFile(String filename) {
+    public static ArrayList<Floor> deserializeMapFromFile(String filename) {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            return mapper.readValue(new File(filename), new TypeReference<ArrayList<Level>>(){});
+            return mapper.readValue(new File(filename), new TypeReference<ArrayList<Floor>>(){});
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from GameData");
             e.printStackTrace();

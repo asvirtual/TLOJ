@@ -68,7 +68,7 @@ public class PlayerAttack extends Attack {
      */
     @Override
     public void setTotalAttack() {
-        this.totalAttack = this.baseDamage + this.weaponRoll;
+        this.totalAttack = this.baseAttack + this.weaponRoll;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class PlayerAttack extends Attack {
         if (this.totalAttack != -1) 
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
 
-        int totalDamage = this.baseDamage + this.weaponRoll - this.targetDef;
+        int totalDamage = this.baseAttack + this.weaponRoll - this.targetDef;
         return totalDamage > 0 ? totalDamage : 0;
     }
 
@@ -109,7 +109,7 @@ public class PlayerAttack extends Attack {
     }
 
     public void resetStats() {
-        this.baseDamage = this.attacker.getCurrentFightAtk();
+        this.baseAttack = this.attacker.getCurrentFightAtk();
         this.targetDef = this.target.getCurrentFightDef();
         this.weaponRoll = 0;
         this.totalAttack = 0;

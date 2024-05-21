@@ -1420,7 +1420,7 @@ public class Controller {
      */
     public Game newGame(String name, String seed) {
         try {
-            ArrayList<Level> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
+            ArrayList<Floor> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
 
             if (seed.isBlank()) this.game = new Game(map);
             else this.game = new Game(map, Long.parseLong(seed));
@@ -1522,11 +1522,11 @@ public class Controller {
     public CharacterFactory characterFactory(String character) {
         Map<String, Supplier<CharacterFactory>> characterMap = new HashMap<>(
             Map.of(
-                "1", () -> new BasePlayerFactory(this.game.getLevel().getStartRoom().getCoordinates()),
-                "2", () -> new HackerFactory(this.game.getLevel().getStartRoom().getCoordinates()),
-                "3", () -> new DataThiefFactory(this.game.getLevel().getStartRoom().getCoordinates()),
-                "4", () -> new MechaKnightFactory(this.game.getLevel().getStartRoom().getCoordinates()),
-                "5", () -> new NeoSamuraiFactory(this.game.getLevel().getStartRoom().getCoordinates())
+                "1", () -> new BasePlayerFactory(this.game.getFloor().getStartRoom().getCoordinates()),
+                "2", () -> new HackerFactory(this.game.getFloor().getStartRoom().getCoordinates()),
+                "3", () -> new DataThiefFactory(this.game.getFloor().getStartRoom().getCoordinates()),
+                "4", () -> new MechaKnightFactory(this.game.getFloor().getStartRoom().getCoordinates()),
+                "5", () -> new NeoSamuraiFactory(this.game.getFloor().getStartRoom().getCoordinates())
             )
         );
         

@@ -1,6 +1,6 @@
 [
   {
-    "levelNumber": 1,
+    "floorNumber": 1,
     "rooms": [
       [
         {
@@ -240,7 +240,7 @@
     }
   },
   {
-    "levelNumber": 2,
+    "floorNumber": 2,
     "rooms": [
       [
         {
@@ -261,7 +261,7 @@
     ]
   },
   {
-    "levelNumber": 3,
+    "floorNumber": 3,
     "rooms": [
       [
         null,
@@ -522,7 +522,7 @@
     ]
   },
   {
-    "levelNumber": 4,
+    "floorNumber": 4,
     "rooms": [
       [
         {
@@ -543,7 +543,7 @@
     ]
   },
   {
-    "levelNumber": 5,
+    "floorNumber": 5,
     "rooms": [
       [
         null,
@@ -794,7 +794,7 @@
     }
   },
   {
-    "levelNumber": 6,
+    "floorNumber": 6,
     "rooms": [
       [
         {

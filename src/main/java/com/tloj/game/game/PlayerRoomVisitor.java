@@ -62,7 +62,7 @@ public class PlayerRoomVisitor implements Visitor {
         room.visit();
 
         this.controller.changeMusic(
-            this.player.getCurrentLevel().getLevelNumber() == 5 ?
+            this.player.getCurrentFloor().getFloorNumber() == 5 ?
                 Constants.FINAL_BOSS_WAV_FILE_PATH
                 : Constants.BOSSFIGHT_WAV_FILE_PATH,
             true

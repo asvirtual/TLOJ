@@ -4,17 +4,13 @@ import java.util.ArrayList;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.collectables.weapons.PulseStaff;
-import com.tloj.game.effects.ManaAttackBooster;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Inventory;
-import com.tloj.game.game.Level;
+import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CheatEngine;
-import com.tloj.game.skills.Steal;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
@@ -42,7 +38,7 @@ public class Hacker extends Character {
         @JsonProperty("lvl") int lvl,
         @JsonProperty("maxWeight") int maxWeight,
         @JsonProperty("money") int money,
-        @JsonProperty("currentLevel") Level currentLevel,
+        @JsonProperty("currentFloor") Floor currentFloor,
         @JsonProperty("currentRoom") Room currentRoom,
         @JsonProperty("weapon") Weapon weapon,
         @JsonProperty("inventory") Inventory inventory,
@@ -57,7 +53,7 @@ public class Hacker extends Character {
             lvl,
             maxWeight,
             money,
-            currentLevel,
+            currentFloor,
             currentRoom,
             weapon,
             inventory,

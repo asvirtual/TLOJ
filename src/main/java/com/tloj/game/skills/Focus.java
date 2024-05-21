@@ -45,7 +45,7 @@ public class Focus extends CharacterSkill {
         if (!this.activated || !(attack instanceof PlayerAttack)) return;
 
         PlayerAttack playerAttack = (PlayerAttack) attack;
-        playerAttack.setBaseDamage(playerAttack.getBaseDamage() + 3);
+        playerAttack.setBaseAttack(playerAttack.getBaseAttack() + 3);
         
         super.execute(attack);
     }

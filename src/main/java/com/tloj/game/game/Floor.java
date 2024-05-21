@@ -13,36 +13,36 @@ import com.tloj.game.utilities.Coordinates;
 
 
 /**
- * Represents a level in the game. <br>
- * A level is a grid of rooms that the player can navigate through. <br>
- * The level has a start room and many other different types . <br>
+ * Represents a floor in the game. <br>
+ * A floor is a grid of rooms that the player can navigate through. <br>
+ * The floor has a start room and many other different types . <br>
  * <br>
  * @see Room
  * @see StartRoom
  * @see RoomType
  */
-public class Level {
-    /** The level number. */
-    private int levelNumber;
+public class Floor {
+    /** The floor number. */
+    private int floorNumber;
     @JsonProperty
-    /** List of rooms in the level. */
+    /** List of rooms in the floor. */
     private ArrayList<ArrayList<Room>> rooms;
-    /** The start room of the level. */
+    /** The start room of the floor. */
     private StartRoom startRoom;
 
     /**
-     * Constructs a new Level object with the given level number and rooms.
+     * Constructs a new Floor object with the given floor number and rooms.
      *
-     * @param levelNumber The level number.
-     * @param rooms       The grid of rooms in the level.
+     * @param floorNumber The floor number.
+     * @param rooms       The grid of rooms in the floor.
      */
     @JsonCreator
-    public Level(
-        @JsonProperty("levelNumber") int levelNumber, 
+    public Floor(
+        @JsonProperty("floorNumber") int floorNumber, 
         @JsonProperty("rooms") ArrayList<ArrayList<Room>> rooms
     ) {
         // Iterate through rooms to find the start room.
-        this.levelNumber = levelNumber;
+        this.floorNumber = floorNumber;
         this.rooms = rooms;
         this.rooms.forEach(row -> { 
             row.forEach(room -> {
@@ -53,9 +53,9 @@ public class Level {
     }
 
     /**
-     * Returns the start room of the level.
+     * Returns the start room of the floor.
      *
-     * @return The start room of the level.
+     * @return The start room of the floor.
      */
     public StartRoom getStartRoom() {
         return this.startRoom;
@@ -93,18 +93,18 @@ public class Level {
     }
 
     /**
-     * Returns the level number.
+     * Returns the floor number.
      *
-     * @return The level number.
+     * @return The floor number.
      */
-    public int getLevelNumber() {
-        return this.levelNumber;
+    public int getFloorNumber() {
+        return this.floorNumber;
     }
 
     /**
-     * Returns a stream of rows of rooms in the level.
+     * Returns a stream of rows of rooms in the floor.
      *
-     * @return A stream of rows of rooms in the level.
+     * @return A stream of rows of rooms in the floor.
      */
     @JsonIgnore
     public Stream<ArrayList<Room>> getRoomStream() {
@@ -112,7 +112,7 @@ public class Level {
     }
 
     /**
-     * Checks if the given coordinates are valid within the level grid.
+     * Checks if the given coordinates are valid within the floor grid.
      *
      * @param coordinates The coordinates to check.
      * @return True if the coordinates are valid, false otherwise.

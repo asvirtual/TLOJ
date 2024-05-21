@@ -1,7 +1,6 @@
 package com.tloj.game.game;
 
 import com.tloj.game.entities.Mob;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Dice;
@@ -30,16 +29,15 @@ public class MobAttack extends Attack {
 
     @Override
     public void setTotalAttack() {
-        this.totalAttack = this.baseDamage + this.diceRoll;
+        this.totalAttack = this.baseAttack + this.diceRoll;
     }
 
     @Override
-    @JsonIgnore
     public int getTotalDamage() {
         if (this.totalAttack != -1) 
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
 
-        int totalDamage = this.baseDamage + this.diceRoll - this.targetDef;
+        int totalDamage = this.baseAttack + this.diceRoll - this.targetDef;
         return totalDamage > 0 ? totalDamage : 0;
     }
 

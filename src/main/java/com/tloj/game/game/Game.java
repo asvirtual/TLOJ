@@ -1,6 +1,5 @@
 package com.tloj.game.game;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -26,7 +25,6 @@ import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Dice;
-import com.tloj.game.utilities.FirebaseHandler;
 import com.tloj.game.utilities.GameState;
 import com.tloj.game.utilities.JsonParser;
 
@@ -42,13 +40,13 @@ public class Game implements CharacterObserver {
     /** The current score of the player. */
     private int score;
     /** The current level the player is in. */
-    private Level currentLevel;
+    private Floor currentFloor;
      /** The player character controlled by the player. */
     @JsonProperty("player")
     private Character player;
     /** The list of levels in the game. */
-    @JsonProperty("levels")
-    private ArrayList<Level> levels;
+    @JsonProperty("floors")
+    private ArrayList<Floor> floors;
     /** The controller responsible for managing game state. */
     private Controller controller;
     private long creationTime;
@@ -64,12 +62,12 @@ public class Game implements CharacterObserver {
 
     /**
      * Constructs a new Game object with the given list of levels.
-     * @param levels The list of levels in the game.
+     * @param floors The list of levels in the game.
      */
-    public Game(ArrayList<Level> levels) {
-        this.levels = levels;
+    public Game(ArrayList<Floor> floors) {
+        this.floors = floors;
 
-        this.currentLevel = this.levels.get(0);
+        this.currentFloor = this.floors.get(0);
         this.controller = Controller.getInstance();
         this.lastPlayed = this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
         this.elapsedTime = 0;
@@ -78,14 +76,14 @@ public class Game implements CharacterObserver {
     }
 
     /**
-     * Constructs a new Game object with the given list of levels and a custom seed.
-     * @param levels The list of levels in the game.
+     * Constructs a new Game object with the given list of floors and a custom seed.
+     * @param floors The list of floors in the game.
      * @param seed The custom seed used for generating random numbers in the game.
      */
-    public Game(ArrayList<Level> levels, long seed) {
-        this.levels = levels;
+    public Game(ArrayList<Floor> floors, long seed) {
+        this.floors = floors;
 
-        this.currentLevel = this.levels.get(0);
+        this.currentFloor = this.floors.get(0);
         this.controller = Controller.getInstance();
         this.seed = seed;
         this.lastPlayed = this.sessionStartTime = this.creationTime = new Date().getTime();
@@ -98,23 +96,23 @@ public class Game implements CharacterObserver {
      * Constructs a new Game object with the given parameters.
      *
      * @param seed         The random seed used for generating random numbers in the game.
-     * @param currentLevel The current level the player is in.
+     * @param currentFloor The current floor the player is in.
      * @param player       The player character controlled by the player.
-     * @param levels       The list of levels in the game.
+     * @param floors       The list of floors in the game.
      */
     @JsonCreator
     public Game(
         @JsonProperty("seed") long seed, 
-        @JsonProperty("level") Level currentLevel, 
+        @JsonProperty("floor") Floor currentFloor, 
         @JsonProperty("player") Character player, 
-        @JsonProperty("levels") ArrayList<Level> levels,
+        @JsonProperty("floors") ArrayList<Floor> floors,
         @JsonProperty("gameId") int gameId,
         @JsonProperty("creationTime") long creationTime,
         @JsonProperty("elapsedTime") long elapsedTime
     ) {
         this.player = player;
-        this.levels = levels;
-        this.currentLevel = currentLevel;
+        this.floors = floors;
+        this.currentFloor = currentFloor;
         this.controller = Controller.getInstance();
         this.seed = seed;
         this.creationTime = creationTime;
@@ -161,7 +159,7 @@ public class Game implements CharacterObserver {
 
     public void setPlayer(Character player) {
         this.player = player;
-        this.player.setCurrentLevel(this.currentLevel);
+        this.player.setCurrentFloor(this.currentFloor);
         this.player.addObserver(this);
 
         this.saveLocally();
@@ -171,8 +169,8 @@ public class Game implements CharacterObserver {
         return this.player;
     }
 
-    public Level getLevel() {
-        return this.currentLevel;
+    public Floor getFloor() {
+        return this.currentFloor;
     }
 
     /**
@@ -192,14 +190,14 @@ public class Game implements CharacterObserver {
             this.getCurrentRoom().getType() == RoomType.HEALING_ROOM
         ) {
             /**
-             * Move to the next level (level numbers are 1-based, so this.currentLevel.getLevelNumber() 
-             * is the index of the next level in the levels (0-based) list)
+             * Move to the next floor (floor numbers are 1-based, so this.currentFloor.getFloorNumber() 
+             * is the index of the next floor in the floors (0-based) list)
             */
-            this.currentLevel = this.levels.get(this.currentLevel.getLevelNumber());
-            this.player.setCurrentLevel(this.currentLevel);
+            this.currentFloor = this.floors.get(this.currentFloor.getFloorNumber());
+            this.player.setCurrentFloor(this.currentFloor);
 
-            if (this.currentLevel.getStartRoom() != null)
-                this.currentLevel.getStartRoom().accept(playerRoomVisitor);
+            if (this.currentFloor.getStartRoom() != null)
+                this.currentFloor.getStartRoom().accept(playerRoomVisitor);
 
             return;
         }
@@ -207,9 +205,9 @@ public class Game implements CharacterObserver {
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
 
         // Check if the room at the new coordinates is locked and the player does not have a special key.
-        if (!this.getLevel().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
+        if (!this.getFloor().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
         if (
-            this.currentLevel.getRoom(newCoordinates).isLocked() && 
+            this.currentFloor.getRoom(newCoordinates).isLocked() && 
             !this.player.hasItem(new SpecialKey())
         ) throw new IllegalArgumentException("That room is locked");
 
@@ -221,7 +219,7 @@ public class Game implements CharacterObserver {
 
         this.player.move(newCoordinates);
 
-        Room room = this.currentLevel.getRoom(newCoordinates);
+        Room room = this.currentFloor.getRoom(newCoordinates);
         room.accept(playerRoomVisitor);
         
         /** Save the game status locally */
@@ -286,7 +284,7 @@ public class Game implements CharacterObserver {
     
     @JsonIgnore
     public Room getCurrentRoom() {
-        return this.currentLevel.getRoom(this.player.getPosition());
+        return this.currentFloor.getRoom(this.player.getPosition());
     }
 
     public Item dropItem(int index) {
@@ -396,25 +394,25 @@ public class Game implements CharacterObserver {
         mapBuilder
             .append(" -")
             
-            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
-            .append(this.currentLevel.getRoomsColCount() % 2 == 0 ? "GN" : "N")
-            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
+            .append("--".repeat(this.currentFloor.getRoomsColCount() / 2 - ((this.currentFloor.getRoomsColCount() + 1) % 2)))
+            .append(this.currentFloor.getRoomsColCount() % 2 == 0 ? "GN" : "N")
+            .append("--".repeat(this.currentFloor.getRoomsColCount() / 2 - ((this.currentFloor.getRoomsColCount() + 1) % 2)))
             .append("--\n");
         
-        // Iterate through each row of rooms in the current level.
-        for (int i = 0; i < this.currentLevel.getRoomsRowCount(); i++) {
-            if ((this.currentLevel.getRoomsRowCount() + 1) % 2 == 0) {
-                if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bW ");
+        // Iterate through each row of rooms in the current floor.
+        for (int i = 0; i < this.currentFloor.getRoomsRowCount(); i++) {
+            if ((this.currentFloor.getRoomsRowCount() + 1) % 2 == 0) {
+                if (i == this.currentFloor.getRoomsRowCount() / 2) mapBuilder.append("\bW ");
                 else mapBuilder.append("\b| ");
             } else {
-                if (i == this.currentLevel.getRoomsRowCount() / 2 - 1) mapBuilder.append("G ");
-                else if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("W ");
+                if (i == this.currentFloor.getRoomsRowCount() / 2 - 1) mapBuilder.append("G ");
+                else if (i == this.currentFloor.getRoomsRowCount() / 2) mapBuilder.append("W ");
                 else mapBuilder.append("| ");
             }
 
             // Iterate through each column of rooms in the current row.
-            for (int j = 0; j < this.currentLevel.getRoomsColCount(); j++) {
-                Room room = this.currentLevel.getRoom(new Coordinates(j, i));
+            for (int j = 0; j < this.currentFloor.getRoomsColCount(); j++) {
+                Room room = this.currentFloor.getRoom(new Coordinates(j, i));
                 if (room == null) {
                     mapBuilder.append("\u00A0 ");                    
                     continue;
@@ -429,12 +427,12 @@ public class Game implements CharacterObserver {
             }
 
             // Append vertical borders or gates at the end of each row based on the current column count.
-            if ((this.currentLevel.getRoomsRowCount() + 1) % 2 == 0) {
-                if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("\bE\n");
+            if ((this.currentFloor.getRoomsRowCount() + 1) % 2 == 0) {
+                if (i == this.currentFloor.getRoomsRowCount() / 2) mapBuilder.append("\bE\n");
                 else mapBuilder.append("\b|\n");
             } else {
-                if (i == this.currentLevel.getRoomsRowCount() / 2 - 1) mapBuilder.append("G\n");
-                else if (i == this.currentLevel.getRoomsRowCount() / 2) mapBuilder.append("E\n");
+                if (i == this.currentFloor.getRoomsRowCount() / 2 - 1) mapBuilder.append("G\n");
+                else if (i == this.currentFloor.getRoomsRowCount() / 2) mapBuilder.append("E\n");
                 else mapBuilder.append("|\n");
             }
             
@@ -443,9 +441,9 @@ public class Game implements CharacterObserver {
         // Append the bottom border of the map.
         mapBuilder
             .append(" -")
-            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
-            .append(this.currentLevel.getRoomsColCount() % 2 == 0 ? "GS" : "S")
-            .append("--".repeat(this.currentLevel.getRoomsColCount() / 2 - ((this.currentLevel.getRoomsColCount() + 1) % 2)))
+            .append("--".repeat(this.currentFloor.getRoomsColCount() / 2 - ((this.currentFloor.getRoomsColCount() + 1) % 2)))
+            .append(this.currentFloor.getRoomsColCount() % 2 == 0 ? "GS" : "S")
+            .append("--".repeat(this.currentFloor.getRoomsColCount() / 2 - ((this.currentFloor.getRoomsColCount() + 1) % 2)))
             .append("--\n");
         
         return mapBuilder.toString().split("\n");
@@ -487,7 +485,7 @@ public class Game implements CharacterObserver {
     }
     
     public void returnToStart() {
-        Coordinates startCoordinates = this.currentLevel.getStartRoom().getCoordinates();
+        Coordinates startCoordinates = this.currentFloor.getStartRoom().getCoordinates();
         this.player.move(startCoordinates);
     }
 
@@ -524,29 +522,29 @@ public class Game implements CharacterObserver {
         Coordinates coordinates = this.player.getPosition();
         String directions = "You can: \n";
 
-        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
-            Room northRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH));
+        if (this.currentFloor.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.NORTH))) {
+            Room northRoom = currentFloor.getRoom(coordinates.getAdjacent(Coordinates.Direction.NORTH));
 
             if (northRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleHandler.RED + "[gn - Something's off... ]" + ConsoleHandler.RESET;
             else directions += northRoom.isVisited() ? "[" + ConsoleHandler.CYAN_UNDERLINED + "gn" + ConsoleHandler.RESET + "] " : "[gn] ";    
         }
         
-        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))) {
-            Room southRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH));
+        if (this.currentFloor.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.SOUTH))) {
+            Room southRoom = currentFloor.getRoom(coordinates.getAdjacent(Coordinates.Direction.SOUTH));
 
             if (southRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleHandler.RED + "[gs - Something's off... ]" + ConsoleHandler.RESET;
             else directions += southRoom.isVisited() ? "[" + ConsoleHandler.CYAN_UNDERLINED + "gs" + ConsoleHandler.RESET + "] " : "[gs] ";    
         }
 
-        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))) {
-            Room eastRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST));
+        if (this.currentFloor.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.EAST))) {
+            Room eastRoom = currentFloor.getRoom(coordinates.getAdjacent(Coordinates.Direction.EAST));
 
             if (eastRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleHandler.RED + "[ge - Something's off... ]" + ConsoleHandler.RESET;
             else directions += eastRoom.isVisited() ? "[" + ConsoleHandler.CYAN_UNDERLINED + "ge" + ConsoleHandler.RESET + "] " : "[ge] ";    
         }
 
-        if (this.currentLevel.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))) {
-            Room westRoom = currentLevel.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST));
+        if (this.currentFloor.areCoordinatesValid(coordinates.getAdjacent(Coordinates.Direction.WEST))) {
+            Room westRoom = currentFloor.getRoom(coordinates.getAdjacent(Coordinates.Direction.WEST));
 
             if (westRoom.getType() == RoomType.BOSS_ROOM) directions += ConsoleHandler.RED + "[gw - Something's off... ]" + ConsoleHandler.RESET;
             else directions += westRoom.isVisited() ? "[" + ConsoleHandler.CYAN_UNDERLINED + "gw" + ConsoleHandler.RESET + "] " : "[gw] ";    
