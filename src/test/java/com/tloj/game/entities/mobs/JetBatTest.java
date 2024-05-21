@@ -10,6 +10,14 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Coordinates;
 
+
+/**
+ * {@code JetBatTest} is a test class for the {@link JetBat} entity.<br>
+ * It tests the constructors for the level up mechanic.<br>
+ * It tests the ability of the JetBat to dodge player's attacks.<br>
+ * It also tests wether the ability triggers or not.<br>
+ */
+
 public class JetBatTest {
 
     @Test

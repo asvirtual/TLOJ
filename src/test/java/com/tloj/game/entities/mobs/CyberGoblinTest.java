@@ -10,6 +10,13 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
 
 
+/**
+ * {@code CyberGoblinTest} is a test class for the {@link CyberGoblin} entity.<br>
+ * It tests the constructors for the level up mechanic.<br>
+ * It tests the ability of the CyberGoblin to steal money from the player.<br>
+ * It also tests wether the ability triggers or not.<br>
+ */
+
 public class CyberGoblinTest {
     @Test
     void testConstructorLevelTwo() {

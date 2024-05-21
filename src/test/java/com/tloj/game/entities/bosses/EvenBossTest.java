@@ -19,9 +19,9 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 
 
 /**
- * {@code EvenBossTest} is a test class for the {@link EvenBoss} entity.
- * It tests the ability of the boss to only take damage from even-numbered rolls.
- * It also tests wether the ability triggers or not.
+ * {@code EvenBossTest} is a test class for the {@link EvenBoss} entity.<br>
+ * It tests the ability of the boss to only take damage from even-numbered rolls.<br>
+ * It also tests wether the ability triggers or not.<br>
  */
 
 public class EvenBossTest {

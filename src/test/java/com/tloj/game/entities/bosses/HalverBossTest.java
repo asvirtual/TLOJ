@@ -11,8 +11,8 @@ import com.tloj.game.utilities.Coordinates;
 
 
 /**
- * {@code HalverBossTest} is a test class for the {@link HalverBoss} entity.
- * It tests the ability of the boss to half the attacker weapon roll.
+ * {@code HalverBossTest} is a test class for the {@link HalverBoss} entity.<br>
+ * It tests the ability of the boss to half the attacker weapon roll.<br>
  */
 
 public class HalverBossTest {

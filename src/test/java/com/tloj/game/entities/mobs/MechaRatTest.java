@@ -10,6 +10,13 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Coordinates;
 
 
+/**
+ * {@code MechaRatTest} is a test class for the {@link MechaRat} entity.<br>
+ * It tests the constructors for the level up mechanic.<br>
+ * It tests the ability of the MechaRat to destroy a random item from the player inventory.<br>
+ * It also tests wether the ability triggers or not.<br>
+ */
+
 public class MechaRatTest {
     @Test
      void testConstructorLevelTwo() {

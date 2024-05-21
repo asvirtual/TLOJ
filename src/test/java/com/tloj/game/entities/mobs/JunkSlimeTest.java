@@ -8,6 +8,14 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.Coordinates;
 
+
+/**
+ * {@code JunkSlimeTest} is a test class for the {@link JunkSlime} entity.<br>
+ * It tests the constructors for the level up mechanic.<br>
+ * It tests the ability of the JunkSlime to poison the attacker.<br>
+ * It also tests wether the ability triggers or not.<br>
+ */
+
 public class JunkSlimeTest {
     private static final int MOCK_CHARACTER_MAX_HP = 20;
     
