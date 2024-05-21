@@ -24,7 +24,6 @@ import com.tloj.game.utilities.Dice;
  * It also tests wether the ability triggers or not.<br>
  */
 
-
 public class FlyingBossTest {
     private final InputStream originalSystemIn = System.in;
     private ByteArrayInputStream testIn = new ByteArrayInputStream("\n\n".getBytes());

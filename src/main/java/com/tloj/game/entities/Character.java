@@ -182,6 +182,10 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         return this.lvl;
     }
 
+    public int getXp() {
+        return this.xp;
+    }
+
     public int getMana() {
         return this.mana;
     }
