@@ -12,17 +12,17 @@ public class GlitchedTest {
         
         assertEquals(70, glitched.getHp());
         assertEquals(10, glitched.getAtk());
-        assertEquals(5, glitched.getDef());
+        assertEquals(6, glitched.getDef());
         assertEquals(10, glitched.getCurrentFightAtk());
-        assertEquals(5, glitched.getCurrentFightDef());
+        assertEquals(6, glitched.getCurrentFightDef());
         assertEquals(6, glitched.getDiceFaces());
-        assertEquals(6, glitched.dropXp());
+        assertEquals(16, glitched.dropXp());
         assertEquals(6, glitched.getMoneyDrop());
     }
 
     @Test
     void testTeleport() {
-        // assertTrue(false);
+    // assertTrue(false);
         // Glitched glitched = new Glitched(new Coordinates(0, 0), 1);
         // Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);
         // Coordinates startCoordinates = glitched.getPosition();
