@@ -18,6 +18,13 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.utilities.Dice;
 
 
+/**
+ * {@code FlyingBossTest} is a test class for the {@link FlyingBoss} entity.<br>
+ * It tests the ability of the boss to dodge attacks and heal for the attacker weapon roll.<br>
+ * It also tests wether the ability triggers or not.<br>
+ */
+
+
 public class FlyingBossTest {
     private final InputStream originalSystemIn = System.in;
     private ByteArrayInputStream testIn = new ByteArrayInputStream("\n\n".getBytes());

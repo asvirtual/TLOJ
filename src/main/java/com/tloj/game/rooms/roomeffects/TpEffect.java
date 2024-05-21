@@ -63,14 +63,14 @@ public class TpEffect extends RoomEffect {
 
         // Loop until a valid location is found
         do {
-            int row = (int) Math.floor(Math.random() * rows);
-            int col = (int) Math.floor(Math.random() * cols);
+            int y = (int) Math.floor(Math.random() * rows); // Returns a random number between 0 (inclusive) and rows (exclusive)
+            int x = (int) Math.floor(Math.random() * cols); // Returns a random number between 0 (inclusive) and cols (exclusive)
 
-            Coordinates newCoords = new Coordinates(row, col);
+            Coordinates newCoords = new Coordinates(x, y);
             this.newRoom = character.getCurrentFloor().getRoom(newCoords);
 
             // Skip if new location is the same as current location
-            if (newCoords == character.getPosition()) continue;
+            if (newCoords.equals(character.getPosition())) continue;
             // Skip if new location is not valid on the floor grid
             if (!floor.areCoordinatesValid(newCoords)) continue;
             // Skip if new location is a boss room
