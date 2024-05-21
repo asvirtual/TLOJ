@@ -14,6 +14,11 @@ import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.rooms.*;
 
 
+/**
+ * {@code DaburuTest} is a test class for the {@link Daburu} skill.<br>
+ * It tests its effect, if it consumes mana and that you cant use it with no mana.<br>
+ */
+
 public class DaburuTest {
     @Test
     void daburuTest() {

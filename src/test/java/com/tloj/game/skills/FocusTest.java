@@ -15,6 +15,11 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.rooms.*;
 
 
+/**
+ * {@code FocusTest} is a test class for the {@link Focus} skill.<br>
+ * It tests its effect, if it consumes mana and that you cant use it with no mana.<br>
+ */
+
 public class FocusTest {
     @Test
     void focusTest() {

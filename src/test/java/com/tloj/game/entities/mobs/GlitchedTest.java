@@ -18,6 +18,12 @@ import com.tloj.game.rooms.Room;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.Mob;
 
+
+/**
+ * {@code GlitchedTest} is a test class for the {@link Glitched} mob.<br>
+ * It tests its moving method and checks if it disappears after 4 encounters.<br>
+ */
+
 public class GlitchedTest {
     @Test
     void testConstructor() {

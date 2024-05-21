@@ -18,6 +18,12 @@ import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.rooms.TrapRoom;
 import com.tloj.game.utilities.Coordinates;
 
+
+/**
+ * {@code TpEffectTest} is a test class for the {@link TpEffect} effect on the teleport type trap room.<br>
+ * It tests the ability of the trap to teleport the player to a different room.<br>
+ */
+
 public class TpEffectTest {
 
     @Test

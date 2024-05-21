@@ -15,6 +15,11 @@ import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.rooms.*;
 
 
+/**
+ * {@code GuardTest} is a test class for the {@link Guard} skill.<br>
+ * It tests its effect, if it consumes mana and that you cant use it with no mana.<br>
+ */
+
 public class GuardTest {
     @Test
     public void guardTest(){

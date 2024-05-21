@@ -18,6 +18,12 @@ import com.tloj.game.collectables.weapons.NanoDirk;
 import com.tloj.game.rooms.*;
 
 
+/**
+ * {@code StealTest} is a test class for the {@link Steal} skill.<br>
+ * It tests its effect, if it consumes mana and that you cant use it with no mana.<br>
+ * It also tests wether it fails or not.<br>
+ */
+
 public class StealTest {
     @Test
     void stealSuccessTest() {
