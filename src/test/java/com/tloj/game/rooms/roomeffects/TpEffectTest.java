@@ -12,7 +12,7 @@ import com.tloj.game.entities.Inventory;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Game;
-import com.tloj.game.game.Floor;
+import com.tloj.game.game.Level;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.rooms.TrapRoom;
@@ -29,7 +29,7 @@ public class TpEffectTest {
 
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
-        ArrayList<Floor> levels = new ArrayList<>();
+        ArrayList<Level> levels = new ArrayList<>();
 
         Coordinates startCoordinates = new Coordinates(0, 0);
         TrapRoom mockRoom = new TrapRoom(startCoordinates, new TpEffect());
@@ -39,7 +39,7 @@ public class TpEffectTest {
         rooms.add(mockStartRoom);
         floor.add(rooms);
         
-        Floor level = new Floor(1, floor);
+        Level level = new Level(1, floor);
         levels.add(level);
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockRoom, new LaserBlade(), new Inventory(), startCoordinates);
