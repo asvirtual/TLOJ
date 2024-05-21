@@ -16,6 +16,12 @@ import com.tloj.game.rooms.TrapRoom;
 import com.tloj.game.utilities.Coordinates;
 
 
+/**
+ * {@code InflictDamageTest} is a test class for the {@link InflictDamage} effect on the damage type trap room.<br>
+ * It tests the ability of the trap to inflict damage to the player and if it can kill it.<br>
+ * It also tests wether it triggers or not.<br>
+ */
+
 public class InflictDamageTest {
 
     @Test

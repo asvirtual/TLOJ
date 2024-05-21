@@ -38,10 +38,14 @@ public class SmithTest {
 
     @Test
     void noWeaponShardToUpgradeTest() {
+        String input = "\n";
+        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
+        System.setIn(testIn);
+
         Controller.getInstance();
+
         Smith mockSmith = new Smith(new Coordinates(0, 0));
         Character mockCharacter = new BasePlayer(null);
-        mockCharacter.addInventoryItem(new WeaponShard());
         Item itemToGive = mockCharacter.getInventoryItem(new WeaponShard());
 
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();

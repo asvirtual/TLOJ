@@ -65,7 +65,6 @@ public class MechaRatTest {
         MechaRat mechaRat = new MechaRat(new Coordinates(0, 0), 1);
         Character mockCharacter = new BasePlayer(null);
         HealthPotion healthPotion = new HealthPotion();
-        mockCharacter.addInventoryItem(healthPotion);
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         while (!mechaRat.getAbility().wasUsed()) {

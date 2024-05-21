@@ -50,5 +50,4 @@ public class CheatEngineTest {
         assertEquals(initalDamage, finalDamage);
         assertEquals(mockCharacter.getMaxMana(), mockCharacter.getMana());
     }
-
 }
