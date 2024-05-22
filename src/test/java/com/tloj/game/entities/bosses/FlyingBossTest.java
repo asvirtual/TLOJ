@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.Inventory;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
@@ -58,7 +59,7 @@ public class FlyingBossTest {
         FlyingBoss flyingBoss = new FlyingBoss(new Coordinates(0, 0));
         int startHp = flyingBoss.getMaxHp() / 2;
         flyingBoss.setHp(startHp);
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, null, null);
+        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, null, new Inventory(), null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
         
         while (!flyingBoss.getAbility().wasUsed()) {
@@ -74,7 +75,7 @@ public class FlyingBossTest {
     @Test
     void testAbilityNotUsed() {  
         FlyingBoss flyingBoss = new FlyingBoss(new Coordinates(0, 0));
-        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), null, null);
+        Character mockCharacter = new BasePlayer(20, 4, 4, 10, 0, 1, 5, 10, null, null, new LaserBlade(), new Inventory(), null);
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
 
         while (true) {

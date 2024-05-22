@@ -55,7 +55,4 @@ public class CharacterFactoryTest {
         Floor level = new Floor(1, floor);
         floors.add(level);
     }
-
-    @Test
-    
 }

@@ -15,6 +15,7 @@ import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.entities.characters.BasePlayer;
 
+
 public class ControllerTest {
     private final InputStream originalSystemIn = System.in;
     private Coordinates startCoordinates = new Coordinates(0, 0);
@@ -27,6 +28,7 @@ public class ControllerTest {
         input = "test\n12345\nyes\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
+        Controller.instance = null;
         controller = Controller.getInstance();
         
         GameIndex.loadGames();
@@ -36,12 +38,6 @@ public class ControllerTest {
         controller.setGame(game);
         controller.handleUserInput("1");
     }
-/*
-    private void deliteGame() {
-        input += "yes\n";
-        controller.handleUserInput("exit");
-    }
-*/
 
     @BeforeEach
     void setUpMap(){
@@ -63,15 +59,14 @@ public class ControllerTest {
         Floor level = new Floor(1, floor);
         floors.add(level);
     }
-/*
     @AfterEach
     void tearDown() {
+        this.controller.setState(GameState.MAIN_MENU);
         controller = null;
         game = null;
         System.setIn(originalSystemIn);
     }
-*/
-//da capire perche dopo il primo test non crea il player 
+    
     @Test
     void moveTest() {
         this.setUpGame();
@@ -84,7 +79,6 @@ public class ControllerTest {
         this.setUpGame();
         controller.handleUserInput("gs");
         assertEquals(startCoordinates, game.getPlayer().getPosition());
-   //     deliteGame();
     }
 
      @Test

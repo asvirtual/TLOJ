@@ -1185,7 +1185,7 @@ public class Controller {
     /** 
      * Singleton Controller unique instance 
      */
-    private static Controller instance;
+    protected static Controller instance;
     private static Scanner scanner;
     private Game game;
     private int currentGameId;
