@@ -892,7 +892,8 @@ class NewGameCommand extends GameCommand {
         ConsoleHandler.clearConsole();
 
         System.out.print(ConsoleHandler.YELLOW + "Enter a custom name for this save: " + ConsoleHandler.RESET);
-        String saveName = Controller.getScanner().nextLine();
+        Scanner scanner = Controller.getScanner();
+        String saveName = scanner.nextLine();
         String seed;
 
         do {
