@@ -169,6 +169,10 @@ public abstract class Mob extends CombatEntity {
         this.dice = dice;
     }
 
+    public int rollDice() {
+        return this.dice.roll();
+    }
+ 
     public void setDrop(Item drop) {
         this.drop = drop;
     }

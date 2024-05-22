@@ -14,6 +14,7 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
 
+
 public class ControllerTest {
     private final InputStream originalSystemIn = System.in;
     private Coordinates startCoordinates = new Coordinates(0, 0);
