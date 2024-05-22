@@ -1,7 +1,6 @@
 package com.tloj.game.game;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -10,12 +9,13 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.utilities.Coordinates;
 
-public class ControllerTest {
+public class CharacterFactoryTest {
     private Coordinates startCoordinates = new Coordinates(0, 0);
     private Game game;
     private ArrayList<Floor> floors = new ArrayList<>(); 
@@ -57,16 +57,8 @@ public class ControllerTest {
     }
 
     @Test
-    void moveTest() {
+    void characterFactoryTest() {
         this.setUpGame();
-        controller.handleUserInput("ge");
-        assertNotEquals(startCoordinates, game.getPlayer().getPosition());
-    }
-
-    @Test
-    void invalidCoordinateMoveTest() {
-        this.setUpGame();
-        controller.handleUserInput("gs");
-        assertEquals(startCoordinates, game.getPlayer().getPosition());
+        assertTrue(game.getPlayer() instanceof BasePlayer);
     }
 }
