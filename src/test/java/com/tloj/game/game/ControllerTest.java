@@ -29,17 +29,6 @@ public class ControllerTest {
             e.printStackTrace();
         }
 
-        ArrayList<ArrayList<Room>> floor = new ArrayList<>();
-        ArrayList<Room> rooms = new ArrayList<>();
-        ArrayList<Floor> floors = new ArrayList<>();
-        StartRoom room = new StartRoom(startCoordinates);
-        rooms.add(room);
-        floor.add(rooms);
-
-        Floor level = new Floor(1, floor);
-        floors.add(level);
-
-        game = new Game(floors, 1);
     }
 
     @Test
@@ -53,6 +42,18 @@ public class ControllerTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Controller controller = Controller.getInstance();
+
+        ArrayList<ArrayList<Room>> floor = new ArrayList<>();
+        ArrayList<Room> rooms = new ArrayList<>();
+        ArrayList<Floor> floors = new ArrayList<>();
+        StartRoom room = new StartRoom(startCoordinates);
+        rooms.add(room);
+        floor.add(rooms);
+
+        Floor level = new Floor(1, floor);
+        floors.add(level);
+        
+        game = new Game(floors, 1);
         controller.setGame(game);
 
         controller.handleUserInput("new");
