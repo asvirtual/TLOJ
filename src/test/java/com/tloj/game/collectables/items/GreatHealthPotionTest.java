@@ -12,7 +12,7 @@ public class GreatHealthPotionTest {
 
     @Test
     void testConsume() {
-        Dice.setSeed(1);
+
 
         // Create BasePlayer, level up to 30 to have at least 55 max health
         Character mockCharacter = new BasePlayer(null);
