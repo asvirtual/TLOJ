@@ -1,4 +1,4 @@
-package com.tloj.game.utilities;
+package com.tloj.game.game;
 
 
 /**

@@ -2,12 +2,12 @@ package com.tloj.game.rooms;
 
 import java.util.ArrayList;
 
-import com.tloj.game.utilities.Coordinates;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 /**

@@ -2,7 +2,7 @@ package com.tloj.game.collectables.items;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.BasePlayer;
-import com.tloj.game.utilities.Dice;
+import com.tloj.game.game.Dice;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.ConsoleHandler;
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 /**

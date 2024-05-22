@@ -5,11 +5,11 @@ import org.fusesource.jansi.Ansi;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.utilities.ConsoleHandler;
-import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
 import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.game.Attack;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.skills.CharacterSkill;
@@ -169,6 +169,10 @@ public abstract class Mob extends CombatEntity {
         this.dice = dice;
     }
 
+    public int rollDice() {
+        return this.dice.roll();
+    }
+ 
     public void setDrop(Item drop) {
         this.drop = drop;
     }

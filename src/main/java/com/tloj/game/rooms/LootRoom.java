@@ -1,14 +1,13 @@
 package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.ConsoleHandler;
-import com.tloj.game.utilities.Coordinates;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Character;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 /**

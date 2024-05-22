@@ -9,9 +9,9 @@ import java.io.InputStream;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
 import com.tloj.game.entities.characters.BasePlayer;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;

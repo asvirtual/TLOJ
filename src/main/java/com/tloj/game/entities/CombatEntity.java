@@ -2,7 +2,7 @@ package com.tloj.game.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.game.Attack;
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.Coordinates;
 
 
 /**

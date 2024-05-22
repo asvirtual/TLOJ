@@ -6,7 +6,6 @@ import com.tloj.game.effects.WeaponEffect;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.ConsoleHandler;
-import com.tloj.game.utilities.Dice;
 
 
 /**

@@ -6,12 +6,12 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Inventory;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.Guard;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
 
 
 public class MechaKnight extends Character {

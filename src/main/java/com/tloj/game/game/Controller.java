@@ -25,9 +25,7 @@ import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.FirebaseHandler;
-import com.tloj.game.utilities.GameState;
 import com.tloj.game.utilities.JsonParser;
 import com.tloj.game.utilities.MusicPlayer;
 
@@ -70,10 +68,12 @@ abstract class GameCommand {
     protected Controller controller;
     protected List<GameState> invalidStates;
     protected List<GameState> validListStates;
+    protected int commandLength;
 
     protected GameCommand(Game game, String[] commands) {
         this.game = game;
         this.commands = commands;
+        this.commandLength = 1;
         if (this.game != null) this.player = game.getPlayer();
         this.controller = Controller.getInstance();
     }
@@ -84,6 +84,9 @@ abstract class GameCommand {
             (this.invalidStates != null && this.invalidStates.contains(this.controller.getState()))
         )
             throw new IllegalStateException("Invalid state to execute this command");
+
+        if (this.commands != null && this.commands.length != this.commandLength)
+            throw new IllegalArgumentException("Invalid command length! This command accepts " + (this.commandLength - 1) + " arguments");
     };
 }
 
@@ -296,6 +299,7 @@ class InventoryCommand extends GameCommand {
 class UseItemCommand extends GameCommand {
     public UseItemCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU
@@ -305,11 +309,6 @@ class UseItemCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleHandler.RESET);
-            return;
-        }
 
         if (this.player.hasUsedItem()) {
             System.out.println(ConsoleHandler.RED + "You've already used an item this turn" + ConsoleHandler.RESET);
@@ -362,6 +361,7 @@ class UseItemCommand extends GameCommand {
 class InfoItemCommand extends GameCommand {
     public InfoItemCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU
@@ -371,11 +371,6 @@ class InfoItemCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleHandler.RESET);
-            return;
-        }
         
         try {
             ConsoleHandler.clearConsole();
@@ -394,6 +389,7 @@ class InfoItemCommand extends GameCommand {
 class SwapWeaponCommand extends GameCommand {
     public SwapWeaponCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
             GameState.SMITH_FORGING,
@@ -407,11 +403,6 @@ class SwapWeaponCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: swap [weapon]" + ConsoleHandler.RESET);
-            return;
-        }
         
         try {
             ConsoleHandler.clearConsole();
@@ -440,6 +431,7 @@ class SwapWeaponCommand extends GameCommand {
 class DropItemCommand extends GameCommand {
     public DropItemCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU,
@@ -451,11 +443,6 @@ class DropItemCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: drop [item]" + ConsoleHandler.RESET);
-            return;
-        }
 
         if (!Controller.awaitConfirmation()) return;
 
@@ -799,6 +786,7 @@ class MerchantCommand extends GameCommand {
 class BuyCommand extends GameCommand {
     public BuyCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.MAIN_MENU
         );
@@ -807,11 +795,6 @@ class BuyCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: buy [item]" + ConsoleHandler.RESET);
-            return;
-        }
         
         if (!Controller.awaitConfirmation()) return;
 
@@ -856,6 +839,7 @@ class SmithCommand extends GameCommand {
 class GiveCommand extends GameCommand {
     public GiveCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 3;
         this.invalidStates = List.of(
             GameState.MAIN_MENU
         );
@@ -864,12 +848,6 @@ class GiveCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        
-        if (this.commands.length != 3) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: give [npc] [item]" + ConsoleHandler.RESET);
-            return;
-        }
-
         this.game.giveItem(commands[1], commands[2]);
     }
 }
@@ -914,40 +892,88 @@ class NewGameCommand extends GameCommand {
  */
 class LoadGameCommand extends GameCommand {
     public LoadGameCommand(Game game, String[] commands) {
+        super(game, commands);
+        this.validListStates = List.of(
+            GameState.MAIN_MENU
+        );
+    }
+
+    @Override
+    public void execute() throws IllegalStateException {
+        super.execute();
+
+        this.controller.getSaveHandler().loadAllCloud();
+        GameIndex.loadGames();
+        
+        ConsoleHandler.clearConsole();
+        int idx = 1;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+
+        System.out.println(ConsoleHandler.GREEN + "Saved games:" + ConsoleHandler.RESET + "\n");
+        for (String filename : GameIndex.getEntries()) {
+            try {
+                Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + filename);
+                System.out.println(
+                    idx++ + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " - " + game.getPlayer().getName() + 
+                    " - Created: " + formatter.format(game.getCreationTime())
+                );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        String choice;
+        int index = -1;
+
+        do {
+            System.out.print(ConsoleHandler.YELLOW + "Choose a save to load or press Enter to go back to main menu: " + ConsoleHandler.RESET);
+            choice = Controller.getScanner().nextLine();
+    
+            if (choice.isBlank()) {
+                ConsoleHandler.clearConsole();
+                System.out.println(Constants.GAME_TITLE);
+                this.controller.setState(GameState.MAIN_MENU);
+                return;
+            }
+    
+            try {
+                index = Integer.parseInt(choice);
+                ConsoleHandler.clearConsole();
+                this.controller.loadGame(index);
+            } catch (NumberFormatException e) {
+                System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
+            }
+        } while (!choice.isBlank() && (index < 1 || index > GameIndex.getEntries().size()));
+    }
+}
+
+/**
+ * Concrete command class to load last played game
+ * @see GameCommand
+ */
+class ContinueGameCommand extends GameCommand {
+    public ContinueGameCommand(Game game, String[] commands) {
         super(game, null);
         this.validListStates = List.of(
             GameState.MAIN_MENU
         );
     }
 
-    // TODO: actually load game/give choice to user
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+
+        this.controller.getSaveHandler().loadAllCloud();
+        GameIndex.loadGames();
         
-        ConsoleHandler.clearConsole();
-        int idx = 1;
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
-
-        GameIndex.getEntries().forEach(filename -> {
-            try {
-                Game game = JsonParser.loadFromFile(filename);
-                System.out.println(
-                    idx + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " " + game.getPlayer().getName() + 
-                    formatter.format(game.getCreationTime())
-                );
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-
-        try {
-            ConsoleHandler.clearConsole();
-            this.controller.loadGame(Integer.parseInt(commands[1]));
-        } catch (NumberFormatException e) {
-            System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
+        if (GameIndex.getEntries().isEmpty()) {
+            System.out.println(ConsoleHandler.RED + "No saved games found" + ConsoleHandler.RESET);
             return;
         }
+
+        // The first game is the last played game
+        this.controller.loadGame(1);
+        ConsoleHandler.clearConsole();
     }
 }
 
@@ -1361,7 +1387,6 @@ public class Controller {
         Controller.printSideBySideText(asciiArt, String.join("\n", this.game.generateMapLines()));
     }
 
-    // TODO: maybe only save the game when the player chooses a character, since without a character the game is not really started
     public void newGame(String name, String seed) {
         try {
             ArrayList<Floor> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
@@ -1374,6 +1399,7 @@ public class Controller {
             String saveName = name + Constants.SAVE_GAME_FILENAME_SEPARATOR + game.getCreationTime() + ".json";
             JsonParser.saveToFile(game, Constants.BASE_SAVES_DIRECTORY + saveName);
             this.currentGameId = GameIndex.addEntry(saveName);
+            this.game.setId(this.currentGameId);
 
             this.setState(GameState.CHOOSING_CHARACTER);
             this.setGame(game);
@@ -1411,6 +1437,7 @@ public class Controller {
         Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
             Map.ofEntries(
                 Map.entry("new", () -> new NewGameCommand(this.game, commands)),
+                Map.entry("continue", () -> new ContinueGameCommand(this.game, commands)),
                 Map.entry("load", () -> new LoadGameCommand(this.game, commands)),
                 Map.entry("exit", () -> new ExitGameCommand(this.game, commands)),
                 Map.entry("gn", () -> new MoveNorthCommand(this.game, commands)),
@@ -1494,7 +1521,7 @@ public class Controller {
     @JsonIgnore
     public String getAvailableCommands() {
         return switch (this.getState()) {
-            case MAIN_MENU -> "[new] - [load] - [exit]";
+            case MAIN_MENU -> "[new] - [continue] - [load] - [exit]";
             case FIGHTING_BOSS, FIGHTING_MOB -> "[atk] - [skill] - [use *number*] - [inv]";
             case LOOTING_ROOM -> "[inv] - [use *number*] - [drop *number*] - " + this.game.getAvailableDirections();
             case MOVING -> this.game.getAvailableDirections();

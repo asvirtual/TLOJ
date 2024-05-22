@@ -43,6 +43,11 @@ public class FirebaseHandler {
      * Uploads a JSON file with the specified filename to Firebase Storage.
      */
     public void saveToCloud(String filename) {
+        if (!NetworkUtils.isInternetAvailable()) {
+            System.out.println(ConsoleHandler.RED + "No internet connection. Save to cloud failed." + ConsoleHandler.RESET);
+            return;
+        }
+
         Bucket bucket = StorageClient.getInstance().bucket();
 
         try {
@@ -62,6 +67,11 @@ public class FirebaseHandler {
     }
 
     public void loadAllCloud() {
+        if (!NetworkUtils.isInternetAvailable()) {
+            System.out.println(ConsoleHandler.RED + "No internet connection. Couldn't load games from cloud." + ConsoleHandler.RESET);
+            return;
+        }
+
         Bucket bucket = StorageClient.getInstance().bucket();
         Page<Blob> blobs = bucket.list();
         
@@ -79,6 +89,11 @@ public class FirebaseHandler {
     }
 
     public void deleteFromCloud(String filename) {
+        if (!NetworkUtils.isInternetAvailable()) {
+            System.out.println(ConsoleHandler.RED + "No internet connection. Save to cloud failed." + ConsoleHandler.RESET);
+            return;
+        }
+        
         if (filename == null) return;
         Bucket bucket = StorageClient.getInstance().bucket();
         Blob blob = bucket.get(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""));

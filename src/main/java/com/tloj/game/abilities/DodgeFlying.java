@@ -13,11 +13,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * An ability that allows the mob to dodge an attack with a 25% probability. <br>
  * It is paired with the {@link JetBat}.
  */
-public class JetBatAbility extends MobAbility {
+public class DodgeFlying extends MobAbility {
     private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "JetBat was so quick it dodged the attack!" + ConsoleHandler.RESET;
 
     @JsonCreator
-    public JetBatAbility(@JsonProperty("user") Mob user) {
+    public DodgeFlying(@JsonProperty("user") Mob user) {
         super(user, ACTIVATION_MESSAGE);
     }
 

@@ -13,9 +13,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * It is paired with the {@link FlyingBoss}.
  */
 
-public class DodgeSlowAttackFlying extends BossAbility {
+public class VampireDodge extends BossAbility {
     @JsonCreator
-    public DodgeSlowAttackFlying(@JsonProperty("user") Boss boss) {
+    public VampireDodge(@JsonProperty("user") Boss boss) {
         super(boss);
     }
 

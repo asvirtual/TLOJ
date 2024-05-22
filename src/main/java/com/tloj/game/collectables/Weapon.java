@@ -1,7 +1,7 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.Dice;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

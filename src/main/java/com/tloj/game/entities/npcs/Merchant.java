@@ -20,10 +20,10 @@ import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.Inventory;
 import com.tloj.game.entities.ItemsHolderEntity;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.GameState;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.GameState;
 
 
 /**

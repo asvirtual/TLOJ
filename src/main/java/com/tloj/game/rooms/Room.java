@@ -2,9 +2,9 @@ package com.tloj.game.rooms;
 
 import java.util.ArrayList;
 
-import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.FriendlyEntity;
 import com.tloj.game.entities.Character;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.roomeffects.RoomEffect;
 

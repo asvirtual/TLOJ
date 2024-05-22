@@ -2,6 +2,7 @@ package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.RoomType;
@@ -9,7 +10,6 @@ import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.collectables.items.NorthStar;
 
 /**
@@ -20,7 +20,7 @@ import com.tloj.game.collectables.items.NorthStar;
  * @see StealMoney
  */
 
-public class TpEffect extends RoomEffect {
+public class Teleport extends RoomEffect {
     /**
      * The visitor able to visit the new room after teleportation.
      */
@@ -31,7 +31,7 @@ public class TpEffect extends RoomEffect {
      */
     private Room newRoom;
 
-    public TpEffect() {
+    public Teleport() {
         this.sideEffect = new Runnable() {
             @Override
             public void run() {

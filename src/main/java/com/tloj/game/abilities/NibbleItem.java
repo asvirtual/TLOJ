@@ -14,11 +14,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * An ability that allows the mob to destroy a random item from the player's inventory once per fight with a 20% probability <br>
  * It is paired with the {@link MechaRat}.
  */
-public class RatBiteAbility extends MobAbility {
+public class NibbleItem extends MobAbility {
     private boolean abilityUsed;
     
     @JsonCreator
-    public RatBiteAbility(@JsonProperty("user") Mob user) {
+    public NibbleItem(@JsonProperty("user") Mob user) {
         super(user);
         this.abilityUsed = false;
     }

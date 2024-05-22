@@ -12,9 +12,9 @@ import com.tloj.game.utilities.ConsoleHandler;
  * An ability that poisons the attacker with a 45% probability. The player then takes the mob's level as damage per turn during fight <br>
  * It is paired with the {@link JunkSlime}.
  */
-public class CyberPoisonAbility extends MobAbility {
+public class CyberPoison extends MobAbility {
     @JsonCreator
-    public CyberPoisonAbility(@JsonProperty("user") Mob user) {
+    public CyberPoison(@JsonProperty("user") Mob user) {
         super(user);
         this.activationMessage = ConsoleHandler.PURPLE + "Oh no! Jordan was poisoned and took " + user.getLvl() + " damage!" + ConsoleHandler.RESET;
     }

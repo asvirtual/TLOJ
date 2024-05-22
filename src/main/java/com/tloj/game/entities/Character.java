@@ -14,13 +14,13 @@ import com.tloj.game.collectables.Weapon;
 import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.game.CharacterObserver;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.skills.CharacterSkill;
 import com.tloj.game.utilities.ConsoleHandler;
-import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
 
 import org.fusesource.jansi.Ansi;
 
@@ -119,6 +119,7 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.observers = new ArrayList<CharacterObserver>();
 
         this.updateRequiredXp();
+        this.inventory.setHolder(this);
     }
 
     /** 
@@ -176,6 +177,10 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
 
     public boolean canAfford(PurchasableItem item) {
         return this.money >= item.getPrice();
+    }
+
+    public int getXp() {
+        return this.xp;
     }
 
     public int getLvl() {

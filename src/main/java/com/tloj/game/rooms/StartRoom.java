@@ -1,7 +1,7 @@
 package com.tloj.game.rooms;
 
 import com.tloj.game.utilities.ConsoleHandler;
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
 
 import com.fasterxml.jackson.annotation.JsonCreator;

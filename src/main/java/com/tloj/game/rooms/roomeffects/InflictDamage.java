@@ -2,16 +2,16 @@ package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Dice;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Dice;
 
 /**
  * Class that implements a room effect that inflicts damage to the character<br>
  * Inflicts {@value #DAMAGE} damage to the player if it rolls {@literal <} 5 on D6<br>
  * @see RoomEffect
  * @see StealMoney
- * @see TpEffect
+ * @see Teleport
  */
 
 public class InflictDamage extends RoomEffect {

@@ -2,8 +2,8 @@ package com.tloj.game.rooms;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.PlayerRoomVisitor;
-import com.tloj.game.utilities.Coordinates;
 
 /**
  * Represents the end room in the game.<br>

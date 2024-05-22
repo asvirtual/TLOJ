@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
-import com.tloj.game.utilities.Dice;
+import com.tloj.game.game.Dice;
 
 
 /**
