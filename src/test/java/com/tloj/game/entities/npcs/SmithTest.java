@@ -5,10 +5,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 
-import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.WeaponShard;
 

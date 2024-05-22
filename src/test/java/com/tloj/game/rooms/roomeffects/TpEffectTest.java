@@ -11,12 +11,19 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.Inventory;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.rooms.TrapRoom;
-import com.tloj.game.utilities.Coordinates;
+
+
+/**
+ * {@code TpEffectTest} is a test class for the {@link Teleport} effect on the teleport type trap room.<br>
+ * It tests the ability of the trap to teleport the player to a different room.<br>
+ */
 
 public class TpEffectTest {
 
@@ -32,7 +39,7 @@ public class TpEffectTest {
         ArrayList<Floor> levels = new ArrayList<>();
 
         Coordinates startCoordinates = new Coordinates(0, 0);
-        TrapRoom mockRoom = new TrapRoom(startCoordinates, new TpEffect());
+        TrapRoom mockRoom = new TrapRoom(startCoordinates, new Teleport());
         StartRoom mockStartRoom = new StartRoom(new Coordinates(0, 1));
         
         rooms.add(mockRoom);

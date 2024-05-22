@@ -3,12 +3,12 @@ package com.tloj.game.entities.mobs;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.MovingEntity;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
 
 import org.fusesource.jansi.Ansi;
 

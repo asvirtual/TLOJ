@@ -23,9 +23,6 @@ import com.tloj.game.rooms.RoomType;
 import com.tloj.game.skills.CharacterSkill;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
-import com.tloj.game.utilities.GameState;
 import com.tloj.game.utilities.JsonParser;
 
 

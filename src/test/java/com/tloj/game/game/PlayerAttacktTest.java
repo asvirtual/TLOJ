@@ -13,8 +13,6 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.Inventory;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.mobs.CyberGoblin;
-import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
 
 
 /**

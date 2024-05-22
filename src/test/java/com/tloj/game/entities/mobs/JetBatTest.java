@@ -8,7 +8,7 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.Coordinates;
 
 
 /**

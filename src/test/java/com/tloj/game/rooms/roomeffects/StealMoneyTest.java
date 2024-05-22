@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.TrapRoom;
-import com.tloj.game.utilities.Coordinates;
 
 
 public class StealMoneyTest {

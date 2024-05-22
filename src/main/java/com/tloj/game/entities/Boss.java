@@ -1,13 +1,13 @@
 package com.tloj.game.entities;
 
 import com.tloj.game.utilities.ConsoleHandler;
-import com.tloj.game.utilities.Coordinates;
 
 import org.fusesource.jansi.Ansi;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.collectables.Item;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.MobAttack;
 import com.tloj.game.skills.CharacterSkill;
 

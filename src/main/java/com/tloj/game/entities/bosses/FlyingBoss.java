@@ -1,7 +1,6 @@
 package com.tloj.game.entities.bosses;
 
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.abilities.BossAbility;
@@ -9,6 +8,7 @@ import com.tloj.game.abilities.DodgeEvenRoll;
 import com.tloj.game.abilities.VampireDodge;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
+import com.tloj.game.game.Coordinates;
 
 /**
  * Represents the FlyingBoss Boss entity in the game.<br>

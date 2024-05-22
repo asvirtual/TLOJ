@@ -1,6 +1,6 @@
 package com.tloj.game.entities;
 
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.Coordinates;
 
 
 /**

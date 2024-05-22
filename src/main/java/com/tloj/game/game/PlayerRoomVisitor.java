@@ -3,7 +3,6 @@ package com.tloj.game.game;
 import com.tloj.game.rooms.*;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.GameState;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.Emp;
 import com.tloj.game.collectables.items.SpecialKey;

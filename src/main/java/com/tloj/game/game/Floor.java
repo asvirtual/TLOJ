@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.RoomType;
 import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.utilities.Coordinates;
 
 
 /**

@@ -3,7 +3,7 @@ package com.tloj.game.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.Coordinates;
 
 
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON

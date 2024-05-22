@@ -1,11 +1,10 @@
 package com.tloj.game.abilities;
 
 import com.tloj.game.utilities.ConsoleHandler;
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.mobs.CyberGoblin;
-import com.tloj.game.utilities.Dice;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

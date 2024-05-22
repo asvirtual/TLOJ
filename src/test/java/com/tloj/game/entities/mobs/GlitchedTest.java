@@ -12,14 +12,16 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.Inventory;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.rooms.TrapRoom;
-import com.tloj.game.rooms.roomeffects.TpEffect;
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.rooms.roomeffects.Teleport;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.entities.Mob;
 
 public class GlitchedTest {

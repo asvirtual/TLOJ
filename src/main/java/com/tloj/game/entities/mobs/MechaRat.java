@@ -3,8 +3,8 @@ package com.tloj.game.entities.mobs;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.NibbleItem;
 
 

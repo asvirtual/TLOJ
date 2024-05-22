@@ -8,9 +8,9 @@ import com.tloj.game.entities.characters.MechaKnight;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.MobAttack;
-import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
 import com.tloj.game.collectables.weapons.PlasmaGreatsword;
 import com.tloj.game.rooms.*;
 

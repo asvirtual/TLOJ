@@ -5,10 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.tloj.game.entities.characters.DataThief;
 import com.tloj.game.entities.mobs.CyberGoblin;
+import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.entities.Character;
-import com.tloj.game.utilities.Dice;
 
 
 public class NanoDirkTest {

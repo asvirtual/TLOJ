@@ -2,16 +2,16 @@ package com.tloj.game.rooms.roomeffects;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
+import com.tloj.game.game.Dice;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Dice;
 
 /**
  * Class that implements a room effect that steals money from the character<br>
  * Steals {@value #COST} money from the player if it doesn't roll 6 on D6<br>
  * @see RoomEffect
  * @see InflictDamage
- * @see TpEffect
+ * @see Teleport
  */
 
 public class StealMoney extends RoomEffect {

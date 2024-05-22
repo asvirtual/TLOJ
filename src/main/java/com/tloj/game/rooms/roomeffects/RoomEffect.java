@@ -17,7 +17,7 @@ import com.tloj.game.entities.Character;
  * This interface is meant to be implemented by classes that represent effects that can be applied to a character when they enter a room, guaranteeing modularity.<br>
  * @see InflictDamage
  * @see StealMoney
- * @see TpEffect
+ * @see Teleport
  */
 public abstract class RoomEffect {
     // Runnable side effect to be executed when the effect is applied

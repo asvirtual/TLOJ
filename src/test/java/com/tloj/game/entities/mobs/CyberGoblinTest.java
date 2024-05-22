@@ -3,9 +3,15 @@ package com.tloj.game.entities.mobs;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.tloj.game.utilities.Coordinates;
-import com.tloj.game.utilities.Dice;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+
 import com.tloj.game.entities.characters.BasePlayer;
+import com.tloj.game.game.Controller;
+import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
 

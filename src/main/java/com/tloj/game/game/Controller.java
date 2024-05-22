@@ -25,9 +25,7 @@ import com.tloj.game.entities.npcs.Merchant;
 import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.FirebaseHandler;
-import com.tloj.game.utilities.GameState;
 import com.tloj.game.utilities.JsonParser;
 import com.tloj.game.utilities.MusicPlayer;
 
@@ -1421,7 +1419,7 @@ public class Controller {
             String saveName = name + Constants.SAVE_GAME_FILENAME_SEPARATOR + game.getCreationTime() + ".json";
             JsonParser.saveToFile(game, Constants.BASE_SAVES_DIRECTORY + saveName);
             this.currentGameId = GameIndex.addEntry(saveName);
-            this.game.setId(currentGameId);
+            this.game.setId(this.currentGameId);
 
             this.setState(GameState.CHOOSING_CHARACTER);
             this.setGame(game);
