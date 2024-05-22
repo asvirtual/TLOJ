@@ -3,7 +3,7 @@ package com.tloj.game.entities.bosses;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.abilities.DodgeEvenRollAttack;
 import com.tloj.game.abilities.DodgeSlowAttackFlying;
-import com.tloj.game.abilities.TakeHalfDamage;
+import com.tloj.game.abilities.TakeHalfDamageAbility;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -22,7 +22,7 @@ import com.tloj.game.utilities.Constants;
  * @see HalverBoss
  * @see BossAbility
  * @see DodgeSlowAttackFlying
- * @see TakeHalfDamage
+ * @see TakeHalfDamageAbility
  * @see WeaponShard
  */
 

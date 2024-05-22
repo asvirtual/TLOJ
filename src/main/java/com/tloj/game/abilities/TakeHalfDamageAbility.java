@@ -13,11 +13,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * It is paired with the {@link HalverBoss}.<br>
  * @see Boss 
  */
-public class TakeHalfDamage extends BossAbility {
+public class TakeHalfDamageAbility extends BossAbility {
     private final static String ACTIVATION_MESSAGE = ConsoleHandler.PURPLE + "The boss used its mighty ability and halved you roll!" + ConsoleHandler.RESET;
 
     @JsonCreator
-    public TakeHalfDamage(@JsonProperty("user") Boss boss) {
+    public TakeHalfDamageAbility(@JsonProperty("user") Boss boss) {
         super(boss, ACTIVATION_MESSAGE);
     }
 
