@@ -1,9 +1,13 @@
 package com.tloj.game.entities.mobs;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.tloj.game.collectables.weapons.LaserBlade;
@@ -15,6 +19,7 @@ import com.tloj.game.game.Game;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.utilities.Dice;
 import com.tloj.game.entities.Mob;
 
 
@@ -23,6 +28,33 @@ import com.tloj.game.entities.Mob;
  * It tests its moving method and checks if it disappears after 4 encounters.<br>
  */
 public class GlitchedTest {
+    private final InputStream originalSystemIn = System.in;
+    private Thread inputThread;
+    
+    @BeforeEach
+    public void setUpInput() {
+        this.inputThread =  new Thread(() -> {
+            while (true) {
+                System.setIn(new ByteArrayInputStream("\n\n".getBytes()));
+                try {
+                    Thread.sleep(100);  // Sleep for a short time to ensure the input is read
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        inputThread.start();
+        Dice.setSeed(1);
+        Controller.getInstance();
+    }
+
+    @AfterEach
+    public void restoreSystemIn() {
+        this.inputThread.interrupt();
+        System.setIn(originalSystemIn);
+    }
+
     @Test
     void testConstructor() {
         Glitched glitched = new Glitched(new Coordinates(0, 0), 1);
@@ -100,7 +132,7 @@ public class GlitchedTest {
         Floor level = new Floor(1, floor);
         levels.add(level);
         
-        BasePlayer mockCharacter = new BasePlayer(1, 3, 3, 10, 0, 1, 5, 10, level, mockRoomFrom, new LaserBlade(), new Inventory(), startCoordinates);
+        BasePlayer mockCharacter = new BasePlayer(50, 3, 3, 10, 0, 1, 5, 10, level, mockRoomFrom, new LaserBlade(), new Inventory(), startCoordinates);
         Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0);
         Controller.getInstance().setGame(mockGame);
         
@@ -110,6 +142,7 @@ public class GlitchedTest {
                 Mob mobToCheck = roomToCheck.getMob();
                 if (mobToCheck != null) {
                     mockCharacter.move(mobToCheck.getPosition());
+                    mockCharacter.setHp(mockCharacter.getMaxHp());
                     mobToCheck.attack(mockCharacter);
                 }
             }

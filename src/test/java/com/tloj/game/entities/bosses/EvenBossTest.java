@@ -26,7 +26,7 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 
 public class EvenBossTest {
     private final InputStream originalSystemIn = System.in;
-    Thread inputThread;
+    private Thread inputThread;
     
     @BeforeEach
     public void setUpInput() {
