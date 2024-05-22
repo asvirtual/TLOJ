@@ -1,7 +1,7 @@
 package com.tloj.game.collectables.weapons;
 
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.effects.ManaAttackBooster;
+import com.tloj.game.collectables.weaponeffects.ManaAttackBooster;
 import com.tloj.game.utilities.Constants;
 import com.fasterxml.jackson.annotation.JsonCreator;
 

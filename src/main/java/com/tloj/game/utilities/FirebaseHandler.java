@@ -11,14 +11,13 @@ import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
-
 import com.google.api.gax.paging.Page;
 
 
 public class FirebaseHandler {
     private static FirebaseHandler instance;
 
-    private FirebaseHandler() {
+    private FirebaseHandler() { 
         try {
             FileInputStream serviceAccount = new FileInputStream(Constants.FIREBASE_SERVICE_ACCOUNT_FILE);
 
@@ -27,7 +26,7 @@ public class FirebaseHandler {
                     .setStorageBucket("the-legend-of-jordan.appspot.com")
                     .build();
     
-            FirebaseApp.initializeApp(options);          
+            FirebaseApp.initializeApp(options);
         } catch (IOException e) {
             System.out.println("Error opening Firebase service account file");
             e.printStackTrace();

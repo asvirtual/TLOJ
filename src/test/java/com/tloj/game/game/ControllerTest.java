@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.game.Coordinates;
+
 
 public class ControllerTest {
     private Coordinates startCoordinates = new Coordinates(0, 0);

@@ -178,7 +178,7 @@
           "cleared": false,
           "locked": false,
           "effect": {
-            "@class": "com.tloj.game.rooms.roomeffects.TpEffect"
+            "@class": "com.tloj.game.rooms.roomeffects.Teleport"
           }
         }
       ],

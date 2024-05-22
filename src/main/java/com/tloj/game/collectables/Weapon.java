@@ -1,11 +1,11 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.collectables.weaponeffects.WeaponEffect;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.tloj.game.effects.WeaponEffect;
 
 
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON

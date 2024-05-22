@@ -2,7 +2,7 @@ package com.tloj.game.game;
 
 import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.effects.WeaponEffect;
+import com.tloj.game.collectables.weaponeffects.WeaponEffect;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.ConsoleHandler;

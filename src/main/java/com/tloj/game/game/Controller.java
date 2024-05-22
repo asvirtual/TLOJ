@@ -1391,9 +1391,8 @@ public class Controller {
         try {
             ArrayList<Floor> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
 
-            Game game;
-            if (seed.isBlank()) game = new Game(map);
-            else game = new Game(map, Long.parseLong(seed));
+            if (seed.isBlank()) this.game = new Game(map);
+            else this.game = new Game(map, Long.parseLong(seed));
 
             // TODO: Sanitize the save name
             String saveName = name + Constants.SAVE_GAME_FILENAME_SEPARATOR + game.getCreationTime() + ".json";
