@@ -24,29 +24,29 @@ import com.tloj.game.utilities.Dice;
 
 public class PlayerAttacktTest {
     private final InputStream originalSystemIn = System.in;
-    Thread inputThread;
-    
+   
     @BeforeEach
     public void setUpInput() {
-        this.inputThread =  new Thread(() -> {
-            while (true) {
-                System.setIn(new ByteArrayInputStream("\n\n".getBytes()));
-                try {
-                    Thread.sleep(100);  // Sleep for a short time to ensure the input is read
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        try {
+            Thread.sleep(100); 
+            
+            String input = "";
+            for (int i = 0; i < 10000; i++) {
+                input += "\n";
             }
-        });
 
-        inputThread.start();
-        Dice.setSeed(1);
-        Controller.getInstance();
+            System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+            Dice.setSeed(1);
+            Controller.getInstance();
+        }
+        catch(InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        this.inputThread.interrupt();
         System.setIn(originalSystemIn);
     }
 
