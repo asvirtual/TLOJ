@@ -24,19 +24,31 @@ import com.tloj.game.utilities.Dice;
 
 public class PlayerAttacktTest {
     private final InputStream originalSystemIn = System.in;
-    private ByteArrayInputStream testIn = new ByteArrayInputStream("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n".getBytes());
+    Thread inputThread;
     
     @BeforeEach
     public void setUpInput() {
-        Dice.setSeed(7);
-        System.setIn(testIn);
+        this.inputThread =  new Thread(() -> {
+            while (true) {
+                System.setIn(new ByteArrayInputStream("\n\n".getBytes()));
+                try {
+                    Thread.sleep(100);  // Sleep for a short time to ensure the input is read
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        inputThread.start();
+        Dice.setSeed(1);
         Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
+        this.inputThread.interrupt();
         System.setIn(originalSystemIn);
-    }    
+    }
 
     @Test
     void testAttack() {
@@ -85,7 +97,6 @@ public class PlayerAttacktTest {
         PlayerAttack playerAttack = new PlayerAttack(player, enemy);
         
         while(inventory.getSize() == 0) {
-            System.setIn(testIn);
             playerAttack.perform();
             player.lootMob(enemy);
             enemy = new CyberGoblin(new Coordinates(0,0), 1);
