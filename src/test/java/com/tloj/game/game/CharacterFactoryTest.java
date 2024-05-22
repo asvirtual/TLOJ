@@ -13,7 +13,7 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.utilities.Coordinates;
+import com.tloj.game.game.Coordinates;
 
 public class CharacterFactoryTest {
     private Coordinates startCoordinates = new Coordinates(0, 0);

@@ -15,6 +15,7 @@ import com.tloj.game.game.Controller;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 
 
 /**

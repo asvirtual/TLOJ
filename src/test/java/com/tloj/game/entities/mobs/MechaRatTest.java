@@ -15,6 +15,7 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 
 
 /**

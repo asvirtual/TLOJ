@@ -3,7 +3,7 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.entities.Character;
 import com.tloj.game.rooms.roomeffects.InflictDamage;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.Dice;
+import com.tloj.game.game.Dice;
 import com.tloj.game.utilities.JsonParser;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
