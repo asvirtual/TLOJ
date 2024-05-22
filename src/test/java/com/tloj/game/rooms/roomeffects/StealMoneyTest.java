@@ -15,6 +15,12 @@ import com.tloj.game.rooms.TrapRoom;
 import com.tloj.game.utilities.Coordinates;
 
 
+/**
+ * {@code StealMoneyTest} is a test class for the {@link StealMoney} effect on the steal money type trap room.<br>
+ * It tests the ability of the trap to steal money from the player.<br>
+ * It also tests wether it triggers or not.<br>
+ */
+
 public class StealMoneyTest {
     
     @Test

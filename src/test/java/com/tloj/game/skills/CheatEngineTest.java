@@ -13,6 +13,12 @@ import com.tloj.game.utilities.Dice;
 import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.rooms.*;
 
+
+/**
+ * {@code CheatEngineTest} is a test class for the {@link CheatEngine} skill.<br>
+ * It tests its effect, if it consumes mana and that you cant use it with no mana.<br>
+ */
+
 public class CheatEngineTest {
     @Test
     public void cheatEngineTest() {
