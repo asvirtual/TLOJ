@@ -20,6 +20,7 @@ import com.tloj.game.rooms.*;
  */
 
 public class CheatEngineTest {
+    
     @Test
     public void cheatEngineTest() {
         Dice.setSeed(1);
