@@ -71,9 +71,6 @@ public class GlitchedTest {
 
     @Test
     void testTeleport() {
-        String input = "\n\n\n\n";
-        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
-        System.setIn(testIn);
         
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
@@ -107,9 +104,6 @@ public class GlitchedTest {
     
     @Test
     void disappearTest() {
-        String input = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
-        ByteArrayInputStream testIn = new ByteArrayInputStream(input.getBytes());
-        System.setIn(testIn);
         
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
