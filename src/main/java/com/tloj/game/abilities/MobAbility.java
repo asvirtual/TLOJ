@@ -1,4 +1,4 @@
-package com.tloj.game.abilities;
+ package com.tloj.game.abilities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
