@@ -1391,7 +1391,6 @@ public class Controller {
         try {
             ArrayList<Floor> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
 
-            Game game;
             if (seed.isBlank()) game = new Game(map);
             else game = new Game(map, Long.parseLong(seed));
 

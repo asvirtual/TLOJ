@@ -57,8 +57,5 @@ public class CharacterFactoryTest {
     }
 
     @Test
-    void characterFactoryTest() {
-        this.setUpGame();
-        assertTrue(game.getPlayer() instanceof BasePlayer);
-    }
+    
 }

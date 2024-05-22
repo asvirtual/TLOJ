@@ -1,28 +1,30 @@
 package com.tloj.game.game;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.game.Coordinates;
+import com.tloj.game.entities.characters.BasePlayer;
 
 public class ControllerTest {
+    private final InputStream originalSystemIn = System.in;
     private Coordinates startCoordinates = new Coordinates(0, 0);
     private Game game;
     private ArrayList<Floor> floors = new ArrayList<>(); 
     private Controller controller;
+    String input;
     
     private void setUpGame() {
-        String input = "test\n12345\nyes\n";
+        input = "test\n12345\nyes\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         controller = Controller.getInstance();
@@ -34,6 +36,12 @@ public class ControllerTest {
         controller.setGame(game);
         controller.handleUserInput("1");
     }
+/*
+    private void deliteGame() {
+        input += "yes\n";
+        controller.handleUserInput("exit");
+    }
+*/
 
     @BeforeEach
     void setUpMap(){
@@ -55,7 +63,15 @@ public class ControllerTest {
         Floor level = new Floor(1, floor);
         floors.add(level);
     }
-
+/*
+    @AfterEach
+    void tearDown() {
+        controller = null;
+        game = null;
+        System.setIn(originalSystemIn);
+    }
+*/
+//da capire perche dopo il primo test non crea il player 
     @Test
     void moveTest() {
         this.setUpGame();
@@ -68,5 +84,12 @@ public class ControllerTest {
         this.setUpGame();
         controller.handleUserInput("gs");
         assertEquals(startCoordinates, game.getPlayer().getPosition());
+   //     deliteGame();
+    }
+
+     @Test
+    void characterFactoryTest() {
+        this.setUpGame();
+        assertTrue(game.getPlayer() instanceof BasePlayer);
     }
 }

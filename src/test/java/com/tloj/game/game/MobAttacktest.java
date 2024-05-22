@@ -21,7 +21,7 @@ import com.tloj.game.entities.mobs.CyberGoblin;
 
 public class MobAttackTest {
     private final InputStream originalSystemIn = System.in;
-   
+
     @BeforeEach
     public void setUpInput() {
         try {
