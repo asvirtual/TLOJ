@@ -19,7 +19,7 @@ import com.tloj.game.entities.mobs.CyberGoblin;
  * It tests the attack method with its formula, the player's defense and if its possible to kill the player.<br>
  */
 
-public class MobAttacktest {
+public class MobAttackTest {
     private final InputStream originalSystemIn = System.in;
    
     @BeforeEach

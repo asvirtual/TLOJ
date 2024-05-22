@@ -10,7 +10,6 @@ import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
-import com.tloj.game.game.Dice;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
@@ -18,7 +17,6 @@ import com.tloj.game.rooms.TrapRoom;
 
 
 public class InflictDamageTest {
-
     @Test
     public void applyEffectTest() {
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();

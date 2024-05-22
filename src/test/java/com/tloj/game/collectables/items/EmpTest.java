@@ -6,7 +6,6 @@ import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.JsonParser;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
-import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.PlayerRoomVisitor;

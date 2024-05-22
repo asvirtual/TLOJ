@@ -68,10 +68,12 @@ abstract class GameCommand {
     protected Controller controller;
     protected List<GameState> invalidStates;
     protected List<GameState> validListStates;
+    protected int commandLength;
 
     protected GameCommand(Game game, String[] commands) {
         this.game = game;
         this.commands = commands;
+        this.commandLength = 1;
         if (this.game != null) this.player = game.getPlayer();
         this.controller = Controller.getInstance();
     }
@@ -82,6 +84,9 @@ abstract class GameCommand {
             (this.invalidStates != null && this.invalidStates.contains(this.controller.getState()))
         )
             throw new IllegalStateException("Invalid state to execute this command");
+
+        if (this.commands != null && this.commands.length != this.commandLength)
+            throw new IllegalArgumentException("Invalid command length! This command accepts " + (this.commandLength - 1) + " arguments");
     };
 }
 
@@ -294,6 +299,7 @@ class InventoryCommand extends GameCommand {
 class UseItemCommand extends GameCommand {
     public UseItemCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU
@@ -303,11 +309,6 @@ class UseItemCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleHandler.RESET);
-            return;
-        }
 
         if (this.player.hasUsedItem()) {
             System.out.println(ConsoleHandler.RED + "You've already used an item this turn" + ConsoleHandler.RESET);
@@ -360,6 +361,7 @@ class UseItemCommand extends GameCommand {
 class InfoItemCommand extends GameCommand {
     public InfoItemCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU
@@ -369,11 +371,6 @@ class InfoItemCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: use [item]" + ConsoleHandler.RESET);
-            return;
-        }
         
         try {
             ConsoleHandler.clearConsole();
@@ -392,6 +389,7 @@ class InfoItemCommand extends GameCommand {
 class SwapWeaponCommand extends GameCommand {
     public SwapWeaponCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.MERCHANT_SHOPPING,
             GameState.SMITH_FORGING,
@@ -405,11 +403,6 @@ class SwapWeaponCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: swap [weapon]" + ConsoleHandler.RESET);
-            return;
-        }
         
         try {
             ConsoleHandler.clearConsole();
@@ -438,6 +431,7 @@ class SwapWeaponCommand extends GameCommand {
 class DropItemCommand extends GameCommand {
     public DropItemCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.SMITH_FORGING,
             GameState.MAIN_MENU,
@@ -449,11 +443,6 @@ class DropItemCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: drop [item]" + ConsoleHandler.RESET);
-            return;
-        }
 
         if (!Controller.awaitConfirmation()) return;
 
@@ -797,6 +786,7 @@ class MerchantCommand extends GameCommand {
 class BuyCommand extends GameCommand {
     public BuyCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 2;
         this.invalidStates = List.of(
             GameState.MAIN_MENU
         );
@@ -805,11 +795,6 @@ class BuyCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-
-        if (commands.length != 2) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: buy [item]" + ConsoleHandler.RESET);
-            return;
-        }
         
         if (!Controller.awaitConfirmation()) return;
 
@@ -854,6 +839,7 @@ class SmithCommand extends GameCommand {
 class GiveCommand extends GameCommand {
     public GiveCommand(Game game, String[] commands) {
         super(game, commands);
+        this.commandLength = 3;
         this.invalidStates = List.of(
             GameState.MAIN_MENU
         );
@@ -862,12 +848,6 @@ class GiveCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
-        
-        if (this.commands.length != 3) {
-            System.out.println(ConsoleHandler.RED + "Invalid command. Correct Syntax: give [npc] [item]" + ConsoleHandler.RESET);
-            return;
-        }
-
         this.game.giveItem(commands[1], commands[2]);
     }
 }
