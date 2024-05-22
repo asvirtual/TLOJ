@@ -179,10 +179,6 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         return this.money >= item.getPrice();
     }
 
-    public int getXp() {
-        return this.xp;
-    }
-
     public int getLvl() {
         return this.lvl;
     }
