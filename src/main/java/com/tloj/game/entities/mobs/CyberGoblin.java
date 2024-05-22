@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.utilities.Coordinates;
 import com.tloj.game.utilities.Constants;
-import com.tloj.game.abilities.GoblinStealAbility;
+import com.tloj.game.abilities.StealItem;
 
 
 /**
@@ -31,7 +31,7 @@ public class CyberGoblin extends Mob {
         @JsonProperty("lvl") int lvl
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position);
-        this.ability = new GoblinStealAbility(this);
+        this.ability = new StealItem(this);
     }
     
     @Override
