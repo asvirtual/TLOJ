@@ -32,7 +32,7 @@ public abstract class Item {
     protected int id;
     protected double dropChance;
     
-    enum ConsumableItems {
+    enum DroppableItems {
         HEALTH_POTION(new HealthPotion()),
         GREAT_HEALTH_POTION(new GreatHealthPotion()),
         MANA_POTION(new ManaPotion()),
@@ -46,7 +46,7 @@ public abstract class Item {
 
         private Item item;
 
-        ConsumableItems(Item item) {
+        DroppableItems(Item item) {
             this.item = item;
         }
     }
@@ -88,14 +88,14 @@ public abstract class Item {
      */
     public static Item getRandomItem() {
         double totalProbability = 0.0;
-        for (ConsumableItems i : ConsumableItems.values()) {
+        for (DroppableItems i : DroppableItems.values()) {
             Item item = i.item;
             totalProbability += item.getDropChance();
         }
 
         double randomValue = Math.random() * totalProbability;
         double cumulativeProbability = 0.0;
-        for (ConsumableItems i : ConsumableItems.values()) {
+        for (DroppableItems i : DroppableItems.values()) {
             Item item = i.item;
             cumulativeProbability += item.getDropChance();
             if (randomValue <= cumulativeProbability) return item;

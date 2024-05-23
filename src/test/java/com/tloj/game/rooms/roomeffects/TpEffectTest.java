@@ -59,7 +59,6 @@ public class TpEffectTest {
 
     @Test
     public void applyEffectTest() {
-
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
         ArrayList<Floor> levels = new ArrayList<>();
