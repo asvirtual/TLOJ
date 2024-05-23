@@ -22,7 +22,7 @@ public class PlayerAttack extends Attack {
     private int weaponRoll;
     private MobAbility targetAbility;
     private WeaponEffect weaponEffect;
-
+    
     /**
      * Constructs a PlayerAttack object with the given attacker and target.
      *
@@ -120,7 +120,7 @@ public class PlayerAttack extends Attack {
      */
     @Override
     public void perform() {
-        super.perform();
+        super.perfinorm();
         
         Controller.printSideBySideText(
             this.attacker.getASCII(), 

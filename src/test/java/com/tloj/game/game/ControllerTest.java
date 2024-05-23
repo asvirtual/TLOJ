@@ -5,11 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
+import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
@@ -17,7 +19,7 @@ import com.tloj.game.entities.characters.BasePlayer;
 
 
 public class ControllerTest {
-    private final InputStream originalSystemIn = System.in;
+    private static final InputStream originalSystemIn = System.in;
     private Coordinates startCoordinates = new Coordinates(0, 0);
     private Game game;
     private ArrayList<Floor> floors = new ArrayList<>(); 
@@ -48,25 +50,42 @@ public class ControllerTest {
             e.printStackTrace();
         }
 
-        ArrayList<ArrayList<Room>> floor = new ArrayList<>();
-        ArrayList<Room> rooms = new ArrayList<>();
+        ArrayList<ArrayList<Room>> firstFloor = new ArrayList<>();
+        ArrayList<Room> firstRooms = new ArrayList<>();
         StartRoom room = new StartRoom(startCoordinates);
         LootRoom mockLootRoom = new LootRoom(new Coordinates(0, 1));
-        rooms.add(room);
-        rooms.add(mockLootRoom);
-        floor.add(rooms);
+        
+        firstRooms.add(room);
+        firstRooms.add(mockLootRoom);
+        firstFloor.add(firstRooms);
+        
+        Floor firstLevel = new Floor(1, firstFloor);
+        
+        ArrayList<ArrayList<Room>> secondFloor = new ArrayList<>();
+        ArrayList<Room> secondRooms = new ArrayList<>();
+        HealingRoom mockHealingRoom = new HealingRoom(new Coordinates(1, 0));
+       
+        secondRooms.add(mockHealingRoom);
+        secondFloor.add(secondRooms);
 
-        Floor level = new Floor(1, floor);
-        floors.add(level);
+        Floor secondLevel = new Floor(2, secondFloor);
+       
+        floors.add(firstLevel);
+        floors.add(secondLevel);
     }
-    @AfterEach
-    void tearDown() {
-        this.controller.setState(GameState.MAIN_MENU);
-        controller = null;
-        game = null;
+  
+    @AfterAll
+    static void tearDown() {
         System.setIn(originalSystemIn);
     }
-    
+   
+    @Test
+    void SingletonTest() {
+        Controller controller1 = Controller.getInstance();
+        Controller controller2 = Controller.getInstance();
+        assertEquals(controller1, controller2);
+    }
+
     @Test
     void moveTest() {
         this.setUpGame();
@@ -81,9 +100,99 @@ public class ControllerTest {
         assertEquals(startCoordinates, game.getPlayer().getPosition());
     }
 
+    @Test
+    void changeFloorTest() {
+        this.setUpGame();
+        controller.setState(GameState.BOSS_DEFEATED);
+        int floorBefore = game.getPlayer().getCurrentFloor().getFloorNumber();
+        controller.handleUserInput("ge");
+        int floorafter = game.getPlayer().getCurrentFloor().getFloorNumber();
+        
+        assertNotEquals(floorBefore, floorafter);
+    }
+
      @Test
     void characterFactoryTest() {
         this.setUpGame();
         assertTrue(game.getPlayer() instanceof BasePlayer);
     }
+
+   
+
+    @Test
+    void validCommandTest(){
+        class MockGameCommand extends GameCommand{
+
+            public MockGameCommand(Game game, String[] commands){
+                super(game, null);
+                this.validListStates = List.of(
+                    GameState.MOVING
+                );
+    
+            }
+        }
+
+        Controller.getInstance();
+        Controller.getInstance().setState(GameState.MOVING);
+        GCInvoker invoker = new GCInvoker();
+        invoker.setCommand(new MockGameCommand(game, null));
+        assertDoesNotThrow(() -> invoker.executeCommand());
+
+    }
+
+    
+    @Test
+    void invalidCommandTest(){
+
+        class MockGameCommand extends GameCommand{
+
+            public MockGameCommand(Game game, String[] commands){
+                super(game, null);
+                this.invalidStates = List.of(
+                    GameState.MOVING
+                );
+    
+            }
+        }
+
+        Controller.getInstance();
+        Controller.getInstance().setState(GameState.MOVING);
+        GCInvoker invoker = new GCInvoker();
+        invoker.setCommand(new MockGameCommand(game, null));
+        assertThrows(IllegalStateException.class, () -> invoker.executeCommand());
+
+    }
+
+    @Test
+    void wrongLenghtCommandTest(){
+        class MockGameCommand extends GameCommand{
+
+            public MockGameCommand(Game game, String[] commands){
+                super(game, commands);
+            }
+        }
+
+        Controller.getInstance();
+        GCInvoker invoker = new GCInvoker();
+        invoker.setCommand(new MockGameCommand(game, "test".split(" ")));
+        assertDoesNotThrow(() -> invoker.executeCommand());
+
+    }
+
+    @Test
+    void rightLenghtCommandTest(){
+        class MockGameCommand extends GameCommand{
+
+            public MockGameCommand(Game game, String[] commands){
+                super(game, commands);
+            }
+        }
+
+        Controller.getInstance();
+        GCInvoker invoker = new GCInvoker();
+        invoker.setCommand(new MockGameCommand(game, "test test".split(" ")));
+        assertThrows(IllegalArgumentException.class, () -> invoker.executeCommand());
+
+    }
 }
+
