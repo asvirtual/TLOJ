@@ -6,18 +6,17 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.game.Coordinates;
 
 
+/**
+ *An abstract class representing a friendly entity in the game.<br>
+*@see Merchant
+*@see Smith
+*/  
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.CLASS, 
   include = JsonTypeInfo.As.PROPERTY, 
   property = "@class")
 
-
-/**
- *An abstract class representing a friendly entity in the game.<br>
-*@see Merchant
-*@see Smith
-*/  
 public abstract class FriendlyEntity extends Entity {
     @JsonIgnore
     protected Character player;

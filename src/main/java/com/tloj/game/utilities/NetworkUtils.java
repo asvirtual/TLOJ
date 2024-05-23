@@ -6,6 +6,11 @@ import java.net.SocketAddress;
 import java.net.Socket;
 
 
+/**
+ * Utility class to handle network operations, such as:<br>
+ *  - Check if internet is available<br>
+ */
+
 public class NetworkUtils {
     public static boolean isInternetAvailable() {
         try (Socket socket = new Socket()) {
