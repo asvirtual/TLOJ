@@ -12,6 +12,7 @@ import com.tloj.game.entities.Character;
 
 
 public class NanoDirkTest {
+
     @Test
     public void usedEffectTest() {    
         Dice.setSeed(1);
