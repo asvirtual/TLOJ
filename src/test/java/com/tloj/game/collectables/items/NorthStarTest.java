@@ -1,70 +1,34 @@
 package com.tloj.game.collectables.items;
 
-import com.google.storage.v2.StorageGrpc.StorageFutureStub;
 import com.tloj.game.collectables.weapons.LaserBlade;
-import com.tloj.game.entities.Character;
 import com.tloj.game.entities.Inventory;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
-import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
-import com.tloj.game.game.GameIndex;
-import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.HostileRoom;
-import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.rooms.TrapRoom;
-import com.tloj.game.rooms.roomeffects.Teleport;
-import com.tloj.game.utilities.Constants;
-import com.tloj.game.utilities.JsonParser;
 
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-
 public class NorthStarTest {
-
-    private final InputStream originalSystemIn = System.in;
-/*
-    @BeforeEach
-    public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "y";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-*/
-
-    @AfterEach
-    public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
-    }
 
     @Test
     void showMapTest() {
 
+        try{
+            Thread.sleep(100);
+        }
+        catch(InterruptedException e){
+            e.printStackTrace();
+        }
+        
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
         ArrayList<Floor> levels = new ArrayList<>();
@@ -107,6 +71,7 @@ public class NorthStarTest {
         
         assertEquals(NoStarString, starString);
         assertEquals(expectedString, starString);
+
         
     }
 }
