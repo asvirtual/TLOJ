@@ -120,7 +120,7 @@ public class PlayerAttack extends Attack {
      */
     @Override
     public void perform() {
-        super.perfinorm();
+        super.perform();
         
         Controller.printSideBySideText(
             this.attacker.getASCII(), 
