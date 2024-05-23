@@ -18,7 +18,6 @@ import com.tloj.game.game.Coordinates;
 *@see Merchant
 *@see Smith
 */  
-
 public abstract class FriendlyEntity extends Entity {
     @JsonIgnore
     protected Character player;

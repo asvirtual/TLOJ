@@ -35,7 +35,7 @@ public class CyberGoblin extends Mob {
     }
     
     @Override
-    protected void levelUp(int lvl) {
+    public void levelUp(int lvl) {
         switch (lvl) {
             case 2:
                 this.atk += 4; // Total attack = 8

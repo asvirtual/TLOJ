@@ -13,6 +13,7 @@ import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.skills.Daburu;
 
+
 public class NeoSamurai extends Character {
     private static final int HP = 20;
     private static final int ATTACK = 5;

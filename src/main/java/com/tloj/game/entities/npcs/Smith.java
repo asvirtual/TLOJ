@@ -1,6 +1,7 @@
 package com.tloj.game.entities.npcs;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.Weapon;
@@ -99,6 +100,7 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
         }
     }
 
+    @JsonIgnore
     private String getCurrentStatus() {
         return "You currently have " + ConsoleHandler.YELLOW + this.player.getItemCount(new WeaponShard()) + " Weapon Shards." + ConsoleHandler.RESET;
     }

@@ -54,8 +54,6 @@ public class EmpTest {
     @Test
     void testConsume() {
         // Simulates user input to use Emp when prompted
-       
-
         ArrayList<Floor> mockLevels = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
         Game mockGame = new Game(mockLevels, 1);
         Controller.getInstance().setGame(mockGame);

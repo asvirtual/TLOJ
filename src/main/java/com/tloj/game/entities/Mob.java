@@ -215,9 +215,10 @@ public abstract class Mob extends CombatEntity {
     }
 
     @Override
-    public void defend(Attack attack) {
+    public void defend(Attack attack) throws IllegalArgumentException {
+        if (!(attack instanceof PlayerAttack)) throw new IllegalArgumentException("Mobs can only be attacked by Characters");
+        
         super.defend(attack);
-        if (!(attack instanceof PlayerAttack)) return;
 
         if (this.ability == null) return;
         PlayerAttack playerAttack = (PlayerAttack) attack;

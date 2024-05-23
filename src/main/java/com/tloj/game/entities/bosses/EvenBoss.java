@@ -1,8 +1,6 @@
 package com.tloj.game.entities.bosses;
 
 import com.tloj.game.abilities.DodgeEvenRoll;
-import com.tloj.game.abilities.VampireDodge;
-import com.tloj.game.abilities.HalveDamage;
 import com.tloj.game.collectables.items.WeaponShard;
 import com.tloj.game.entities.Boss;
 import com.tloj.game.game.Coordinates;
@@ -25,8 +23,6 @@ import com.tloj.game.utilities.Constants;
  * @see TakeHalfDamageAbility
  * @see WeaponShard
  */
-
-
 public class EvenBoss extends Boss {
     public static final int HP = 50;
     public static final int ATTACK = 6;

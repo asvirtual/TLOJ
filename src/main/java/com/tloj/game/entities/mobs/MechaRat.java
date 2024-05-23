@@ -35,7 +35,7 @@ public class MechaRat extends Mob  {
     }
 
     @Override
-    protected void levelUp(int lvl) {
+    public void levelUp(int lvl) {
         switch (lvl) {
             case 2:
                 this.atk += 3; // Total attack = 6

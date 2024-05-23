@@ -288,8 +288,8 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
 
     @Override
     @JsonIgnore
-    public void removeInventoryItem(Item item) {
-        this.inventory.remove(item);
+    public Item removeInventoryItem(Item item) {
+        return this.inventory.remove(item);
     }
 
     @Override

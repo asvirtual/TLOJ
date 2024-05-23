@@ -85,10 +85,12 @@ public class Inventory {
         return null;
     }
 
-    public void remove(Item item) {
-        this.items.remove(item);
+    public Item remove(Item item) {
+        boolean removed = this.items.remove(item);
         this.totalWeight -= item.getWeight();
         this.sort();
+        
+        return removed ? item : null;
     }
 
     public Item removeByIndex(int index) {
