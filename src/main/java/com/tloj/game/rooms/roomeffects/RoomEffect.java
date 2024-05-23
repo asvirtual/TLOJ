@@ -6,11 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.entities.Character;
 
 
-// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
-@JsonTypeInfo(
-  use = JsonTypeInfo.Id.CLASS, 
-  include = JsonTypeInfo.As.PROPERTY, 
-  property = "@class")
+
 
 /**
  * Interface for room effects<br>
@@ -19,6 +15,13 @@ import com.tloj.game.entities.Character;
  * @see StealMoney
  * @see Teleport
  */
+
+// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.CLASS, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "@class")
+
 public abstract class RoomEffect {
     // Runnable side effect to be executed when the effect is applied
     protected Runnable sideEffect;
