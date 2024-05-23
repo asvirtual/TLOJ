@@ -21,9 +21,9 @@ public class HealthAbsorber extends WeaponEffect {
 
     @Override
     public boolean apply(PlayerAttack attack) {
-        
         int damage = this.weapon.diceRoll();
         attack.setWeaponRoll(damage);
+
         if (Math.random() > 0.666) return this.used = false;
         attack.setOnHit(new Runnable() {
             @Override
