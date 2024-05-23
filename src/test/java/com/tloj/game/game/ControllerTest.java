@@ -110,14 +110,12 @@ public class ControllerTest {
         
         assertNotEquals(floorBefore, floorafter);
     }
-
-     @Test
+    
+    @Test
     void characterFactoryTest() {
         this.setUpGame();
         assertTrue(game.getPlayer() instanceof BasePlayer);
-    }
-
-   
+    }   
 
     @Test
     void validCommandTest(){
@@ -139,7 +137,6 @@ public class ControllerTest {
         assertDoesNotThrow(() -> invoker.executeCommand());
 
     }
-
     
     @Test
     void invalidCommandTest(){

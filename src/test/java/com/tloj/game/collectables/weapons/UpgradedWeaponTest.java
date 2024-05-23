@@ -3,8 +3,6 @@ package com.tloj.game.collectables.weapons;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.fusesource.jansi.internal.Kernel32.INPUT_RECORD;
-
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Coordinates;
@@ -12,10 +10,10 @@ import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
 
+
 public class UpgradedWeaponTest {
     @Test
     void upgradedWeaponTest() {
-
         Dice.setSeed(1);
 
         LaserBlade upgradedWeapon = new LaserBlade();
