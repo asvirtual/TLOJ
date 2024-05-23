@@ -14,6 +14,14 @@ import com.google.firebase.cloud.StorageClient;
 import com.google.api.gax.paging.Page;
 
 
+/**
+ * Utility class to handle Firebase operations, such as:<br>
+ *  - Save game to cloud<br>
+ *  - Load game from cloud<br>
+ *  - Delete game from cloud<br>
+ */
+
+
 public class FirebaseHandler {
     private static FirebaseHandler instance;
 

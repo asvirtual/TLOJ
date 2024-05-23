@@ -8,11 +8,17 @@ import com.tloj.game.entities.Mob;
 import com.tloj.game.game.PlayerAttack;
 
 
+/**
+ * Abstract class representing an ability that a mob can use during combat. <br>
+ * @see Mob
+ */
+
 // Needed to serialize/deserialize subclasses of MobAbility, by including the class name in the JSON
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.CLASS, 
   include = JsonTypeInfo.As.PROPERTY, 
   property = "@class")
+  
 public abstract class MobAbility {
     @JsonProperty("user")
     @JsonManagedReference

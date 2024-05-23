@@ -12,6 +12,11 @@ import com.tloj.game.game.MobAttack;
 import com.tloj.game.skills.CharacterSkill;
 
 
+/**
+ * Abstract class to represent the Boss class in the game
+* @see Mob
+*/
+
 // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.CLASS, 

@@ -13,6 +13,19 @@ import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 import com.tloj.game.skills.Daburu;
 
+
+/**
+ * Class to represent the NeoSamurai class in the game<br>
+ * It has the following fixed initial attributes:<br>
+ * HP 20 health points<br>
+ * ATTACK 5 attack points<br>
+ * DEFENSE 1 defense points<br>
+ * MANA 10 mana points<br>
+ * MAX_WEIGHT 5 maximum weight capacity<br>
+ * MONEY 15 money<br>
+ * @see Character
+ */
+
 public class NeoSamurai extends Character {
     private static final int HP = 20;
     private static final int ATTACK = 5;

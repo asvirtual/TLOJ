@@ -15,6 +15,7 @@ import com.tloj.game.game.Floor;
 /**
  * This class is a utility class for parsing JSON files.
  */
+
 public class JsonParser {
     /**
      * Private constructor to prevent instantiation.
