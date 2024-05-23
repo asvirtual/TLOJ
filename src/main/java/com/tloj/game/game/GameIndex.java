@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -134,6 +135,14 @@ public class GameIndex {
         
         if (!file.exists()) {
             games = new ArrayList<>();
+            try {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write("[]");
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return;
         }
 

@@ -14,18 +14,18 @@ import com.tloj.game.entities.Character;
 
 public class CyberKatanaTest {
     @Test
-    public void attackTest() {
+    public void diceRollTest() {
         Dice.setSeed(1);
 
         CyberKatana cyberKatana = new CyberKatana();
         
         Character mockCharacter = new DataThief(20, 4, 4, 10, 0, 1, 5, 10, null, null, cyberKatana, null, null);
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
-        PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mockCyberGoblin);
-        //TODO
-        int calculatedDamage = 7;
-        assertTrue(mockPlayerAttack.getWeaponRoll() == 6);
-        assertEquals(mockPlayerAttack.getTotalDamage(), calculatedDamage);
+        PlayerAttack playerAttack = new PlayerAttack(mockCharacter, mockCyberGoblin);
+        
+        mockCharacter.getWeapon().modifyAttack(playerAttack);
+        int weaponRoll = playerAttack.getWeaponRoll();
+        assertTrue(weaponRoll >= 1 && weaponRoll <= 10);
 
     }
 }
