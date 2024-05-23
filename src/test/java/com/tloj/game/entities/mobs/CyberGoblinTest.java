@@ -29,15 +29,23 @@ public class CyberGoblinTest {
    
     @BeforeEach
     public void setUpInput() {
-        String input = "";
-        for (int i = 0; i < 10000; i++) {
-            input += "\n";
+        try {
+            Thread.sleep(100); 
+            
+            String input = "";
+            for (int i = 0; i < 10000; i++) {
+                input += "\n";
+            }
+
+            System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+            Dice.setSeed(1);
+            Controller.getInstance();
         }
-
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
+        catch(InterruptedException e){
+            e.printStackTrace();
+        }
         Dice.setSeed(1);
-        Controller.getInstance();
     }
 
     @AfterEach

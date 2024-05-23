@@ -106,6 +106,5 @@ public class PlayerAttacktTest {
         assertTrue(inventory.getSize() > 0);
         assertTrue(player.getMoney() > 0);
         assertTrue(player.getXp() > 0);
-        
     }
 }

@@ -48,7 +48,6 @@ public class JetBatTest {
         }
     }
 
-
     @AfterEach
     public void restoreSystemIn() {
         System.setIn(originalSystemIn);

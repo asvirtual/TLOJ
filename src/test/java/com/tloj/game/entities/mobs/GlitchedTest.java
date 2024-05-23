@@ -49,8 +49,8 @@ public class GlitchedTest {
         catch(InterruptedException e){
             e.printStackTrace();
         }
+        Dice.setSeed(1);
     }
-
 
     @AfterEach
     public void restoreSystemIn() {
