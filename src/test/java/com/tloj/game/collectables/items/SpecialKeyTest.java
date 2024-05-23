@@ -5,7 +5,6 @@ import com.tloj.game.game.Controller;
 import com.tloj.game.game.Game;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.Inventory;
