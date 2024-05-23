@@ -97,7 +97,7 @@ public class GameIndex {
         int index;
 
         try {
-            index = Integer.parseInt(id);
+            index = Integer.parseInt(id) - 1;
             if (index < 0 || index >= games.size()) return null;
         } catch (NumberFormatException e) {
             e.printStackTrace();
