@@ -3,6 +3,11 @@ package com.tloj.game.entities;
 import com.tloj.game.collectables.Item;
 
 
+/**
+ * Interface to represents an entity that can hold items in its inventory. <br>
+ 
+ */
+
 public interface ItemsHolderEntity {
     double getMaxWeight();
     double getFreeWeight();
