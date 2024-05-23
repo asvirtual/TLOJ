@@ -14,6 +14,18 @@ import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 
 
+/**
+ * Class to represent the MechaKnight class in the game<br>
+ * It has the following fixed initial attributes:<br>
+ * HP 30 health points<br>
+ * ATTACK 1 attack points<br>
+ * DEFENSE 5 defense points<br>
+ * MANA 5 mana points<br>
+ * MAX_WEIGHT 5 maximum weight capacity<br>
+ * MONEY 15 money<br>
+ * @see Character
+ */
+
 public class MechaKnight extends Character {
     private static final int HP = 30;
     private static final int ATTACK = 1; 

@@ -25,11 +25,7 @@ import com.tloj.game.utilities.ConsoleHandler;
 import org.fusesource.jansi.Ansi;
 
 
-// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
-@JsonTypeInfo(
-  use = JsonTypeInfo.Id.CLASS, 
-  include = JsonTypeInfo.As.PROPERTY, 
-  property = "@class")
+
 
 /**
  * Abstract class to represent a character in the game.<br>
@@ -39,6 +35,13 @@ import org.fusesource.jansi.Ansi;
  * @see Mob
  * @see PlayerAttack
 */
+
+// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+@JsonTypeInfo(
+  use = JsonTypeInfo.Id.CLASS, 
+  include = JsonTypeInfo.As.PROPERTY, 
+  property = "@class")
+  
 public abstract class Character extends CombatEntity implements MovingEntity, ItemsHolderEntity {
     public static final int REQ_XP_BASE = 15;
     public static final int INITIAL_LVL = 1;

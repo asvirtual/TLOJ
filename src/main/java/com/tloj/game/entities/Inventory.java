@@ -13,6 +13,11 @@ import com.tloj.game.collectables.Item;
 import com.tloj.game.utilities.ConsoleHandler;
 
 
+/**
+ * Represents the inventory of an entity in the game.
+ * The class has methods to add, remove, sort and get items from the inventory.
+ */
+
 public class Inventory {
     @JsonProperty("items")
     private ArrayList<Item> items;
