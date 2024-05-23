@@ -1,14 +1,20 @@
 package com.tloj.game.rooms.roomeffects;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
@@ -22,6 +28,32 @@ import com.tloj.game.rooms.TrapRoom;
  */
 
 public class StealMoneyTest {
+    private final InputStream originalSystemIn = System.in;
+    
+    @BeforeEach
+    public void setUpInput() {
+        try {
+            Thread.sleep(100); 
+            
+            String input = "";
+            for (int i = 0; i < 10000; i++) {
+                input += "\n";
+            }
+
+            System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+            Dice.setSeed(1);
+            Controller.getInstance();
+        }
+        catch(InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    @AfterEach
+    public void restoreSystemIn() {
+        System.setIn(originalSystemIn);
+    }
     
     @Test
     public void applyEffectTest() {
