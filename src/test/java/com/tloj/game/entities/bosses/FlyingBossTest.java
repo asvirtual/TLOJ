@@ -2,7 +2,6 @@ package com.tloj.game.entities.bosses;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -31,29 +30,15 @@ public class FlyingBossTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        Dice.setSeed(1);
+        MockController.deleteController();
+        Controller.getInstance();
     }
 
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
 
     @Test
@@ -65,6 +50,10 @@ public class FlyingBossTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
         
         while (!flyingBoss.getAbility().wasUsed()) {
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
+
             flyingBoss.defend(mockPlayerAttack);
 
             if (flyingBoss.getAbility().wasUsed()) {
@@ -81,6 +70,11 @@ public class FlyingBossTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
 
         while (true) {
+
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
+
             mockCharacter.getWeapon().modifyAttack(mockPlayerAttack);
             flyingBoss.defend(mockPlayerAttack);
             int totalDamage = mockPlayerAttack.getTotalDamage();

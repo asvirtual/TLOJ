@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -34,29 +33,15 @@ public class GlitchedTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        
         Dice.setSeed(1);
+        MockController.deleteController();
+        Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
 
     @Test
@@ -99,7 +84,11 @@ public class GlitchedTest {
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockRoomfrom, new LaserBlade(), new Inventory(), startCoordinates);
         Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0);
         Controller.getInstance().setGame(mockGame);
-       
+
+        MockController.deleteController();
+        MockController.setInput("\n\n");
+        Controller.getInstance();
+
         glitched.attack(mockCharacter);
         Coordinates endCoordinates = glitched.getPosition();
 
@@ -141,6 +130,11 @@ public class GlitchedTest {
                 if (mobToCheck != null) {
                     mockCharacter.move(mobToCheck.getPosition());
                     mockCharacter.setHp(mockCharacter.getMaxHp());
+                    
+                    MockController.deleteController();
+                    MockController.setInput("\n\n");
+                    Controller.getInstance();
+
                     mobToCheck.attack(mockCharacter);
                 }
             }

@@ -3,7 +3,6 @@ package com.tloj.game.collectables.weapons;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -22,32 +21,22 @@ import com.tloj.game.entities.Character;
 public class NaniteLeechBladeTest {
     private final InputStream originalSystemIn = System.in;
    
+      
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
 
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        Dice.setSeed(1);
+        MockController.deleteController();
+        Controller.getInstance();
     }
+    
 
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
+
 
     @Test
     public void usedEffectTest() {    
@@ -61,6 +50,9 @@ public class NaniteLeechBladeTest {
         int initialHp = mockCharacter.getHp();
 
         while (!naniteLeechBlade.getEffect().wasUsed()) {
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
             naniteLeechBlade.modifyAttack(mockPlayerAttack);
             int totalDamage = mockPlayerAttack.getTotalDamage();
             mockPlayerAttack.perform();
@@ -82,6 +74,9 @@ public class NaniteLeechBladeTest {
         int initialHp = mockCharacter.getHp();
     
         do {
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
             naniteLeechBlade.modifyAttack(mockPlayerAttack);
             int weaponRoll = mockPlayerAttack.getWeaponRoll();
             mockPlayerAttack.perform();

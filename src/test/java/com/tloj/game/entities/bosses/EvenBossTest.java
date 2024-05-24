@@ -2,7 +2,6 @@ package com.tloj.game.entities.bosses;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -30,29 +29,15 @@ public class EvenBossTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        Dice.setSeed(1);
+        MockController.deleteController();
+        Controller.getInstance();           
     }
 
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
 
     @Test
@@ -63,6 +48,9 @@ public class EvenBossTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, evenBoss);
         
         while (!evenBoss.getAbility().wasUsed()) {
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
             evenBoss.defend(mockPlayerAttack);
 
             if (evenBoss.getAbility().wasUsed()) 
@@ -77,6 +65,10 @@ public class EvenBossTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, evenBoss);
     
         while (true) {
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
+
             mockCharacter.getWeapon().modifyAttack(mockPlayerAttack);
             evenBoss.defend(mockPlayerAttack);
             int totalDamage = mockPlayerAttack.getTotalDamage();

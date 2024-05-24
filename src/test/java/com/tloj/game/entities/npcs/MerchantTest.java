@@ -2,10 +2,6 @@ package com.tloj.game.entities.npcs;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,32 +17,13 @@ import com.tloj.game.collectables.items.HealthPotion;
 
 
 class MerchantTest {
-    private final InputStream originalSystemIn = System.in;
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-
-    @AfterEach
-    public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        Dice.setSeed(1);
+        MockController.deleteController();
+        Controller.getInstance();
+      
     }
 
    @Test

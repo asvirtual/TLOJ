@@ -2,7 +2,6 @@ package com.tloj.game.rooms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -27,28 +26,15 @@ public class LootRoomTest {
 
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        Dice.setSeed(1);
+        MockController.deleteController();
+        MockController.setInput("\n");
+        Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
 
     @Test   

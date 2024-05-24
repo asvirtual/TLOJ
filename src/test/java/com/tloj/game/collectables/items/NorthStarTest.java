@@ -22,13 +22,6 @@ public class NorthStarTest {
     @Test
     void showMapTest() {
 
-        try{
-            Thread.sleep(100);
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-        
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
         ArrayList<Floor> levels = new ArrayList<>();

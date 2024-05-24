@@ -43,13 +43,7 @@ public class ControllerTest {
 
     @BeforeEach
     void setUpMap(){
-        try {
-            Thread.sleep(100); 
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-
+    
         ArrayList<ArrayList<Room>> firstFloor = new ArrayList<>();
         ArrayList<Room> firstRooms = new ArrayList<>();
         StartRoom room = new StartRoom(startCoordinates);
@@ -76,7 +70,7 @@ public class ControllerTest {
   
     @AfterAll
     static void tearDown() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
    
     @Test

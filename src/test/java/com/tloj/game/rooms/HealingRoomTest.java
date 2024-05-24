@@ -2,12 +2,9 @@ package com.tloj.game.rooms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.collectables.weapons.LaserBlade;
@@ -23,34 +20,14 @@ import com.tloj.game.game.MockController;
 public class HealingRoomTest {
     private final InputStream originalSystemIn = System.in;
 
-    @BeforeEach
-    public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-
-    @AfterEach
-    public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
-    }
-
     @Test   
     void fullHealTest() {
+
+        
+        Dice.setSeed(1);
+        MockController.deleteController();
+        MockController.setInput("\n");
+        Controller.getInstance();
 
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
@@ -80,6 +57,8 @@ public class HealingRoomTest {
         
         assertEquals(mockGame.getPlayer().getMaxHp(), mockGame.getPlayer().getHp());
         assertEquals(mockGame.getPlayer().getMaxMana(), mockGame.getPlayer().getMana());
+
+        MockController.resetInput(originalSystemIn);
 
     }
 }

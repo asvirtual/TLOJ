@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -33,28 +32,16 @@ public class InflictDamageTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        
+        Dice.setSeed(1);
+        MockController.deleteController();
+        Controller.getInstance();
     }
+    
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
 
     @Test
@@ -81,6 +68,10 @@ public class InflictDamageTest {
         boolean triggered = false;
 
         while (!triggered) {
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
+            Controller.getInstance().setGame(mockGame);
             
             triggered = mockRoom.triggerTrap(mockCharacter);
             int endHp = mockCharacter.getHp();
@@ -117,6 +108,11 @@ public class InflictDamageTest {
         
         while (!triggered) {
             
+            MockController.deleteController();
+            MockController.setInput("\n\n");
+            Controller.getInstance();
+            Controller.getInstance().setGame(mockGame);
+
             triggered = mockRoom.triggerTrap(mockCharacter);
             if (triggered) {
                 assertTrue(!mockCharacter.isAlive());

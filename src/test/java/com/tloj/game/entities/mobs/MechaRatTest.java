@@ -3,7 +3,6 @@ package com.tloj.game.entities.mobs;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -31,29 +30,16 @@ public class MechaRatTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
+        
             Dice.setSeed(1);
             MockController.deleteController();
             Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
     }
 
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
  
     @Test
@@ -106,6 +92,10 @@ public class MechaRatTest {
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         while (!mechaRat.getAbility().wasUsed()) {
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
+
             mechaRat.defend(mockPlayerAttack);
             if (mechaRat.getAbility().wasUsed()) {
                 assertNull(mockCharacter.getInventoryItem(healthPotion));
@@ -126,6 +116,10 @@ public class MechaRatTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         mechaRat.defend(mockPlayerAttack);
         do {
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
+
             if (!mechaRat.getAbility().wasUsed()) assertEquals(healthPotion, mockCharacter.getInventoryItem(healthPotion));
             else {
                 mechaRat = new MechaRat(new Coordinates(0, 0), 1);

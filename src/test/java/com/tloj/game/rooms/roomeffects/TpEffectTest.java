@@ -2,12 +2,9 @@ package com.tloj.game.rooms.roomeffects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.collectables.weapons.LaserBlade;
@@ -33,34 +30,13 @@ public class TpEffectTest {
 
     private final InputStream originalSystemIn = System.in;
    
-    @BeforeEach
-    public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-
-    @AfterEach
-    public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
-    }
-
     @Test
     public void applyEffectTest() {
+
+        Dice.setSeed(1);
+        MockController.deleteController();
+        MockController.setInput("\n");
+        Controller.getInstance();
 
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
@@ -87,5 +63,8 @@ public class TpEffectTest {
         
         assertNotEquals(startCoordinates, endCoordinates);
         assertFalse(mockRoom.isVisited());
+
+        MockController.resetInput(originalSystemIn);
+
     }    
 }

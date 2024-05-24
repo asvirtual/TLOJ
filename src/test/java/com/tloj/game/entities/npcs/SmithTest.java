@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import com.tloj.game.entities.characters.BasePlayer;
@@ -22,28 +21,15 @@ public class SmithTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        Dice.setSeed(1);
+        MockController.deleteController();
+        Controller.getInstance();
+    
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
 
     @Test
@@ -53,6 +39,9 @@ public class SmithTest {
         mockCharacter.addInventoryItem(new WeaponShard());
         Item itemToGive = mockCharacter.getInventoryItem(new WeaponShard());
 
+        MockController.deleteController();
+        MockController.setInput("\n");
+        Controller.getInstance();
 
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();
         mockSmith.interact(mockCharacter);
@@ -68,6 +57,10 @@ public class SmithTest {
         Smith mockSmith = new Smith(new Coordinates(0, 0));
         Character mockCharacter = new BasePlayer(null);
         Item itemToGive = mockCharacter.getInventoryItem(new WeaponShard());
+
+        MockController.deleteController();
+        MockController.setInput("\n");
+        Controller.getInstance();
 
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();
         mockSmith.interact(mockCharacter);
@@ -87,6 +80,10 @@ public class SmithTest {
         mockCharacter.getWeapon().setLevel(5);
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();
         
+        MockController.deleteController();
+        MockController.setInput("\n");
+        Controller.getInstance();
+
         mockSmith.interact(mockCharacter);
         mockSmith.giveItem(itemToGive);
         

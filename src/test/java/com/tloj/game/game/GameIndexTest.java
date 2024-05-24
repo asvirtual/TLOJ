@@ -23,13 +23,6 @@ public class GameIndexTest {
 
     @BeforeEach
     void setUpMap(){
-        try {
-            Thread.sleep(100); 
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-
         this.floors = new ArrayList<>();
 
         ArrayList<ArrayList<Room>> firstFloorMap = new ArrayList<>();

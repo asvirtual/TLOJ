@@ -2,7 +2,6 @@ package com.tloj.game.game;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -22,33 +21,22 @@ import com.tloj.game.entities.mobs.CyberGoblin;
 
 public class PlayerAttacktTest {
     private final InputStream originalSystemIn = System.in;
-    Thread inputThread;
     
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            MockController.deleteController();
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
         Dice.setSeed(1);
+        MockController.deleteController();
+        Controller.getInstance();
+
+        MockController.deleteController();
+        MockController.setInput("\n");
+        Controller.getInstance();
+
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        MockController.resetInput(originalSystemIn);
     }
 
     @Test
@@ -98,6 +86,11 @@ public class PlayerAttacktTest {
         PlayerAttack playerAttack = new PlayerAttack(player, enemy);
         
         while (inventory.getSize() == 0) {
+           
+            MockController.deleteController();
+            MockController.setInput("\n");
+            Controller.getInstance();
+           
             playerAttack.perform();
             player.lootMob(enemy);
             enemy = new CyberGoblin(new Coordinates(0,0), 1);
