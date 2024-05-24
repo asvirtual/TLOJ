@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 
+import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
