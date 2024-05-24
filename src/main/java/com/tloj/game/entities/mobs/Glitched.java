@@ -24,11 +24,19 @@ import com.tloj.game.entities.CombatEntity;
 /**
  * Represents the Glithed Wandering Mob entity in the game.<br>
  * The Glithed Wandering is a special moving entyty in the game. It has average health and low defense, but inflicts some damage<br>
- * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
+ * It has {@value #HP} health points <br>
+ * {@value #ATTACK} attack points <br>
+ * {@value #DEFENSE} defense points<br>
+ * {@value #DICE_FACES} dice faces<br>
+ * {@value #XP_DROP} experience points drop<br>
+ * {@value #MONEY_DROP} money drop.<br>
+ * It drops the {@link SpecialKey} item<br>
+ * But disappears in {@value #TURNS_BEFORE_DISAPPEARANCE} turns<br>
  * @see JetBat
  * @see JunkSlime
  * @see MechaRat
  */
+
 public class Glitched extends Mob implements MovingEntity {
     private static final int HP = 70;
     private static final int ATTACK = 10;

@@ -52,6 +52,10 @@ public class Dice {
         Dice.random = new Random(seed);
     }
 
+    /**
+     * @return The ASCII representation of the dice roll.
+     * It includes a special ascii for negated rolls and a special ascii for rolls over 20.
+     */
     public static String getASCII(int roll) {
         return switch (roll) {
             case 0 -> Constants.DICE_NEGATED;

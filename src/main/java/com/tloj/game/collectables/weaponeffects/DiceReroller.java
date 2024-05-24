@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  * An effect that rerolls the weapon's dice and applies the damage twice to the target<br>
- * This effect is always applied and does not require any mana to use<br>
+ * This effect has a 70% probability to apply.<br>
  * It is paired with the Nano Dirk<br>
  * @see NanoDirk
 */

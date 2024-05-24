@@ -5,6 +5,8 @@ import com.tloj.game.game.Coordinates;
 
 /**
  * Represents an entity that can move in the game. <br>
+ * @see Character
+ * @see Glitched
  */
 
 public interface MovingEntity {

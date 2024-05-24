@@ -28,7 +28,7 @@ public abstract class WeaponEffect {
         return this.used;
     }
 
-    /*
+    /**
      * Split the class name by capital letters and join the resulting array with spaces
      */
     @Override

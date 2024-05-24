@@ -17,12 +17,13 @@ import com.tloj.game.utilities.Constants;
 /**
  * Class to represent the Hacker class in the game<br>
  * It has the following fixed initial attributes:<br>
- * HP 18 health points<br>
- * ATTACK 3 attack points<br>
- * DEFENSE 3 defense points<br>
- * MANA 20 mana points<br>
- * MAX_WEIGHT 5 maximum weight capacity<br>
- * MONEY 10 money<br>
+ * {@value #HP} health points<br>
+ * {@value #MANA} mana points<br>
+ * {@value #ATTACK} attack points<br>
+ * {@value #DEFENSE} defense points<br>
+ * {@value #MAX_WEIGHT} maximum weight capacity<br>
+ * {@value #MONEY} money<br>
+ * It has the {@link CheatEngine} ability<br>
  * @see Character
  */
 

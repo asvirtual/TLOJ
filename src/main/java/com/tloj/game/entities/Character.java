@@ -29,7 +29,8 @@ import org.fusesource.jansi.Ansi;
 
 /**
  * Abstract class to represent a character in the game.<br>
- * A Character is a moving entity that can engage in combat with Mobs, and it is controlled by the user.<br>
+ * A Character is a moving entity that can engage in combat with Mobs and interact with NPCs.<br>
+ * It is controlled by the user.<br>
  * @see MovingEntity
  * @see CombatEntity
  * @see Mob
@@ -412,6 +413,12 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.requiredXp = REQ_XP_BASE * this.lvl;
     }
 
+    /**
+     * Level up the character when it has enough xp points ({@value #REQ_XP_BASE} for lvl 2).<br>
+     * The required xp is then increased for each level.<br>
+     * Hp and mana are increased by rolling a 5-sided dice, attack and defense by rolling a 3-sided dice.<br>
+     * The character is also completely healed.<br>
+     */
     public void levelUp() {
         Dice fiveDice = new Dice(D5);
         Dice threeDice = new Dice(D3);

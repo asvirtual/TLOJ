@@ -17,12 +17,13 @@ import com.tloj.game.utilities.Constants;
 /**
  * Class to represent the DataThief class in the game<br>
  * It has the following fixed initial attributes:<br>
- * HP 20 health points<br>
- * ATTACK 4 attack points<br>
- * DEFENSE 2 defense points<br>
- * MANA 10 mana points<br>
- * MAX_WEIGHT 5 maximum weight capacity<br>
- * MONEY 0 money<br>
+ * {@value #HP} health points<br>
+ * {@value #MANA} mana points<br>
+ * {@value #ATTACK} attack points<br>
+ * {@value #DEFENSE} defense points<br>
+ * {@value #MAX_WEIGHT} maximum weight capacity<br>
+ * {@value #MONEY} money<br>
+ * It has the {@link Steal} ability<br>
  * @see Character
  */
 

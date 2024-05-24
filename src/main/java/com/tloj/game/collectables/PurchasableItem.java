@@ -5,7 +5,7 @@ import com.tloj.game.entities.Character;
 
 
 /**
- * An abstract class representing an item that can be purchased in the game<br>
+ * An abstract class representing an item that can be purchased in the game via {@link Merchant}<br>
  * This class is meant to be extended by specific purchasable items, guaranteeing modularity<br>
  */
 public abstract class PurchasableItem extends Item {

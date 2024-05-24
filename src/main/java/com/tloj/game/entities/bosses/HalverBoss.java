@@ -13,7 +13,7 @@ import com.tloj.game.game.Coordinates;
 
 
 /**
- * Represents the FlyingBoss Boss entity in the game.<br>
+ * Represents the HalverBoss, called Leth, Boss entity in the game.<br>
  * The EvenBoss is the second boss of the game. It has a special ability that nullifies received damage is weapon roll is {@literal <} 4<br>
  * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
  * This boss is paired with the {@link HalveDamage} ability and the {@link WeaponShard} drop.

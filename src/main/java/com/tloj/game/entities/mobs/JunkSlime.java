@@ -11,7 +11,13 @@ import com.tloj.game.utilities.Constants;
 /**
  * Represents the JunkSlime Mob entity in the game.<br>
  * The JunkSlime is a resilient enemy that can be found in the game. It deals low damage, but has a high health and defense.<br>
- * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
+ * It has {@value #HP} health points<br>
+ * {@value #ATTACK} attack points<br>
+ * {@value #DEFENSE} defense points<br>
+ * {@value #DICE_FACES} dice faces<br>
+ * {@value #XP_DROP} experience points drop<br>
+ * {@value #MONEY_DROP} money drop.<br>
+ * It has the {@link CyberPoison} ability<br>
  * @see Mob
  * @see JetBat
  * @see CyberGoblin

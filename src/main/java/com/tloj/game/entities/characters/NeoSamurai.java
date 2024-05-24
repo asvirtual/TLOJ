@@ -17,12 +17,13 @@ import com.tloj.game.skills.Daburu;
 /**
  * Class to represent the NeoSamurai class in the game<br>
  * It has the following fixed initial attributes:<br>
- * HP 20 health points<br>
- * ATTACK 5 attack points<br>
- * DEFENSE 1 defense points<br>
- * MANA 10 mana points<br>
- * MAX_WEIGHT 5 maximum weight capacity<br>
- * MONEY 15 money<br>
+ * {@value #HP} health points<br>
+ * {@value #MANA} mana points<br>
+ * {@value #ATTACK} attack points<br>
+ * {@value #DEFENSE} defense points<br>
+ * {@value #MAX_WEIGHT} maximum weight capacity<br>
+ * {@value #MONEY} money<br>
+ * It has the {@link Daburu} ability<br>
  * @see Character
  */
 
