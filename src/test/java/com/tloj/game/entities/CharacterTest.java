@@ -2,16 +2,13 @@ package com.tloj.game.entities;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Dice;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -20,32 +17,12 @@ import com.tloj.game.game.Dice;
  */
 
 public class CharacterTest {
-    private final InputStream originalSystemIn = System.in;
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
             Dice.setSeed(1);
+            ControllerHandler.deleteController();
             Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-
-
-    @AfterEach
-    public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
     }
 
     @Test

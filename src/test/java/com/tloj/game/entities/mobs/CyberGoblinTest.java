@@ -3,7 +3,6 @@ package com.tloj.game.entities.mobs;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
@@ -29,20 +29,14 @@ public class CyberGoblinTest {
    
     @BeforeEach
     public void setUpInput() {
-        String input = "";
-        for (int i = 0; i < 10000; i++) {
-            input += "\n";
-        }
-
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
         Dice.setSeed(1);
+        ControllerHandler.deleteController();
         Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -95,6 +89,11 @@ public class CyberGoblinTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, cyberGoblin);
 
         while (!cyberGoblin.getAbility().wasUsed()) {
+
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             cyberGoblin.defend(mockPlayerAttack);
 
             if (cyberGoblin.getAbility().wasUsed()) 
@@ -114,6 +113,11 @@ public class CyberGoblinTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, cyberGoblin);
 
         do {
+
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             cyberGoblin.defend(mockPlayerAttack);
 
             if (!cyberGoblin.getAbility().wasUsed()) {

@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 
 public class Coordinates {
-
     /**
      * Represents the direction of movement.
      */

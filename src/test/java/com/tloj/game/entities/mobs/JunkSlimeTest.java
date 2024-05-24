@@ -2,7 +2,6 @@ package com.tloj.game.entities.mobs;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -15,6 +14,7 @@ import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -29,28 +29,16 @@ public class JunkSlimeTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+       
+        Dice.setSeed(1);
+        ControllerHandler.deleteController();
+        Controller.getInstance();
     }
 
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
     
     private static final int MOCK_CHARACTER_MAX_HP = 20;
@@ -104,6 +92,11 @@ public class JunkSlimeTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
         
         while (!junkSlime.getAbility().wasUsed()) {
+
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             junkSlime.defend(mockPlayerAttack);
             if (junkSlime.getAbility().wasUsed()){
                 assertTrue(mockCharacter.getHp() < MOCK_CHARACTER_MAX_HP);
@@ -124,6 +117,11 @@ public class JunkSlimeTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, junkSlime);
 
         do {
+
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             junkSlime.defend(mockPlayerAttack);
             if (!junkSlime.getAbility().wasUsed()) {
                 assertTrue(mockCharacter.getHp() == MOCK_CHARACTER_MAX_HP);

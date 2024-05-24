@@ -1185,7 +1185,7 @@ public class Controller {
     /** 
      * Singleton Controller unique instance 
      */
-    private static Controller instance;
+    protected static Controller instance;
     private static Scanner scanner;
     private Game game;
     private int currentGameId;
@@ -1566,7 +1566,9 @@ public class Controller {
         this.musicPlayer = new MusicPlayer(Constants.MAIN_MENU_WAV_FILE_PATH);
         this.musicPlayer.playMusic(true);
 
+        this.saveHandler.loadAllCloud();
         GameIndex.loadGames();
+        
         System.out.println(Constants.GAME_TITLE);
 
         while (this.getState() != GameState.EXIT) {

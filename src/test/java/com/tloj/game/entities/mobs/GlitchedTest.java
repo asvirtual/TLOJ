@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -18,6 +17,7 @@ import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.entities.Mob;
@@ -33,28 +33,15 @@ public class GlitchedTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        
+        Dice.setSeed(1);
+        ControllerHandler.deleteController();
+        Controller.getInstance();
     }
-
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -97,7 +84,11 @@ public class GlitchedTest {
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockRoomfrom, new LaserBlade(), new Inventory(), startCoordinates);
         Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0);
         Controller.getInstance().setGame(mockGame);
-       
+
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n\n");
+        Controller.getInstance();
+
         glitched.attack(mockCharacter);
         Coordinates endCoordinates = glitched.getPosition();
 
@@ -139,6 +130,11 @@ public class GlitchedTest {
                 if (mobToCheck != null) {
                     mockCharacter.move(mobToCheck.getPosition());
                     mockCharacter.setHp(mockCharacter.getMaxHp());
+                    
+                    ControllerHandler.deleteController();
+                    ControllerHandler.setInput("\n\n");
+                    Controller.getInstance();
+
                     mobToCheck.attack(mockCharacter);
                 }
             }

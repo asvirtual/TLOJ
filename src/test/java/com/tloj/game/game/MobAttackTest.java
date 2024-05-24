@@ -2,7 +2,6 @@ package com.tloj.game.game;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -21,30 +20,18 @@ import com.tloj.game.entities.mobs.CyberGoblin;
 
 public class MobAttackTest {
     private final InputStream originalSystemIn = System.in;
-   
+
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        Dice.setSeed(1);
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
+        Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
     
     @Test

@@ -9,48 +9,19 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.TrapRoom;
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
-
 public class EmpTest {
     private final InputStream originalSystemIn = System.in;
    
-    @BeforeEach
-    public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "y";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
-    }
-
-
-    @AfterEach
-    public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
-    }
-  
     @Test
     void testConsume() {
         // Simulates user input to use Emp when prompted
@@ -69,5 +40,7 @@ public class EmpTest {
         mockPlayerRoomVisitor.visit(mockDamageTrapRoom);
         assertEquals(mockCharacter.getMaxHp(), mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(emp));
+        
+        ControllerHandler.resetInput(originalSystemIn);
     }
 }

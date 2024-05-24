@@ -35,7 +35,6 @@ public abstract class CharacterSkill {
     @JsonProperty("character")
     @JsonManagedReference
     protected Character character;
-    protected Runnable onUse;
     protected boolean activated = false;
     protected int manaCost;
     protected String activationMessage;

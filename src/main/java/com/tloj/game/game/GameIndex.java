@@ -1,6 +1,7 @@
 package com.tloj.game.game;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -97,7 +98,7 @@ public class GameIndex {
         int index;
 
         try {
-            index = Integer.parseInt(id);
+            index = Integer.parseInt(id) - 1;
             if (index < 0 || index >= games.size()) return null;
         } catch (NumberFormatException e) {
             e.printStackTrace();
@@ -134,6 +135,14 @@ public class GameIndex {
         
         if (!file.exists()) {
             games = new ArrayList<>();
+            try {
+                FileWriter fileWriter = new FileWriter(file);
+                fileWriter.write("[]");
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return;
         }
 
@@ -165,12 +174,11 @@ public class GameIndex {
 
                 return 0;
             });
-
         } catch (JsonGenerationException e) {
-            System.out.println("Error generating JSON from GameData");
+            System.out.println("Error deleting outdated saves");
             e.printStackTrace();
         } catch (JsonMappingException e) {
-            System.out.println("Error mapping JSON from GameData");
+            System.out.println("Error deleting outdated saves");
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Error opening file " + Constants.GAMES_INDEX_FILE_PATH + " for reading");

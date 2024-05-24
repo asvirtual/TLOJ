@@ -1,18 +1,22 @@
 package com.tloj.game.rooms.roomeffects;
 
 import static org.junit.jupiter.api.Assertions.*;
+
 import org.junit.jupiter.api.Test;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 import com.tloj.game.collectables.weapons.LaserBlade;
 import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
+import com.tloj.game.game.Dice;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.TrapRoom;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -22,9 +26,15 @@ import com.tloj.game.rooms.TrapRoom;
  */
 
 public class StealMoneyTest {
+    private final InputStream originalSystemIn = System.in;
     
     @Test
     public void applyEffectTest() {
+        
+        Dice.setSeed(1);
+        ControllerHandler.deleteController();
+        Controller.getInstance();
+        
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
         ArrayList<Floor> levels = new ArrayList<>();
@@ -47,6 +57,12 @@ public class StealMoneyTest {
         boolean triggered = false;
     
         while (!triggered) {
+
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+            Controller.getInstance().setGame(mockGame);
+
             triggered = mockRoom.triggerTrap(mockCharacter);
             int endMoney = mockCharacter.getMoney();
             
@@ -55,5 +71,7 @@ public class StealMoneyTest {
                 return;
             }
         } ;
+
+        ControllerHandler.resetInput(originalSystemIn);
     }
 }

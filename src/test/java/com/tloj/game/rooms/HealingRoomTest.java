@@ -1,4 +1,4 @@
-package com.tloj.game.rooms.roomeffects;
+package com.tloj.game.rooms;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,26 +13,17 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
-import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
-import com.tloj.game.rooms.Room;
-import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.rooms.TrapRoom;
+import com.tloj.game.game.Game;
 import com.tloj.game.game.ControllerHandler;
 
-
-/**
- * {@code TpEffectTest} is a test class for the {@link Teleport} effect on the teleport type trap room.<br>
- * It tests the ability of the trap to teleport the player to a different room.<br>
- */
-
-public class TpEffectTest {
-
+public class HealingRoomTest {
     private final InputStream originalSystemIn = System.in;
-   
-    @Test
-    public void applyEffectTest() {
 
+    @Test   
+    void fullHealTest() {
+
+        
         Dice.setSeed(1);
         ControllerHandler.deleteController();
         ControllerHandler.setInput("\n");
@@ -43,28 +34,31 @@ public class TpEffectTest {
         ArrayList<Floor> levels = new ArrayList<>();
 
         Coordinates startCoordinates = new Coordinates(0, 0);
-        TrapRoom mockRoom = new TrapRoom(startCoordinates, new Teleport());
-        StartRoom mockStartRoom = new StartRoom(new Coordinates(0, 1));
+        Coordinates endCoordinates = new Coordinates(1, 0);
+        HealingRoom mockLootRoom = new HealingRoom(endCoordinates);
+        StartRoom mockStartRoom = new StartRoom(startCoordinates);
         
-        rooms.add(mockRoom);
         rooms.add(mockStartRoom);
+        rooms.add(mockLootRoom);
         floor.add(rooms);
         
         Floor level = new Floor(1, floor);
         levels.add(level);
         
-        BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockRoom, new LaserBlade(), new Inventory(), startCoordinates);
+        BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockStartRoom, new LaserBlade(), new Inventory(), startCoordinates);
         
         Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0);
         Controller.getInstance().setGame(mockGame);
-       
-        mockRoom.triggerTrap(mockCharacter);
-        Coordinates endCoordinates = mockCharacter.getPosition();
+
+        mockGame.getPlayer().setHp(10);
+        mockGame.getPlayer().setMana(5);
+
+        mockGame.movePlayer(Coordinates.Direction.EAST);
         
-        assertNotEquals(startCoordinates, endCoordinates);
-        assertFalse(mockRoom.isVisited());
+        assertEquals(mockGame.getPlayer().getMaxHp(), mockGame.getPlayer().getHp());
+        assertEquals(mockGame.getPlayer().getMaxMana(), mockGame.getPlayer().getMana());
 
         ControllerHandler.resetInput(originalSystemIn);
 
-    }    
+    }
 }

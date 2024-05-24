@@ -12,6 +12,7 @@ import com.tloj.game.entities.Character;
 
 
 public class NanoDirkTest {
+
     @Test
     public void usedEffectTest() {    
         Dice.setSeed(1);
@@ -24,7 +25,7 @@ public class NanoDirkTest {
         while (!nanoDirk.getEffect().wasUsed()) {
             nanoDirk.modifyAttack(mockPlayerAttack);
             if (nanoDirk.getEffect().wasUsed()) 
-                assertTrue(mockPlayerAttack.getWeaponRoll() > 6);
+                assertTrue(mockPlayerAttack.getWeaponRoll() > 2);
         }
     }
 

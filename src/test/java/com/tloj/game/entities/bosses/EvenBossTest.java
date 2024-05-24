@@ -2,7 +2,6 @@ package com.tloj.game.entities.bosses;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -14,6 +13,7 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.collectables.weapons.LaserBlade;
 
@@ -29,28 +29,15 @@ public class EvenBossTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        Dice.setSeed(1);
+        ControllerHandler.deleteController();
+        Controller.getInstance();           
     }
 
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -61,6 +48,9 @@ public class EvenBossTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, evenBoss);
         
         while (!evenBoss.getAbility().wasUsed()) {
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
             evenBoss.defend(mockPlayerAttack);
 
             if (evenBoss.getAbility().wasUsed()) 
@@ -75,6 +65,10 @@ public class EvenBossTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, evenBoss);
     
         while (true) {
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             mockCharacter.getWeapon().modifyAttack(mockPlayerAttack);
             evenBoss.defend(mockPlayerAttack);
             int totalDamage = mockPlayerAttack.getTotalDamage();

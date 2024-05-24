@@ -22,7 +22,7 @@ public class PlayerAttack extends Attack {
     private int weaponRoll;
     private MobAbility targetAbility;
     private WeaponEffect weaponEffect;
-
+    
     /**
      * Constructs a PlayerAttack object with the given attacker and target.
      *
@@ -112,6 +112,7 @@ public class PlayerAttack extends Attack {
         this.targetDef = this.target.getCurrentFightDef();
         this.weaponRoll = 0;
         this.totalAttack = 0;
+        this.setOnHit(null);
         this.getAttacker().setUsedItem(false);
     }
 

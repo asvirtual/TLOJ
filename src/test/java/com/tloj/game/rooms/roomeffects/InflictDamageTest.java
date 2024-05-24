@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 
@@ -19,6 +18,7 @@ import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.TrapRoom;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -32,27 +32,16 @@ public class InflictDamageTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-            Dice.setSeed(1);
-            Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
+        
+        Dice.setSeed(1);
+        ControllerHandler.deleteController();
+        Controller.getInstance();
     }
+    
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -79,6 +68,10 @@ public class InflictDamageTest {
         boolean triggered = false;
 
         while (!triggered) {
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+            Controller.getInstance().setGame(mockGame);
             
             triggered = mockRoom.triggerTrap(mockCharacter);
             int endHp = mockCharacter.getHp();
@@ -115,6 +108,11 @@ public class InflictDamageTest {
         
         while (!triggered) {
             
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n\n");
+            Controller.getInstance();
+            Controller.getInstance().setGame(mockGame);
+
             triggered = mockRoom.triggerTrap(mockCharacter);
             if (triggered) {
                 assertTrue(!mockCharacter.isAlive());

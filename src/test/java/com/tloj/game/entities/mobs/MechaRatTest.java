@@ -3,7 +3,6 @@ package com.tloj.game.entities.mobs;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +15,7 @@ import com.tloj.game.collectables.items.HealthPotion;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -30,28 +30,16 @@ public class MechaRatTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
+        
             Dice.setSeed(1);
+            ControllerHandler.deleteController();
             Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
     }
 
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
  
     @Test
@@ -104,6 +92,10 @@ public class MechaRatTest {
 
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         while (!mechaRat.getAbility().wasUsed()) {
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             mechaRat.defend(mockPlayerAttack);
             if (mechaRat.getAbility().wasUsed()) {
                 assertNull(mockCharacter.getInventoryItem(healthPotion));
@@ -124,6 +116,10 @@ public class MechaRatTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, mechaRat);
         mechaRat.defend(mockPlayerAttack);
         do {
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             if (!mechaRat.getAbility().wasUsed()) assertEquals(healthPotion, mockCharacter.getInventoryItem(healthPotion));
             else {
                 mechaRat = new MechaRat(new Coordinates(0, 0), 1);

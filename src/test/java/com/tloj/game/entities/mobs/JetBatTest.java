@@ -2,7 +2,6 @@ package com.tloj.game.entities.mobs;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.junit.jupiter.api.AfterEach;
@@ -16,6 +15,7 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -30,28 +30,14 @@ public class JetBatTest {
    
     @BeforeEach
     public void setUpInput() {
-        try {
-            Thread.sleep(100); 
-            
-            String input = "";
-            for (int i = 0; i < 10000; i++) {
-                input += "\n";
-            }
-
-            System.setIn(new ByteArrayInputStream(input.getBytes()));
-
             Dice.setSeed(1);
+            ControllerHandler.deleteController();
             Controller.getInstance();
-        }
-        catch(InterruptedException e){
-            e.printStackTrace();
-        }
     }
-
 
     @AfterEach
     public void restoreSystemIn() {
-        System.setIn(originalSystemIn);
+       ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -104,6 +90,15 @@ public class JetBatTest {
         jetBat.defend(mockPlayerAttack);
 
         while (!jetBat.getAbility().wasUsed()) {
+
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+            
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             jetBat.defend(mockPlayerAttack);
             if (jetBat.getAbility().wasUsed()) {
                 assertTrue(mockPlayerAttack.getTotalAttack() == 0);
@@ -123,6 +118,11 @@ public class JetBatTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, jetBat);
 
         do {
+
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
+            Controller.getInstance();
+
             jetBat.defend(mockPlayerAttack);
             if (!jetBat.getAbility().wasUsed()) {
                 assertTrue(mockPlayerAttack.getTotalAttack() != 0);
