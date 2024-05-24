@@ -47,13 +47,11 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     public static final int REQ_XP_BASE = 15;
     public static final int INITIAL_LVL = 1;
 
-    /**
-     * Dice faces used to level up hp, mana, attack and defense
-     */
+    /** The faces count of the dice used to level up hp, mana, attack and defense */
     public static final int D5 = 5;
+    /** The face count of the dice used to level up hp, mana, attack and defense */
     public static final int D3 = 3;
     
-    /** Used for abilities */
     protected int mana; 
     protected int maxMana;
     /** Experience points, needed to level up */
@@ -61,7 +59,6 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
 
     /** Experience points required to reach next level */
     protected int requiredXp;
-    /** Current level */
     protected int lvl;
     /** The maximum weight a Character can carry. The sum of the items' weight in the inventory shall always be lower or equal than this field */
     protected int maxWeight;
@@ -219,6 +216,10 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         return this.skill;
     }
 
+    /**
+     * Checks if the character has used an item in the current turn of the fight
+     * @return true if the character has used an item, false otherwise
+     */
     public boolean hasUsedItem() {
         return this.usedItem;
     }
@@ -409,15 +410,14 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
     }
 
     public void updateRequiredXp() {
-        // this.requiredXp = REQ_XP_BASE * (this.lvl * (this.lvl + 1)) / 2;
         this.requiredXp = REQ_XP_BASE * this.lvl;
     }
 
     /**
-     * Level up the character when it has enough xp points ({@value #REQ_XP_BASE} for lvl 2).<br>
+     * Level up the character when it has enough xp points ({@value #REQ_XP_BASE} * its current level).<br>
      * The required xp is then increased for each level.<br>
-     * Hp and mana are increased by rolling a 5-sided dice, attack and defense by rolling a 3-sided dice.<br>
-     * The character is also completely healed.<br>
+     * Hp and mana are increased by rolling a 5-sided dice, attack and defense are increased by rolling a 3-sided dice.<br>
+     * The character is completely healed and its mana entirely restored.<br>
      */
     public void levelUp() {
         Dice fiveDice = new Dice(D5);

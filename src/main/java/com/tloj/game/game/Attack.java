@@ -17,6 +17,7 @@ public abstract class Attack {
 
     protected int baseAttack;
     protected int targetDef;
+    /** The total sum of the atk stats, not to be confused with the total damage, which also takes into account the target's defense */
     protected int totalAttack;
 
     /** The action to be performed when the attack hits the target. */
@@ -87,6 +88,9 @@ public abstract class Attack {
         return totalDamage > 0 ? totalDamage : 0;
     }
 
+    /** 
+     * Performs the attack, dealing damage to the target and executing the onHit action.
+     */
     public void perform() {
         if (this.getTotalDamage() >= 0) this.target.takeDamage(this.getTotalDamage());
         if (this.onHit != null) this.onHit.run();

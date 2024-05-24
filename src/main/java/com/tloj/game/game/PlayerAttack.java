@@ -9,7 +9,7 @@ import com.tloj.game.utilities.ConsoleHandler;
 
 
 /**
- * Represents an attack performed by the player. <br>
+ * Represents an {@link Attack} performed by the player. <br>
  * The player can attack mobs in the game. <br>
  * This class extends the abstract class Attack and adds the player's weapon roll and bonus damage to the attack. <br>
  * This design respects modularity and scalability, as the action of the attack is its own class that encapsulates different data like <br>

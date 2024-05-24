@@ -6,7 +6,7 @@ import com.tloj.game.game.Coordinates;
 
 
 /**
- * An abstract class representing an entity that can attack and be attacker<br>
+ * An abstract class representing an entity that can either attack and be attacked<br>
  * This includes the {@link Character} (the player), the {@link Mob}s and the {@link Boss}es<br>
  * All combat entities have a health pool, an attack stat and a defense stat<br>
  */
