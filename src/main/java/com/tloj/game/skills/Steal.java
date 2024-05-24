@@ -2,7 +2,6 @@ package com.tloj.game.skills;
 
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.DataThief;
-import com.tloj.game.game.Attack;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Dice;
 import com.tloj.game.rooms.HostileRoom;
