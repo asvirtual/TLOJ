@@ -110,10 +110,10 @@ public class GameIndex {
         try {
             return mapper.readValue(new File(Constants.BASE_SAVES_DIRECTORY + games.get(index)), Game.class);
         } catch (JsonGenerationException e) {
-            System.out.println("Error generating JSON from GameData");
+            System.out.println("Error generating JSON from game data");
             e.printStackTrace();
         } catch (JsonMappingException e) {
-            System.out.println("Error mapping JSON from GameData");
+            System.out.println("Error mapping JSON from game data");
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Error opening file " + games.get(index) + " for reading");
@@ -133,12 +133,12 @@ public class GameIndex {
         if (!savesDir.exists()) savesDir.mkdirs();
         File file = new File(Constants.BASE_SAVES_DIRECTORY + Constants.GAMES_INDEX_FILE_PATH);
         
+        // The index file doesn't exist, so there are no games to be loaded
         if (!file.exists()) {
             games = new ArrayList<>();
-            try {
-                FileWriter fileWriter = new FileWriter(file);
+
+            try (FileWriter fileWriter = new FileWriter(file)) {
                 fileWriter.write("[]");
-                fileWriter.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -149,9 +149,22 @@ public class GameIndex {
         try {
             games = mapper.readValue(file, new TypeReference<ArrayList<String>>(){});
             File[] files = savesDir.listFiles();
-            for (File f : files)
-                if (!f.getName().equals(Constants.GAMES_INDEX_FILE_PATH) && !games.contains(f.getName()))
-                    f.delete();
+
+            for (File f : files) {
+                String filename = f.getName();
+                if (filename.equals(Constants.GAMES_INDEX_FILE_PATH)) continue;
+                if (games.contains(filename)) continue;
+
+                Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + filename);
+
+                // Delete old saves that are not on the cloud anymore, except for those 
+                // that were never backup up after the last time they were played
+                if (game.isBackedUp()) f.delete();
+                else games.add(filename);
+            }
+
+            // Save to index also files that were not picked from the cloud as they weren't backed up before
+            GameIndex.saveGames();
 
             // Sort the games by creation time
             games.sort((first, second) -> {

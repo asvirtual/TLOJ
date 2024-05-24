@@ -564,8 +564,12 @@ class QuitCommand extends GameCommand {
         if (!Controller.awaitConfirmation()) return;
 
         this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
-
-        this.controller.saveCurrentGameToCloud();
+        this.game.setBackedUp(this.controller.saveCurrentGameToCloud());
+        this.game.saveLocally();
+        if (!game.isBackedUp()) {
+            System.out.println(ConsoleHandler.RED + "Game could not be saved to cloud. The save is only available locally." + ConsoleHandler.RESET);
+            Controller.awaitEnter();
+        }
 
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
@@ -1407,9 +1411,9 @@ public class Controller {
         }
     }
 
-    public void saveCurrentGameToCloud() {
-        this.saveHandler.saveToCloud(GameIndex.getFile(String.valueOf(this.currentGameId)));
-        this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
+    public boolean saveCurrentGameToCloud() {
+        return (this.saveHandler.saveToCloud(GameIndex.getFile(String.valueOf(this.currentGameId))) &&
+                this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH));
     }
 
     public void loadGame(int index) {

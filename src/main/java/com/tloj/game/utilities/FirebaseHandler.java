@@ -20,8 +20,6 @@ import com.google.api.gax.paging.Page;
  *  - Load game from cloud<br>
  *  - Delete game from cloud<br>
  */
-
-
 public class FirebaseHandler {
     private static FirebaseHandler instance;
 
@@ -49,10 +47,10 @@ public class FirebaseHandler {
     /**
      * Uploads a JSON file with the specified filename to Firebase Storage.
      */
-    public void saveToCloud(String filename) {
+    public boolean saveToCloud(String filename) {
         if (!NetworkUtils.isInternetAvailable()) {
             System.out.println(ConsoleHandler.RED + "No internet connection. Save to cloud failed." + ConsoleHandler.RESET);
-            return;
+            return false;
         }
 
         Bucket bucket = StorageClient.getInstance().bucket();
@@ -71,12 +69,14 @@ public class FirebaseHandler {
             System.out.println("Error opening file " + filename + " for reading");
             e.printStackTrace();
         }
+
+        return true;
     }
 
-    public void loadAllCloud() {
+    public boolean loadAllCloud() {
         if (!NetworkUtils.isInternetAvailable()) {
             System.out.println(ConsoleHandler.RED + "No internet connection. Couldn't load games from cloud." + ConsoleHandler.RESET);
-            return;
+            return false;
         }
 
         System.out.println(ConsoleHandler.YELLOW + "Loading games from cloud..." + ConsoleHandler.RESET);
@@ -97,18 +97,22 @@ public class FirebaseHandler {
         });
 
         ConsoleHandler.clearConsole();
+
+        return true;
     }
 
-    public void deleteFromCloud(String filename) {
+    public boolean deleteFromCloud(String filename) {
         if (!NetworkUtils.isInternetAvailable()) {
             System.out.println(ConsoleHandler.RED + "No internet connection. Save to cloud failed." + ConsoleHandler.RESET);
-            return;
+            return false;
         }
         
-        if (filename == null) return;
+        if (filename == null) return false;
         Bucket bucket = StorageClient.getInstance().bucket();
         Blob blob = bucket.get(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""));
         blob.delete();
+
+        return true;
     }
 }
 

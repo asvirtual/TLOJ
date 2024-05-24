@@ -9,10 +9,6 @@ import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Character;
 
 
-/**
- * Represents a visitor for different types of rooms in the game.
- * Each method in this class represents a visit to a specific type of room.
- */
 interface Visitor {
     void visit(StartRoom room);
     void visit(BossRoom room);
@@ -23,6 +19,10 @@ interface Visitor {
     void visit(TrapRoom room);
 }
 
+/**
+ * PlayerRoomVisitor class to handle the visit different types of rooms in the game.
+ * It implements the Visitor pattern
+ */
 public class PlayerRoomVisitor implements Visitor {
     private Character player;
     private Controller controller;
@@ -38,7 +38,7 @@ public class PlayerRoomVisitor implements Visitor {
     }
 
     /**
-     * Visit method for a StartRoom.<br>
+     * Visit method for a {@link StartRoom}.<br>
      * @param room The StartRoom to visit.
      * Visits a start room, clears the room, and sets the game state to MOVING
      */
@@ -52,9 +52,10 @@ public class PlayerRoomVisitor implements Visitor {
     }
 
     /**
-     * Visit method for a BossRoom.<br>
+     * Visit method for a {@link BossRoom}.<br>
      * @param room The BossRoom to visit.
-     * Visits a boss room, triggers a fight with the boss, and sets the game state to FIGHTING_BOSS
+     * Visits a boss room, triggers a fight with the boss, changes the music 
+     * and sets the game state to FIGHTING_BOSS
      */
     @Override
     public void visit(BossRoom room) {
@@ -80,7 +81,7 @@ public class PlayerRoomVisitor implements Visitor {
     }
 
     /**
-     * Visit method for a HealingRoom.<br>
+     * Visit method for a {@link HealingRoom}.<br>
      * @param room The HealingRoom to visit.
      * Visits a healing room, heals the player, and sets the game state to HEALING_ROOM
      */
@@ -124,7 +125,7 @@ public class PlayerRoomVisitor implements Visitor {
     }
 
     /**
-     * Visit method for a HostileRoom.<br>
+     * Visit method for a {@link HostileRoom}.<br>
      * @param room The HostileRoom to visit.
      * Visits a hostile room, triggers a fight with the mob, and sets the game state to FIGHTING_MOB
      */
@@ -151,7 +152,7 @@ public class PlayerRoomVisitor implements Visitor {
     }
 
     /**
-     * Visit method for a LootRoom.<br>
+     * Visit method for a {@link LootRoom}.<br>
      * @param room The LootRoom to visit.
      * Visits a loot room, adds the item to the player's inventory, and clears the room
      */
@@ -185,9 +186,9 @@ public class PlayerRoomVisitor implements Visitor {
     }
 
     /**
-     * Visit method for a TrapRoom.<br>
+     * Visit method for a {@link TrapRoom}.<br>
      * @param room The TrapRoom to visit.
-     * Visits a trap room, triggers the trap, and executes the side effect of the room
+     * Visits a trap room, triggers the trap, and executes its side effect 
      */
     @Override
     public void visit(TrapRoom room) {
@@ -221,7 +222,7 @@ public class PlayerRoomVisitor implements Visitor {
     }
 
     /**
-     * Visit method for a EndRoom.<br>
+     * Visit method for a {@link EndRoom}.<br>
      * @param room The EndRoom to visit.
      * Visits an end room, sets the game state to WIN, and displays game win message
      */

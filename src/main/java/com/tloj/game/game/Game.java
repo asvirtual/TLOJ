@@ -6,6 +6,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.NorthStar;
@@ -27,7 +28,7 @@ import com.tloj.game.utilities.JsonParser;
 
 
 /**
- * The Game class represents the main game logic and state management.<br>
+ * The Game class represents the main game logic.<br>
  * It controls player movement, interactions with rooms and entities,
  * combat, inventory management, saving and loading game data, and more.
  */
@@ -56,6 +57,11 @@ public class Game implements CharacterObserver {
     private long lastPlayed;
     @JsonProperty("gameId")
     private int gameId;
+    /** A boolean flag that indicates whether the corresponding save file is on the cloud
+     * or if the cloud has an older version of the game, or doesn't have it at all. 
+     */
+    @JsonPropertyOrder("backedUp")
+    private boolean backedUp;
 
     /**
      * Constructs a new Game object with the given list of floors.
@@ -130,6 +136,14 @@ public class Game implements CharacterObserver {
         this.gameId = gameId;
     }
 
+    public boolean isBackedUp() {
+        return this.backedUp;
+    }
+
+    public void setBackedUp(boolean backedUp) {
+        this.backedUp = backedUp;
+    }
+
     public long getLastPlayed() {
         return this.lastPlayed;
     }
@@ -179,7 +193,6 @@ public class Game implements CharacterObserver {
      * @throws IllegalArgumentException If the move is invalid.
      */
     public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException {  
-        // Create a visitor for the player to interact with the room.
         PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player);
 
         if (
@@ -202,17 +215,20 @@ public class Game implements CharacterObserver {
 
         Coordinates newCoordinates = this.player.getPosition().getAdjacent(direction);
 
-        // Check if the room at the new coordinates is locked and the player does not have a special key.
         if (!this.getFloor().areCoordinatesValid(newCoordinates)) throw new IllegalArgumentException("Invalid coordinates");
         if (
             this.currentFloor.getRoom(newCoordinates).isLocked() && 
             !this.player.hasItem(new SpecialKey())
         ) throw new IllegalArgumentException("That room is locked");
 
+        /**
+         * If the player was in the LOOTING_ROOM state (i.e. it didn't have enough space in its inventory to pick up an item)
+         * but decided to move, change the game state to MOVING as he now exited the LootRoom
+         */
         if (this.controller.getState() == GameState.LOOTING_ROOM) 
             this.controller.setState(GameState.MOVING);
         
-        /** Reset fight stats, so that elixirs' effects are canceled */
+        // Reset fight stats, so that elixirs' effects are canceled
         this.player.resetFightStats();
 
         this.player.move(newCoordinates);
@@ -220,14 +236,12 @@ public class Game implements CharacterObserver {
         Room room = this.currentFloor.getRoom(newCoordinates);
         room.accept(playerRoomVisitor);
         
-        /** Save the game status locally */
+        // Save the game status locally
         this.saveLocally();
     }
 
     public void playerAttack() {
-        /** 
-         * Player in a HostileRoom/BossRoom, attack its Mob/Boss
-        */
+        // Player in a HostileRoom/BossRoom, attack its Mob/Boss
         HostileRoom room = (HostileRoom) this.getCurrentRoom();
         Mob mob = room.getMob();
         this.player.attack(mob);
@@ -235,16 +249,15 @@ public class Game implements CharacterObserver {
         if (mob.isAlive()) {
             mob.attack(this.player);
 
-            /**
-             * No further action, the fight continues
-             */
+            // If the mob didn't move and is still in the player's room, the fight continues
             if (mob.getPosition().equals(this.player.getPosition())) return; 
         }
 
+        // The fight ended, deactivate the player's skill
         CharacterSkill playerSkill = this.player.getSkill();
         if (playerSkill != null) playerSkill.setActivated(false);
 
-        // Boss defeated
+        // The defeated enemy was a boss
         if (room.getType() == RoomType.BOSS_ROOM) return;
 
         // If no mobs left in the room, clear it and go back to moving state
@@ -255,7 +268,7 @@ public class Game implements CharacterObserver {
             return;
         }
         
-        // Get new mob if there is one
+        // Otherwise, get the next mob to fight
         mob = room.getMob();        
 
         ConsoleHandler.clearConsole();
@@ -307,9 +320,10 @@ public class Game implements CharacterObserver {
         
         this.increaseScore(Mob.SCORE_DROP);
 
-        // There are other mobs in the room
+        // If the defeted mob was the last one, clear the room
         if (room.getMobsCount() == 1) room.clear(this.player);
         else {
+            // Otherwise, face the next mob  
             room.removeMob(mob);
             ConsoleHandler.println(ConsoleHandler.PURPLE + "You've encountered " + room.getMob() + ConsoleHandler.RESET + "\n" + room.getMob().getASCII() + "\n");
         }
@@ -326,7 +340,7 @@ public class Game implements CharacterObserver {
 
         room.clear(this.player);
 
-        /** Reset stats to how they were before the fight, so that elixirs' effects are canceled */
+        // Reset stats to how they were before the fight, so that elixirs' effects are canceled
         this.player.resetFightStats();
         this.player.lootMob(boss);
 
@@ -388,7 +402,7 @@ public class Game implements CharacterObserver {
     public String[] generateMapLines() {
         StringBuilder mapBuilder = new StringBuilder();
 
-        // Append the top border of the map.
+        // Append the top frame of the map.
         mapBuilder
             .append(" -")
             
@@ -399,6 +413,7 @@ public class Game implements CharacterObserver {
         
         // Iterate through each row of rooms in the current floor.
         for (int i = 0; i < this.currentFloor.getRoomsRowCount(); i++) {
+            // Append the frame of the map with the correct directions
             if ((this.currentFloor.getRoomsRowCount() + 1) % 2 == 0) {
                 if (i == this.currentFloor.getRoomsRowCount() / 2) mapBuilder.append("\bW ");
                 else mapBuilder.append("\b| ");
@@ -424,7 +439,7 @@ public class Game implements CharacterObserver {
                 }
             }
 
-            // Append vertical borders or gates at the end of each row based on the current column count.
+            // Append the frame of the map with the correct directions
             if ((this.currentFloor.getRoomsRowCount() + 1) % 2 == 0) {
                 if (i == this.currentFloor.getRoomsRowCount() / 2) mapBuilder.append("\bE\n");
                 else mapBuilder.append("\b|\n");
@@ -436,7 +451,7 @@ public class Game implements CharacterObserver {
             
         }
 
-        // Append the bottom border of the map.
+        // Append the bottom frame of the map.
         mapBuilder
             .append(" -")
             .append("--".repeat(this.currentFloor.getRoomsColCount() / 2 - ((this.currentFloor.getRoomsColCount() + 1) % 2)))
