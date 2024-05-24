@@ -11,7 +11,7 @@ import com.tloj.game.utilities.Constants;
 
 
 /**
- * Represents the EvenBoss Boss entity in the game.<br>
+ * Represents the EvenBoss, called Cyfartal, boss entity in the game.<br>
  * The EvenBoss is the first boss of the game. It has a special ability that nullifies received damage is weapon roll is even<br>
  * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
  * This boss is paired with the {@link DodgeEvenRoll} ability and the {@link WeaponShard} drop.    

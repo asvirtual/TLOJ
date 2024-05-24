@@ -3,6 +3,7 @@ package com.tloj.game.utilities;
 
 /**
  *This class contains all the constants used in the game.<br> 
+ * ASCII art, story text and music file paths are stored here.
  */
 public class Constants {
     public static final int BAR_LENGTH = 10;

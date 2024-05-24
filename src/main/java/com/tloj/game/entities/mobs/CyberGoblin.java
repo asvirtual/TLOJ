@@ -11,7 +11,13 @@ import com.tloj.game.abilities.StealItem;
 /**
  * Represents the CyberGoblin Mob entity in the game.<br>
  * The CyberGoblin is a weak but quick enemy that can be found in the game. It has average health and low defense, but inflicts some damage<br>
- * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
+ * It has {@value #HP} health points <br>
+ * {@value #ATTACK} attack points <br>
+ * {@value #DEFENSE} defense points <br>
+ * {@value #DICE_FACES} dice faces <br>
+ * {@value #XP_DROP} experience points drop <br>
+ * {@value #MONEY_DROP} money drop <br>
+ * It has the {@link StealItem} ability<br>
  * @see Mob
  * @see JetBat
  * @see JunkSlime

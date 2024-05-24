@@ -14,24 +14,29 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
-// Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
-@JsonTypeInfo(
-  use = JsonTypeInfo.Id.CLASS, 
-  include = JsonTypeInfo.As.PROPERTY, 
-  property = "@class")
-  
+
 /**
  * An abstract class representing an item that can be found in the game<br>
  * All items have a weight, and can be picked up by the player<br>
  * @see Weapon
  * @see PurchasableItem
  */
+
+ // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.CLASS, 
+    include = JsonTypeInfo.As.PROPERTY, 
+    property = "@class")
+    
 public abstract class Item {
     protected double weight;
     protected int dropMoney;
     protected int id;
     protected double dropChance;
     
+    /**
+     * An enum that contains all the items that can be dropped by defeating mobs or in the loot rooms.<br>
+     */
     enum DroppableItems {
         HEALTH_POTION(new HealthPotion()),
         GREAT_HEALTH_POTION(new GreatHealthPotion()),
@@ -80,11 +85,11 @@ public abstract class Item {
         return id;
     }
 
-    /*
+    /**
      * used to get a random item based on their drop chances. 
      * It first calculates the total drop chance of all items, then generates a random value within this range. 
      * It then goes through the items again, adding each item's drop chance to a cumulative total 
-     * until this total is greater than or equal to the random value, at which point it returns the current item
+     * until this total is greater than or equal to the random value, at which point it returns the current item.
      */
     public static Item getRandomItem() {
         double totalProbability = 0.0;

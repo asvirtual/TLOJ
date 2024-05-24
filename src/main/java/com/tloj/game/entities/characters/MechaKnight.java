@@ -17,12 +17,13 @@ import com.tloj.game.utilities.Constants;
 /**
  * Class to represent the MechaKnight class in the game<br>
  * It has the following fixed initial attributes:<br>
- * HP 30 health points<br>
- * ATTACK 1 attack points<br>
- * DEFENSE 5 defense points<br>
- * MANA 5 mana points<br>
- * MAX_WEIGHT 5 maximum weight capacity<br>
- * MONEY 15 money<br>
+ * {@value #HP} health points<br>
+ * {@value #MANA} mana points<br>
+ * {@value #ATTACK} attack points<br>
+ * {@value #DEFENSE} defense points<br>
+ * {@value #MAX_WEIGHT} maximum weight capacity<br>
+ * {@value #MONEY} money<br>
+ * It has the {@link Guard} ability<br>
  * @see Character
  */
 

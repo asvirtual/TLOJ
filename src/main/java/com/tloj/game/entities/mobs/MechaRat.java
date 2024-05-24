@@ -11,7 +11,13 @@ import com.tloj.game.abilities.NibbleItem;
 /**
  * Represents the MechaRat Mob entity in the game.<br>
  * The MechaRat is a small enemy that can be found in the game. It has low hp, but some attack and defense<br>
- * It has {@value #HP} health points, {@value #ATTACK} attack points, {@value #DEFENSE} defense points, {@value #DICE_FACES} dice faces, {@value #XP_DROP} experience points drop, {@value #MONEY_DROP} money drop.
+ * It has {@value #HP} health points<br>
+ * {@value #ATTACK} attack points<br>
+ * {@value #DEFENSE} defense points<br>
+ * {@value #DICE_FACES} dice faces<br>
+ * {@value #XP_DROP} experience points drop<br>
+ * {@value #MONEY_DROP} money drop.<br>
+ * It has the {@link NibbleItem} ability<br>
  * @see Mob
  * @see JetBat
  * @see JunkSlime

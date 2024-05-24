@@ -15,7 +15,6 @@ import com.tloj.game.rooms.StartRoom;
  * Represents a floor in the game. <br>
  * A floor is a grid of rooms that the player can navigate through. <br>
  * The floor has a start room and many other different types . <br>
- * <br>
  * @see Room
  * @see StartRoom
  * @see RoomType

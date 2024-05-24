@@ -13,7 +13,8 @@ import com.tloj.game.skills.CharacterSkill;
 
 
 /**
- * Abstract class to represent the Boss class in the game
+ * Abstract class to represent the Boss class in the game.
+ * Bosses are special Mobs with higher health, attack and defense points and special abilities to challenge the player.
 * @see Mob
 */
 
