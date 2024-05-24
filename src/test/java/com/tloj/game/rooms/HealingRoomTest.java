@@ -18,6 +18,7 @@ import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
+import com.tloj.game.game.MockController;
 
 public class HealingRoomTest {
     private final InputStream originalSystemIn = System.in;
@@ -35,6 +36,7 @@ public class HealingRoomTest {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
 
             Dice.setSeed(1);
+            MockController.deleteController();
             Controller.getInstance();
         }
         catch(InterruptedException e){

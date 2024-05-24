@@ -9,6 +9,7 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
+import com.tloj.game.game.MockController;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.TrapRoom;
 import java.io.ByteArrayInputStream;
@@ -38,6 +39,7 @@ public class EmpTest {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
 
             Dice.setSeed(1);
+            MockController.deleteController();
             Controller.getInstance();
         }
         catch(InterruptedException e){

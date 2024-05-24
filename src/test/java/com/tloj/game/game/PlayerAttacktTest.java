@@ -37,6 +37,7 @@ public class PlayerAttacktTest {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
 
             Dice.setSeed(1);
+            MockController.deleteController();
             Controller.getInstance();
         }
         catch(InterruptedException e){

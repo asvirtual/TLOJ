@@ -12,10 +12,6 @@ import java.io.*;
 
 
 /**
- * Class that represents a music player in the game<br>
- * Used to play music files in the game<br>
- */
-/**
  * The MusicPlayer class is responsible for playing music files.
  */
 public class MusicPlayer {

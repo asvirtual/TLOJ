@@ -18,6 +18,7 @@ import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
+import com.tloj.game.game.MockController;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.entities.Mob;
@@ -44,6 +45,7 @@ public class GlitchedTest {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
 
             Dice.setSeed(1);
+            MockController.deleteController();
             Controller.getInstance();
         }
         catch(InterruptedException e){

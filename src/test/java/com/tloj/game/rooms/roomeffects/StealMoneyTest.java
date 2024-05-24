@@ -19,6 +19,7 @@ import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.TrapRoom;
+import com.tloj.game.game.MockController;
 
 
 /**
@@ -43,6 +44,7 @@ public class StealMoneyTest {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
 
             Dice.setSeed(1);
+            MockController.deleteController();
             Controller.getInstance();
         }
         catch(InterruptedException e){

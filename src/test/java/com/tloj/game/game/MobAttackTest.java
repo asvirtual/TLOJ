@@ -35,6 +35,7 @@ public class MobAttackTest {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
 
             Dice.setSeed(1);
+            Controller.instance = null;
             Controller.getInstance();
         }
         catch(InterruptedException e){

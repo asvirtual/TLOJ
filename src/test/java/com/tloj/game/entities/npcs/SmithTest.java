@@ -13,6 +13,7 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
+import com.tloj.game.game.MockController;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.WeaponShard;
 
@@ -32,6 +33,7 @@ public class SmithTest {
             System.setIn(new ByteArrayInputStream(input.getBytes()));
 
             Dice.setSeed(1);
+            MockController.deleteController();
             Controller.getInstance();
         }
         catch(InterruptedException e){
