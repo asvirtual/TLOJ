@@ -17,7 +17,7 @@ import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.rooms.HostileRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.entities.Mob;
@@ -35,13 +35,13 @@ public class GlitchedTest {
     public void setUpInput() {
         
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -85,8 +85,8 @@ public class GlitchedTest {
         Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0);
         Controller.getInstance().setGame(mockGame);
 
-        MockController.deleteController();
-        MockController.setInput("\n\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n\n");
         Controller.getInstance();
 
         glitched.attack(mockCharacter);
@@ -131,8 +131,8 @@ public class GlitchedTest {
                     mockCharacter.move(mobToCheck.getPosition());
                     mockCharacter.setHp(mockCharacter.getMaxHp());
                     
-                    MockController.deleteController();
-                    MockController.setInput("\n\n");
+                    ControllerHandler.deleteController();
+                    ControllerHandler.setInput("\n\n");
                     Controller.getInstance();
 
                     mobToCheck.attack(mockCharacter);

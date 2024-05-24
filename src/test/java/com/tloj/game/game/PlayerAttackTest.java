@@ -1,9 +1,8 @@
 package com.tloj.game.game;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.InputStream;
 
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,24 +18,24 @@ import com.tloj.game.entities.mobs.CyberGoblin;
  * It tests the attack method with its formula, the mob's defense, the lootMob method and if its possible to kill the mob.<br>
  */
 
-public class PlayerAttacktTest {
+public class PlayerAttackTest {
     private final InputStream originalSystemIn = System.in;
     
     @BeforeEach
     public void setUpInput() {
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
 
-        MockController.deleteController();
-        MockController.setInput("\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
         Controller.getInstance();
 
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -87,8 +86,8 @@ public class PlayerAttacktTest {
         
         while (inventory.getSize() == 0) {
            
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
            
             playerAttack.perform();

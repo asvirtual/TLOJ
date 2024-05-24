@@ -3,8 +3,8 @@ package com.tloj.game.game;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-public class MockController {
-    
+
+public class ControllerHandler {
     public static void deleteController() {
         Controller.instance = null;
     }

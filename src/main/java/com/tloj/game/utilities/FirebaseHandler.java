@@ -72,6 +72,8 @@ public class FirebaseHandler {
             return;
         }
 
+        System.out.println(ConsoleHandler.YELLOW + "Loading games from cloud..." + ConsoleHandler.RESET);
+
         Bucket bucket = StorageClient.getInstance().bucket();
         Page<Blob> blobs = bucket.list();
         
@@ -86,6 +88,8 @@ public class FirebaseHandler {
                 System.out.println("Error writing file: " + e.getMessage());
             }
         });
+
+        ConsoleHandler.clearConsole();
     }
 
     public void deleteFromCloud(String filename) {

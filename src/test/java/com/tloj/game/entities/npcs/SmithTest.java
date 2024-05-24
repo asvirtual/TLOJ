@@ -12,7 +12,7 @@ import com.tloj.game.entities.Character;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.WeaponShard;
 
@@ -22,14 +22,14 @@ public class SmithTest {
     @BeforeEach
     public void setUpInput() {
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
     
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -39,8 +39,8 @@ public class SmithTest {
         mockCharacter.addInventoryItem(new WeaponShard());
         Item itemToGive = mockCharacter.getInventoryItem(new WeaponShard());
 
-        MockController.deleteController();
-        MockController.setInput("\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
         Controller.getInstance();
 
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();
@@ -58,8 +58,8 @@ public class SmithTest {
         Character mockCharacter = new BasePlayer(null);
         Item itemToGive = mockCharacter.getInventoryItem(new WeaponShard());
 
-        MockController.deleteController();
-        MockController.setInput("\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
         Controller.getInstance();
 
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();
@@ -80,8 +80,8 @@ public class SmithTest {
         mockCharacter.getWeapon().setLevel(5);
         int startWeaponLevel = mockCharacter.getWeapon().getLevel();
         
-        MockController.deleteController();
-        MockController.setInput("\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
         Controller.getInstance();
 
         mockSmith.interact(mockCharacter);

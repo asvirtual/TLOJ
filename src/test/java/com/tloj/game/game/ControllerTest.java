@@ -70,7 +70,7 @@ public class ControllerTest {
   
     @AfterAll
     static void tearDown() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
    
     @Test

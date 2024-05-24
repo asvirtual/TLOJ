@@ -14,7 +14,7 @@ import com.tloj.game.entities.Inventory;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.collectables.weapons.LaserBlade;
 
@@ -31,14 +31,14 @@ public class FlyingBossTest {
     @BeforeEach
     public void setUpInput() {
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
     }
 
 
     @AfterEach
     public void restoreSystemIn() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -50,8 +50,8 @@ public class FlyingBossTest {
         PlayerAttack mockPlayerAttack = new PlayerAttack(mockCharacter, flyingBoss);
         
         while (!flyingBoss.getAbility().wasUsed()) {
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
 
             flyingBoss.defend(mockPlayerAttack);
@@ -71,8 +71,8 @@ public class FlyingBossTest {
 
         while (true) {
 
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
 
             mockCharacter.getWeapon().modifyAttack(mockPlayerAttack);

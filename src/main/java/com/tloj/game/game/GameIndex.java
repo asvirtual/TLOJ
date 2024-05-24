@@ -174,12 +174,11 @@ public class GameIndex {
 
                 return 0;
             });
-
         } catch (JsonGenerationException e) {
-            System.out.println("Error generating JSON from GameData");
+            System.out.println("Error deleting outdated saves");
             e.printStackTrace();
         } catch (JsonMappingException e) {
-            System.out.println("Error mapping JSON from GameData");
+            System.out.println("Error deleting outdated saves");
             e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Error opening file " + Constants.GAMES_INDEX_FILE_PATH + " for reading");

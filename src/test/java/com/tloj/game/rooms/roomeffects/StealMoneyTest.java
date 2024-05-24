@@ -16,7 +16,7 @@ import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.TrapRoom;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -32,7 +32,7 @@ public class StealMoneyTest {
     public void applyEffectTest() {
         
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
         
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
@@ -58,8 +58,8 @@ public class StealMoneyTest {
     
         while (!triggered) {
 
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
             Controller.getInstance().setGame(mockGame);
 
@@ -72,6 +72,6 @@ public class StealMoneyTest {
             }
         } ;
 
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 }

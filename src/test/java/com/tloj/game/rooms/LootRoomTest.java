@@ -19,7 +19,8 @@ import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
+
 
 public class LootRoomTest {
     private final InputStream originalSystemIn = System.in;
@@ -27,14 +28,14 @@ public class LootRoomTest {
     @BeforeEach
     public void setUpInput() {
         Dice.setSeed(1);
-        MockController.deleteController();
-        MockController.setInput("\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
         Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test   

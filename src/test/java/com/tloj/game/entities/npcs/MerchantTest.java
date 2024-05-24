@@ -9,7 +9,7 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.entities.Character;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.collectables.items.ManaPotion;
@@ -21,7 +21,7 @@ class MerchantTest {
     @BeforeEach
     public void setUpInput() {
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
       
     }

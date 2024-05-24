@@ -15,7 +15,7 @@ import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -31,13 +31,13 @@ public class JetBatTest {
     @BeforeEach
     public void setUpInput() {
             Dice.setSeed(1);
-            MockController.deleteController();
+            ControllerHandler.deleteController();
             Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
-       MockController.resetInput(originalSystemIn);
+       ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -91,12 +91,12 @@ public class JetBatTest {
 
         while (!jetBat.getAbility().wasUsed()) {
 
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
             
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
 
             jetBat.defend(mockPlayerAttack);
@@ -119,8 +119,8 @@ public class JetBatTest {
 
         do {
 
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
 
             jetBat.defend(mockPlayerAttack);

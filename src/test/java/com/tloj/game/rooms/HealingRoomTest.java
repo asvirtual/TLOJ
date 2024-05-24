@@ -15,7 +15,7 @@ import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 
 public class HealingRoomTest {
     private final InputStream originalSystemIn = System.in;
@@ -25,8 +25,8 @@ public class HealingRoomTest {
 
         
         Dice.setSeed(1);
-        MockController.deleteController();
-        MockController.setInput("\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
         Controller.getInstance();
 
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
@@ -58,7 +58,7 @@ public class HealingRoomTest {
         assertEquals(mockGame.getPlayer().getMaxHp(), mockGame.getPlayer().getHp());
         assertEquals(mockGame.getPlayer().getMaxMana(), mockGame.getPlayer().getMana());
 
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
 
     }
 }

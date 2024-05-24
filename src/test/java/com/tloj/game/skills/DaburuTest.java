@@ -9,7 +9,7 @@ import com.tloj.game.entities.mobs.CyberGoblin;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.collectables.weapons.CyberKatana;
 import com.tloj.game.rooms.*;
@@ -24,7 +24,7 @@ public class DaburuTest {
     @Test
     void daburuTest() {
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
         Room mockRoom = new HostileRoom(new Coordinates(0, 0), mockCyberGoblin);
@@ -47,7 +47,7 @@ public class DaburuTest {
     @Test
     void daburuNoManaTest() {
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
         CyberGoblin mockCyberGoblin = new CyberGoblin(new Coordinates(0, 0), 1);
         Room mockRoom = new HostileRoom(new Coordinates(0, 0), mockCyberGoblin);

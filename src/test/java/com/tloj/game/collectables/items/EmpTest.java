@@ -9,7 +9,7 @@ import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.game.Controller;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 import com.tloj.game.game.PlayerRoomVisitor;
 import com.tloj.game.rooms.TrapRoom;
 import java.io.InputStream;
@@ -25,9 +25,9 @@ public class EmpTest {
     @Test
     void testConsume() {
         // Simulates user input to use Emp when prompted
-        MockController.setInput("y\n");
+        ControllerHandler.setInput("y\n");
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
 
         ArrayList<Floor> mockLevels = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
@@ -46,6 +46,6 @@ public class EmpTest {
         assertEquals(mockCharacter.getMaxHp(), mockCharacter.getHp());
         assertNull(mockCharacter.getInventoryItem(emp));
         
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 }

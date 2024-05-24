@@ -14,7 +14,7 @@ import com.tloj.game.game.Controller;
 import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -31,14 +31,14 @@ public class JunkSlimeTest {
     public void setUpInput() {
        
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
     }
 
 
     @AfterEach
     public void restoreSystemIn() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
     
     private static final int MOCK_CHARACTER_MAX_HP = 20;
@@ -93,8 +93,8 @@ public class JunkSlimeTest {
         
         while (!junkSlime.getAbility().wasUsed()) {
 
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
 
             junkSlime.defend(mockPlayerAttack);
@@ -118,8 +118,8 @@ public class JunkSlimeTest {
 
         do {
 
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
 
             junkSlime.defend(mockPlayerAttack);

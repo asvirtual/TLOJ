@@ -24,14 +24,14 @@ public class MobAttackTest {
     @BeforeEach
     public void setUpInput() {
         Dice.setSeed(1);
-        MockController.deleteController();
-        MockController.setInput("\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
         Controller.getInstance();
     }
 
     @AfterEach
     public void restoreSystemIn() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
     
     @Test

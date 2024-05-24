@@ -18,7 +18,7 @@ import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.rooms.TrapRoom;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -34,8 +34,8 @@ public class TpEffectTest {
     public void applyEffectTest() {
 
         Dice.setSeed(1);
-        MockController.deleteController();
-        MockController.setInput("\n");
+        ControllerHandler.deleteController();
+        ControllerHandler.setInput("\n");
         Controller.getInstance();
 
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
@@ -64,7 +64,7 @@ public class TpEffectTest {
         assertNotEquals(startCoordinates, endCoordinates);
         assertFalse(mockRoom.isVisited());
 
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
 
     }    
 }

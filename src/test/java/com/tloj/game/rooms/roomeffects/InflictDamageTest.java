@@ -18,7 +18,7 @@ import com.tloj.game.rooms.Room;
 import com.tloj.game.game.Game;
 import com.tloj.game.game.Floor;
 import com.tloj.game.rooms.TrapRoom;
-import com.tloj.game.game.MockController;
+import com.tloj.game.game.ControllerHandler;
 
 
 /**
@@ -34,14 +34,14 @@ public class InflictDamageTest {
     public void setUpInput() {
         
         Dice.setSeed(1);
-        MockController.deleteController();
+        ControllerHandler.deleteController();
         Controller.getInstance();
     }
     
 
     @AfterEach
     public void restoreSystemIn() {
-        MockController.resetInput(originalSystemIn);
+        ControllerHandler.resetInput(originalSystemIn);
     }
 
     @Test
@@ -68,8 +68,8 @@ public class InflictDamageTest {
         boolean triggered = false;
 
         while (!triggered) {
-            MockController.deleteController();
-            MockController.setInput("\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n");
             Controller.getInstance();
             Controller.getInstance().setGame(mockGame);
             
@@ -108,8 +108,8 @@ public class InflictDamageTest {
         
         while (!triggered) {
             
-            MockController.deleteController();
-            MockController.setInput("\n\n");
+            ControllerHandler.deleteController();
+            ControllerHandler.setInput("\n\n");
             Controller.getInstance();
             Controller.getInstance().setGame(mockGame);
 
