@@ -80,11 +80,11 @@ public class InflictDamageTest {
                 assertEquals(startHp - InflictDamage.DAMAGE, endHp);
                 return;
             }
-        } ;
+        }
     }
 
     @Test
-    public void EffectKillPlayerTest() {
+    public void effectKillPlayerTest() {
       
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
@@ -107,7 +107,6 @@ public class InflictDamageTest {
         boolean triggered  = false;
         
         while (!triggered) {
-            
             ControllerHandler.deleteController();
             ControllerHandler.setInput("\n\n");
             Controller.getInstance();

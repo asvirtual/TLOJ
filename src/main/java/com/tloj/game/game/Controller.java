@@ -1402,8 +1402,6 @@ public class Controller {
 
             this.setState(GameState.CHOOSING_CHARACTER);
             this.setGame(game);
-            
-            this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
         } catch (NumberFormatException e) {
             System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
         }

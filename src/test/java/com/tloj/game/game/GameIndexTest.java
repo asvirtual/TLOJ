@@ -63,7 +63,6 @@ public class GameIndexTest {
     static void restoreLocalSaves() {
         File backupDir = new File("test-backup");
         File savesDir = new File(Constants.BASE_SAVES_DIRECTORY);
-        backupDir.mkdir();
 
         File[] testSaveFiles = savesDir.listFiles();
         for (File f : testSaveFiles) f.delete();

@@ -217,6 +217,7 @@ public class PlayerRoomVisitor implements Visitor {
         
         room.clear(this.player);
         room.executeSideEffect();
+        if (!this.player.isAlive()) this.player.notifyDefeat();
     }
 
     /**

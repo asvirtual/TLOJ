@@ -42,7 +42,7 @@ public class ControllerTest {
     }
 
     @BeforeEach
-    void setUpMap(){
+    void setUpMap() {
     
         ArrayList<ArrayList<Room>> firstFloor = new ArrayList<>();
         ArrayList<Room> firstRooms = new ArrayList<>();
@@ -113,7 +113,7 @@ public class ControllerTest {
 
     @Test
     void validCommandTest(){
-        class MockGameCommand extends GameCommand{
+        class MockGameCommand extends GameCommand {
 
             public MockGameCommand(Game game, String[] commands){
                 super(game, null);
@@ -135,7 +135,7 @@ public class ControllerTest {
     @Test
     void invalidCommandTest(){
 
-        class MockGameCommand extends GameCommand{
+        class MockGameCommand extends GameCommand {
 
             public MockGameCommand(Game game, String[] commands){
                 super(game, null);
@@ -155,8 +155,8 @@ public class ControllerTest {
     }
 
     @Test
-    void wrongLenghtCommandTest(){
-        class MockGameCommand extends GameCommand{
+    void wrongLengthCommandTest(){
+        class MockGameCommand extends GameCommand {
 
             public MockGameCommand(Game game, String[] commands){
                 super(game, commands);
@@ -171,8 +171,8 @@ public class ControllerTest {
     }
 
     @Test
-    void rightLenghtCommandTest(){
-        class MockGameCommand extends GameCommand{
+    void rightLengthCommandTest(){
+        class MockGameCommand extends GameCommand {
 
             public MockGameCommand(Game game, String[] commands){
                 super(game, commands);

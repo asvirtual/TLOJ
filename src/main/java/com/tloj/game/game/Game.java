@@ -114,6 +114,7 @@ public class Game implements CharacterObserver {
         this.seed = seed;
         this.creationTime = creationTime;
         this.lastPlayed = this.sessionStartTime = new Date().getTime();
+        this.gameId = gameId;
         
         if (this.player != null) this.player.addObserver(this);
         Dice.setSeed(this.seed);

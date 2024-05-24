@@ -35,7 +35,6 @@ public class InflictDamage extends RoomEffect {
         
         // Inflict damage to the character
         character.takeDamage(DAMAGE);
-        if (!character.isAlive()) character.notifyDefeat();
 
         return true;
     }
