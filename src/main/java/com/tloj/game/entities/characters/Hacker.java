@@ -14,6 +14,18 @@ import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 
 
+/**
+ * Class to represent the Hacker class in the game<br>
+ * It has the following fixed initial attributes:<br>
+ * HP 18 health points<br>
+ * ATTACK 3 attack points<br>
+ * DEFENSE 3 defense points<br>
+ * MANA 20 mana points<br>
+ * MAX_WEIGHT 5 maximum weight capacity<br>
+ * MONEY 10 money<br>
+ * @see Character
+ */
+
 public class Hacker extends Character {
     private static final int HP = 18;
     private static final int ATTACK = 3;

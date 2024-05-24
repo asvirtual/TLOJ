@@ -32,7 +32,6 @@ public class Daburu extends CharacterSkill {
         super(character, MANA_COST);
         this.activationMessage = ConsoleHandler.PURPLE + "Daburu modo! Next attack will deal double damage!" + ConsoleHandler.RESET;
     }
-    
 
     /**
      * Method for using ability.

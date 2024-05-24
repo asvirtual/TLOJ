@@ -75,16 +75,6 @@ public class Steal extends CharacterSkill {
         System.out.println();
     }
 
-    /**
-     * Method for using ability.
-     *
-     * @param attack The attack being performed.
-     */
-    @Override
-    public void execute(Attack attack) {
-        super.execute(attack);
-    }
-
     public static String describe() {
         return "Steal: Chance to steal a random item";
     }

@@ -15,7 +15,6 @@ import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.LootRoom;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
-import com.tloj.game.entities.characters.BasePlayer;
 
 
 public class ControllerTest {

@@ -32,11 +32,17 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 
 ---
 ### How to Download and Install
+***Clone the repository or download the .zip release.***
+
 ***Windows***
 - Download and extract the .zip file then simply run the .exe file <br>
+- Download and extract the .zip file containing the .jar then use "java -jar filename.jar" <br>
+- Compile using Maven by using "mvn clean package" and "mvn exec:java" <br>
 
 ***MacOs***
-- Download and extract the .tar file then simply run the .dmg file <br>
+- Download and extract the .zip file containing the .jar then use "java -jar filename.jar" <br>
+- Compile using Maven by using "mvn clean package" and "mvn exec:java" <br>
+
 ---
 ### How to Play
 ***Fullscreen and black console bg recommended to have a better experience***<br>
@@ -45,7 +51,8 @@ A detailed list of commands can be found by typing [help] command at any given t
 
 ---
 ### System Documentation
-A complete system documentation, shipped in 6 documents can be found ...
+The complete system documentation, shipped in 6 files can be found in the Documents folder of the repository.
+
 ---
 ### Rights and Licenses
 ***Ascii***

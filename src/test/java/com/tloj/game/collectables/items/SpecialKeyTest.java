@@ -18,10 +18,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class SpecialKeyTest {
-    
     @Test
     void noKeyTest() {
-       
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
         ArrayList<Floor> levels = new ArrayList<>();
@@ -49,7 +53,12 @@ public class SpecialKeyTest {
 
     @Test
     void useKeyTest() {
-
+        try {
+            Thread.sleep(100);
+        } catch(InterruptedException e){
+            e.printStackTrace();
+        }
+        
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
         ArrayList<Floor> levels = new ArrayList<>();
@@ -75,6 +84,5 @@ public class SpecialKeyTest {
         assertDoesNotThrow(() -> mockGame.movePlayer(Coordinates.Direction.EAST));
         assertEquals(endCoordinates, mockGame.getPlayer().getPosition());
         assertFalse(mockGame.getPlayer().hasItem(new SpecialKey()));
-
     }
 }

@@ -4,6 +4,10 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 
+/**
+ * Represents the coordinates used to move and initialize objects in the game map.
+ */
+
 public class Coordinates {
     /**
      * Represents the direction of movement.

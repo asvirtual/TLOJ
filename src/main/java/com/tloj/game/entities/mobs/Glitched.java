@@ -114,12 +114,7 @@ public class Glitched extends Mob implements MovingEntity {
     public Item getDrop() {
         return this.drop;
     }
-
-    @Override
-    public void takeDamage(int damage) {
-        super.takeDamage(damage);
-    }
-
+    
     @Override
     public String getASCII(){
         return Constants.GLITCHED_STATIC;

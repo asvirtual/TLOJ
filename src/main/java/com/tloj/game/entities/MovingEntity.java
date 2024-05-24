@@ -6,6 +6,7 @@ import com.tloj.game.game.Coordinates;
 /**
  * Represents an entity that can move in the game. <br>
  */
+
 public interface MovingEntity {
     /**
      * Moves the entity to the specified coordinates. <br>

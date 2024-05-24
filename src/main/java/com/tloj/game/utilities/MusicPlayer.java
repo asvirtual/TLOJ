@@ -12,8 +12,10 @@ import java.io.*;
 
 
 /**
- * The MusicPlayer class is responsible for playing music files.
+ * Class that represents a music player in the game<br>
+ * Used to play music files in the game<br>
  */
+
 public class MusicPlayer {
     // The clip that is currently playing
     private Clip playingClip;

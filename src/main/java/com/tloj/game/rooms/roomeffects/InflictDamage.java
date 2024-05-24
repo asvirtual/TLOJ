@@ -17,11 +17,6 @@ import com.tloj.game.utilities.Constants;
 public class InflictDamage extends RoomEffect {
     public static final int DAMAGE = 10;
 
-    /*
-     * Default constructor for Jackson JSON deserialization
-     */
-    public InflictDamage() {}
-
     /**
      * Applies the effect of inflicting damage to a character.
      *

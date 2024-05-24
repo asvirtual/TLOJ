@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
  * @see RoomType
  * @see RoomEffect
  */
+
 @JsonTypeInfo(
   use = JsonTypeInfo.Id.CLASS, 
   include = JsonTypeInfo.As.PROPERTY, 

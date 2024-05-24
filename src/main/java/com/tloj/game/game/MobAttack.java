@@ -37,7 +37,7 @@ public class MobAttack extends Attack {
             return this.totalAttack - this.targetDef > 0 ? this.totalAttack - this.targetDef : 0;
 
         int totalDamage = this.baseAttack + this.diceRoll - this.targetDef;
-        return totalDamage > 0 ? totalDamage : 0;
+        return totalDamage > 0 ? totalDamage : 0; 
     }
 
 

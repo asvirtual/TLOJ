@@ -25,11 +25,6 @@ public class EmpTest {
     @Test
     void testConsume() {
         // Simulates user input to use Emp when prompted
-        ControllerHandler.setInput("y\n");
-        Dice.setSeed(1);
-        ControllerHandler.deleteController();
-        Controller.getInstance();
-
         ArrayList<Floor> mockLevels = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
         Game mockGame = new Game(mockLevels, 1);
         Controller.getInstance().setGame(mockGame);

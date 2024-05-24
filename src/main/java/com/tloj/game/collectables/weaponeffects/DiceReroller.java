@@ -1,4 +1,4 @@
-package com.tloj.game.effects;
+package com.tloj.game.collectables.weaponeffects;
 
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;

@@ -33,7 +33,6 @@ public class Guard extends CharacterSkill {
         this.activationMessage = ConsoleHandler.PURPLE + "Guard activated! Jordan will take half damage from the next opponent's attack!" + ConsoleHandler.RESET;
     }
     
-
     /**
      * Method for using ability.
      *

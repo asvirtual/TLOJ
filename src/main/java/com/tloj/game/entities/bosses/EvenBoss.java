@@ -23,8 +23,6 @@ import com.tloj.game.utilities.Constants;
  * @see TakeHalfDamageAbility
  * @see WeaponShard
  */
-
-
 public class EvenBoss extends Boss {
     public static final int HP = 50;
     public static final int ATTACK = 6;

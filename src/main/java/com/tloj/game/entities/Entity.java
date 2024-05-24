@@ -23,7 +23,7 @@ public abstract class Entity {
     }
 
     public void setPosition(Coordinates position) {
-        this.position = position;
+    this.position = position;
     }
 
     // Returns a string representation of the Entity's health bar

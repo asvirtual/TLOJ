@@ -25,6 +25,7 @@ import com.tloj.game.utilities.Constants;
  * MONEY 10 money<br>
  * @see Character
  */
+
 public class BasePlayer extends Character {
     private static final int HP = 25;
     private static final int ATTACK = 3;

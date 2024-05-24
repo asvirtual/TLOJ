@@ -14,6 +14,18 @@ import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 
 
+/**
+ * Class to represent the DataThief class in the game<br>
+ * It has the following fixed initial attributes:<br>
+ * HP 20 health points<br>
+ * ATTACK 4 attack points<br>
+ * DEFENSE 2 defense points<br>
+ * MANA 10 mana points<br>
+ * MAX_WEIGHT 5 maximum weight capacity<br>
+ * MONEY 0 money<br>
+ * @see Character
+ */
+
 public class DataThief extends Character {
     private static final int HP = 20;
     private static final int ATTACK = 4;

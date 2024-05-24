@@ -1,7 +1,7 @@
 package com.tloj.game.abilities;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.tloj.game.effects.WeaponEffect;
+import com.tloj.game.collectables.weaponeffects.WeaponEffect;
 import com.tloj.game.entities.Boss;
 
 
