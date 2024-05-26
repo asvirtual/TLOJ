@@ -111,7 +111,8 @@ public class Game implements CharacterObserver {
         @JsonProperty("floors") ArrayList<Floor> floors,
         @JsonProperty("gameId") int gameId,
         @JsonProperty("creationTime") long creationTime,
-        @JsonProperty("elapsedTime") long elapsedTime
+        @JsonProperty("elapsedTime") long elapsedTime,
+        @JsonProperty("backedUp") boolean backedUp
     ) {
         this.player = player;
         this.floors = floors;
@@ -121,6 +122,7 @@ public class Game implements CharacterObserver {
         this.creationTime = creationTime;
         this.lastPlayed = this.sessionStartTime = new Date().getTime();
         this.gameId = gameId;
+        this.backedUp = backedUp;
         
         if (this.player != null) this.player.addObserver(this);
         Dice.setSeed(this.seed);

@@ -117,7 +117,7 @@ public class ControllerTest {
 
             public MockGameCommand(Game game, String[] commands){
                 super(game, null);
-                this.validListStates = List.of(
+                this.validStates = List.of(
                     GameState.MOVING
                 );
     

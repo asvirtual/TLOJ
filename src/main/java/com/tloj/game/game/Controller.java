@@ -55,7 +55,6 @@ import com.tloj.game.utilities.MusicPlayer;
  * - New game (new) {@link NewGameCommand} (start a new game)<br>
  * - Load game (load) {@link LoadGameCommand} (load a saved game)<br>
  * - Exit game (exit) {@link ExitGameCommand} (exit the game)<br>
- * - Choose character (choose [character]) {@link ChooseCharacterGameCommand} (choose a character)<br>
  * - Activate skill (skill) {@link SkillCommand} (activate character's skill)<br>
  * - Show inventory (inventory) {@link InventoryCommand} (show player's inventory)<br>
  * - Swap weapon (swap [weapon]) {@link SwapWeaponCommand} (swap player's weapon)<br>
@@ -67,7 +66,7 @@ abstract class GameCommand {
     protected Character player;
     protected Controller controller;
     protected List<GameState> invalidStates;
-    protected List<GameState> validListStates;
+    protected List<GameState> validStates;
     protected int commandLength;
 
     protected GameCommand(Game game, String[] commands) {
@@ -80,7 +79,7 @@ abstract class GameCommand {
 
     public void execute() throws IllegalStateException {
         if (
-            (this.validListStates != null && !this.validListStates.contains(this.controller.getState())) ||
+            (this.validStates != null && !this.validStates.contains(this.controller.getState())) ||
             (this.invalidStates != null && this.invalidStates.contains(this.controller.getState()))
         )
             throw new IllegalStateException("Invalid state to execute this command");
@@ -98,7 +97,7 @@ abstract class GameCommand {
 class MoveNorthCommand extends GameCommand {
     public MoveNorthCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.MOVING,
             GameState.HEALING_ROOM,
             GameState.BOSS_DEFEATED,
@@ -129,7 +128,7 @@ class MoveNorthCommand extends GameCommand {
 class MoveSouthCommand extends GameCommand {
     public MoveSouthCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.MOVING,
             GameState.HEALING_ROOM,
             GameState.BOSS_DEFEATED,
@@ -160,7 +159,7 @@ class MoveSouthCommand extends GameCommand {
 class MoveWestCommand extends GameCommand {
     public MoveWestCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.MOVING,
             GameState.HEALING_ROOM,
             GameState.BOSS_DEFEATED,
@@ -191,7 +190,7 @@ class MoveWestCommand extends GameCommand {
 class MoveEastCommand extends GameCommand {
     public MoveEastCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.MOVING,
             GameState.HEALING_ROOM,
             GameState.BOSS_DEFEATED,
@@ -221,7 +220,7 @@ class MoveEastCommand extends GameCommand {
 class AttackCommand extends GameCommand {
     public AttackCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.FIGHTING_BOSS,
             GameState.FIGHTING_MOB
         );
@@ -242,7 +241,7 @@ class AttackCommand extends GameCommand {
 class SkillCommand extends GameCommand {
     public SkillCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.FIGHTING_BOSS,
             GameState.FIGHTING_MOB
         );
@@ -496,7 +495,7 @@ class DropItemCommand extends GameCommand {
 class PickItemCommand extends GameCommand {
     public PickItemCommand(Game game, String[] commands) {
         super(game, commands);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.LOOTING_ROOM
         );
     }
@@ -553,7 +552,8 @@ class QuitCommand extends GameCommand {
     public QuitCommand(Game game, String[] commands) {
         super(game, null);
         this.invalidStates = List.of(
-            GameState.MAIN_MENU
+            GameState.MAIN_MENU,
+            GameState.CHOOSING_CHARACTER
         );
     }
 
@@ -585,7 +585,7 @@ class QuitCommand extends GameCommand {
 class PreviousStateCommand extends GameCommand {
     public PreviousStateCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.CHOOSING_CHARACTER,
             GameState.MERCHANT_SHOPPING, 
             GameState.SMITH_FORGING,
@@ -701,7 +701,7 @@ class HelpCommand extends GameCommand {
 class ReturnCommand extends GameCommand {
     public ReturnCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(GameState.MOVING);
+        this.validStates = List.of(GameState.MOVING);
     }
 
     @Override
@@ -767,7 +767,7 @@ class PrintMapCommand extends GameCommand {
 class MerchantCommand extends GameCommand {
     public MerchantCommand(Game game, String[] commands) {
         super(game, commands);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.HEALING_ROOM
         );
     }
@@ -820,7 +820,7 @@ class BuyCommand extends GameCommand {
 class SmithCommand extends GameCommand {
     public SmithCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.HEALING_ROOM
         );
     }
@@ -862,8 +862,8 @@ class GiveCommand extends GameCommand {
  */
 class NewGameCommand extends GameCommand {
     public NewGameCommand(Game game, String[] commands) {
-        super(game, null);
-        this.validListStates = List.of(
+        super(game, commands);
+        this.validStates = List.of(
             GameState.MAIN_MENU
         );
     }
@@ -871,6 +871,50 @@ class NewGameCommand extends GameCommand {
     @Override
     public void execute() throws IllegalStateException {
         super.execute();
+        
+        ConsoleHandler.clearConsole();
+        System.out.println("\n" + Constants.CLASS_CHOICE);
+        String choice;
+        boolean confirmed = false;
+        
+        do {
+            System.out.print(ConsoleHandler.YELLOW + "Choose a character: " + ConsoleHandler.RESET);
+            choice = Controller.getScanner().nextLine();
+
+            System.out.println("\n" + switch(choice) {
+                case "1" -> BasePlayer.getDetailedInfo();
+                case "2"-> Hacker.getDetailedInfo();
+                case "3" -> DataThief.getDetailedInfo();
+                case "4" -> MechaKnight.getDetailedInfo();
+                case "5" -> NeoSamurai.getDetailedInfo();
+                default -> "Invalid character choice. Please choose a valid character.";
+            } + "\n");
+
+            if (choice.matches("[1-5]")) {
+                if (Controller.awaitConfirmation()) {
+                    confirmed = true;
+                    continue;
+                }
+
+                ConsoleHandler.clearConsole();
+                System.out.println("\n" + Constants.CLASS_CHOICE);
+            }
+        } while (!confirmed);
+            
+        this.controller.changeMusic(
+            Constants.INTRO_WAV_FILE_PATH,
+            false,
+            new Runnable() {
+                @Override
+                public void run() {
+                    Controller.getInstance().changeMusic(
+                        Constants.LOOP_WAV_FILE_PATH,
+                        true
+                    );
+                }
+            }
+        );
+
         ConsoleHandler.clearConsole();
 
         System.out.print(ConsoleHandler.YELLOW + "Enter a custom name for this save: " + ConsoleHandler.RESET);
@@ -885,8 +929,19 @@ class NewGameCommand extends GameCommand {
                 System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
         } while (!seed.isBlank() && !seed.matches("\\d+"));
 
-        this.controller.newGame(saveName, seed);
-        System.out.println("\n" + Constants.CLASS_CHOICE);
+        this.game = this.controller.newGame(saveName, seed);
+
+        CharacterFactory factory = this.controller.characterFactory(choice);
+        this.game.setPlayer(factory.create());
+        this.game.saveLocally();
+        this.controller.setState(GameState.MOVING);
+
+        ConsoleHandler.clearConsole();        
+        Controller.printSideBySideText(
+            this.game.getPlayer().getASCII(), 
+            this.game.getPlayer().toString() + "\n\n\n" + this.game.getPlayer().getWeapon() + "\n" +
+            this.game.getPlayer().getWeapon().getASCII()
+        );
     }
 }
 
@@ -897,7 +952,7 @@ class NewGameCommand extends GameCommand {
 class LoadGameCommand extends GameCommand {
     public LoadGameCommand(Game game, String[] commands) {
         super(game, commands);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.MAIN_MENU
         );
     }
@@ -958,7 +1013,7 @@ class LoadGameCommand extends GameCommand {
 class ContinueGameCommand extends GameCommand {
     public ContinueGameCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.MAIN_MENU
         );
     }
@@ -988,7 +1043,7 @@ class ContinueGameCommand extends GameCommand {
 class ExitGameCommand extends GameCommand {
     public ExitGameCommand(Game game, String[] commands) {
         super(game, null);
-        this.validListStates = List.of(
+        this.validStates = List.of(
             GameState.MAIN_MENU
         );
     }
@@ -998,68 +1053,6 @@ class ExitGameCommand extends GameCommand {
         super.execute();
         ConsoleHandler.clearConsole();
         this.controller.setState(GameState.EXIT);
-    }
-}
-
-/**
- * Concrete command class to choose the starting character {@link Character}, {@link BasePlayer}, {@link Hacker}, {@link DataThief}, {@link MechaKnight}, {@link NeoSamurai}
- * @see GameCommand
- */
-class ChooseCharacterGameCommand extends GameCommand {
-    public ChooseCharacterGameCommand(Game game, String[] commands) {
-        super(game, commands);
-        this.validListStates = List.of(
-            GameState.CHOOSING_CHARACTER
-        );
-    }
-
-    @Override
-    public void execute() throws IllegalStateException {
-        super.execute();
-
-        System.out.println("\n" + switch(this.commands[0]) {
-            case "1" -> BasePlayer.getDetailedInfo();
-            case "2"-> Hacker.getDetailedInfo();
-            case "3" -> DataThief.getDetailedInfo();
-            case "4" -> MechaKnight.getDetailedInfo();
-            case "5" -> NeoSamurai.getDetailedInfo();
-            default -> "Invalid character choice. Please choose a valid character.";
-        } + "\n");
-
-        if (!Controller.awaitConfirmation()) {
-            ConsoleHandler.clearConsole();
-            System.out.println("\n" + Constants.CLASS_CHOICE);
-            return;
-        }
-            
-        this.controller.changeMusic(
-            Constants.INTRO_WAV_FILE_PATH,
-            false,
-            new Runnable() {
-                @Override
-                public void run() {
-                    Controller.getInstance().changeMusic(
-                        Constants.LOOP_WAV_FILE_PATH,
-                        true
-                    );
-                }
-            }
-        );
-
-        ConsoleHandler.clearConsole();
-
-        CharacterFactory factory = this.controller.characterFactory(commands[0]);
-        this.game.setPlayer(factory.create());
-        this.game.saveLocally();
-        this.controller.setState(GameState.MOVING);
-
-        Controller.printSideBySideText(
-            this.game.getPlayer().getASCII(), 
-            this.game.getPlayer().toString() + "\n\n\n" + this.game.getPlayer().getWeapon() + "\n" +
-            this.game.getPlayer().getWeapon().getASCII()
-        );
-        
-        System.out.println();
     }
 }
 
@@ -1391,7 +1384,7 @@ public class Controller {
         Controller.printSideBySideText(asciiArt, String.join("\n", this.game.generateMapLines()));
     }
 
-    public void newGame(String name, String seed) {
+    public Game newGame(String name, String seed) {
         try {
             ArrayList<Floor> map = JsonParser.deserializeMapFromFile(Constants.MAP_FILE_PATH);
 
@@ -1399,16 +1392,23 @@ public class Controller {
             else this.game = new Game(map, Long.parseLong(seed));
 
             // TODO: Sanitize the save name
-            String saveName = name + Constants.SAVE_GAME_FILENAME_SEPARATOR + game.getCreationTime() + ".json";
+            String saveName = 
+                name.replaceAll(Constants.SAVE_GAME_FILENAME_SEPARATOR, "") + 
+                Constants.SAVE_GAME_FILENAME_SEPARATOR + 
+                game.getCreationTime() + ".json";
+
             JsonParser.saveToFile(game, Constants.BASE_SAVES_DIRECTORY + saveName);
             this.currentGameId = GameIndex.addEntry(saveName);
             this.game.setId(this.currentGameId);
 
             this.setState(GameState.CHOOSING_CHARACTER);
-            this.setGame(game);
+
+            return this.game;
         } catch (NumberFormatException e) {
             System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
         }
+
+        return null;
     }
 
     public boolean saveCurrentGameToCloud() {
@@ -1433,8 +1433,6 @@ public class Controller {
      * @return the command object to be executed
      */
     private GameCommand getCommand(String[] commands) {
-        if (commands[0].matches("\\d+")) return new ChooseCharacterGameCommand(this.game, commands);
-
         Map<String, Supplier<GameCommand>> commandMap = new HashMap<>(
             Map.ofEntries(
                 Map.entry("new", () -> new NewGameCommand(this.game, commands)),

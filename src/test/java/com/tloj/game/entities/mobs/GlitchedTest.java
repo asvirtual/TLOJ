@@ -82,7 +82,7 @@ public class GlitchedTest {
         levels.add(level);
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockRoomfrom, new LaserBlade(), new Inventory(), startCoordinates);
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0, true);
         Controller.getInstance().setGame(mockGame);
 
         ControllerHandler.deleteController();
@@ -120,7 +120,7 @@ public class GlitchedTest {
         levels.add(level);
         
         BasePlayer mockCharacter = new BasePlayer(50, 3, 3, 10, 0, 1, 5, 10, level, mockRoomFrom, new LaserBlade(), new Inventory(), startCoordinates);
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0, true);
         Controller.getInstance().setGame(mockGame);
         
         for (int i = 0; i < 4 ; i++) {

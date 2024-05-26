@@ -4,9 +4,7 @@ import com.tloj.game.collectables.Item;
 
 
 /**
- * Interface to represents an entity that can hold items in its inventory. <br>
- * @see Character and 
- * @see Merchant implement this interface.
+ * Interface to represent an entity that can hold items in its inventory. <br>
  */
 
 public interface ItemsHolderEntity {

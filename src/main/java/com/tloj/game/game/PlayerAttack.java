@@ -17,7 +17,6 @@ import com.tloj.game.utilities.ConsoleHandler;
  * @see Dice
  * @see Weapon
  */
-
 public class PlayerAttack extends Attack {
     private int weaponRoll;
     private MobAbility targetAbility;

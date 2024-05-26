@@ -25,8 +25,6 @@ import com.tloj.game.utilities.ConsoleHandler;
 import org.fusesource.jansi.Ansi;
 
 
-
-
 /**
  * Abstract class to represent a character in the game.<br>
  * A Character is a moving entity that can engage in combat with Mobs and interact with NPCs.<br>

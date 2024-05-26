@@ -39,7 +39,7 @@ public class NorthStarTest {
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockRoom, new LaserBlade(), new Inventory(), startCoordinates);
         
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0, true);
         Controller.getInstance().setGame(mockGame);
         
         String NoStarString = String.join("\n", mockGame.generateMapLines());
