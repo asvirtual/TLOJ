@@ -163,9 +163,6 @@ public class GameIndex {
                 else games.add(filename);
             }
 
-            // Save to index also files that were not picked from the cloud as they weren't backed up before
-            GameIndex.saveGames();
-
             // Sort the games by creation time
             games.sort((first, second) -> {
                 try {
@@ -187,6 +184,9 @@ public class GameIndex {
 
                 return 0;
             });
+
+            // Save to index also files that were not picked from the cloud as they weren't backed up before
+            GameIndex.saveGames();
         } catch (JsonGenerationException e) {
             System.out.println("Error deleting outdated saves");
             e.printStackTrace();
