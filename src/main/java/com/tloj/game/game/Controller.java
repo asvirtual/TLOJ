@@ -1195,7 +1195,7 @@ public class Controller {
      */
     protected static Controller instance;
     private static Scanner scanner;
-    private Game game;
+    protected Game game;
     private long currentGameKey;
     private FirebaseHandler saveHandler;
     /**

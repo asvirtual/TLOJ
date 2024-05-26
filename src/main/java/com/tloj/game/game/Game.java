@@ -64,7 +64,7 @@ public class Game implements CharacterObserver {
     /**
      * Constructs a new Game object with the given list of floors.
      * @param floors The list of floors in the game.
-     */
+    */
     public Game(ArrayList<Floor> floors) {
         this.floors = floors;
 
