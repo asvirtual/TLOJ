@@ -87,21 +87,20 @@ public class GameIndexTest {
 
         String saveName = "test" + Constants.SAVE_GAME_FILENAME_SEPARATOR + mockGame.getCreationTime() + ".json";
         JsonParser.saveToFile(mockGame, Constants.BASE_SAVES_DIRECTORY + saveName);
-        int currentGameId = GameIndex.addEntry(saveName);
-        mockGame.setId(currentGameId);
+        GameIndex.addEntry(mockGame.getCreationTime(), saveName);
 
         GameIndex.loadGames();
-        assertEquals(GameIndex.getGame(String.valueOf(currentGameId)).getCreationTime(), mockGame.getCreationTime());
+        assertEquals(GameIndex.getGame(mockGame.getCreationTime()).getCreationTime(), mockGame.getCreationTime());
     }
 
     @Test
     void loadTest() {
         Game mockGame = new Game(this.floors);
-        String saveName = "test.json";
+        String saveName = "test" + mockGame.getCreationTime() + ".json";
         File index = new File(Constants.BASE_SAVES_DIRECTORY + "index.json");
 
         try (FileWriter writer = new FileWriter(index)) { 
-            writer.write("[\"test.json\"]");
+            writer.write("{\"" + mockGame.getCreationTime() + "\":\"" + saveName + "\"}");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -109,6 +108,6 @@ public class GameIndexTest {
         JsonParser.saveToFile(mockGame, Constants.BASE_SAVES_DIRECTORY + saveName);
 
         GameIndex.loadGames();
-        assertEquals(GameIndex.getFile("1"), "test.json");
+        assertEquals("test" + mockGame.getCreationTime() + ".json", GameIndex.getFile(mockGame.getCreationTime()));
     }
 }

@@ -50,7 +50,7 @@ public class StealMoneyTest {
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockRoom, new LaserBlade(), null, coordinates);
         
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0, true);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true);
         Controller.getInstance().setGame(mockGame);
         
         int startMoney = mockCharacter.getMoney();

@@ -3,9 +3,9 @@ package com.tloj.game.game;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -22,17 +22,16 @@ import com.tloj.game.utilities.JsonParser;
  * The index is loaded when the game starts and saved when the game ends.
  */
 public class GameIndex {
-    private static ArrayList<String> games;
+    private static Map<Long, String> games;
 
     private GameIndex() {}
 
     /**
      * Adds a new entry to the index with the given filename.
      */
-    public static int addEntry(String filename) {
-        games.add(filename);
+    public static void addEntry(long key, String filename) {
+        games.put(key, filename);
         saveGames();
-        return games.size();
     }
 
     /**
@@ -40,17 +39,8 @@ public class GameIndex {
      * @param id The id of the game.
      * @return The filename of the game.
      */
-    public static String getFile(String id) {
-        try {
-            int index = Integer.parseInt(id) - 1;
-            if (index < 0 || index >= games.size()) return null;
-
-            return games.get(index);
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+    public static String getFile(long key) {
+        return games.get(key);
     }
 
     /**
@@ -58,23 +48,14 @@ public class GameIndex {
      * @param id The id of the entry to be removed.
      * @return The filename of the removed entry.
      */
-    public static String removeEntry(String id) {
-        try {
-            int index = Integer.parseInt(id) - 1;
-            if (index < 0 || index >= games.size()) return null;
+    public static String removeEntry(long key) {
+        String removed = games.remove(key);
 
-            String removed = games.remove(index);
+        File file = new File(Constants.BASE_SAVES_DIRECTORY + removed);
+        file.delete();
 
-            File file = new File(Constants.BASE_SAVES_DIRECTORY + removed);
-            file.delete();
-
-            saveGames();
-            return removed;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        saveGames();
+        return removed;
     }
 
     /**
@@ -85,8 +66,32 @@ public class GameIndex {
         saveGames();
     }
 
-    public static List<String> getEntries() {
-        return games;
+    public static List<Long> getKeys() {
+        return games.keySet().stream().toList();
+    }
+
+    public static long getLastPlayedKey() {
+        if (games.isEmpty()) return -1;
+
+        long key = -1;
+        long lastPlayed = -1;
+        try {
+
+            for (Map.Entry<Long, String> entry : games.entrySet()) {
+                String file = entry.getValue();
+                Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + file);
+                long played = game.getSessionStartTime();
+                if (played > lastPlayed) {
+                    lastPlayed = played;
+                    key = entry.getKey();
+                }
+            }
+    
+            return key;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     /**
@@ -94,21 +99,11 @@ public class GameIndex {
      * @param id The id of the game.
      * @return The Game object.
      */
-    public static Game getGame(String id) {
-        int index;
-
-        try {
-            index = Integer.parseInt(id) - 1;
-            if (index < 0 || index >= games.size()) return null;
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            return null;
-        }
-
+    public static Game getGame(long key) {
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            return mapper.readValue(new File(Constants.BASE_SAVES_DIRECTORY + games.get(index)), Game.class);
+            return mapper.readValue(new File(Constants.BASE_SAVES_DIRECTORY + games.get(key)), Game.class);
         } catch (JsonGenerationException e) {
             System.out.println("Error generating JSON from game data");
             e.printStackTrace();
@@ -116,7 +111,7 @@ public class GameIndex {
             System.out.println("Error mapping JSON from game data");
             e.printStackTrace();
         } catch (IOException e) {
-            System.out.println("Error opening file " + games.get(index) + " for reading");
+            System.out.println("Error opening file " + games.get(key) + " for reading");
             e.printStackTrace();
         }
 
@@ -135,10 +130,10 @@ public class GameIndex {
         
         // The index file doesn't exist, so there are no games to be loaded
         if (!file.exists()) {
-            games = new ArrayList<>();
+            games = new HashMap<Long, String>();
 
             try (FileWriter fileWriter = new FileWriter(file)) {
-                fileWriter.write("[]");
+                fileWriter.write("{}");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -147,43 +142,21 @@ public class GameIndex {
         }
 
         try {
-            games = mapper.readValue(file, new TypeReference<ArrayList<String>>(){});
+            games = mapper.readValue(file, new TypeReference<Map<Long, String>>(){});
             File[] files = savesDir.listFiles();
 
             for (File f : files) {
                 String filename = f.getName();
                 if (filename.equals(Constants.GAMES_INDEX_FILE_PATH)) continue;
-                if (games.contains(filename)) continue;
+                if (games.containsValue(filename)) continue;
 
                 Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + filename);
 
                 // Delete old saves that are not on the cloud anymore, except for those 
                 // that were never backup up after the last time they were played
                 if (game.isBackedUp() || game.getPlayer() == null) f.delete();
-                else games.add(filename);
+                else games.put(game.getSessionStartTime(), filename);
             }
-
-            // Sort the games by creation time
-            games.sort((first, second) -> {
-                try {
-                    return 
-                        new Date(
-                            JsonParser.loadFromFile(
-                                Constants.BASE_SAVES_DIRECTORY + second
-                            ).getLastPlayed()
-                        ).compareTo(
-                            new Date(
-                                JsonParser.loadFromFile(
-                                    Constants.BASE_SAVES_DIRECTORY + first
-                                ).getLastPlayed()
-                            )
-                        );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-                return 0;
-            });
 
             // Save to index also files that were not picked from the cloud as they weren't backed up before
             GameIndex.saveGames();

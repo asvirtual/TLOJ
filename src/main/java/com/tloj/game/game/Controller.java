@@ -4,6 +4,7 @@ package com.tloj.game.game;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -566,8 +567,8 @@ class QuitCommand extends GameCommand {
         if (!Controller.awaitConfirmation()) return;
 
         this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
-        this.game.setBackedUp(this.controller.saveCurrentGameToCloud());
         this.game.saveLocally();
+        this.game.setBackedUp(this.controller.saveCurrentGameToCloud());
         if (!game.isBackedUp()) {
             System.out.println(ConsoleHandler.RED + "Game could not be saved to cloud. The save is only available locally." + ConsoleHandler.RESET);
             Controller.awaitEnter();
@@ -576,6 +577,7 @@ class QuitCommand extends GameCommand {
         this.controller.setGame(null);
         this.controller.setState(GameState.MAIN_MENU);
         ConsoleHandler.clearConsole();
+        ConsoleHandler.clearLog();
         System.out.println(Constants.GAME_TITLE);
     }
 }
@@ -967,15 +969,16 @@ class LoadGameCommand extends GameCommand {
         GameIndex.loadGames();
         
         ConsoleHandler.clearConsole();
-        int idx = 1;
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
 
         System.out.println(ConsoleHandler.GREEN + "Saved games:" + ConsoleHandler.RESET + "\n");
-        for (String filename : GameIndex.getEntries()) {
+        List<Long> keys = GameIndex.getKeys();
+        for (int i = 0; i < keys.size(); i++) {
             try {
+                String filename = GameIndex.getFile(keys.get(i));
                 Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + filename);
                 System.out.println(
-                    idx++ + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " - " + game.getPlayer().getName() + 
+                    (i + 1) + ". " + filename.split(Constants.SAVE_GAME_FILENAME_SEPARATOR)[0] + " - " + game.getPlayer().getName() + 
                     " - Created: " + formatter.format(game.getCreationTime())
                 );
             } catch (IOException e) {
@@ -1000,11 +1003,12 @@ class LoadGameCommand extends GameCommand {
             try {
                 index = Integer.parseInt(choice);
                 ConsoleHandler.clearConsole();
-                this.controller.loadGame(index);
+                this.controller.loadGame(keys.get(index - 1));
+                this.controller.setState(GameState.MOVING);
             } catch (NumberFormatException e) {
                 System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
             }
-        } while (!choice.isBlank() && (index < 1 || index > GameIndex.getEntries().size()));
+        } while (!choice.isBlank() && (index < 1 || index > GameIndex.getKeys().size()));
     }
 }
 
@@ -1027,13 +1031,18 @@ class ContinueGameCommand extends GameCommand {
         this.controller.getSaveHandler().loadAllCloud();
         GameIndex.loadGames();
         
-        if (GameIndex.getEntries().isEmpty()) {
+        if (GameIndex.getKeys().isEmpty()) {
             System.out.println(ConsoleHandler.RED + "No saved games found" + ConsoleHandler.RESET);
             return;
         }
 
-        // The first game is the last played game
-        this.controller.loadGame(1);
+        long lastPlayedKey = GameIndex.getLastPlayedKey();
+        if (lastPlayedKey == -1) {
+            System.out.println(ConsoleHandler.RED + "Could not load the last played game" + ConsoleHandler.RESET);
+            return;
+        }
+        
+        this.controller.loadGame(lastPlayedKey);
         ConsoleHandler.clearConsole();
     }
 }
@@ -1187,7 +1196,7 @@ public class Controller {
     protected static Controller instance;
     private static Scanner scanner;
     private Game game;
-    private int currentGameId;
+    private long currentGameKey;
     private FirebaseHandler saveHandler;
     /**
      * Music player to handle the game music
@@ -1247,8 +1256,8 @@ public class Controller {
         return this.saveHandler;
     }
 
-    public int getCurrentGameId() {
-        return this.currentGameId;
+    public long getCurrentGameKey() {
+        return this.currentGameKey;
     }
 
     /**
@@ -1400,8 +1409,8 @@ public class Controller {
                 game.getCreationTime() + ".json";
 
             JsonParser.saveToFile(game, Constants.BASE_SAVES_DIRECTORY + saveName);
-            this.currentGameId = GameIndex.addEntry(saveName);
-            this.game.setId(this.currentGameId);
+            this.currentGameKey = this.game.getCreationTime();
+            GameIndex.addEntry(this.currentGameKey, saveName);
 
             this.setState(GameState.CHOOSING_CHARACTER);
 
@@ -1414,15 +1423,16 @@ public class Controller {
     }
 
     public boolean saveCurrentGameToCloud() {
-        return (this.saveHandler.saveToCloud(GameIndex.getFile(String.valueOf(this.currentGameId))) &&
+        return (this.saveHandler.saveToCloud(GameIndex.getFile(this.game.getCreationTime())) &&
                 this.saveHandler.saveToCloud(Constants.GAMES_INDEX_FILE_PATH));
     }
 
-    public void loadGame(int index) {
+    public void loadGame(long key) {
         try {
-            String saveName = GameIndex.getFile(String.valueOf(index));
-            this.currentGameId = index;
+            String saveName = GameIndex.getFile(key);
+            this.currentGameKey = key;
             this.game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + saveName);
+            this.game.setSessionStartTime(new Date().getTime());
             this.setState(GameState.MOVING);
         } catch (IOException e) {
             System.out.println(ConsoleHandler.RED + "Please insert a number from the list above" + ConsoleHandler.RESET);

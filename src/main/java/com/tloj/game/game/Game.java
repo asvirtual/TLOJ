@@ -52,12 +52,10 @@ public class Game implements CharacterObserver {
     @JsonProperty("elapsedTime")
     private long elapsedTime;
     /** The start time of the game session. */
+    @JsonProperty("sessionStartTime")
     private long sessionStartTime;
-    @JsonProperty("lastPlayed")
-    private long lastPlayed;
-    @JsonProperty("gameId")
-    private int gameId;
-    /** A boolean flag that indicates whether the corresponding save file is on the cloud
+    /** 
+     * A boolean flag that indicates whether the corresponding save file is on the cloud
      * or if the cloud has an older version of the game, or doesn't have it at all. 
      */
     @JsonPropertyOrder("backedUp")
@@ -72,7 +70,8 @@ public class Game implements CharacterObserver {
 
         this.currentFloor = this.floors.get(0);
         this.controller = Controller.getInstance();
-        this.lastPlayed = this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
+        // this.lastPlayed = this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
+        this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
         this.elapsedTime = 0;
 
         Dice.setSeed(this.seed);
@@ -89,7 +88,8 @@ public class Game implements CharacterObserver {
         this.currentFloor = this.floors.get(0);
         this.controller = Controller.getInstance();
         this.seed = seed;
-        this.lastPlayed = this.sessionStartTime = this.creationTime = new Date().getTime();
+        // this.lastPlayed = this.sessionStartTime = this.creationTime = new Date().getTime();
+        this.sessionStartTime = this.creationTime = new Date().getTime();
         this.elapsedTime = 0;
 
         Dice.setSeed(this.seed);
@@ -109,7 +109,6 @@ public class Game implements CharacterObserver {
         @JsonProperty("floor") Floor currentFloor, 
         @JsonProperty("player") Character player, 
         @JsonProperty("floors") ArrayList<Floor> floors,
-        @JsonProperty("gameId") int gameId,
         @JsonProperty("creationTime") long creationTime,
         @JsonProperty("elapsedTime") long elapsedTime,
         @JsonProperty("backedUp") boolean backedUp
@@ -120,22 +119,10 @@ public class Game implements CharacterObserver {
         this.controller = Controller.getInstance();
         this.seed = seed;
         this.creationTime = creationTime;
-        this.lastPlayed = this.sessionStartTime = new Date().getTime();
-        this.gameId = gameId;
         this.backedUp = backedUp;
         
         if (this.player != null) this.player.addObserver(this);
         Dice.setSeed(this.seed);
-    }
-
-    @JsonIgnore
-    public int getId() {
-        return this.gameId;
-    }
-
-    @JsonIgnore
-    public void setId(int gameId) {
-        this.gameId = gameId;
     }
 
     public boolean isBackedUp() {
@@ -146,8 +133,12 @@ public class Game implements CharacterObserver {
         this.backedUp = backedUp;
     }
 
-    public long getLastPlayed() {
-        return this.lastPlayed;
+    public long getSessionStartTime() {
+        return this.sessionStartTime;
+    }
+
+    public void setSessionStartTime(long sessionStartTime) {
+        this.sessionStartTime = sessionStartTime;
     }
 
     public long getCreationTime() {
@@ -290,7 +281,7 @@ public class Game implements CharacterObserver {
 
     public void saveLocally() {
         this.elapsedTime += new Date().getTime() - this.sessionStartTime;
-        String saveName = GameIndex.getFile(String.valueOf(this.gameId));
+        String saveName = GameIndex.getFile(this.creationTime);
         String path = Constants.BASE_SAVES_DIRECTORY + saveName;
         JsonParser.saveToFile(this, path);
     }
@@ -386,7 +377,7 @@ public class Game implements CharacterObserver {
         System.out.println(Constants.GAME_TITLE);
         this.controller.setState(GameState.MAIN_MENU);
 
-        String filename = GameIndex.removeEntry(String.valueOf(this.gameId));
+        String filename = GameIndex.removeEntry(this.creationTime);
         this.controller.getSaveHandler().deleteFromCloud(filename);
         this.controller.getSaveHandler().saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
     }

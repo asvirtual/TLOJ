@@ -64,7 +64,8 @@ public class FirebaseHandler {
             fis.read(data);
             fis.close();
 
-            bucket.create(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""), data, "application/json");
+            Blob blob = bucket.create(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""), data, "application/json");
+            System.out.println(blob.getName() + " uploaded to cloud." + ConsoleHandler.RESET);
         } catch (IOException e) {
             System.out.println("Error opening file " + filename + " for reading");
             e.printStackTrace();
