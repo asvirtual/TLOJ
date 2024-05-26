@@ -27,7 +27,7 @@ public class ControllerTest {
     String input;
     
     private void setUpGame() {
-        input = "test\n12345\nyes\n";
+        input = "1\ny\ntest\n12345\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Controller.instance = null;
@@ -37,8 +37,8 @@ public class ControllerTest {
 
         controller.handleUserInput("new");
         game = new Game(floors, 1);
+        game.setBackedUp(true);
         controller.setGame(game);
-        controller.handleUserInput("1");
     }
 
     @BeforeEach

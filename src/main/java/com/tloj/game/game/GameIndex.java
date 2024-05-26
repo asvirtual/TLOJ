@@ -173,12 +173,12 @@ public class GameIndex {
                         new Date(
                             JsonParser.loadFromFile(
                                 Constants.BASE_SAVES_DIRECTORY + second
-                            ).getCreationTime()
+                            ).getLastPlayed()
                         ).compareTo(
                             new Date(
                                 JsonParser.loadFromFile(
                                     Constants.BASE_SAVES_DIRECTORY + first
-                                ).getCreationTime()
+                                ).getLastPlayed()
                             )
                         );
                 } catch (IOException e) {

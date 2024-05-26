@@ -553,7 +553,9 @@ class QuitCommand extends GameCommand {
         super(game, null);
         this.invalidStates = List.of(
             GameState.MAIN_MENU,
-            GameState.CHOOSING_CHARACTER
+            GameState.CHOOSING_CHARACTER,
+            GameState.FIGHTING_BOSS,
+            GameState.FIGHTING_MOB
         );
     }
 
@@ -936,7 +938,7 @@ class NewGameCommand extends GameCommand {
         this.game.saveLocally();
         this.controller.setState(GameState.MOVING);
 
-        ConsoleHandler.clearConsole();        
+        ConsoleHandler.clearConsole();
         Controller.printSideBySideText(
             this.game.getPlayer().getASCII(), 
             this.game.getPlayer().toString() + "\n\n\n" + this.game.getPlayer().getWeapon() + "\n" +
