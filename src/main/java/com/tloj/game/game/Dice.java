@@ -48,6 +48,15 @@ public class Dice {
         return this.roll;
     }
 
+    /**
+     * Used to evaluate a probability<br>
+     * @param probability The probability to be evaluated<br>
+     * @return true if the random number is less than the probability, false otherwise
+     */
+    public boolean evaluateProbability(double probability) {
+        return Dice.random.nextDouble() < probability;
+    }
+
     public static void setSeed(long seed) {
         Dice.random = new Random(seed);
     }

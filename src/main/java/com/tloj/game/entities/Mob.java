@@ -188,6 +188,10 @@ public abstract class Mob extends CombatEntity {
     public int rollDice() {
         return this.dice.roll();
     }
+
+    public boolean evaluateProbability(double probability) {
+        return this.dice.evaluateProbability(probability);
+    }
     
     @Override
     public void attack(CombatEntity t) throws IllegalArgumentException {

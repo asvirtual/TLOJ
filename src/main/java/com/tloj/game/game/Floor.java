@@ -113,7 +113,7 @@ public class Floor {
      * Checks if the given coordinates are valid within the floor grid.
      *
      * @param coordinates The coordinates to check.
-     * @return True if the coordinates are valid, false otherwise.
+     * @return true if the coordinates are valid, false otherwise.
      */
     public boolean areCoordinatesValid(Coordinates coordinates) {
         int roomsRowCount = this.getRoomsRowCount();

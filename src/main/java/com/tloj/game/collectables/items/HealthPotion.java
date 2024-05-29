@@ -22,24 +22,26 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see SpecialKey
  * @see NorthStar
  */
+
 public class HealthPotion extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0.2;
     private static final int PRICE = 10;
     private static final int HEAL_AMOUNT = 20;
     private static final double DROP_CHANCE = 0.17;
-    private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 1;
 
     @JsonCreator
     public HealthPotion() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
+        super(PRICE, WEIGHT, ID, DROP_CHANCE); 
     }
     
+    /**
+     * Restores the Health Points of the player by {@value #HEAL_AMOUNT}.
+     * @param consumer The character that consumes the item
+     */
     @Override
     public void consume(Character consumer) {
         consumer.heal(HEAL_AMOUNT);
-        if (consumer.getHp() > consumer.getMaxHp()) consumer.setHp(consumer.getMaxHp());
-        
         consumer.removeInventoryItem(this);
     }
 

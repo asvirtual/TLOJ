@@ -23,16 +23,21 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see Ragu
  * @see NorthStar
  */
+
 public class SpecialKey extends Item implements ConsumableItem {
     private static final double WEIGHT = 0;
-    private static final int DROP_MONEY = 0;
     private static final int ID = 11;    
 
     @JsonCreator
     public SpecialKey() {
-        super(WEIGHT, DROP_MONEY, ID); 
+        super(WEIGHT, ID); 
     }
     
+    /**
+     * Consumes the Special Key, removing it from the inventory of the character.<br>
+     * The logic to open the special loot room is implemented in the {@link com.tloj.game.game.PlayerRoomVisitor#visit(com.tloj.game.rooms.LootRoom)} method
+     * @param consumer The character that consumes the item
+     */
     @Override
     public void consume(Character consumer) {
         consumer.removeInventoryItem(this);

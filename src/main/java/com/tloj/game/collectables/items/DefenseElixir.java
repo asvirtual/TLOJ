@@ -4,6 +4,7 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Constants;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
@@ -27,14 +28,17 @@ public class DefenseElixir extends PurchasableItem implements ConsumableItem {
     private static final int PRICE = 15;
     private static final int DEFENSE_BOOST = 4;
     private static final double DROP_CHANCE = 0.1;
-    private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 6;
 
     @JsonCreator
     public DefenseElixir() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
+        super(PRICE, WEIGHT, ID, DROP_CHANCE); 
     }
     
+    /**
+     * Boosts the defense stat of the player by {@value #DEFENSE_BOOST} for the duration of a fight.
+     * @param consumer The character that consumes the item
+     */
     @Override
     public void consume(Character consumer) {
         consumer.setCurrentFightDef(consumer.getDef() + DEFENSE_BOOST);

@@ -1,18 +1,22 @@
 package com.tloj.game.collectables.weaponeffects;
 
 import com.tloj.game.game.PlayerAttack;
-import com.tloj.game.abilities.BossAbility;
+import com.tloj.game.abilities.MobAbility;
 import com.tloj.game.collectables.Weapon;
 
 
 /**
  * An abstract class representing an effect that can be applied to a weapon<br>
- * As with the {@link BossAbility} class, this class applies an adaptation of the Strategy pattern to the weapon effects, allowing for easy addition of new effects<br>
+ * As with the {@link MobAbility} class, this class applies an adaptation of the Strategy pattern to the weapon effects, allowing for easy addition of new effects<br>
  * This class is meant to be extended by specific weapon effects, guaranteeing modularity<br>
  * @see Weapon
  */
+
 public abstract class WeaponEffect {
     protected Weapon weapon;
+    /**
+     * The message to be displayed when the effect is activated
+     */
     protected String activationMessage;
     protected boolean used = false;
 
@@ -28,9 +32,6 @@ public abstract class WeaponEffect {
         return this.used;
     }
 
-    /**
-     * Split the class name by capital letters and join the resulting array with spaces
-     */
     @Override
     public String toString() {  
         return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])")) + ": "; 

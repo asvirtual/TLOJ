@@ -1,13 +1,13 @@
 package com.tloj.game.abilities;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.entities.Mob;
 import com.tloj.game.entities.mobs.MechaRat;
 import com.tloj.game.collectables.Item;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 /**
@@ -15,20 +15,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * It is paired with the {@link MechaRat}.
  */
 public class NibbleItem extends MobAbility {
-    private boolean abilityUsed;
+    /** Needed to ensure this ability only activates one per fight */
+    private boolean usedInCurrentFight;
     
     @JsonCreator
     public NibbleItem(@JsonProperty("user") Mob user) {
         super(user);
-        this.abilityUsed = false;
+        this.usedInCurrentFight = false;
     }
 
     @Override
     public boolean use(PlayerAttack attack) {
-        if (this.abilityUsed) return this.used = false;
-        if (Math.random() > 0.20) return this.used = false;
+        if (this.usedInCurrentFight) return this.used = false;
+        if (!this.user.evaluateProbability(0.2)) return this.used = false;
 
-        this.abilityUsed = true;
+        this.usedInCurrentFight = true;
         Item destroyedItem = attack.getAttacker().removeRandomInventoryItem();
         if (destroyedItem != null) {
             this.activationMessage = ConsoleHandler.PURPLE + "Jordan was distracted and the rat ate " + destroyedItem + ConsoleHandler.RESET;

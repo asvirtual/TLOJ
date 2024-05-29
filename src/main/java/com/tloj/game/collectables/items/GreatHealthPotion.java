@@ -4,6 +4,7 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Constants;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
@@ -22,24 +23,26 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see SpecialKey
  * @see NorthStar
  */
+
 public class GreatHealthPotion extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0.3;
     private static final int PRICE = 18;
     private static final int HEAL_AMOUNT = 50;
     private static final double DROP_CHANCE = 0.12;
-    private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 2;
 
     @JsonCreator
     public GreatHealthPotion() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
+        super(PRICE, WEIGHT, ID, DROP_CHANCE); 
     }
     
+    /**
+     * Restores the Health Points of the player by {@value #HEAL_AMOUNT}.
+     * @param consumer The character that consumes the item
+     */
     @Override
     public void consume(Character consumer) {
         consumer.heal(HEAL_AMOUNT);
-        if (consumer.getHp() > consumer.getMaxHp()) consumer.setHp(consumer.getMaxHp());
-        
         consumer.removeInventoryItem(this);
     }
 

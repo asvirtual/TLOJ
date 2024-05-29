@@ -4,6 +4,7 @@ import com.tloj.game.entities.Boss;
 import com.tloj.game.entities.bosses.FlyingBoss;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -12,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * An ability that allows a boss to dodge player's attack and heal itself of player's weapon roll with a 33% probability. <br>
  * It is paired with the {@link FlyingBoss}.
  */
-
 public class VampireDodge extends BossAbility {
     @JsonCreator
     public VampireDodge(@JsonProperty("user") Boss boss) {
@@ -21,7 +21,7 @@ public class VampireDodge extends BossAbility {
 
     @Override
     public boolean use(PlayerAttack attack) {
-        if (Math.random() > 0.333) return this.used = false;
+        if (!this.user.evaluateProbability(0.333)) return this.used = false;
 
         this.user.heal(attack.getWeaponRoll());
         attack.setTotalAttack(0);

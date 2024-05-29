@@ -1,6 +1,5 @@
 package com.tloj.game.collectables;
 
-
 import com.tloj.game.entities.Character;
 
 
@@ -11,16 +10,20 @@ import com.tloj.game.entities.Character;
 public abstract class PurchasableItem extends Item {
     protected int price;
 
-    protected PurchasableItem(int price, double weight, int dropMoney, int id) {
-        super(weight, dropMoney, id);
+    protected PurchasableItem(int price, double weight, int id) {
+        super(weight, id);
         this.price = price;
     }
 
-    protected PurchasableItem(int price, double weight, int dropMoney, int id, double dropChance) {
-        super(weight, dropMoney, id, dropChance);
+    protected PurchasableItem(int price, double weight, int id, double dropChance) {
+        super(weight, id, dropChance);
         this.price = price;
     }
 
+    /**
+     * Purchases the item and adds it to the buyer's inventory
+     * @param buyer The character that is purchasing the item
+     */
     public void purchase(Character buyer) {
         buyer.addInventoryItem(this);
         buyer.pay(this.price);
@@ -30,6 +33,9 @@ public abstract class PurchasableItem extends Item {
         return this.price;
     }
 
+    /**
+     * @return A short description of the item to be displayed when printing the player's inventory
+     */
     public abstract String shortInfo();
 
     @Override

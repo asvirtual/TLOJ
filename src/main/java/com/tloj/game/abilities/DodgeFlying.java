@@ -23,9 +23,11 @@ public class DodgeFlying extends MobAbility {
 
     @Override
     public boolean use(PlayerAttack attack) {
-        if (Math.random() > 0.25) return this.used = false;
+        if (!this.user.evaluateProbability(0.25)) return this.used = false;
+
         // Needed to tell the PlayerAttack to print the disabled dice roll
         attack.setWeaponRoll(0);
+        
         attack.setTotalAttack(0);
         return this.used = true;
     }

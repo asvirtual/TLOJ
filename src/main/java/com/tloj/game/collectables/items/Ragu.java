@@ -4,6 +4,7 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Constants;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
@@ -22,19 +23,23 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see SpecialKey
  * @see NorthStar
  */
+
 public class Ragu extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 1;
     private static final int PRICE = 0;
     private static final int STAT_BOOST = 2;
     private static final double DROP_CHANCE = 0.075;
-    private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 7;
     
     @JsonCreator
     public Ragu() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
+        super(PRICE, WEIGHT, ID, DROP_CHANCE); 
     }
     
+    /**
+     * Restores all HP and Mana, boosts def stat and the atk inflicted by {@value #STAT_BOOST} for the duration of a fight.
+     * @param consumer The character that consumes the item
+     */
     @Override
     public void consume(Character consumer) {
         consumer.setHp(consumer.getMaxHp());

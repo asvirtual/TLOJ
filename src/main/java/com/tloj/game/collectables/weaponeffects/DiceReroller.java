@@ -3,7 +3,7 @@ package com.tloj.game.collectables.weaponeffects;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.collectables.Weapon;
-import com.tloj.game.collectables.weapons.NanoDirk;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
@@ -19,12 +19,17 @@ public class DiceReroller extends WeaponEffect {
         super(weapon);
     }
 
+    /**
+     * Rerolls the weapon's dice and applies the damage twice to the target<br>
+     * Note: The weapon's dice is rolled twice, this doesn't mean the damage dealt is twice the original weapon's roll <br>
+     * @return true if the effect was applied, false otherwise
+     */
     @Override
     public boolean apply(PlayerAttack attack) {
         int roll = this.weapon.diceRoll();
         attack.setWeaponRoll(roll);
         
-        if (Math.random() > 0.7) return this.used = false;
+        if (!this.weapon.evaluateProbability(0.7)) return this.used = false;
         
         attack.setWeaponRoll(
             roll + 
@@ -38,9 +43,5 @@ public class DiceReroller extends WeaponEffect {
     @Override
     public String toString() {
         return super.toString() + "dice thrown twice";
-    }
-
-    public static String describe() {
-        return "Dice Reroller: dice thrown twice";
     }
 }

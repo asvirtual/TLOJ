@@ -3,19 +3,17 @@ package com.tloj.game.collectables;
 import com.tloj.game.collectables.weaponeffects.WeaponEffect;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
-
-
 /**
  * An abstract class that represents a weapon that can be used to attack enemies<br>
  * Different weapons have different effects that are applied to the target when they are hit<br>
- * They are also equipped with a {@link Dice} that is rolled to determine the damage dealt to the target (in addition to the player's base damage stat) if no effects are to be applied.<br>
- * @param lvl is the weapon's level that is increased via {@link WeaponShard} and {@link Smith}<br>
- * level up means adding the level to the dice roll<br>
+ * They are also equipped with a {@link Dice} that is rolled to determine the damage dealt to the target (in addition to the player's base damage stat).<br>
+ * @param lvl is the weapon's level that is increased via {@link WeaponShard} and {@link Smith} (each level adds 1 damage point to the dice roll)<br>
  * @see WeaponEffect
 */
 
@@ -26,7 +24,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
   property = "@class")
 
 public abstract class Weapon extends Item {
-    private static final int DROP_MONEY = 0;
     public static final int MAX_LEVEL = 5;
 
     @JsonIgnore
@@ -37,13 +34,13 @@ public abstract class Weapon extends Item {
     protected int lvl;
 
     public Weapon(double weight, int diceFaces, int id) {
-        super(weight, DROP_MONEY, id);
+        super(weight, id);
         this.dice = new Dice(diceFaces);
         this.lvl = 0;
     }
 
     public Weapon(double weight, int diceMin, int diceMax, int id) {
-        super(weight, DROP_MONEY, id);
+        super(weight, id);
         this.dice = new Dice(diceMin, diceMax);
         this.lvl = 0;
     }
@@ -70,8 +67,16 @@ public abstract class Weapon extends Item {
         this.lvl += lvl;
     }
     
+    /**
+     * Roll the weapon's dice and add the weapon's level to the result<br>
+     * @return The result of the dice roll + the weapon's level
+     */
     public int diceRoll() {
         return dice.roll() + this.lvl;
+    }
+
+    public boolean evaluateProbability(double probability) {
+        return Math.random() < probability;
     }
 
     public int getLevel() {

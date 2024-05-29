@@ -87,7 +87,7 @@ public class Coordinates {
      * Checks if the specified object is equal to this coordinates object.
      *
      * @param obj The object to compare.
-     * @return True if the objects are equal, false otherwise.
+     * @return true if the objects are equal, false otherwise.
      */
     @Override
     public boolean equals(Object obj) {

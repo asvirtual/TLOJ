@@ -21,15 +21,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see Ragu
  * @see SpecialKey
 */
+
 public class NorthStar extends Item {
     private static final double WEIGHT = 0;
     private static final double DROP_CHANCE = 0.025;
-    private static final int DROP_MONEY = 50;
     private static final int ID = 9;
 
     @JsonCreator
     public NorthStar() {
-        super(WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
+        super(WEIGHT, ID, DROP_CHANCE); 
     }
 
     @Override

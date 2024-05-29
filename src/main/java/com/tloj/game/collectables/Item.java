@@ -10,16 +10,18 @@ import com.tloj.game.collectables.items.ManaPotion;
 import com.tloj.game.collectables.items.NorthStar;
 import com.tloj.game.collectables.items.Ragu;
 import com.tloj.game.collectables.items.WeaponShard;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 
-
 /**
- * An abstract class representing an item that can be found in the game<br>
+ * An abstract class representing an item in the game<br>
  * All items have a weight, and can be picked up by the player<br>
+ * Some items can be purchased, and some can be consumed to provide benefits to the player<br>
  * @see Weapon
  * @see PurchasableItem
+ * @see ConsumableItem
  */
 
  // Needed to serialize/deserialize subclasses of Character, by including the class name in the JSON
@@ -29,9 +31,14 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
     property = "@class")
     
 public abstract class Item {
+    /** 
+     * The weight of the item. The player has a limited carrying capacity, reached which they can no longer pick up items.<br>
+     */
     protected double weight;
-    protected int dropMoney;
     protected int id;
+    /**
+     * The chance that the item will be dropped by a mob upon defeat.<br>
+     */
     protected double dropChance;
     
     /**
@@ -56,15 +63,13 @@ public abstract class Item {
         }
     }
 
-    protected Item(double weight, int dropMoney, int id) {
+    protected Item(double weight, int id) {
         this.weight = weight;
-        this.dropMoney = dropMoney;
         this.id = id;
     }
 
-    protected Item(double weight, int dropMoney, int id, double dropChance) {
+    protected Item(double weight, int id, double dropChance) {
         this.weight = weight;
-        this.dropMoney = dropMoney;
         this.id = id;
         this.dropChance = dropChance;
     }
@@ -77,46 +82,53 @@ public abstract class Item {
         return this.dropChance;
     }
 
-    public int getDropMoney() {
-        return dropMoney;
-    }
-
     public int getId() {
         return id;
     }
 
     /**
-     * used to get a random item based on their drop chances. 
-     * It first calculates the total drop chance of all items, then generates a random value within this range. 
-     * It then goes through the items again, adding each item's drop chance to a cumulative total 
-     * until this total is greater than or equal to the random value, at which point it returns the current item.
+     * Used to get a random item based on their drop chances. 
      */
     public static Item getRandomItem() {
+        // Calculate the total drop chance of all items
         double totalProbability = 0.0;
         for (DroppableItems i : DroppableItems.values()) {
             Item item = i.item;
             totalProbability += item.getDropChance();
         }
 
+        // Generate a random value within the total drop chance range
         double randomValue = Math.random() * totalProbability;
+        // Go through the items again, adding each item's drop chance to a cumulative total
         double cumulativeProbability = 0.0;
         for (DroppableItems i : DroppableItems.values()) {
             Item item = i.item;
             cumulativeProbability += item.getDropChance();
+            // Return the current item if the cumulative total is greater than or equal to the random value
             if (randomValue <= cumulativeProbability) return item;
         }
 
-        return null; // Should never reach here if probabilities sum to 1
+        // Should never reach here if probabilities sum to 1
+        return null; 
     }
 
     @Override
     public String toString() {
+        // Split the class name by capital letters and join the resulting array with spaces
         return String.join(" ", this.getClass().getSimpleName().split("(?=[A-Z])"));
     };
 
+    /**
+     * Used to get the ASCII representation of the item
+     * @return The ASCII representation of the item
+     */
     @JsonIgnore
     public abstract String getASCII();
 
+    /**
+     * Used to get the description of the item
+     * @return The description of the item
+     */
     @JsonIgnore
     public abstract String describe();
 

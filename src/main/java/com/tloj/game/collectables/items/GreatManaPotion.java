@@ -4,6 +4,7 @@ import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
 import com.tloj.game.utilities.Constants;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 
 
@@ -22,24 +23,26 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * @see SpecialKey
  * @see NorthStar
  */
+
 public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
     private static final double WEIGHT = 0.3;
     private static final int PRICE = 18;
     private static final int MANA_RESTORE = 30;
     private static final double DROP_CHANCE = 0.12;
-    private static final int DROP_MONEY = PRICE / 2;
     private static final int ID = 4;
 
     @JsonCreator
     public GreatManaPotion() {
-        super(PRICE, WEIGHT, DROP_MONEY, ID, DROP_CHANCE); 
+        super(PRICE, WEIGHT, ID, DROP_CHANCE); 
     }
     
+    /**
+     * Restores the Mana of the player by {@value #MANA_RESTORE}.
+     * @param consumer The character that consumes the item
+     */
     @Override
     public void consume(Character consumer) {
         consumer.restoreMana(MANA_RESTORE);
-        if (consumer.getMana() > consumer.getMaxMana()) consumer.setMana(consumer.getMaxMana());
-        
         consumer.removeInventoryItem(this);
     }
 
