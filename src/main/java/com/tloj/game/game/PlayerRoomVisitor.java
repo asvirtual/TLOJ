@@ -200,8 +200,7 @@ public class PlayerRoomVisitor implements Visitor {
 
         Emp emp = new Emp();
         if (this.player.hasItem(emp)) {
-            ConsoleHandler.println("You've encountered a trap! Do you want to use an EMP to disarm it? (Y/N)");
-            if (Controller.awaitConfirmation()) {
+            if (Controller.awaitConfirmation("You've encountered a trap! Do you want to use an EMP to disarm it? (Y/N)")) {
                 this.player.useItem(emp);
                 ConsoleHandler.println(ConsoleHandler.CYAN_BRIGHT + "You've disarmed the trap!" + ConsoleHandler.RESET);
                 room.clear(this.player);

@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  */
 
 public class ManaAttackBooster extends WeaponEffect {
-    private static final int MANA_COST = 3;
+    public static final int MANA_COST = 3;
 
     @JsonCreator
     public ManaAttackBooster(Weapon weapon) {

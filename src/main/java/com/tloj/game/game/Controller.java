@@ -916,14 +916,15 @@ class NewGameCommand extends GameCommand {
             seed = Controller.getScanner().nextLine();
 
             try {
-                Long.parseLong(seed);
-                if (!seed.isEmpty() && !seed.matches("\\d+")) 
+                if (!seed.isBlank()) {
+                    Long.parseLong(seed);
                     System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
+                }
             } catch (NumberFormatException e) {
-                seed = "";
                 System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
+                continue;
             }
-        } while (seed.isEmpty() || !seed.matches("\\d+"));
+        } while (!seed.isBlank() && !seed.matches("\\d+"));
 
         this.game = this.controller.newGame(saveName, seed);
 
@@ -1261,14 +1262,18 @@ public class Controller {
      * Await user confirmation before proceeding with an action
      * @return true if the user confirms the action, false otherwise
      */
-    public static boolean awaitConfirmation() {
-        System.out.println("Are you sure? (yes/no)");
+    public static boolean awaitConfirmation(String message) {
+        System.out.println(message);
         String input;
         do {
             input = Controller.scanner.nextLine();
         } while (!input.matches("(yes|y|no|n)"));
 
         return input.matches("(yes|y)");
+    }
+
+    public static boolean awaitConfirmation() {
+        return awaitConfirmation("Are you sure? (yes/no)");
     }
 
     /**

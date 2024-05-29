@@ -28,8 +28,7 @@ public class Constants {
                       """
                       + ConsoleHandler.RESET + ConsoleHandler.YELLOW_BOLD_BRIGHT +
                           """
-                                                                                                          closed 
-                                                                                                            beta version
+                                                                                                          v1.0
                       """ 
                       + ConsoleHandler.RESET +
                       """

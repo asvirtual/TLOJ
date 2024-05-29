@@ -3,6 +3,7 @@ package com.tloj.game.collectables.items;
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.PurchasableItem;
 import com.tloj.game.entities.Character;
+import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.utilities.Constants;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -60,7 +61,7 @@ public class GreatManaPotion extends PurchasableItem implements ConsumableItem {
 
     @Override  
     public String shortInfo() {
-        return " (+" + MANA_RESTORE + " Mana)";
+        return ConsoleHandler.BLUE + " (+" + MANA_RESTORE + " Mana)" + ConsoleHandler.RESET;
     }
 
     @Override
