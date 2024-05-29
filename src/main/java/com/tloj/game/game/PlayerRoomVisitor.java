@@ -8,6 +8,9 @@ import com.tloj.game.collectables.items.Emp;
 import com.tloj.game.collectables.items.SpecialKey;
 import com.tloj.game.entities.Character;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 
 interface Visitor {
     void visit(StartRoom room);
@@ -243,7 +246,10 @@ public class PlayerRoomVisitor implements Visitor {
         ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.FIFTH_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.clearConsole(5000);
         ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.SIXTH_PRINT_WIN + ConsoleHandler.RESET);
-        ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!" + ConsoleHandler.RESET);
+        ConsoleHandler.println(
+            ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!\n" + 
+            "It took you " + new SimpleDateFormat("HH:mm:ss").format(new Date(this.controller.game.getElapsedTime())) + ConsoleHandler.RESET
+        );
 
         Controller.awaitEnter();
         ConsoleHandler.clearConsole();
@@ -264,6 +270,9 @@ public class PlayerRoomVisitor implements Visitor {
                 }
             }
         );
+
+        this.controller.game.saveLocally();
+        this.controller.saveCurrentGameToCloud();
 
         String filename = GameIndex.removeEntry(this.controller.getCurrentGameKey());
         this.controller.getSaveHandler().deleteFromCloud(filename);

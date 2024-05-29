@@ -182,6 +182,7 @@ public class Constants {
     public static final String GAMES_INDEX_FILE_PATH = "index.json";
     public static final String MAP_FILE_PATH = "src/main/resources/map.json";
     public static final String SAVE_GAME_FILENAME_SEPARATOR = "___";
+    public static final String ENDED_GAMES_FIREBASE_DIRECTORY = "ended_games/";
 
     public static final String INTRO_WAV_FILE_PATH = "src/main/resources/sounds/intro.wav";
     public static final String LOOP_WAV_FILE_PATH = "src/main/resources/sounds/loop.wav";

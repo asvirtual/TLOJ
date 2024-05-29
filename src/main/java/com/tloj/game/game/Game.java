@@ -71,7 +71,6 @@ public class Game implements CharacterObserver {
 
         this.currentFloor = this.floors.get(0);
         this.controller = Controller.getInstance();
-        // this.lastPlayed = this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
         this.sessionStartTime = this.creationTime = this.seed = new Date().getTime();
         this.elapsedTime = 0;
 
@@ -89,7 +88,6 @@ public class Game implements CharacterObserver {
         this.currentFloor = this.floors.get(0);
         this.controller = Controller.getInstance();
         this.seed = seed;
-        // this.lastPlayed = this.sessionStartTime = this.creationTime = new Date().getTime();
         this.sessionStartTime = this.creationTime = new Date().getTime();
         this.elapsedTime = 0;
 
@@ -125,6 +123,7 @@ public class Game implements CharacterObserver {
         this.creationTime = creationTime;
         this.elapsedTime = elapsedTime;
         this.backedUp = backedUp;
+        this.sessionStartTime = new Date().getTime();
         
         this.player.addObserver(this);
         Dice.setSeed(this.seed);
@@ -148,6 +147,10 @@ public class Game implements CharacterObserver {
 
     public long getCreationTime() {
         return this.creationTime;
+    }
+
+    public long getElapsedTime() {
+        return this.elapsedTime + (new Date().getTime() - this.sessionStartTime);
     }
 
     public int getScore() {
@@ -285,7 +288,7 @@ public class Game implements CharacterObserver {
     }
 
     public void saveLocally() {
-        this.elapsedTime += new Date().getTime() - this.sessionStartTime;
+        this.elapsedTime += (new Date().getTime() - this.sessionStartTime);
         String saveName = GameIndex.getFile(this.creationTime);
         String path = Constants.BASE_SAVES_DIRECTORY + saveName;
         JsonParser.saveToFile(this, path);
@@ -381,6 +384,9 @@ public class Game implements CharacterObserver {
 
         System.out.println(Constants.GAME_TITLE);
         this.controller.setState(GameState.MAIN_MENU);
+
+        this.saveLocally();
+        this.controller.saveCurrentGameToCloud();
 
         String filename = GameIndex.removeEntry(this.creationTime);
         this.controller.getSaveHandler().deleteFromCloud(filename);

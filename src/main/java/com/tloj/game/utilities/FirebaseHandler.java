@@ -65,12 +65,16 @@ public class FirebaseHandler {
             fis.close();
 
             bucket.create(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""), data, "application/json");
+            if (!filename.contains(Constants.GAMES_INDEX_FILE_PATH))
+                bucket.create(Constants.ENDED_GAMES_FIREBASE_DIRECTORY + filename.replace(Constants.BASE_SAVES_DIRECTORY, ""), data, "application/json");
+                
+            return true;
         } catch (IOException e) {
             System.out.println("Error opening file " + filename + " for reading");
             e.printStackTrace();
+            return false;
         }
 
-        return true;
     }
 
     public boolean loadAllCloud() {
@@ -85,6 +89,7 @@ public class FirebaseHandler {
         Page<Blob> blobs = bucket.list();
         
         blobs.iterateAll().forEach(blob -> {
+        if (blob.getName().contains(Constants.ENDED_GAMES_FIREBASE_DIRECTORY)) return;
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             File downloadFile = new File(Constants.BASE_SAVES_DIRECTORY + blob.getName());
 
@@ -108,7 +113,7 @@ public class FirebaseHandler {
         if (filename == null) return false;
         Bucket bucket = StorageClient.getInstance().bucket();
         Blob blob = bucket.get(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""));
-        blob.delete();
+        if (blob != null) blob.delete();
 
         return true;
     }
