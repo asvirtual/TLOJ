@@ -904,20 +904,6 @@ class NewGameCommand extends GameCommand {
                 System.out.println("\n" + Constants.CLASS_CHOICE);
             }
         } while (!confirmed);
-            
-        this.controller.changeMusic(
-            Constants.INTRO_WAV_FILE_PATH,
-            false,
-            new Runnable() {
-                @Override
-                public void run() {
-                    Controller.getInstance().changeMusic(
-                        Constants.LOOP_WAV_FILE_PATH,
-                        true
-                    );
-                }
-            }
-        );
 
         ConsoleHandler.clearConsole();
 
@@ -945,6 +931,20 @@ class NewGameCommand extends GameCommand {
         this.game.setPlayer(factory.create());
         this.game.saveLocally();
         this.controller.setState(GameState.MOVING);
+            
+        this.controller.changeMusic(
+            Constants.INTRO_WAV_FILE_PATH,
+            false,
+            new Runnable() {
+                @Override
+                public void run() {
+                    Controller.getInstance().changeMusic(
+                        Constants.LOOP_WAV_FILE_PATH,
+                        true
+                    );
+                }
+            }
+        );
 
         ConsoleHandler.clearConsole();
         Controller.printSideBySideText(
@@ -1020,6 +1020,20 @@ class LoadGameCommand extends GameCommand {
                 System.out.println(ConsoleHandler.RED + "Insert a valid number" + ConsoleHandler.RESET);
             }
         } while (!choice.isBlank() && (index < 1 || index > GameIndex.getKeys().size()));
+            
+        this.controller.changeMusic(
+            Constants.INTRO_WAV_FILE_PATH,
+            false,
+            new Runnable() {
+                @Override
+                public void run() {
+                    Controller.getInstance().changeMusic(
+                        Constants.LOOP_WAV_FILE_PATH,
+                        true
+                    );
+                }
+            }
+        );
     }
 }
 
@@ -1055,6 +1069,20 @@ class ContinueGameCommand extends GameCommand {
         
         this.controller.loadGame(lastPlayedKey);
         ConsoleHandler.clearConsole();
+            
+        this.controller.changeMusic(
+            Constants.INTRO_WAV_FILE_PATH,
+            false,
+            new Runnable() {
+                @Override
+                public void run() {
+                    Controller.getInstance().changeMusic(
+                        Constants.LOOP_WAV_FILE_PATH,
+                        true
+                    );
+                }
+            }
+        );
     }
 }
 
