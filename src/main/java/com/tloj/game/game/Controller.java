@@ -810,7 +810,7 @@ class BuyCommand extends GameCommand {
         Merchant merchant = (Merchant) room.getFriendlyEntityByName(Merchant.NAME);
         
         try {
-            if (merchant != null) merchant.buy(Integer.parseInt(this.commands[1]));
+            if (merchant != null) merchant.buy(Integer.parseInt(this.commands[1]) - 1);
         } catch (NumberFormatException e) {
             System.out.println("Please enter a valid number");
         }

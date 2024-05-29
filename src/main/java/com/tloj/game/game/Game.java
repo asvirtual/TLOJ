@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.collectables.items.NorthStar;
@@ -102,6 +103,9 @@ public class Game implements CharacterObserver {
      * @param currentFloor The current floor the player is in.
      * @param player       The player character controlled by the player.
      * @param floors       The list of floors in the game.
+     * @param creationTime The time at which the game was created.
+     * @param elapsedTime  The time elapsed since the start of the game.
+     * @param backedUp     A boolean flag that indicates whether the corresponding save file is on the cloud.
      */
     @JsonCreator
     public Game(
@@ -119,9 +123,10 @@ public class Game implements CharacterObserver {
         this.controller = Controller.getInstance();
         this.seed = seed;
         this.creationTime = creationTime;
+        this.elapsedTime = elapsedTime;
         this.backedUp = backedUp;
         
-        if (this.player != null) this.player.addObserver(this);
+        this.player.addObserver(this);
         Dice.setSeed(this.seed);
     }
 
@@ -193,7 +198,7 @@ public class Game implements CharacterObserver {
             this.controller.getState() == GameState.WIN || 
             this.getCurrentRoom().getType() == RoomType.HEALING_ROOM
         ) {
-            /**
+            /*
              * Move to the next floor (floor numbers are 1-based, so this.currentFloor.getFloorNumber() 
              * is the index of the next floor in the floors (0-based) list)
             */
@@ -214,7 +219,7 @@ public class Game implements CharacterObserver {
             !this.player.hasItem(new SpecialKey())
         ) throw new IllegalArgumentException("That room is locked");
 
-        /**
+        /*
          * If the player was in the LOOTING_ROOM state (i.e. it didn't have enough space in its inventory to pick up an item)
          * but decided to move, change the game state to MOVING as he now exited the LootRoom
          */
