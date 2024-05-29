@@ -26,9 +26,7 @@ public class VampireDodge extends BossAbility {
         this.user.heal(attack.getWeaponRoll());
         attack.setTotalAttack(0);
 
-        this.activationMessage = 
-            ConsoleHandler.PURPLE + "Oh no! " + this.user.getName() + 
-            " dodged your attack and healed itself for " + attack.getWeaponRoll() + " HP!" + ConsoleHandler.RESET;
+        this.activationMessage = ConsoleHandler.PURPLE + " the boss dodged the attack and healed for " + attack.getWeaponRoll() + " HP!" + ConsoleHandler.RESET;
 
         return this.used = true;
     }
