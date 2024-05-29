@@ -929,9 +929,15 @@ class NewGameCommand extends GameCommand {
             System.out.print(ConsoleHandler.YELLOW + "Enter a custom seed for the game or press Enter to generate it automatically: " + ConsoleHandler.RESET);
             seed = Controller.getScanner().nextLine();
 
-            if (!seed.isBlank() && !seed.matches("\\d+")) 
+            try {
+                Long.parseLong(seed);
+                if (!seed.isEmpty() && !seed.matches("\\d+")) 
+                    System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
+            } catch (NumberFormatException e) {
+                seed = "";
                 System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
-        } while (!seed.isBlank() && !seed.matches("\\d+"));
+            }
+        } while (seed.isEmpty() || !seed.matches("\\d+"));
 
         this.game = this.controller.newGame(saveName, seed);
 
@@ -967,6 +973,11 @@ class LoadGameCommand extends GameCommand {
 
         this.controller.getSaveHandler().loadAllCloud();
         GameIndex.loadGames();
+
+        if (GameIndex.getKeys().isEmpty()) {
+            System.out.println(ConsoleHandler.RED + "No saved games found" + ConsoleHandler.RESET);
+            return;
+        }
         
         ConsoleHandler.clearConsole();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
@@ -1581,6 +1592,7 @@ public class Controller {
         this.saveHandler.loadAllCloud();
         GameIndex.loadGames();
         
+        ConsoleHandler.clearConsole();
         System.out.println(Constants.GAME_TITLE);
 
         while (this.getState() != GameState.EXIT) {
