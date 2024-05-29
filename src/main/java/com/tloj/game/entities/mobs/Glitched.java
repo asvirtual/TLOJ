@@ -101,8 +101,8 @@ public class Glitched extends Mob implements MovingEntity {
                 ConsoleHandler.RESET
             );
 
+            this.move(newCoords);
             if (this.turnsLeft != 0) {
-                this.move(newCoords);
                 nextRoom.addMobToTop(this);
                 nextRoom.setCleared(false);
             }

@@ -467,10 +467,11 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
 
         Item item = this.getInventoryItem(index - 1);
         if (item instanceof Weapon) {
-            this.inventory.add(this.weapon);
-
+            Item oldWeapon = this.weapon;
+            
             this.weapon = (Weapon) item;
             this.inventory.remove(item);
+            this.inventory.add(oldWeapon);
             return true;
         } else {
             ConsoleHandler.println(ConsoleHandler.RED + item + " is not a weapon" + ConsoleHandler.RESET);
