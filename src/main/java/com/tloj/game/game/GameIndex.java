@@ -3,6 +3,7 @@ package com.tloj.game.game;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,12 +155,12 @@ public class GameIndex {
 
                 // Delete old saves that are not on the cloud anymore, except for those 
                 // that were never backup up after the last time they were played
-                if (game.isBackedUp() || game.getPlayer() == null) f.delete();
+                if (game.isBackedUp() || game.getPlayer() == null || game.hasEnded()) f.delete();
                 else games.put(game.getSessionStartTime(), filename);
             }
 
             // Save to index also files that were not picked from the cloud as they weren't backed up before
-            GameIndex.saveGames();
+            saveGames();
         } catch (JsonGenerationException e) {
             System.out.println("Error deleting outdated saves");
             e.printStackTrace();

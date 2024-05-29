@@ -65,9 +65,6 @@ public class FirebaseHandler {
             fis.close();
 
             bucket.create(filename.replace(Constants.BASE_SAVES_DIRECTORY, ""), data, "application/json");
-            if (!filename.contains(Constants.GAMES_INDEX_FILE_PATH))
-                bucket.create(Constants.ENDED_GAMES_FIREBASE_DIRECTORY + filename.replace(Constants.BASE_SAVES_DIRECTORY, ""), data, "application/json");
-                
             return true;
         } catch (IOException e) {
             System.out.println("Error opening file " + filename + " for reading");
@@ -106,7 +103,7 @@ public class FirebaseHandler {
 
     public boolean deleteFromCloud(String filename) {
         if (!NetworkUtils.isInternetAvailable()) {
-            System.out.println(ConsoleHandler.RED + "No internet connection. Save to cloud failed." + ConsoleHandler.RESET);
+            System.out.println(ConsoleHandler.RED + "No internet connection. Delete from cloud failed." + ConsoleHandler.RESET);
             return false;
         }
         

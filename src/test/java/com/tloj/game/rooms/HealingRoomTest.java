@@ -15,19 +15,19 @@ import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
+import com.tloj.game.game.GameIndex;
 import com.tloj.game.game.ControllerHandler;
 
 public class HealingRoomTest {
     private final InputStream originalSystemIn = System.in;
 
     @Test   
-    void fullHealTest() {
-
-        
+    void fullHealTest() {        
         Dice.setSeed(1);
         ControllerHandler.deleteController();
         ControllerHandler.setInput("\n");
         Controller.getInstance();
+        GameIndex.loadGames();
 
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
@@ -47,7 +47,7 @@ public class HealingRoomTest {
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockStartRoom, new LaserBlade(), new Inventory(), startCoordinates);
         
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true, false);
         Controller.getInstance().setGame(mockGame);
 
         mockGame.getPlayer().setHp(10);

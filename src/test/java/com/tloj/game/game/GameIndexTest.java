@@ -13,6 +13,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import com.tloj.game.utilities.Constants;
+import com.tloj.game.entities.characters.BasePlayer;
 import com.tloj.game.rooms.Room;
 import com.tloj.game.rooms.StartRoom;
 import com.tloj.game.utilities.JsonParser;
@@ -84,6 +85,7 @@ public class GameIndexTest {
     void checkJson() {
         GameIndex.loadGames();
         Game mockGame = new Game(this.floors);
+        mockGame.setPlayer(new BasePlayer(null));
 
         String saveName = "test" + Constants.SAVE_GAME_FILENAME_SEPARATOR + mockGame.getCreationTime() + ".json";
         JsonParser.saveToFile(mockGame, Constants.BASE_SAVES_DIRECTORY + saveName);

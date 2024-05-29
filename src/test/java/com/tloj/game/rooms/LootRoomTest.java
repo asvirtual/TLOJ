@@ -19,6 +19,7 @@ import com.tloj.game.game.Coordinates;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.Floor;
 import com.tloj.game.game.Game;
+import com.tloj.game.game.GameIndex;
 import com.tloj.game.game.ControllerHandler;
 
 
@@ -31,6 +32,7 @@ public class LootRoomTest {
         ControllerHandler.deleteController();
         ControllerHandler.setInput("\n");
         Controller.getInstance();
+        GameIndex.loadGames();
     }
 
     @AfterEach
@@ -59,7 +61,7 @@ public class LootRoomTest {
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockStartRoom, new LaserBlade(), new Inventory(), startCoordinates);
         
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true, false);
         Controller.getInstance().setGame(mockGame);
 
         mockGame.movePlayer(Coordinates.Direction.EAST);
@@ -69,7 +71,7 @@ public class LootRoomTest {
     }
 
     @Test
-    void fullInvTest(){
+    void fullInvTest() {
         ArrayList<ArrayList<Room>> floor = new ArrayList<>();
         ArrayList<Room> rooms = new ArrayList<>();
         ArrayList<Floor> levels = new ArrayList<>();
@@ -88,7 +90,7 @@ public class LootRoomTest {
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockStartRoom, new LaserBlade(), new Inventory(), startCoordinates);
         
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true, false);
         Controller.getInstance().setGame(mockGame);
     
         while(mockGame.getPlayer().canCarry(new ManaPotion()))

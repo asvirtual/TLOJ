@@ -271,11 +271,11 @@ public class PlayerRoomVisitor implements Visitor {
             }
         );
 
+        this.controller.game.setEnded(true);
         this.controller.game.saveLocally();
         this.controller.saveCurrentGameToCloud();
 
-        String filename = GameIndex.removeEntry(this.controller.getCurrentGameKey());
-        this.controller.getSaveHandler().deleteFromCloud(filename);
+        GameIndex.removeEntry(this.controller.getCurrentGameKey());
         this.controller.getSaveHandler().saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
     }
 } 

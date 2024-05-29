@@ -6,7 +6,6 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.tloj.game.collectables.ConsumableItem;
 import com.tloj.game.collectables.Item;
@@ -59,8 +58,10 @@ public class Game implements CharacterObserver {
      * A boolean flag that indicates whether the corresponding save file is on the cloud
      * or if the cloud has an older version of the game, or doesn't have it at all. 
      */
-    @JsonPropertyOrder("backedUp")
+    @JsonProperty("backedUp")
     private boolean backedUp;
+    @JsonProperty("ended")
+    private boolean ended;
 
     /**
      * Constructs a new Game object with the given list of floors.
@@ -93,7 +94,7 @@ public class Game implements CharacterObserver {
 
         Dice.setSeed(this.seed);
     }
-    
+
     /**
      * Constructs a new Game object with the given parameters.
      *
@@ -113,7 +114,8 @@ public class Game implements CharacterObserver {
         @JsonProperty("floors") ArrayList<Floor> floors,
         @JsonProperty("creationTime") long creationTime,
         @JsonProperty("elapsedTime") long elapsedTime,
-        @JsonProperty("backedUp") boolean backedUp
+        @JsonProperty("backedUp") boolean backedUp,
+        @JsonProperty("ended") boolean hasEnded
     ) {
         this.player = player;
         this.floors = floors;
@@ -123,10 +125,19 @@ public class Game implements CharacterObserver {
         this.creationTime = creationTime;
         this.elapsedTime = elapsedTime;
         this.backedUp = backedUp;
+        this.ended = hasEnded;
         this.sessionStartTime = new Date().getTime();
         
         this.player.addObserver(this);
         Dice.setSeed(this.seed);
+    }
+
+    public boolean hasEnded() {
+        return this.ended;
+    }
+
+    public void setEnded(boolean ended) {
+        this.ended = ended;
     }
 
     public boolean isBackedUp() {
@@ -385,11 +396,12 @@ public class Game implements CharacterObserver {
         System.out.println(Constants.GAME_TITLE);
         this.controller.setState(GameState.MAIN_MENU);
 
+
+        this.setEnded(true);
         this.saveLocally();
         this.controller.saveCurrentGameToCloud();
 
-        String filename = GameIndex.removeEntry(this.creationTime);
-        this.controller.getSaveHandler().deleteFromCloud(filename);
+        GameIndex.removeEntry(this.creationTime);
         this.controller.getSaveHandler().saveToCloud(Constants.GAMES_INDEX_FILE_PATH);
     }
 

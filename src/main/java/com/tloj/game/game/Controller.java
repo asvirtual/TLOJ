@@ -933,7 +933,7 @@ class NewGameCommand extends GameCommand {
         this.game.setPlayer(factory.create());
         this.game.saveLocally();
         this.controller.setState(GameState.MOVING);
-            
+
         this.controller.changeMusic(
             Constants.INTRO_WAV_FILE_PATH,
             false,
@@ -982,7 +982,7 @@ class LoadGameCommand extends GameCommand {
         }
         
         ConsoleHandler.clearConsole();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm:ss");
 
         System.out.println(ConsoleHandler.GREEN + "Saved games:" + ConsoleHandler.RESET + "\n");
         List<Long> keys = GameIndex.getKeys();
