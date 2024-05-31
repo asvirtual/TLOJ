@@ -82,11 +82,11 @@ public class FirebaseHandler {
 
         System.out.println(ConsoleHandler.YELLOW + "Loading games from cloud..." + ConsoleHandler.RESET);
 
+        if (!new File(Constants.BASE_SAVES_DIRECTORY).exists()) new File(Constants.BASE_SAVES_DIRECTORY).mkdir();
         Bucket bucket = StorageClient.getInstance().bucket();
         Page<Blob> blobs = bucket.list();
         
         blobs.iterateAll().forEach(blob -> {
-        if (blob.getName().contains(Constants.ENDED_GAMES_FIREBASE_DIRECTORY)) return;
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             File downloadFile = new File(Constants.BASE_SAVES_DIRECTORY + blob.getName());
 

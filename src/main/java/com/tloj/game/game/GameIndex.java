@@ -128,7 +128,6 @@ public class GameIndex {
         if (!savesDir.exists()) savesDir.mkdirs();
         File file = new File(Constants.BASE_SAVES_DIRECTORY + Constants.GAMES_INDEX_FILE_PATH);
         
-        // The index file doesn't exist, so there are no games to be loaded
         if (!file.exists()) {
             games = new HashMap<Long, String>();
 
@@ -137,8 +136,6 @@ public class GameIndex {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            return;
         }
 
         try {
