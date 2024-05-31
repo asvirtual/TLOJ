@@ -17,7 +17,7 @@
 ---
 # Progetto Elementi di Ingegneria del Software 2024
 ## ___Text Adventure RPG - The Legend Of Jordan___ 
-[Our website](https://tloj-site.netlify.app/)
+Visit [our website](https://tloj-site.netlify.app/) for more
 ---
 ### Group Members
 - Alberti Giordano
@@ -46,13 +46,13 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 ---
 ### How to Play
 ***Fullscreen and black console bg recommended to have a better experience***<br>
-*If you experience weird behavior from the ASCII graphics, try to zoom out the console (ctrl - on Windows, cmd - on MacOS)*
+*If you experience weird behavior from the ASCII graphics, try to zoom out the console (ctrl - on Windows, cmd - on MacOS)*<br><br>
 The game saves automatically after clearing every room, exiting the game using [exit] command also saves the game.<br>
 A detailed list of commands can be found by typing [help] command at any given time. <br>
 
 ---
 ### System Documentation
-The complete system documentation, shipped in 6 files can be found in the Documents folder of the repository.
+The complete system documentation, shipped in 6 files can be found in the docs folder of the repository.
 
 ---
 ### Rights and Licenses
