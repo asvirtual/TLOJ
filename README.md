@@ -37,11 +37,11 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 
 ***Windows***
 - Download and extract the .zip file containing the .jar then use "java -jar filename.jar" <br>
-- Compile using Maven by using "mvn clean package" and "mvn exec:java" <br>
+- Compile using Maven by using "mvn compile" and "mvn exec:java" <br>
 
 ***MacOs***
 - Download and extract the .zip file containing the .jar then use "java -jar filename.jar" <br>
-- Compile using Maven by using "mvn clean package" and "mvn exec:java" <br>
+- Compile using Maven by using "mvn compile" and "mvn exec:java" <br>
 
 ---
 ### How to Play
