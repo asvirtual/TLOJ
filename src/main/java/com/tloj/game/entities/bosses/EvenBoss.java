@@ -19,8 +19,8 @@ import com.tloj.game.utilities.Constants;
  * @see FlyingBoss
  * @see HalverBoss
  * @see BossAbility
- * @see DodgeSlowAttackFlying
- * @see TakeHalfDamageAbility
+ * @see VampireDodge
+ * @see HalveDamage
  * @see WeaponShard
  */
 public class EvenBoss extends Boss {

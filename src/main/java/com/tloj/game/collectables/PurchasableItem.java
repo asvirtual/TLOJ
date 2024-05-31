@@ -1,6 +1,7 @@
 package com.tloj.game.collectables;
 
 import com.tloj.game.entities.Character;
+import com.tloj.game.entities.npcs.Merchant;
 
 
 /**
