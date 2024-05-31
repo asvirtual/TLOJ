@@ -1,0 +1,16 @@
+com.tloj.game
+com.tloj.game.abilities
+com.tloj.game.collectables
+com.tloj.game.collectables.items
+com.tloj.game.collectables.weaponeffects
+com.tloj.game.collectables.weapons
+com.tloj.game.entities
+com.tloj.game.entities.bosses
+com.tloj.game.entities.characters
+com.tloj.game.entities.mobs
+com.tloj.game.entities.npcs
+com.tloj.game.game
+com.tloj.game.rooms
+com.tloj.game.rooms.roomeffects
+com.tloj.game.skills
+com.tloj.game.utilities
