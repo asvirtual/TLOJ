@@ -409,6 +409,17 @@ public class Game implements CharacterObserver {
         System.out.println(String.join("\n", this.generateMapLines()) + "\n");
     }
 
+    public void printLegend(){
+        System.out.println("Legend:\n"
+        + " " + ConsoleHandler.YELLOW_BOLD_BRIGHT + "\u0398 " + ConsoleHandler.RESET + " - Your position\n" 
+        + " " + ConsoleHandler.YELLOW + "\u2229" + ConsoleHandler.RESET + " - Strart Room\n" 
+        + " " + ConsoleHandler.PURPLE + "\u2566" + ConsoleHandler.RESET + " - Trap Room\n" 
+        + " " + ConsoleHandler.RED + "\u25A0" + ConsoleHandler.RESET + " - Hostile Room\n" 
+        + " " + ConsoleHandler.GREEN + "\u255A" + ConsoleHandler.RESET + " - Loot Room\n" 
+        + " " + ConsoleHandler.RED_BOLD_BRIGHT + "\u00DF" + ConsoleHandler.RESET + " - Boss Room\n" 
+        );
+    }
+
     /**
      * Generates an array of strings representing the map layout.
      * Each string in the array represents a row of the map.

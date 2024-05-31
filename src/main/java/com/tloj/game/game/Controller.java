@@ -42,6 +42,7 @@ import com.tloj.game.utilities.MusicPlayer;
  * - Use item (use [number]) {@link UseItemCommand}<br>
  * - Drop item (drop [number]) {@link DropItemCommand}<br>
  * - Info item (info [number]) {@link DescribeCommand}<br>
+ * - Print map (map) {@link PrintMapCommand}
  * - Print seed (seed) {@link PrintSeedCommand}<br>
  * - Print score (score) {@link PrintScoreCommand}<br>
  * - Quit (quit) {@link QuitCommand}<br>
@@ -762,6 +763,7 @@ class PrintMapCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         this.game.printMap();
+        this.game.printLegend();
     }
 }
 
