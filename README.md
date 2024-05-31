@@ -36,7 +36,6 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 ***Clone the repository or download the .zip release.***
 
 ***Windows***
-- Download and extract the .zip file then simply run the .exe file <br>
 - Download and extract the .zip file containing the .jar then use "java -jar filename.jar" <br>
 - Compile using Maven by using "mvn clean package" and "mvn exec:java" <br>
 
@@ -47,6 +46,7 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 ---
 ### How to Play
 ***Fullscreen and black console bg recommended to have a better experience***<br>
+*If you experience weird behavior from the ASCII graphics, try to zoom out the console (ctrl - on Windows, cmd - on MacOS)*
 The game saves automatically after clearing every room, exiting the game using [exit] command also saves the game.<br>
 A detailed list of commands can be found by typing [help] command at any given time. <br>
 
