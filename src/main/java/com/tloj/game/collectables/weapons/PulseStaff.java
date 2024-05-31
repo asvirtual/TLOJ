@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
  * Represents the PulseStaff Weapon in the game.<br>
  * The PulseStaff is an rare heavy weapon with a long blade that can be found in the game. <br>
  * It is paired with the {@link ManaAttackBooster} ability, that allows its holder to inflict from 5 to 10 more damage points by spending 3 mana points<br>
- * It weighs {@value #WEIGHT} and is equipped with a D{@value #DICE_FACES}
+ * It weighs {@value #WEIGHT} and is equipped with a D{@value #DICE_MIN}-{@value #DICE_MAX}
  * @see LaserBlade
  * @see CyberKatana
  * @see NanoDirk

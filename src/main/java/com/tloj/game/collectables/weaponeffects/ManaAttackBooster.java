@@ -1,5 +1,6 @@
 package com.tloj.game.collectables.weaponeffects;
 
+import com.tloj.game.collectables.weapons.PulseStaff;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.entities.Character;
 import com.tloj.game.game.PlayerAttack;

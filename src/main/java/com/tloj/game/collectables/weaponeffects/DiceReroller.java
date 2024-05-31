@@ -3,6 +3,7 @@ package com.tloj.game.collectables.weaponeffects;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;
 import com.tloj.game.collectables.Weapon;
+import com.tloj.game.collectables.weapons.NanoDirk;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 

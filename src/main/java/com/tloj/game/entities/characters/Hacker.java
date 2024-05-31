@@ -37,7 +37,7 @@ public class Hacker extends Character {
 
     /** 
      * Constructor to create a Cheater from loaded data 
-     * See {@link Character#Character(int, int, int, int, int, int, int, int, Weapon, Inventory, Coordinates)}
+     * See {@link Character#Character(int, int, int, int, int, int, int, int, Floor, Room, Weapon, Inventory, Coordinates)}
     */
     @JsonCreator
     public Hacker(

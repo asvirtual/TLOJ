@@ -1,5 +1,6 @@
 package com.tloj.game.collectables.weaponeffects;
 
+import com.tloj.game.collectables.weapons.NaniteLeechBlade;
 import com.tloj.game.collectables.Weapon;
 import com.tloj.game.game.PlayerAttack;
 import com.tloj.game.utilities.ConsoleHandler;

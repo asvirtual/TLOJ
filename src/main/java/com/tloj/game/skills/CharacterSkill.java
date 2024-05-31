@@ -12,8 +12,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.tloj.game.abilities.BossAbility;
 
 
-
-
 /**
  * Abstract class for character skill used during combat<br>
  * As with the {@link BossAbility} class, this class applies an adaptation of the Strategy pattern to the character skills, allowing for easy addition of new skills.<br>

@@ -1,5 +1,7 @@
 package com.tloj.game.collectables;
 
+import com.tloj.game.collectables.items.WeaponShard;
+import com.tloj.game.entities.npcs.Smith;
 import com.tloj.game.collectables.weaponeffects.WeaponEffect;
 import com.tloj.game.game.Dice;
 import com.tloj.game.game.PlayerAttack;

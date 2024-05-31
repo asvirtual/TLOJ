@@ -1,5 +1,6 @@
 package com.tloj.game.entities;
 
+import com.tloj.game.entities.mobs.Glitched;
 import com.tloj.game.game.Coordinates;
 
 
