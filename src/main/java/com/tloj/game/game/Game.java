@@ -117,7 +117,6 @@ public class Game implements CharacterObserver {
         @JsonProperty("backedUp") boolean backedUp,
         @JsonProperty("ended") boolean hasEnded
     ) {
-        this.player = player;
         this.floors = floors;
         this.currentFloor = currentFloor;
         this.controller = Controller.getInstance();
@@ -127,8 +126,8 @@ public class Game implements CharacterObserver {
         this.backedUp = backedUp;
         this.ended = hasEnded;
         this.sessionStartTime = new Date().getTime();
-        
-        this.player.addObserver(this);
+       
+        this.setPlayer(player);
         Dice.setSeed(this.seed);
     }
 
@@ -329,7 +328,6 @@ public class Game implements CharacterObserver {
         this.player.lootMob(mob);
 
         Controller.awaitEnter();
-        
         this.increaseScore(Mob.SCORE_DROP);
 
         // If the defeted mob was the last one, clear the room

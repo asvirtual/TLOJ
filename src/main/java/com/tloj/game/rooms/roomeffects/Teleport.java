@@ -67,7 +67,7 @@ public class Teleport extends RoomEffect {
             int x = (int) Math.floor(Math.random() * cols); // Returns a random number between 0 (inclusive) and cols (exclusive)
 
             Coordinates newCoords = new Coordinates(x, y);
-            this.newRoom = character.getCurrentFloor().getRoom(newCoords);
+            this.newRoom = floor.getRoom(newCoords);
 
             // Skip if new location is the same as current location
             if (newCoords.equals(character.getPosition())) continue;
@@ -83,7 +83,7 @@ public class Teleport extends RoomEffect {
                 rowRooms.forEach(room -> {
                     if (room != null) room.forget();
                 });
-            });            
+            });
 
             character.move(newCoords);
             this.newRoom.visit();
