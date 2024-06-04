@@ -1577,7 +1577,9 @@ public class Controller {
         try {
             invoker.executeCommand();
         } catch (IllegalStateException e) {
-            System.out.println("There's a time and a place for everything...");
+            System.out.println(ConsoleHandler.RED + "There's a time and a place for everything..." + ConsoleHandler.RESET);
+        } catch (IllegalArgumentException e) {
+            System.out.println(ConsoleHandler.RED + e.getMessage() + ConsoleHandler.RESET);
         }
     }
 
