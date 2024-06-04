@@ -17,7 +17,9 @@
 ---
 # Progetto Elementi di Ingegneria del Software 2024
 ## ___Text Adventure RPG - The Legend Of Jordan___ 
-Visit [our website](https://tloj-site.netlify.app/) for more
+
+__Visit [our website](https://tloj-site.netlify.app/) for more info about the project!__
+
 ---
 ### Group Members
 - Alberti Giordano
@@ -40,7 +42,7 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 - Compile using Maven by using "mvn compile" and "mvn exec:java" <br>
 
 ***MacOs***
-- Download and extract the .zip file containing the .jar then use "java -jar filename.jar" <br>
+- Download and extract the .tar file containing the .jar then use "java -jar filename.jar" <br>
 - Compile using Maven by using "mvn compile" and "mvn exec:java" <br>
 
 ---
@@ -52,7 +54,7 @@ A detailed list of commands can be found by typing [help] command at any given t
 
 ---
 ### System Documentation
-The complete system documentation, shipped in 6 files can be found in the docs folder of the repository.
+The complete system documentation can be found in the docs folder of the repository, the [Jira](https://studenti-team-zlhv8tc4edim.atlassian.net/jira/software/projects/JORDAN/list?filter=%22type%22%20%3D%20%27Story%27&sortBy=key&direction=ASC) page and [our website](https://tloj-site.netlify.app/).
 
 ---
 ### Rights and Licenses
