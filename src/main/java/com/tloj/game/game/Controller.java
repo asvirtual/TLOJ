@@ -1038,6 +1038,8 @@ class LoadGameCommand extends GameCommand {
                 }
             }
         );
+        
+        ConsoleHandler.clearLog();
     }
 }
 

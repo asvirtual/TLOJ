@@ -226,10 +226,14 @@ public abstract class Character extends CombatEntity implements MovingEntity, It
         this.usedItem = usedItem;
     }
 
-    public void setCurrentFloor(Floor Floor) {
-        this.currentFloor = Floor;
+    public void moveToFloor(Floor floor) {
+        this.currentFloor = floor;
         this.currentRoom = this.currentFloor.getStartRoom();
         this.position = this.currentRoom.getCoordinates();
+    }
+
+    public void setCurrentFloor(Floor floor) {
+        this.currentFloor = floor;
     }
 
     public void useMana(int amount) {

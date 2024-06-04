@@ -117,6 +117,8 @@ public class Game implements CharacterObserver {
         @JsonProperty("backedUp") boolean backedUp,
         @JsonProperty("ended") boolean hasEnded
     ) {
+        Dice.setSeed(seed);
+
         this.floors = floors;
         this.currentFloor = currentFloor;
         this.controller = Controller.getInstance();
@@ -128,7 +130,6 @@ public class Game implements CharacterObserver {
         this.sessionStartTime = new Date().getTime();
        
         this.setPlayer(player);
-        Dice.setSeed(this.seed);
     }
 
     public boolean hasEnded() {
@@ -216,7 +217,7 @@ public class Game implements CharacterObserver {
              * is the index of the next floor in the floors (0-based) list)
             */
             this.currentFloor = this.floors.get(this.currentFloor.getFloorNumber());
-            this.player.setCurrentFloor(this.currentFloor);
+            this.player.moveToFloor(this.currentFloor);
 
             if (this.currentFloor.getStartRoom() != null)
                 this.currentFloor.getStartRoom().accept(playerRoomVisitor);
