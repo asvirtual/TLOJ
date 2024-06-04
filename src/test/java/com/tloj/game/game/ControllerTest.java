@@ -77,6 +77,7 @@ public class ControllerTest {
                 this.floors,
                 0,
                 0,
+                0,
                 true,
                 false
             )

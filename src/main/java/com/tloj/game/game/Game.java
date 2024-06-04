@@ -114,6 +114,7 @@ public class Game implements CharacterObserver {
         @JsonProperty("floors") ArrayList<Floor> floors,
         @JsonProperty("creationTime") long creationTime,
         @JsonProperty("elapsedTime") long elapsedTime,
+        @JsonProperty("sessionStartTime") long sessionStartTime,
         @JsonProperty("backedUp") boolean backedUp,
         @JsonProperty("ended") boolean hasEnded
     ) {
@@ -127,6 +128,7 @@ public class Game implements CharacterObserver {
         this.elapsedTime = elapsedTime;
         this.backedUp = backedUp;
         this.ended = hasEnded;
+        this.sessionStartTime = sessionStartTime;
        
         this.setPlayer(player);
     }

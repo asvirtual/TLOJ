@@ -96,7 +96,7 @@ public class SpecialKeyTest {
         
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockStartRoom, new LaserBlade(), new Inventory(), startCoordinates);
         
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true, false);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0, true, false);
         Controller.getInstance().setGame(mockGame);
 
         assertThrows(IllegalArgumentException.class, () -> mockGame.movePlayer(Coordinates.Direction.EAST));
@@ -132,7 +132,7 @@ public class SpecialKeyTest {
         BasePlayer mockCharacter = new BasePlayer(20, 3, 3, 10, 0, 1, 5, 10, level, mockStartRoom, new LaserBlade(), new Inventory(), startCoordinates);
         mockCharacter.addInventoryItem(new SpecialKey());
 
-        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, true, false);
+        Game mockGame = new Game(1, level, mockCharacter, levels, -1, 0, 0, true, false);
         Controller.getInstance().setGame(mockGame);
         
         assertDoesNotThrow(() -> mockGame.movePlayer(Coordinates.Direction.EAST));
