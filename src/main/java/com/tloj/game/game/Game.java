@@ -127,7 +127,6 @@ public class Game implements CharacterObserver {
         this.elapsedTime = elapsedTime;
         this.backedUp = backedUp;
         this.ended = hasEnded;
-        this.sessionStartTime = new Date().getTime();
        
         this.setPlayer(player);
     }

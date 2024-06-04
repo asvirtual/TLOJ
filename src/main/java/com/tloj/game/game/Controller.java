@@ -573,8 +573,7 @@ class QuitCommand extends GameCommand {
 
         this.game.setBackedUp(NetworkUtils.isInternetAvailable());
         this.game.saveLocally();
-        this.game.setBackedUp(this.controller.saveCurrentGameToCloud());
-        this.game.saveLocally();
+        this.controller.saveCurrentGameToCloud();
 
         if (!game.isBackedUp()) {
             System.out.println(ConsoleHandler.RED + "Game could not be saved to cloud. The save is only available locally." + ConsoleHandler.RESET);
