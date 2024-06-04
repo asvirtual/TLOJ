@@ -11,6 +11,7 @@ import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
+import com.tloj.game.game.Game;
 import com.google.api.gax.paging.Page;
 
 
@@ -89,6 +90,15 @@ public class FirebaseHandler {
         blobs.iterateAll().forEach(blob -> {
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             File downloadFile = new File(Constants.BASE_SAVES_DIRECTORY + blob.getName());
+
+            if (downloadFile.exists()) {
+                try {
+                    Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + blob.getName());
+                    if (!game.isBackedUp()) return;
+                } catch (IOException e) {
+                    e.printStackTrace();    
+                }
+            }
 
             // Write data to file
             try (FileOutputStream outputStream = new FileOutputStream(downloadFile)) {
