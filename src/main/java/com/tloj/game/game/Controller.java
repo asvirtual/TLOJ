@@ -30,6 +30,7 @@ import com.tloj.game.utilities.Constants;
 import com.tloj.game.utilities.FirebaseHandler;
 import com.tloj.game.utilities.JsonParser;
 import com.tloj.game.utilities.MusicPlayer;
+import com.tloj.game.utilities.NetworkUtils;
 
 
 /**
@@ -569,9 +570,12 @@ class QuitCommand extends GameCommand {
         if (!Controller.awaitConfirmation()) return;
 
         this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
+
+        this.game.setBackedUp(NetworkUtils.isInternetAvailable());
         this.game.saveLocally();
         this.game.setBackedUp(this.controller.saveCurrentGameToCloud());
         this.game.saveLocally();
+
         if (!game.isBackedUp()) {
             System.out.println(ConsoleHandler.RED + "Game could not be saved to cloud. The save is only available locally." + ConsoleHandler.RESET);
             Controller.awaitEnter();
