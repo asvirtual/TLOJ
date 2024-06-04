@@ -301,6 +301,8 @@ public class Game implements CharacterObserver {
     public void saveLocally() {
         this.elapsedTime += (new Date().getTime() - this.sessionStartTime);
         String saveName = GameIndex.getFile(this.creationTime);
+        if (saveName == null) return;
+    
         String path = Constants.BASE_SAVES_DIRECTORY + saveName;
         JsonParser.saveToFile(this, path);
     }

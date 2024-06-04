@@ -22,7 +22,7 @@ import com.tloj.game.utilities.JsonParser;
  * The index is loaded when the game starts and saved when the game ends.
  */
 public class GameIndex {
-    private static Map<Long, String> games;
+    private static Map<Long, String> games = new HashMap<Long, String>();
 
     private GameIndex() {}
 

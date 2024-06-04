@@ -91,7 +91,7 @@ public class FirebaseHandler {
             byte[] data = blob.getContent(Blob.BlobSourceOption.generationMatch());
             File downloadFile = new File(Constants.BASE_SAVES_DIRECTORY + blob.getName());
 
-            if (downloadFile.exists()) {
+            if (downloadFile.exists() && !downloadFile.getName().contains(Constants.GAMES_INDEX_FILE_PATH)) {
                 try {
                     Game game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + blob.getName());
                     if (!game.isBackedUp()) return;
