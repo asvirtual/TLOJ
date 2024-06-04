@@ -204,7 +204,7 @@ public class Game implements CharacterObserver {
      * @param direction The direction in which to move the player.
      * @throws IllegalArgumentException If the move is invalid.
      */
-    public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException {  
+public void movePlayer(Coordinates.Direction direction) throws IllegalArgumentException {  
         PlayerRoomVisitor playerRoomVisitor = new PlayerRoomVisitor(this.player);
 
         if (

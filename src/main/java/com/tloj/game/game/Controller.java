@@ -15,6 +15,7 @@ import java.util.function.Supplier;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tloj.game.rooms.HealingRoom;
 import com.tloj.game.rooms.LootRoom;
+import com.tloj.game.rooms.RoomType;
 import com.tloj.game.collectables.Item;
 import com.tloj.game.entities.Character;
 import com.tloj.game.entities.characters.BasePlayer;
@@ -1038,7 +1039,7 @@ class LoadGameCommand extends GameCommand {
                 }
             }
         );
-        
+
         ConsoleHandler.clearLog();
     }
 }
@@ -1482,7 +1483,10 @@ public class Controller {
             this.currentGameKey = key;
             this.game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + saveName);
             this.game.setSessionStartTime(new Date().getTime());
-            this.setState(GameState.MOVING);
+
+            if (this.game.getCurrentRoom().getType() == RoomType.HEALING_ROOM) this.setState(GameState.HEALING_ROOM);
+            else if (this.game.getCurrentRoom().getType() == RoomType.BOSS_ROOM) this.setState(GameState.BOSS_DEFEATED);
+            else this.setState(GameState.MOVING);
         } catch (IOException e) {
             System.out.println(ConsoleHandler.RED + "Please insert a number from the list above" + ConsoleHandler.RESET);
         }
