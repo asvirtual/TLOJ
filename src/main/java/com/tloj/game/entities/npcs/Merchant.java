@@ -126,6 +126,8 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
             return;
         }
 
+        if (!Controller.awaitConfirmation()) return;
+
         item.purchase(this.player);
         this.inventory.removeByIndex(index);
 

@@ -315,7 +315,7 @@ public class Game implements CharacterObserver {
 
     public Item dropItem(int index) {
         if (index < 1 || index > this.player.getInventorySize()) {
-            System.out.println("Couldn't find that item in your inventory");
+            System.out.println(ConsoleHandler.RED + "Couldn't find that item in your inventory" + ConsoleHandler.RESET);
             return null;
         }
 
@@ -411,14 +411,14 @@ public class Game implements CharacterObserver {
         System.out.println(String.join("\n", this.generateMapLines()) + "\n");
     }
 
-    public void printLegend(){
+    public void printLegend() {
         System.out.println("Legend:\n"
-        + " " + ConsoleHandler.YELLOW_BOLD_BRIGHT + "\u0398 " + ConsoleHandler.RESET + " - Your position\n" 
-        + " " + ConsoleHandler.YELLOW + "\u2229" + ConsoleHandler.RESET + " - Strart Room\n" 
-        + " " + ConsoleHandler.PURPLE + "\u2566" + ConsoleHandler.RESET + " - Trap Room\n" 
-        + " " + ConsoleHandler.RED + "\u25A0" + ConsoleHandler.RESET + " - Hostile Room\n" 
-        + " " + ConsoleHandler.GREEN + "\u255A" + ConsoleHandler.RESET + " - Loot Room\n" 
-        + " " + ConsoleHandler.RED_BOLD_BRIGHT + "\u00DF" + ConsoleHandler.RESET + " - Boss Room\n" 
+            + " " + ConsoleHandler.YELLOW_BOLD_BRIGHT + "\u0398 " + ConsoleHandler.RESET + " - Your position\n" 
+            + " " + ConsoleHandler.YELLOW + "\u2229" + ConsoleHandler.RESET + " - Start Room\n" 
+            + " " + ConsoleHandler.PURPLE + "\u2566" + ConsoleHandler.RESET + " - Trap Room\n" 
+            + " " + ConsoleHandler.RED + "\u25A0" + ConsoleHandler.RESET + " - Hostile Room\n" 
+            + " " + ConsoleHandler.GREEN + "\u255A" + ConsoleHandler.RESET + " - Loot Room\n" 
+            + " " + ConsoleHandler.RED_BOLD_BRIGHT + "\u00DF" + ConsoleHandler.RESET + " - Boss Room\n" 
         );
     }
 
@@ -518,7 +518,7 @@ public class Game implements CharacterObserver {
 
     public void infoItem(int index) {
         if (index < 1 || index > this.player.getInventorySize()) {
-            System.out.println("Couldn't find that item in your inventory");
+            System.out.println(ConsoleHandler.RED + "Couldn't find that item in your inventory" + ConsoleHandler.RESET);
             return;
         }
 
