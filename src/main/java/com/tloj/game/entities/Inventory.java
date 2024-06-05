@@ -79,7 +79,11 @@ public class Inventory {
 
     @JsonIgnore
     public Item getByIndex(int index) {
-        return this.items.get(index);
+        try {
+            return this.items.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
     }
 
     @JsonIgnore
@@ -99,7 +103,13 @@ public class Inventory {
     }
 
     public Item removeByIndex(int index) {
-        Item item = this.items.remove(index);
+        Item item;
+        try {
+            item = this.items.remove(index);
+        } catch (IndexOutOfBoundsException e) {
+            return null;
+        }
+
         this.totalWeight -= item.getWeight();
         this.sort();
 

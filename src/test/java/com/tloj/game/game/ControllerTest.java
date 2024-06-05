@@ -177,7 +177,6 @@ public class ControllerTest {
     @Test
     void validCommandTest() {
         class MockGameCommand extends GameCommand {
-
             public MockGameCommand(Game game, String[] commands){
                 super(game, null);
                 this.validStates = List.of(
