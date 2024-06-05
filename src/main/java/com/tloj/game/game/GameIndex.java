@@ -144,6 +144,7 @@ public class GameIndex {
 
             for (File f : files) {
                 String filename = f.getName();
+                if (filename.contains(Constants.DS_STORE_EXTENSION)) continue;
                 if (filename.equals(Constants.GAMES_INDEX_FILE_PATH)) continue;
                 if (games.containsValue(filename)) continue;
 

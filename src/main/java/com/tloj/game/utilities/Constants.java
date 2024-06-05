@@ -179,6 +179,7 @@ public class Constants {
   """;
 
     public static final String BASE_SAVES_DIRECTORY = "saves/";
+    public static final String DS_STORE_EXTENSION = ".DS_Store";
     public static final String GAMES_INDEX_FILE_PATH = "index.json";
     public static final String MAP_FILE_PATH = "src/main/resources/map.json";
     public static final String SAVE_GAME_FILENAME_SEPARATOR = "___";

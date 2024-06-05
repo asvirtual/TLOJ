@@ -811,15 +811,13 @@ class BuyCommand extends GameCommand {
     public void execute() throws IllegalStateException {
         super.execute();
         
-        if (!Controller.awaitConfirmation()) return;
-
         HealingRoom room = (HealingRoom) this.game.getCurrentRoom();
         Merchant merchant = (Merchant) room.getFriendlyEntityByName(Merchant.NAME);
         
         try {
             if (merchant != null) merchant.buy(Integer.parseInt(this.commands[1]) - 1);
         } catch (NumberFormatException e) {
-            System.out.println("Please enter a valid number");
+            System.out.println(ConsoleHandler.RED + "Please enter a valid number" + ConsoleHandler.RESET);
         }
     }
 }

@@ -547,8 +547,6 @@ public class Game implements CharacterObserver {
             return;
         }
         
-        if (!Controller.awaitConfirmation()) return;
-        
         ItemReceiverEntity receiver = (ItemReceiverEntity) entity;
         receiver.giveItem(item);
     }
