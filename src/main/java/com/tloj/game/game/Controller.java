@@ -902,36 +902,40 @@ class NewGameCommand extends GameCommand {
             } + "\n");
 
             if (choice.matches("[1-5]")) {
-                if (Controller.awaitConfirmation()) {
-                    confirmed = true;
+                if (!Controller.awaitConfirmation()) {
+                    ConsoleHandler.clearConsole();
+                    System.out.println("\n" + Constants.CLASS_CHOICE);
                     continue;
                 }
 
-                ConsoleHandler.clearConsole();
-                System.out.println("\n" + Constants.CLASS_CHOICE);
+                confirmed = true;
             }
         } while (!confirmed);
 
         ConsoleHandler.clearConsole();
 
-        System.out.print(ConsoleHandler.YELLOW + "Enter a custom name for this save: " + ConsoleHandler.RESET);
-        String saveName = Controller.getScanner().nextLine();
+        System.out.print(ConsoleHandler.YELLOW + "Enter a custom name for this save (only letters are allowed, no special characters): " + ConsoleHandler.RESET);
+        String saveName;
+        do {
+            saveName = Controller.getScanner().nextLine();
+            if (saveName.isBlank() || !saveName.matches("[a-zA-Z]+")) System.out.println(ConsoleHandler.RED + "Please insert a valid name: " + ConsoleHandler.RESET);
+        } while (saveName.isBlank() || !saveName.matches("[a-zA-Z]+"));
+
         String seed;
+        boolean validSeed = false;
 
         do {
             System.out.print(ConsoleHandler.YELLOW + "Enter a custom seed for the game or press Enter to generate it automatically: " + ConsoleHandler.RESET);
             seed = Controller.getScanner().nextLine();
 
             try {
-                if (!seed.isBlank()) {
-                    Long.parseLong(seed);
-                    System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
-                }
+                Long.parseLong(seed);
+                validSeed = true;
             } catch (NumberFormatException e) {
                 System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
                 continue;
             }
-        } while (!seed.isBlank() && !seed.matches("\\d+"));
+        } while (!validSeed);
 
         this.game = this.controller.newGame(saveName, seed);
 
