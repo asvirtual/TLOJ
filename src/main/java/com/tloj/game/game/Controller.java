@@ -571,6 +571,21 @@ class QuitCommand extends GameCommand {
 
         this.controller.changeMusic(Constants.MAIN_MENU_WAV_FILE_PATH, true);
 
+        /* 
+         * Sync saves before quitting so that the local index doesn't 
+         * overwrite changes that happened in the cloud while the game was running. 
+         * To do so, temporarily remove the current game from the index, 
+         * get all cloud saves and then add the current game back to the index.
+        */
+        String filename = GameIndex.removeEntry(this.game.getCreationTime());
+        this.controller.getSaveHandler().loadAllCloud();
+        GameIndex.addEntry(this.game.getCreationTime(), filename);
+
+        /*
+         * Save the game to the cloud if there's an internet connection
+         * and set the game as backed up. If there's no internet connection,
+         * the game will be saved locally only.
+         */
         this.game.setBackedUp(NetworkUtils.isInternetAvailable());
         this.game.saveLocally();
         this.controller.saveCurrentGameToCloud();
@@ -1488,6 +1503,9 @@ public class Controller {
             this.currentGameKey = key;
             this.game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + saveName);
             this.game.setSessionStartTime(new Date().getTime());
+
+            this.game.setBackedUp(false);
+            this.game.saveLocally();
 
             if (this.game.getCurrentRoom().getType() == RoomType.HEALING_ROOM) this.setState(GameState.HEALING_ROOM);
             else if (this.game.getCurrentRoom().getType() == RoomType.BOSS_ROOM) this.setState(GameState.BOSS_DEFEATED);
