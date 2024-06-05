@@ -929,7 +929,7 @@ class NewGameCommand extends GameCommand {
             seed = Controller.getScanner().nextLine();
 
             try {
-                Long.parseLong(seed);
+                if (!seed.isBlank()) Long.parseLong(seed);
                 validSeed = true;
             } catch (NumberFormatException e) {
                 System.out.println(ConsoleHandler.RED + "Please insert a valid number as the seed!" + ConsoleHandler.RESET);
