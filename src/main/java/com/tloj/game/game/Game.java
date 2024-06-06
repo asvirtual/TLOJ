@@ -116,7 +116,8 @@ public class Game implements CharacterObserver {
         @JsonProperty("elapsedTime") long elapsedTime,
         @JsonProperty("sessionStartTime") long sessionStartTime,
         @JsonProperty("backedUp") boolean backedUp,
-        @JsonProperty("ended") boolean hasEnded
+        @JsonProperty("ended") boolean hasEnded,
+        @JsonProperty("score") int score
     ) {
         Dice.setSeed(seed);
 
@@ -129,6 +130,7 @@ public class Game implements CharacterObserver {
         this.backedUp = backedUp;
         this.ended = hasEnded;
         this.sessionStartTime = sessionStartTime;
+        this.score = score;
        
         this.setPlayer(player);
     }
