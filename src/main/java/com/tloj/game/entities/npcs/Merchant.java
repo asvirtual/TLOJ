@@ -90,6 +90,11 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
     }
 
     public void buy(int index) {
+        if (this.player == null) {
+            System.out.println(ConsoleHandler.RED + "You have to interact with the merchant first!" + ConsoleHandler.RESET);
+            return;
+        }
+
         ConsoleHandler.clearConsole();
         PurchasableItem item = (PurchasableItem) this.inventory.getByIndex(index);
         

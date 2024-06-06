@@ -51,6 +51,11 @@ public class Smith extends FriendlyEntity implements ItemReceiverEntity {
     
     @Override
     public void giveItem(Item item) {
+        if (this.player == null) {
+            System.out.println(ConsoleHandler.RED + "You have to interact with the smith first!" + ConsoleHandler.RESET);
+            return;
+        }
+
         ConsoleHandler.clearConsole();
         
         if (!(item instanceof WeaponShard)) {
