@@ -807,8 +807,8 @@ class BuyCommand extends GameCommand {
     public BuyCommand(Game game, String[] commands) {
         super(game, commands);
         this.commandLength = 2;
-        this.invalidStates = List.of(
-            GameState.MAIN_MENU
+        this.validStates = List.of(
+            GameState.MERCHANT_SHOPPING
         );
     }
 
@@ -858,8 +858,8 @@ class GiveCommand extends GameCommand {
     public GiveCommand(Game game, String[] commands) {
         super(game, commands);
         this.commandLength = 3;
-        this.invalidStates = List.of(
-            GameState.MAIN_MENU
+        this.validStates = List.of(
+            GameState.SMITH_FORGING
         );
     }
 
