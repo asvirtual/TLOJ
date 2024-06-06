@@ -24,7 +24,6 @@ public class SmithTest {
         Dice.setSeed(1);
         ControllerHandler.deleteController();
         Controller.getInstance();
-    
     }
 
     @AfterEach

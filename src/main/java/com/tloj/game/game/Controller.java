@@ -1504,6 +1504,11 @@ public class Controller {
             this.game = JsonParser.loadFromFile(Constants.BASE_SAVES_DIRECTORY + saveName);
             this.game.setSessionStartTime(new Date().getTime());
 
+            /*
+             * Mark the game as not backed up to the cloud so that
+             * when all the saves from the cloud will be loaded when quitting,
+             * the current game will not overwritten by the incoming cloud saves.
+             */
             this.game.setBackedUp(false);
             this.game.saveLocally();
 

@@ -16,8 +16,7 @@ import com.tloj.game.collectables.items.ManaPotion;
 import com.tloj.game.collectables.items.HealthPotion;
 
 
-class MerchantTest {
-   
+class MerchantTest {   
     @BeforeEach
     public void setUpInput() {
         Dice.setSeed(1);
@@ -28,8 +27,10 @@ class MerchantTest {
 
    @Test
    void buyTest(){
-
+      ControllerHandler.deleteController();
+      ControllerHandler.setInput("y\n");
       Controller.getInstance();
+
       Merchant mockMerchant = new Merchant(new Coordinates(0, 0));
       Character mockCharacter = new BasePlayer(null);
       mockCharacter.removeInventoryItem(0);
