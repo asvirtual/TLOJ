@@ -7,3 +7,4 @@ saves/
 test.json
 randomNumbers.txt
 executables
+secrets/firebaseServiceAccount.json
