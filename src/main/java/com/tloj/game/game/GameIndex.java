@@ -152,8 +152,10 @@ public class GameIndex {
 
                 // Delete old saves that are not on the cloud anymore, except for those 
                 // that were never backup up after the last time they were played
-                if (game.isBackedUp() || game.getPlayer() == null || game.hasEnded()) f.delete();
-                else games.put(game.getSessionStartTime(), filename);
+                if (game.isBackedUp() || game.getPlayer() == null || game.hasEnded()) {
+                    f.delete();
+                    games.remove(game.getCreationTime());
+                } else games.put(game.getSessionStartTime(), filename);
             }
 
             // Save to index also files that were not picked from the cloud as they weren't backed up before

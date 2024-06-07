@@ -576,7 +576,8 @@ class QuitCommand extends GameCommand {
          * and set the game as backed up. If there's no internet connection,
          * the game will be saved locally only.
          */
-        this.game.setBackedUp(NetworkUtils.isInternetAvailable());
+
+        this.game.setBackedUp(NetworkUtils.isInternetAvailable() && this.controller.getSaveHandler().isInitialized());
         this.game.saveLocally();
         this.controller.saveCurrentGameToCloud();
 

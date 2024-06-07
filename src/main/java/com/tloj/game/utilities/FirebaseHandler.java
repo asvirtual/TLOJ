@@ -11,6 +11,7 @@ import com.google.cloud.storage.Bucket;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.StorageClient;
+import com.tloj.game.game.Controller;
 import com.tloj.game.game.Game;
 import com.google.api.gax.paging.Page;
 
@@ -23,6 +24,7 @@ import com.google.api.gax.paging.Page;
  */
 public class FirebaseHandler {
     private static FirebaseHandler instance;
+    private boolean initialized = false;
 
     private FirebaseHandler() { 
         try {
@@ -34,9 +36,10 @@ public class FirebaseHandler {
                     .build();
     
             FirebaseApp.initializeApp(options);
+            this.initialized = true;
         } catch (IOException e) {
-            System.out.println("Error opening Firebase service account file");
-            e.printStackTrace();
+            System.out.println(ConsoleHandler.RED + "Couldn't find a Firebase service account file, cloud functionalities are disabled" + ConsoleHandler.RESET);
+            Controller.awaitEnter();
         }
     }
 
@@ -45,10 +48,16 @@ public class FirebaseHandler {
         return instance;
     }
 
+    public boolean isInitialized() {
+        return this.initialized;
+    }
+
     /**
      * Uploads a JSON file with the specified filename to Firebase Storage.
      */
     public boolean saveToCloud(String filename) {
+        if (!this.initialized) return false;
+
         if (!NetworkUtils.isInternetAvailable()) {
             System.out.println(ConsoleHandler.RED + "No internet connection. Save to cloud failed." + ConsoleHandler.RESET);
             return false;
@@ -76,6 +85,8 @@ public class FirebaseHandler {
     }
 
     public boolean loadAllCloud() {
+        if (!this.initialized) return false;
+        
         if (!NetworkUtils.isInternetAvailable()) {
             System.out.println(ConsoleHandler.RED + "No internet connection. Couldn't load games from cloud." + ConsoleHandler.RESET);
             return false;
@@ -112,6 +123,8 @@ public class FirebaseHandler {
     }
 
     public boolean deleteFromCloud(String filename) {
+        if (!this.initialized) return false;
+        
         if (!NetworkUtils.isInternetAvailable()) {
             System.out.println(ConsoleHandler.RED + "No internet connection. Delete from cloud failed." + ConsoleHandler.RESET);
             return false;
