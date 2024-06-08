@@ -95,7 +95,6 @@ public class Merchant extends FriendlyEntity implements ItemsHolderEntity {
             return;
         }
 
-        ConsoleHandler.clearConsole();
         PurchasableItem item = (PurchasableItem) this.inventory.getByIndex(index);
         
         if (item == null) {

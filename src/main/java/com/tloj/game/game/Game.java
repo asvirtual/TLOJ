@@ -167,6 +167,10 @@ public class Game implements CharacterObserver {
         return this.elapsedTime + (new Date().getTime() - this.sessionStartTime);
     }
 
+    public void setElapsedTime(long elapsedTime) {
+        this.elapsedTime = elapsedTime;
+    } 
+
     public int getScore() {
         return this.score;
     }
@@ -302,7 +306,6 @@ public class Game implements CharacterObserver {
     }
 
     public void saveLocally() {
-        this.elapsedTime += (new Date().getTime() - this.sessionStartTime);
         String saveName = GameIndex.getFile(this.creationTime);
         if (saveName == null) return;
     

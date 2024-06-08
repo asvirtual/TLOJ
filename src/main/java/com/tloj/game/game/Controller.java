@@ -468,7 +468,7 @@ class DropItemCommand extends GameCommand {
 
             if (this.controller.getState() == GameState.LOOTING_ROOM) {
                 LootRoom room = (LootRoom) this.player.getCurrentRoom();
-                
+                if (room.getItem() == null) return;
                 if (!this.player.addInventoryItem(room.getItem())) return;
 
                 System.out.println(ConsoleHandler.GREEN + "You've picked up the " + room.getItem() + ConsoleHandler.RESET);
@@ -578,6 +578,7 @@ class QuitCommand extends GameCommand {
          */
 
         this.game.setBackedUp(NetworkUtils.isInternetAvailable() && this.controller.getSaveHandler().isInitialized());
+        this.game.setElapsedTime(new Date().getTime() - this.game.getSessionStartTime());
         this.game.saveLocally();
         this.controller.saveCurrentGameToCloud();
 
