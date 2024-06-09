@@ -39,22 +39,22 @@ the various enemies that the hero, Jordan, will meet in his path to escape the d
 
 ***Windows***
 - Download and extract the .zip file containing the .jar then use "java -jar filename.jar" <br>
-- Compile using Maven by using "mvn compile" and "mvn exec:java" <br>
+- Or compile using Maven by using "mvn compile" and "mvn exec:java" <br>
 
 ***MacOs***
 - Download and extract the .tar file containing the .jar then use "java -jar filename.jar" <br>
-- Compile using Maven by using "mvn compile" and "mvn exec:java" <br>
+- Or compile using Maven by using "mvn compile" and "mvn exec:java" <br>
 
 ---
 ### How to Play
 ***Fullscreen and black console bg recommended to have a better experience***<br>
 *If you experience weird behavior from the ASCII graphics, try to zoom out the console (ctrl - on Windows, cmd - on MacOS)*<br><br>
-The game saves automatically after clearing every room, exiting the game using [exit] command also saves the game.<br>
+The game saves locally automatically after clearing every room, quitting the game using the [quit] command also saves the game in the cloud.<br>
 A detailed list of commands can be found by typing [help] command at any given time. <br>
 
 ---
 ### System Documentation
-The complete system documentation can be found in the docs folder of the repository, the [Jira](https://studenti-team-zlhv8tc4edim.atlassian.net/jira/software/projects/JORDAN/list?filter=%22type%22%20%3D%20%27Story%27&sortBy=key&direction=ASC) page and [our website](https://tloj-site.netlify.app/).
+The complete system documentation can be found in the docs folder of this repository, the [Jira](https://studenti-team-zlhv8tc4edim.atlassian.net/jira/software/projects/JORDAN/list?filter=%22type%22%20%3D%20%27Story%27&sortBy=key&direction=ASC) page and [our website](https://tloj-site.netlify.app/).
 
 ---
 ### Rights and Licenses
@@ -68,6 +68,3 @@ The complete system documentation can be found in the docs folder of the reposit
 - "Game Over" sound effect is from Mario death, Super Mario® - Nintendo®
 
 All Rights Reserved ®
-
-
-
