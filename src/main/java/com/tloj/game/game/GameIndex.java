@@ -155,7 +155,7 @@ public class GameIndex {
                 if (game.isBackedUp() || game.getPlayer() == null || game.hasEnded()) {
                     f.delete();
                     games.remove(game.getCreationTime());
-                } else games.put(game.getSessionStartTime(), filename);
+                } else games.put(game.getCreationTime(), filename);
             }
 
             // Save to index also files that were not picked from the cloud as they weren't backed up before
