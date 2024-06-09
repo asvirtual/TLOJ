@@ -46,6 +46,7 @@ public class Glitched extends Mob implements MovingEntity {
     private static final int MONEY_DROP = 6;
     private static final int TURNS_BEFORE_DISAPPEARANCE = 4;
 
+    @JsonProperty("turnsLeft")
     private int turnsLeft = TURNS_BEFORE_DISAPPEARANCE;
     
     @JsonCreator
@@ -54,6 +55,14 @@ public class Glitched extends Mob implements MovingEntity {
         @JsonProperty("lvl") int lvl
     ) {
         super(HP, ATTACK, DEFENSE, DICE_FACES, lvl, XP_DROP, MONEY_DROP, position, new SpecialKey());
+    }
+
+    public int getTurnsLeft() {
+        return this.turnsLeft;
+    }
+
+    public void setTurnsLeft(int turnsLeft) {
+        this.turnsLeft = turnsLeft;
     }
 
     @Override
