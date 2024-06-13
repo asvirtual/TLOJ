@@ -55,7 +55,7 @@ public class ControllerTest {
         this.floors.add(secondFloor);
 
         // Define mock input to create a new game called "test", with a BasePlayer character
-        String input = "1\ny\ntest\n\n";
+        String input = "1\ny\ntest\n\n\n";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Controller.instance = null;

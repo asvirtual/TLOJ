@@ -576,9 +576,8 @@ class QuitCommand extends GameCommand {
          * and set the game as backed up. If there's no internet connection,
          * the game will be saved locally only.
          */
-
         this.game.setBackedUp(NetworkUtils.isInternetAvailable() && this.controller.getSaveHandler().isInitialized());
-        this.game.setElapsedTime(new Date().getTime() - this.game.getSessionStartTime());
+        this.game.setElapsedTime(this.game.getTotalElapsedTime());
         this.game.saveLocally();
         this.controller.saveCurrentGameToCloud();
 
@@ -941,6 +940,10 @@ class NewGameCommand extends GameCommand {
                 continue;
             }
         } while (!validSeed);
+
+        ConsoleHandler.clearConsole();
+        System.out.println(Constants.INTRO);
+        Controller.awaitEnter();
 
         this.game = this.controller.newGame(saveName, seed);
 

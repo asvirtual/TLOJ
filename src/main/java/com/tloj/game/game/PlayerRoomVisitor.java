@@ -248,7 +248,7 @@ public class PlayerRoomVisitor implements Visitor {
         ConsoleHandler.println(ConsoleHandler.YELLOW_BOLD_BRIGHT + Constants.SIXTH_PRINT_WIN + ConsoleHandler.RESET);
         ConsoleHandler.println(
             ConsoleHandler.YELLOW_BOLD_BRIGHT + "Congratulations! You won the game with " + this.controller.getScore() + " points!\n" + 
-            "It took you " + new SimpleDateFormat("HH:mm:ss").format(new Date(this.controller.game.getElapsedTime())) + ConsoleHandler.RESET
+            "It took you " + new SimpleDateFormat("HH:mm:ss").format(new Date(this.controller.game.getTotalElapsedTime())) + ConsoleHandler.RESET
         );
 
         Controller.awaitEnter();
