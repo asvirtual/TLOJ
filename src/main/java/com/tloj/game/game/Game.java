@@ -164,6 +164,11 @@ public class Game implements CharacterObserver {
     }
 
     public long getElapsedTime() {
+        return this.elapsedTime;
+    }
+
+    @JsonIgnore
+    public long getTotalElapsedTime() {
         return this.elapsedTime + (new Date().getTime() - this.sessionStartTime);
     }
 
